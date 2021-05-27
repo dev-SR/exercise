@@ -1,0 +1,16 @@
+{
+    "name": "soikat/mvc",
+    "authors": [
+        {
+            "name": "Soikat Rahman",
+            "email": "hello.dev.sr@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+
+    }
+}

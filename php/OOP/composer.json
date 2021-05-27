@@ -1,0 +1,15 @@
+{
+    "name": "soikat/oop",
+    "authors": [
+        {
+            "name": "Soikat Rahman",
+            "email": "hello.dev.sr@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "auto\\": "./autoloader"
+        }
+    }
+}
