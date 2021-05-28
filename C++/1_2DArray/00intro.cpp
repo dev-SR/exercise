@@ -1,6 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 int main() {
+
+    //2D arrays Deceleration/Initialization:
+    int ar1[2][3];
+    int ar2[2][3] = {{1, 2, 3}, {3, 4, 5}};
+    int ar3[][3] = {{1, 2, 3}, {3, 4, 5}};
+    char ar4[3][2] = {{'A', 'B'}, {'C', 'D'}, {'E', 'F'}};
+    char ar5[][4] = {"abc", "def", "efg", "hij"};
+
+    cout << ar3[0][0] << endl;
+    cout << ar3[0] << endl;
+    cout << ar4[0][0] << endl;
+    cout << ar4[0] << endl;
+
     int a[100][100] = {0};
     int m, n;
     cin >> m >> n;
@@ -18,3 +31,11 @@ int main() {
         cout << endl;
     }
 }
+
+//IN: 2 2
+
+//IN: 1 2
+//IN: 3 4
+
+// 1 2
+// 3 4
