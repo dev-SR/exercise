@@ -1,2 +1,0 @@
-   const getter =
-   //    const setter = ;

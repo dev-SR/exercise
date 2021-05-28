@@ -4,9 +4,13 @@
    "description": "",
    "main": "index.js",
    "scripts": {
-      "start:build": "tsc -w",
-      "start:run": "nodemon ./TS/builds/index.js",
-      "start": "concurrently npm:start:*"
+      "dev:watch-ts": "tsc -w",
+      "dev:watch-node": "nodemon TS/build/index.js",
+      "dev-x": "concurrently npm:start:*",
+      "watch-ts": "tsc -w",
+      "watch-node": "nodemon TS/build/index.js",
+      "dev": "concurrently \"npm run watch-ts\" \"npm run watch-node\"",
+      "start": "node TS/build/index.js"
    },
    "keywords": [],
    "author": "",
