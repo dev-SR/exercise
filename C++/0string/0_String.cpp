@@ -119,16 +119,19 @@ int main() {
     else
         cout << "mango not found in s" << endl;
 
-    // Find next occurrence of "geeks".
-    string str = "geeksforgeeks";
-    int found = 0;
-    char arr[] = "geeks";
-    found = str.find(arr, found + 1);
-    if (found != string::npos)
-        cout << "Next occurrence is " << found << endl;
+    //?finding All occurrence:
+    s = "You must know, first may not no longer be the first if second comes first";
+    cout << "all occurrence:" << endl;
+
+    string::size_type index = s.find("first");
+    while (index != string::npos) {
+        cout << "found at: " << index << endl;
+        index = s.find("first", index + 1);
+    }
 
     // rfind() returns position to last
     // occurrence of substring "geeks"
+    string str = "geeksforgeeks";
     cout << "Last occurrence of \"geeks\" starts from : ";
     cout << str.rfind("geeks") << endl;
 
@@ -140,6 +143,14 @@ int main() {
     // find last occurrence of 'any' character from "aeiou"
     cout << "Last occurrence vowel at : ";
     cout << sr.find_last_of("aeiou") << endl;
+    cout << "Example: occurrene of any '+. !,' :" << endl;
+    sr = "Hello World! Welcome, to my c++ program";
+    string target = "+. !,";
+    string::size_type pos = sr.find_first_of(target);
+    while (pos != string::npos) {
+        cout << "Found '" << sr[pos] << "' at: " << pos << endl;
+        pos = sr.find_first_of(target, pos + 1);
+    }
     cout << endl;
 
     //!Append-----------------------------------------------
@@ -223,16 +234,51 @@ int main() {
     cout << endl;
     //using  For Each
     cout << "Iteration 3" << endl;
+    cout << "1. Range For Loop:  for(char c:s) " << endl;
     for (char c : s1) {
         cout << c << " ";
     }
     cout << endl
          << endl;
+    cout << setw(25) << "-> Modifing Without reference: for(char c:s)  " << endl;
+    for (char c : s1) {
+        if (c >= 'a') {
+            c -= 32;
+        }
+        cout << c;
+    }
+    cout << endl;
+    cout << "After Modification:" << endl;
+    for (char c : s1) {
+        cout << c << " ";
+    }
+    cout << endl
+
+         << "string is not modified" << endl;
+    cout << endl;
+    cout << "-> Modifing With Reference: for(char &c:s)" << endl;
+    for (char &c : s1) {
+        if (c >= 'a') {
+            c -= 32;
+        }
+        cout << c;
+    }
+    cout << endl;
+    cout << "After Modification:" << endl;
+    for (char c : s1) {
+        cout << c;
+    }
+    /**
+     * See reference in c++: https://www.geeksforgeeks.org/references-in-c/ , how its used In For Each Loops to modify all objects
+    */
+
+    cout << endl
+         << endl;
 
     //!Compare two string;---------------------------------------------
-    cout << "comparing string " << endl;
+    cout << "Comparing string--------------------------------------------- " << endl;
     s0 = "Apple";
-    s0 = "Mango";
+    s1 = "Mango";
     cout << s1.compare(s0) << endl;
     cout << s0.compare(s1) << endl;
     //Comparing using Overloaded operators;
@@ -257,7 +303,8 @@ int main() {
     // ?get floating point part of a number-string
     string fnum = "23.342";
     cout << "Floating part is : ";
-    int pos = fnum.find(".");
+    pos = 0;
+    pos = fnum.find(".");
     if (pos == string::npos)
         cout << "" << endl;
     else
