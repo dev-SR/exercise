@@ -1,0 +1,8 @@
+node_modules
+*.jar
+*.exe
+*.[.exe,.jar]
+.vscode
+test.cpp
+tempCodeRunnerFile.cpp
+test_c.c
