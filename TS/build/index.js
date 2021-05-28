@@ -1,22 +1,11 @@
 "use strict";
 // import 'colors';
 // console.log('----------------<ts>---------------'.bgMagenta.black.bold);
-const myObj = {
-    method() {
-        console.log('Object::', this);
-    }
+let dictionary = {};
+const Item = {
+    current: 'ABC',
+    next: 'sodfhjk'
 };
-myObj.method(); //Object:: { method: [Function: method] }
-//CLass
-class MyClass {
-    method() {
-        console.log('Class::', this);
-    }
-}
-const ins = new MyClass();
-ins.method(); //Class:: MyClass {}
-//Function
-function myFunction(text) {
-    console.log('Function::', this, text);
-}
-myFunction.call(myObj, 'ABC');
+// type Items ={[key:'current'|'next']:string}
+dictionary[0] = Item;
+console.log(dictionary); //{ '0': { current: 'ABC', next: 'sodfhjk' } }
