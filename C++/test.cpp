@@ -2,27 +2,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
-    char c[10] = "1234";
-    // string c = "1234";
-    int n = c[0];   //49
-    int zero = '0'; //48
-    n = n - zero;   //1
-    // fixing decimal place values
-    n = n * 1000;
-    cout << n << endl;
+int main(int argc, char **argv) {
 
-    //extracting all at once
-    n = 0;
-    for (int i = 0; c[i] != '\0'; i++) {
-        n = n * 10 + c[i] - '0';
-    }
-    cout << n << endl;
+    printf("\n");
+    printf("\x1B[31mTexting\033[0m\t\t");
+    printf("\x1B[32mTexting\033[0m\t\t");
+    printf("\x1B[33mTexting\033[0m\t\t");
+    printf("\x1B[34mTexting\033[0m\t\t");
+    printf("\x1B[35mTexting\033[0m\n");
 
-    // https: //www.geeksforgeeks.org/converting-strings-numbers-cc/
-    // built-in stoi and atoi
-    n = atoi(c); // C,  works only for C-style strings (character array and string literal)
-    cout << n << endl;
-    n = stoi(c); //added in C++ , improved, works for both C++ strings and C style strings
-    cout << n << endl;
+    printf("\x1B[36mTexting\033[0m\t\t");
+    printf("\x1B[36mTexting\033[0m\t\t");
+    printf("\x1B[36mTexting\033[0m\t\t");
+    printf("\x1B[37mTexting\033[0m\t\t");
+    printf("\x1B[93mTexting\033[0m\n");
+
+    printf("\033[3;42;30mTexting\033[0m\t\t");
+    printf("\033[3;43;30mTexting\033[0m\t\t");
+    printf("\033[3;44;30mTexting\033[0m\t\t");
+    printf("\033[3;104;30mTexting\033[0m\t\t");
+    printf("\033[3;100;30mTexting\033[0m\n");
+
+    printf("\033[3;47;35mTexting\033[0m\t\t");
+    printf("\033[2;47;35mTexting\033[0m\t\t");
+    printf("\033[1;47;35mTexting\033[0m\t\t");
+    printf("\t\t");
+    printf("\n");
+
+    return 0;
 }

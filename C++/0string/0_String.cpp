@@ -79,7 +79,9 @@ int main() {
     r.assign(base);
     // r.assign(base,0,4);
 
-    cout << "initialization:--------------------------------------------" << endl;
+    cout << setfill('*') << setw(20) << "*";
+    cout << "initialization";
+    cout << setfill('*') << setw(20) << "*" << endl;
     cout << s0 << endl;
     cout << s1 << endl;
     cout << s2 << endl;
@@ -99,8 +101,9 @@ int main() {
     cout << endl;
 
     //!Find SubString-----------------------------------------------
-    cout
-        << "Find Substring:-------------------------------------------- " << endl;
+    cout << setfill('*') << setw(20) << "*";
+    cout << "Find Substring";
+    cout << setfill('*') << setw(20) << "*" << endl;
     //size_t find (const string& str, size_t pos = 0);
     //size_t find(const char *s, size_t pos = 0);
     string s = "I want to have apple juice";
@@ -154,7 +157,9 @@ int main() {
     cout << endl;
 
     //!Append-----------------------------------------------
-    cout << "Appending:-------------------------------------------- " << endl;
+    cout << setfill('*') << setw(20) << "*";
+    cout << "Appending";
+    cout << setfill('*') << setw(20) << "*" << endl;
     //@params [str]
     s0.append("I love C++");
     cout << s0 << endl;
@@ -169,7 +174,9 @@ int main() {
     cout << endl;
 
     //!pop_back and clear---------------------------------------------------------
-    cout << "pop_back and clear:-------------------------------------------- " << endl;
+    cout << setfill('*') << setw(20) << "*";
+    cout << "pop_back and clear";
+    cout << setfill('*') << setw(20) << "*" << endl;
     // Using pop_back() to delete a character
     // from end
     s0.pop_back();
@@ -181,7 +188,9 @@ int main() {
     cout << endl;
 
     //!Remove substring-------------------------------------------------
-    cout << "Removing a word from String---------------------------------" << endl;
+    cout << setfill('*') << setw(20) << "*";
+    cout << "Removing a word from String";
+    cout << setfill('*') << setw(20) << "*" << endl;
     string word = "apple";
     int len = word.length();
     s = "I want to have apple juice";
@@ -195,11 +204,16 @@ int main() {
     ;
 
     //!Replace and Insert new substring-----------------------------------
-    cout << "Replace and Insert new substring-----------------------------------" << endl;
+    cout << setfill('*') << setw(20) << "*";
+    cout << "Replace and Insert new";
+    cout << setfill('*') << setw(20) << "*" << endl;
     // replace(x, n, new_string)
     // replaces n No. of characters from index x with a new str
+
     s.replace(6, 0, " - ");
     cout << s << endl;
+
+    cout << "Replacing all occurrence:" << endl;
 
     // insert(x, new_string) :
     s.insert(6, " +");
@@ -207,15 +221,20 @@ int main() {
     cout << endl;
 
     //!Extract Substring-----------------------------------------------
-    cout << "Extract Substring---------------------------------" << endl;
+    cout << setfill('*') << setw(20) << "*";
+    cout << "Extract Substring";
+    cout << setfill('*') << setw(20) << "*" << endl;
     //  substr(x, b) returns a substring of b length
     //  starting from index x
+
     cout << s.substr(7, 4) << endl;
     cout << s.substr(7) << endl;
     cout << endl;
 
     //!Access Individual Charecters-----------------------------------------------
-    cout << "Access Charaters of a String---------------------------------" << endl;
+    cout << setfill('*') << setw(20) << "*";
+    cout << "Access Charaters of a String";
+    cout << setfill('*') << setw(20) << "*" << endl;
     cout << "s1:" << s1 << endl;
     cout << "s1[0] : " << s1[0] << endl;
     cout << "s1.at(1): " << s1.at(1) << endl;
@@ -224,7 +243,9 @@ int main() {
     cout << endl;
 
     //!Iterate over all the character in the string;-------------------------------
-    cout << "Iterators---------------------------------" << endl;
+    cout << setfill('*') << setw(20) << "*";
+    cout << "Iterators";
+    cout << setfill('*') << setw(20) << "*" << endl;
     cout << "Iteration 1" << endl;
     for (int i = 0; i < s1.length(); i++) {
         cout << s1[i] << " ";
@@ -280,7 +301,9 @@ int main() {
          << endl;
 
     //!Compare two string;---------------------------------------------
-    cout << "Comparing string--------------------------------------------- " << endl;
+    cout << setfill('*') << setw(20) << "*";
+    cout << "Comparing string";
+    cout << setfill('*') << setw(20) << "*" << endl;
     s0 = "Apple";
     s1 = "Mango";
     cout << s1.compare(s0) << endl;
@@ -292,7 +315,9 @@ int main() {
     cout << endl;
 
     //!Array Of String + Sorting :---------------------------------------------------------------
-    cout << "Array Of String + Sorting:----------------------------------" << endl;
+    cout << setfill('*') << setw(20) << "*";
+    cout << "Array Of String + Sorting";
+    cout << setfill('*') << setw(20) << "*" << endl;
     string ar[] = {"Apple", "Mango", "Banana", "Guava"};
     sort(ar, ar + 4);
     for (int i = 0; i < 4; i++) {
@@ -302,8 +327,9 @@ int main() {
          << endl;
 
     //!Applications :---------------------------------------------------------------
-    cout << "Applications:---------------------------------------------" << endl;
-
+    cout << setfill('*') << setw(20) << "*";
+    cout << "Applications";
+    cout << setfill('*') << setw(20) << "*" << endl;
     // ?get floating point part of a number-string
     string fnum = "23.342";
     cout << "Floating part is : ";
