@@ -184,14 +184,18 @@ int main() {
     cout << "Removing a word from String---------------------------------" << endl;
     string word = "apple";
     int len = word.length();
+    s = "I want to have apple juice";
     cout << s << endl;
     s.erase(idx, len + 1); //[pos,no of char to be removed]
     cout << s << endl;
     //  iterator version of erase
     s.erase(s.begin() + 6, s.end() - 5);
-    cout << s << endl;
+    cout << s << endl
+         << endl;
+    ;
 
     //!Replace and Insert new substring-----------------------------------
+    cout << "Replace and Insert new substring-----------------------------------" << endl;
     // replace(x, n, new_string)
     // replaces n No. of characters from index x with a new str
     s.replace(6, 0, " - ");
