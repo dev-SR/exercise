@@ -147,11 +147,11 @@ or,
 
 ````
 ```properties
-npm run build
+ npm run build
 ````
 
 ```properties
-npm run build
+ npm run build
 ```
 
 # GIT and GITHUB
@@ -174,7 +174,7 @@ In this case, you may need to clear your Git cache.
 the `–cached` option.**
 
 ```properties
-git rm --cached filename
+ git rm --cached filename
 ```
 
 > **Note** o not forget the `--cached` option or your file will be deleted from
@@ -191,10 +191,12 @@ be ignored via your `.gitignore` file.
 option for recursive.**
 
 ```properties
-git rm -r --cached .
+ git rm -r --cached .
 ```
 
-# Git Alias
+<div id="alias"></div>
+
+## Git Alias
 
 ```properties
 [alias]
