@@ -3,25 +3,26 @@
 -  Markdown Guides
    -  [Cheatsheets](#Cheatsheet)
    -  [Links](#links)
+   -  [Code and Syntax Highlighting](#code-and-syntax-highlighting)
 -  Git and Github
    -  [.gitignore commited files](#clear-git-cache).
 
-## Markdown Guide
+# Markdown Guide
 
 ---
 
-### Cheatsheets
+## Cheatsheets
 
 > [Cheatsheet-1](https://www.markdownguide.org/basic-syntax/)
 
 > [Cheatsheet-1](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
-### Links
+## Links
 
 ```
 [I'm an inline-style link](https://www.google.com)
 
-[I'm a relative reference to a repository file](../blob/master/LICENSE)
+[I'm a relative reference to a repository file](C++/0string)
 
 ```
 
@@ -29,7 +30,7 @@
 
 [I'm a relative reference to a repository file](C++/0string)
 
-#### **Anchor to a heading in github flavored markdown**
+### **Anchor to a heading in github flavored markdown**
 
 ---
 
@@ -43,10 +44,10 @@ following:
 [Go to foo](#foo)
 
 ```
-# Foo
+### Foo
 ```
 
-# Foo
+> ### Foo
 
 In the above case, the Foo header has generated an anchor tag with the name foo.
 
@@ -62,6 +63,98 @@ In the above case, the Foo header has generated an anchor tag with the name foo.
 
 ### My Multi Word Header
 ```
+
+> ### HACK: Referencing Empty Div
+
+---
+
+```md
+## Content
+
+-  [Chapter 1](#Chapter1)
+-  [Chapter 2](#Chapter2)
+
+<div id="Chapter1"></div>
+## Chapter 1
+
+Some text here.  
+Some text here. Some text here.
+
+## Chapter 2 <span id="Chapter2"><span>
+
+Some text here.  
+Some text here. Some text here.
+```
+
+## Code and Syntax Highlighting
+
+---
+
+```
+Inline `code` has `back-ticks around` it.
+```
+
+Inline `code` has `back-ticks around` it.
+
+Blocks of code are either fenced by lines with three back-ticks ```\` , or are
+indented with four spaces. I recommend only using the fenced code blocks --
+they're easier and only they support syntax highlighting.
+
+Basic Example:
+
+````
+```javascript
+var s = "JavaScript syntax highlighting";
+alert(s);
+
+
+```python
+s = "Python syntax highlighting"
+print s
+
+
+```No language indicated, so no syntax highlighting.
+But let's throw in a <b>tag</b>.
+
+````
+
+```javascript
+var s = 'JavaScript syntax highlighting';
+alert(s);
+```
+
+```python
+s = "Python syntax highlighting"
+print s
+```
+
+```
+No language indicated, so no syntax highlighting.
+But let's throw in a <b>tag</b>.
+```
+
+Highlight Bash/shell code :
+
+```properties
+Shell:      console, shell
+Bash:       bash, sh, zsh
+PowerShell: powershell, ps
+DOS:        dos, bat, cmd
+```
+
+or,
+
+````
+```properties
+npm run build
+
+````
+
+```properties
+npm run build
+```
+
+# GIT and GITHUB
 
 ## Clear Git Cache
 
