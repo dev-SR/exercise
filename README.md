@@ -6,6 +6,7 @@
    -  [Code and Syntax Highlighting](#code-and-syntax-highlighting)
 -  Git and Github
    -  [.gitignore commited files](#clear-git-cache).
+   -  [Alias](#alias)
 
 # Markdown Guide
 
@@ -147,7 +148,6 @@ or,
 ````
 ```properties
 npm run build
-
 ````
 
 ```properties
@@ -192,4 +192,129 @@ option for recursive.**
 
 ```properties
 git rm -r --cached .
+```
+
+# Git Alias
+
+```properties
+[alias]
+	a = add --all
+	#############
+	b = branch
+	ba = branch -a
+	bd = branch -d
+	bdd = branch -D
+	#############
+	c = commit
+	ca = commit -a
+	cm = commit -m
+	cam = commit -am
+	cd = commit --amend
+	cad = commit -a --amend
+	######
+	conf = config --global -e
+	#############
+	cl = clone
+	#############
+	f = fetch
+	fo = fetch origin
+	fu = fetch upstream
+	#############
+	l = log --oneline
+	lg = log --oneline --graph --decorate
+	#############
+	m = merge
+	ma = merge --abort
+	mc = merge --continue
+	ms = merge --skip
+	#############
+	o = checkout
+	om = checkout main
+	ob = checkout -b
+	#############
+	ps = push
+	psf = push -f
+	psu = push -u
+	pst = push --tags
+	#############
+	pso = push origin
+	psao = push --all origin
+	psfo = push -f origin
+	psuo = push -u origin
+	#############
+	psom = push origin main
+	psaom = push --all origin main
+	psfom = push -f origin main
+	psuom = push -u origin main
+	#############
+	pl = pull
+	pb = pull --rebase
+	#############
+	plo = pull origin
+	pbo = pull --rebase origin
+	plom = pull origin main
+	ploc = !git pull origin $(git bc)
+	pbom = pull --rebase origin main
+	pboc = !git pull --rebase origin $(git bc)
+	#############
+	plu = pull upstream
+	plum = pull upstream main
+	pluc = !git pull upstream $(git bc)
+	pbum = pull --rebase upstream main
+	pbuc = !git pull --rebase upstream $(git bc)
+	#############
+	rb = rebase
+	rba = rebase --abort
+	rbc = rebase --continue
+	rbi = rebase --interactive
+	rbs = rebase --skip
+	#############
+	re = reset
+	rh = reset HEAD
+	reh = reset --hard
+	rem = reset --mixed
+	res = reset --soft
+	rehh = reset --hard HEAD
+	remh = reset --mixed HEAD
+	resh = reset --soft HEAD
+	rehom = reset --hard origin/main
+	#############
+	r = remote
+	ra = remote add
+	rr = remote rm
+	rv = remote -v
+	rn = remote rename
+	rp = remote prune
+	rs = remote show
+	rao = remote add origin
+	rau = remote add upstream
+	rro = remote remove origin
+	rru = remote remove upstream
+	rso = remote show origin
+	rsu = remote show upstream
+	rpo = remote prune origin
+	rpu = remote prune upstream
+	#############
+	rmf = rm -f
+	rmrf = rm -r -f
+	#############
+	s = status
+	sb = status -s -b
+	#############
+	sa = stash apply
+	sc = stash clear
+	sd = stash drop
+	sl = stash list
+	sp = stash pop
+	ss = stash save
+	ssk = stash save -k
+	sw = stash show
+	#############
+	t = tag
+	td = tag -d
+	#############
+	w = show
+	wp = show -p
+	wr = show -p --no-color
+    ........
 ```
