@@ -4,7 +4,7 @@
    -  [Cheatsheets](#Cheatsheet)
    -  [Links](#links)
 -  Git and Github
-   -  [.gitignore commited files](#Clear-Git-Cache:).
+   -  [.gitignore commited files](#clear-git-cache).
 
 ## Markdown Guide
 
@@ -63,7 +63,7 @@ In the above case, the Foo header has generated an anchor tag with the name foo.
 ### My Multi Word Header
 ```
 
-## Clear Git Cache:
+## Clear Git Cache
 
 [Ref](https://devconnected.com/how-to-clear-git-cache/)
 
