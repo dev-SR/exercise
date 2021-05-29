@@ -214,8 +214,20 @@ int main() {
     cout << s << endl;
 
     cout << "Replacing all occurrence:" << endl;
+    string st = "first is the first word we like first";
+    cout << "\x1B[36m" << st << "\033[0m" << endl; //37
+    string f("first");
+    string repWith("second");
+    int at = st.find(f);
+    while (at != string::npos) {
+        st.replace(at, f.size(), repWith);
+        at = st.find(f, at + repWith.size());
+    }
+    cout << st << endl;
 
     // insert(x, new_string) :
+    cout << endl;
+    cout << "Inserting::...." << endl;
     s.insert(6, " +");
     cout << s << endl;
     cout << endl;
