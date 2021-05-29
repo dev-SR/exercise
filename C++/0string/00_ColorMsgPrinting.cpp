@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
+//https://stackoverflow.com/questions/4053837/colorizing-text-in-the-console-with-c
 int main() {
+    string test = "this is testing";
 
     cout << setfill('*') << setw(80) << "*" << endl;
 
@@ -14,6 +16,11 @@ int main() {
     cout << endl;
 
     cout << "\x1B[31mRED" << endl;
+    cout << "\x1B[31m" << test << endl;
+    cout << "\x1B[31m" << test << endl;
+    cout << "\x1B[31m" << test << "\033[0m" << endl;
+    cout << "Back to White" << endl;
+
     printf("\x1B[32mGREEN\n");
     printf("\x1B[33mBLUE\n");
     printf("\x1B[34mPURPLE\n");
