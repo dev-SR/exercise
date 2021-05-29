@@ -1,6 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 /**
+USECASE://* spliting a string in C/C++
+//https://www.geeksforgeeks.org/how-to-split-a-string-in-cc-python-and-java/
+
+METHOD://? char * strtok(char str[], const char *delims); in C 
+In C++
+Note:  
+       The main disadvantage of strtok() is that it only works for C style strings.
+       Therefore we need to explicitly convert C++ string into a char array.
+       Many programmers are unaware that C++ has two additional APIs which are more elegant
+       and works with C++ string. 
+
+METHOD://?  Using  stringstream API of C++ 
+SEE: 0_StringStream.cpp for more deatails
+
+
+
 **  The strtok() function in C++ returns the next token in a null terminated byte string.
 
 *!  char* strtok( char* str, const char* delim );
@@ -66,3 +83,5 @@ int main() {
         cout << ptr << endl;
     }
 }
+
+//
