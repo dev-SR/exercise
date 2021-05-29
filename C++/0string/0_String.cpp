@@ -215,7 +215,7 @@ int main() {
 
     cout << "Replacing all occurrence:" << endl;
     string st = "first is the first word we like first";
-    cout << "\x1B[36m" << st << "\033[0m" << endl; //37
+    cout << st << endl; //37
     string f("first");
     string repWith("second");
     int at = st.find(f);
