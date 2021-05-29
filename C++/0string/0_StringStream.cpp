@@ -9,6 +9,32 @@ using namespace std;
 #define reset "\e[0m"
 
 //https://www.geeksforgeeks.org/processing-strings-using-stdistringstream/
+
+/**
+
+USECASE://* spliting a string in C/C++
+//https://www.geeksforgeeks.org/how-to-split-a-string-in-cc-python-and-java/
+
+METHOD://? Using stringstream API of C++ 
+SEE: 02_strtok_Tokenization.cpp
+
+METHOD://? char * strtok(char str[], const char *delims); in C (SEE Tokenization)
+In C++
+Note:  
+       The main disadvantage of strtok() is that it only works for C style strings.
+       Therefore we need to explicitly convert C++ string into a char array.
+       Many programmers are unaware that C++ has two additional APIs which are more elegant
+       and works with C++ string. 
+*/
+
+void simple_tokenizer(string s) {
+    istringstream ss(s);
+    string word;
+    while (ss >> word) {
+        cout << word << endl;
+    }
+}
+
 int main() {
 
     cout << GRN << "Printing first item form the stream:"
@@ -17,6 +43,9 @@ int main() {
      The std::istringstream is a string class object which is used to stream the string into different variables and similarly files can be stream into strings. Objects of this class use a string buffer that contains a sequence of characters. This sequence of characters can be accessed as a string object.
      Header File: 
      #include <sstream>
+
+     Stringstream object can be initialized using a string object, it automatically tokenizes strings on space char. Just like “cin” stream stringstream allows you to read a string as a stream of words.
+
     */
     //*1. Streaming integer from a string with std::istringstream
     //! Input string separated by space
@@ -32,6 +61,12 @@ int main() {
 
     /**
     * Once a std::istringstream object has been created, then the string can be streamed and stored using the extraction operator(>>). The extraction operator will read until whitespace is reached or until the stream fails.
+    
+    Some of the Most Common used functions of StringStream.
+    clear() — flushes the stream 
+    str() —  converts a stream of words into a C++ string object.
+    operator << — pushes a string object into the stream.
+    operator >> — extracts a word from the stream.
    */
 
     // Stream a number till white space is encountered
@@ -64,6 +99,12 @@ int main() {
             iss2.ignore();
         }
     }
+    cout << GRN << "Tokenization: split a string:"
+         << reset << endl;
+    string a = "How do you do!";
+    // Takes only space seperated C++ strings.
+    simple_tokenizer(a);
+
     //! ISSUE
     cout << RED
          << "Issue!!: not tokenizing, prints whole string at once"
