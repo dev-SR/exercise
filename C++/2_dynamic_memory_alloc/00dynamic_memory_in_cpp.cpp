@@ -47,10 +47,6 @@ int *getArray(int n) {
 
     srand(time(NULL)); //time_t t = time(NULL);
     /**
-    X://? void srand(unsigned seed) : 
-     * Seeds the pseudo - random number generator used by 
-     * rand() with the value seed.
-
     The srand(x) function sets the seed of the random number generator algorithm used by the function rand( ).  A seed value of 1 is the default setting yielding the same sequence of values as if srand(x) were not used.  Any other value for the seed produces a different sequence.
     
     X://? srand(time(NULL));
