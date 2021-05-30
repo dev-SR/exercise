@@ -5,6 +5,7 @@
    -  [Links](#links)
    -  [Code and Syntax Highlighting](#code-and-syntax-highlighting)
 -  Git and Github
+   -  [Gist](#gist)
    -  [.gitignore commited files](#clear-git-cache).
    -  [Alias](#alias)
    -  [Commands for Github Repo](#githubrepo)
@@ -157,11 +158,17 @@ or,
 
 # GIT and GITHUB
 
-## Clear Git Cache
-
-[Ref](https://devconnected.com/how-to-clear-git-cache/)
+## Gist
 
 ---
+
+[Gist](https://gist.github.com/dev-SR)
+
+## Clear Git Cache
+
+---
+
+[Ref](https://devconnected.com/how-to-clear-git-cache/)
 
 When working with Git, you may want to add some new lines to your gitignore
 files.
