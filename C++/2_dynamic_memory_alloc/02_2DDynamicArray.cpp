@@ -20,9 +20,38 @@ int main() {
        ┃ p[1] ┃----> ┃ new int[n];   ┃      
        ┗━━━━━━┛      ┗━━━━━━━━━━━━━━━┛
 
+    */
+    int r, c;
+    cin >> r >> c;
+    //Create an array of row heads/ array of pointers
+    int **p = new int *[r];
 
-       
-           */
+    //create an 2D array
+    for (int i = 0; i < r; i++) {
+        p[i] = new int[c];
+    }
+
+    //take input:
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            cin >> p[i][j];
+        }
+    }
+
+    //print
+    //take input:
+    for (int i = 0; i < r; i++) {
+        for (int j = 0; j < c; j++) {
+            cout << GRN << p[i][j] << " ";
+        }
+        cout << endl;
+    }
+    //delete 2d arrays
+    for (int i = 0; i < r; i++) {
+        delete[] p[i];
+    }
+    //delete array of pointers
+    delete[] p;
 
     return 0;
 }
