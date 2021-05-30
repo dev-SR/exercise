@@ -9,6 +9,8 @@
    -  [.gitignore commited files](#clear-git-cache).
    -  [Alias](#alias)
    -  [Commands for Github Repo](#githubrepo)
+-  Unicode For Better Comments
+   -  [Unicodes](#unicodes)
 
 # Markdown Guide
 
@@ -350,4 +352,31 @@ git push -u origin main
 git remote add origin <url>
 git branch -M main
 git push -u origin main
+```
+
+# Unicodes
+
+### LINKS
+
+[Arrows](https://unicode-table.com/en/sets/arrow-symbols/)
+
+[Box Drawing](https://unicode-table.com/en/blocks/box-drawing/)
+
+### Examples:
+
+```
+    /**
+       int **p = new int*[2]; <- array of Integer Pointers
+             ┃
+             ▼
+       ┏━━━━━━┓      ┏━━━━━━━━━━━━━━━┓
+       ┃ p[0] ┃----> ┃ new int[n];   ┃
+       ┗━━━━━━┛      ┗━━━━━━━━━━━━━━━┛
+       ┏━━━━━━┓      ┏━━━━━━━━━━━━━━━┓
+       ┃ p[1] ┃----> ┃ new int[n];   ┃
+       ┗━━━━━━┛      ┗━━━━━━━━━━━━━━━┛
+
+
+
+           */
 ```
