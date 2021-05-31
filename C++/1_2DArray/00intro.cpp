@@ -9,10 +9,10 @@ int main() {
     char ar4[3][2] = {{'A', 'B'}, {'C', 'D'}, {'E', 'F'}};
     char ar5[][4] = {"abc", "def", "efg", "hij"};
 
-    cout << ar3[0][0] << endl;
-    cout << ar3[0] << endl;
-    cout << ar4[0][0] << endl;
-    cout << ar4[0] << endl;
+    cout << ar3[0][0] << endl; //1
+    cout << ar3[0] << endl;    //0x61fdb0
+    cout << ar4[0][0] << endl; //A
+    cout << ar4[0] << endl;    //ABCDEF
 
     int a[100][100] = {0};
     int m, n;
