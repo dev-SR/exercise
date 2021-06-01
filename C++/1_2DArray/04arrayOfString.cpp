@@ -9,9 +9,15 @@ using namespace std;
 #define reset "\e[0m"
 
 int main() {
+    //with 2D array
     char ar[3][20] = {"Hello World", "Welcome", "Bye Bye"};
     for (int i = 0; i < 3; i++) {
         cout << ar[i] << endl;
+    }
+    //with String class:
+    string names[] = {"Soikat Rahman", "Never ever"};
+    for (int i = 0; i < 2; i++) {
+        cout << names[i] << endl;
     }
 
     int n;
