@@ -1,5 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define RED "\e[0;91m"
+#define GRN "\e[0;92m"
+#define YEL "\e[0;93m"
+#define BLU "\e[0;94m"
+#define MAG "\e[0;95m"
+#define CYN "\e[0;96m"
+#define reset "\e[0m"
+
 //https://www.geeksforgeeks.org/c-string-class-and-its-applications/
 //https://www.geeksforgeeks.org/c-string-class-applications-set-2/
 
@@ -375,4 +383,39 @@ int main() {
     }
     cout << urlex << endl;
     cout << endl;
+
+    //? Encrypt-Decrypt String
+    cout << GRN << setfill('*') << setw(20) << "*" << reset;
+    cout << YEL << " Encrypt-Decrypt String " << reset;
+    cout << GRN << setfill('*') << setw(20) << "*" << reset << endl;
+
+    string alphabet = "abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXZY";
+    string key{"XZNLWEBGJHQDYVTKFUOMPCIASRwznlwebgihqdyvtkfuompciasr"};
+
+    string en;
+    string msg = "aaaZZZ, Meet me at 10:30PM";
+
+    for (char c : msg) {
+        int pos = alphabet.find(c);
+        if (pos != string::npos) {
+            char new_char{key.at(pos)};
+            en += new_char;
+        } else
+            en += c;
+    }
+    cout << "Original: " << msg << endl;
+    cout << RED << "Encrypted: " << en << reset << endl;
+
+    //decrypt:
+    string de;
+
+    for (char c : en) {
+        int pos = key.find(c);
+        if (pos != string::npos) {
+            char new_char{alphabet.at(pos)};
+            de += new_char;
+        } else
+            de += c;
+    }
+    cout << CYN << "Decrypted: " << de << reset << endl;
 }
