@@ -27,6 +27,7 @@ int main() {
 
     //Dynamic
     Student *s = new Student;
+    delete s;
     /**
      * 
      * Destructor for static is getting called once!!!
