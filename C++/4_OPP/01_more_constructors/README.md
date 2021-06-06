@@ -61,7 +61,9 @@ Shallow copy copies references to original objects. The compiler provides a
 default copy constructor. Default copy constructor provides a shallow copy as
 shown in below example. It is a bit-wise copy of an object.
 
-> Shallow Copy ![shallow](img/shallow-1.png)
+> Shallow Copy
+
+![shallow](img/shallow-1.png)
 
 Shallow copy constructor is used when class is not dealing with any dynamically
 allocated memory.
@@ -80,7 +82,9 @@ in the other location. When we allocate dynamic memory using pointers we need
 user defined copy constructor. Both objects will point to different memory
 locations.
 
-> Deep Copy ![deep](img/deep-1.png)
+> Deep Copy
+
+![deep](img/deep-1.png)
 
 **Deep copy is possible only with user defined copy constructor.** In user
 defined copy constructor, we make sure that pointers (or references) of copied
