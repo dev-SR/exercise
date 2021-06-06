@@ -62,7 +62,7 @@ Player::Player(string name_val) : name{name_val}, health{0}, xp{0} {}
 Player::Player(string name_val, int health, int xp_val) : name{name_val}, health{health}, xp{xp} {}
 
 /**
- * ! Delegating Constructor::calling one constructor with init
+ * ! 2. Delegating Constructor::calling one constructor with init
  * !  list from another
  * 
  * if theres a 3-args constructor like:
