@@ -3,6 +3,7 @@
 -  Markdown Guides
    -  [Cheatsheets](#Cheatsheet)
    -  [Links](#links)
+   -  [Images](#images)
    -  [Code and Syntax Highlighting](#code-and-syntax-highlighting)
 -  Git and Github
    -  [Gist](#gist)
@@ -90,6 +91,15 @@ Some text here. Some text here.
 Some text here.  
 Some text here. Some text here.
 ```
+
+## Images
+
+```git
+![Tux, the Linux mascot](/assets/images/tux.png)
+![Tux, the Linux mascot](https://...)
+```
+
+![Tux, the Linux mascot](https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg)
 
 ## Code and Syntax Highlighting
 
