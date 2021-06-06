@@ -19,9 +19,23 @@ public:
         cout << name << endl;
     }
 };
+
+class StudentDeep {
+    char *name;
+
+public:
+    StudentDeep(char *name) {
+        this->name = new char[strlen(name) + 1]; // DEEP COPY
+        strcpy(this->name, name);
+    }
+    void display() {
+        cout << name << endl;
+    }
+};
+
 int main() {
 
-    //* SHALLOW COPY
+    cout << MAG << "SHALLOW COPY" << reset << endl;
     char name[] = "soikat";
     StudentShallow s(name);
     cout << "s: " << setw(7);
@@ -35,6 +49,7 @@ int main() {
     cout << "s: " << setw(8);
     cout << RED;
     s.display();
+    cout << YEL << "!! modification of 's1' do not affect 's'" << endl;
     cout << reset << endl;
 
     // We can see that modifing 's1' modifies 's' object
@@ -45,5 +60,22 @@ int main() {
     ┃ s1  ┃<----┃ name ┃---->┃ s1  ┃
     ┗━━━━━┛     ┗━━━━━━┛     ┗━━━━━┛
 */
+
+    cout << MAG << "DEEP COPY" << reset << endl;
+    char n[] = "soikat";
+    StudentDeep ss(n);
+    cout << "ss: " << setw(7);
+    ss.display();
+
+    //
+    n[2] = 'o';
+    StudentDeep ss1(n);
+    cout << "ss1: " << setw(6);
+    ss1.display();
+    cout << "ss: " << setw(8);
+    cout << GRN;
+    ss.display();
+    cout << BLU << "!! modification of 's1' affected 's'" << endl;
+    cout << reset << endl;
     return 0;
 }
