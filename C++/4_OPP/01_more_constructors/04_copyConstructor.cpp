@@ -37,6 +37,7 @@ public:
         //Deep Copy
         this->name = new char[strlen(s.name) + 1];
         strcpy(this->name, s.name);
+        cout << CYN "Copy Constructor called!!" << reset << endl;
     }
     void display() {
         cout << name << endl;
@@ -53,22 +54,21 @@ int main() {
     //Defult Copy Constructor
     WithOutCopyConstr s2(s1);
     s2.name[0] = 'x';
-    cout << "s1: ";
+    cout << "s2: ";
     s2.display();
     cout << "s1: " << RED;
     s1.display();
     cout << YEL << "!! modification of 's1' affected 's2'";
-    cout << reset;
+    cout << reset << endl;
 
     cout << MAG << "User-defined Copy Constructor:" << reset << endl;
     char x[] = "soikat";
     cout << "p1: " << GRN;
-    WithOutCopyConstr p1(x);
+    WithCopyConstr p1(x);
     p1.display();
     cout << reset;
-
-    //Defult Copy Constructor
-    WithOutCopyConstr p2(x);
+    // Copy Constructor
+    WithCopyConstr p2(p1);
     p2.name[0] = 'x';
     cout << "p1: ";
     p2.display();
