@@ -1,3 +1,35 @@
+# Overview
+
+-  **Constructor**
+   -  that is responsible for creating an object
+   -  get called automatically and only once
+   -  same as class name
+   -  Parametrized Constructor
+   -  Constructor Overloading
+-  **Copy Constructor**
+
+   -  make a copy of the given object
+   -  exists by default
+   -  shallow copy
+   -  When you need to define your own copy constructor?
+
+      -  You have to make your own copy constructor if a deep copy is needed.
+
+-  **Copy Assignment Operator**
+
+   -  Copies when you do Assignment
+
+   ```cpp
+
+   Car d=c; //Copy Constructor
+
+   Car d;
+   d=c; //Copy Assignment operator.
+
+   ```
+
+   -  you can write your own copy assignment operator to make a deep copy.
+
 # Copy Constructor
 
 Copy Constructors is a type of constructor which is used to create a copy of an
@@ -57,9 +89,13 @@ away in certain cases
 
 ---
 
-Shallow copy copies references to original objects. The compiler provides a
-default copy constructor. Default copy constructor provides a shallow copy as
-shown in below example. It is a bit-wise copy of an object.
+A shallow copy of an object copies all of the member field values. This works
+well if the fields are values, but may not be what you want for fields that
+point to dynamically allocated memory. The pointer will be copied. but the
+memory it points to will not be copied – the field in both the original object
+and the copy will then point to the same dynamically allocated memory, which is
+not usually what you want.\
+**The default copy constructor and assignment operator make shallow copies**.
 
 > Shallow Copy
 
@@ -75,6 +111,11 @@ allocated memory.
 The compiler created copy constructor works fine in general. We need to define
 our own copy constructor only if an object has pointers or any runtime
 allocation of the resource like filehandle, a network connection..etc.
+
+A deep copy copies all fields, and makes copies of dynamically allocated memory
+pointed to by the fields. To make a deep copy, you must write a copy constructor
+and overload the assignment operator, otherwise the copy will point to the
+original, with disasterous consequences.
 
 Deep copy allocates separate memory for copied information. So the source and
 copy are different. Any changes made in one memory location will not affect copy
