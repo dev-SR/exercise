@@ -64,7 +64,7 @@ public:
         return price;
     }
     void print() const {
-        cout << name << endl;
+        cout << GRN << name << reset << endl;
         cout << model_no << endl;
         cout << price << endl;
         cout << endl;
@@ -85,10 +85,9 @@ int main() {
     C.setPrice(1500);
     C.setName(n);
     C.model_no = 1001;
-    //C.start();
     C.print();
     char c1[] = "BMW";
-    char c2[] = "BMW";
+    char c2[] = "Audi";
 
     Car D(100, 200, c1);
     Car E(200, 400, c2); //Default Copy Constructor
@@ -97,10 +96,10 @@ int main() {
     D.name[0] = 'O';
     D.print();
     E.print();
-    cout << E.tyres << endl;
     //Suppose we create a dynamic object
     char c3[] = "Dynamic Tesla Car";
     Car *DC = new Car(100, 200, c3);
+    DC->print();
     delete DC;
     return 0;
 }
