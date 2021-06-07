@@ -103,3 +103,27 @@ int main() {
     delete DC;
     return 0;
 }
+
+/**
+Nano
+1001
+1500
+
+In Copy Assignment Operator
+Oudi
+400
+200
+
+Audi
+400
+200
+
+Dynamic Tesla Car
+200
+100
+
+Destroying the Car Dynamic Tesla Car
+Destroying the Car Audi
+Destroying the Car Oudi
+Destroying the Car Nano
+*/
