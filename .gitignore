@@ -1,6 +1,7 @@
 node_modules
 *.jar
 *.exe
+*.o
 *.[.exe,.jar]
 .vscode
 test.cpp
