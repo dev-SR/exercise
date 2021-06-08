@@ -137,3 +137,62 @@ General requirements for deep copy:
 -  A destructor to delete the dynamically allocated memory.
 -  A copy constructor to make a copy of the dynamically allocated memory. An
    overloaded assignment operator.
+
+# Destructors
+
+Destructor is a member function which destructs or deletes an object.
+Destructors have same name as the class preceded by a tilde (~) Destructors
+don’t take any argument and don’t return anything A destructor function is
+called automatically when the object goes out of scope:
+
+-  the function ends
+-  the program ends
+-  a block containing local variables ends
+-  a delete operator is called
+
+If we do not write our own destructor in class, compiler creates a default
+destructor for us. The default destructor works fine unless we have dynamically
+allocated memory or pointer in class. When a class contains a pointer to memory
+allocated in class, we should write a destructor to release memory before the
+class instance is destroyed. This must be done to avoid memory leak.
+
+# Const Data Members
+
+-  Const keyword is used to make any element of a program constant.
+-  If we declare a variable as const, we cannot change its value. A const
+   variable must be assigned a value at the time of its declaration.
+-  Once initialized, if we try to change its value, then we will get compilation
+   error.
+
+# Const member functions in C++
+
+-  A function becomes const when const keyword is used in function’s
+   declaration. The idea of const functions is not allow them to modify the
+   object on which they are called.
+
+-  When a function is declared as const, it can be called on any type of object.
+   Non-const functions can only be called by non-const objects.
+
+# Initializer List
+
+The **initializer list** is used to directly initialize data members of a class.
+An initializer list starts after the constructor name and its parameters. The
+list begins with a colon ( : ) and is followed by the list of variables that are
+to be initialized – all of​ the variables are separated by a comma with their
+values in curly brackets.
+
+```cpp
+Constructorname(datatype value1, datatype value2):datamember(value1),datamember(value2)
+{
+    ...
+}
+```
+
+> When do we use Initializer List in C++?
+
+1. Initializing a reference type data member
+2. Initializing const data member
+3. Initializing member objects which do not have a default constructor
+
+[link-1](https://www.educative.io/edpresso/what-are-initializer-lists-in-cpp)\
+[link-2](https://www.geeksforgeeks.org/when-do-we-use-initializer-list-in-c/)
