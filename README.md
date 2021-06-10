@@ -1,5 +1,8 @@
 # Quick Navigation
 
+-  Vs Code Setting
+   -  [Font](#font)
+   -  [Terminal](#terminal)
 -  Markdown Guides
    -  [Cheatsheets](#Cheatsheet)
    -  [Links](#links)
@@ -12,6 +15,50 @@
    -  [Commands for Github Repo](#githubrepo)
 -  Unicode For Better Comments
    -  [Unicodes](#unicodes)
+
+# Vs Code Setting:
+
+## font
+
+**For Editor:** _`FiraCode-Regular.ttf`_ and _`FiraCode-Bold.ttf`_ from:
+[tonsky/FiraCode](https://github.com/tonsky/FiraCode)
+
+**For Terminal:** _`FiraMono NF`_ from
+[Nerd Font](https://github.com/tonsky/FiraCode)
+
+## Terminal
+
+### For Windows Terminal:
+
+---
+
+[mohyposh](https://github.com/jandedobbeleer/oh-my-posh)\
+PowerShell Installation:
+
+```
+Install-Module oh-my-posh -Scope CurrentUser
+```
+
+Winget Installation:
+
+```
+winget install JanDeDobbeleer.OhMyPosh
+```
+
+List all themes:
+
+```
+Get-PoshThemes
+```
+
+Set Theme:
+
+Path: `C:\Users\u\Documents\WindowsPowerShell`\
+fileName: `Microsoft.PowerShell_profile.ps1`
+
+```
+Set-PoshPrompt -Theme pure
+```
 
 # Markdown Guide
 
