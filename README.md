@@ -274,8 +274,17 @@ be ignored via your `.gitignore` file.
 **To clear your entire Git cache, use the `"git rm"` command with the `"-r"`
 option for recursive.**
 
+1. apply below cmd to un-stage all files:
+
 ```properties
- git rm -r --cached .
+	git rm -r --cached .
+```
+
+2. add intended file to `.gitignore`
+3. then, get all files back simply by :
+
+```properties
+	git add .
 ```
 
 <div id="alias"/>
