@@ -7,6 +7,7 @@
    -  [Cheatsheets](#Cheatsheet)
    -  [Links](#links)
    -  [Images](#images)
+   -  [Mathematical Formula in markdown](#math)
    -  [Code and Syntax Highlighting](#code-and-syntax-highlighting)
 -  Git and Github
    -  [Gist](#gist)
@@ -62,8 +63,6 @@ Set-PoshPrompt -Theme pure
 
 # Markdown Guide
 
----
-
 ## Cheatsheets
 
 > [Cheatsheet-1](https://www.markdownguide.org/basic-syntax/)
@@ -84,8 +83,6 @@ Set-PoshPrompt -Theme pure
 [I'm a relative reference to a repository file](C++/0string)
 
 ### **Anchor to a heading in github flavored markdown**
-
----
 
 Github automatically parses anchor tags out of your headers. So you can do the
 following:
@@ -119,38 +116,62 @@ In the above case, the Foo header has generated an anchor tag with the name foo.
 
 > ### HACK: Referencing Empty Div
 
----
-
-```md
-## Content
-
 -  [Chapter 1](#Chapter1)
 -  [Chapter 2](#Chapter2)
 
-<div id="Chapter1"></div>
-## Chapter 1
+```md
+-  [Chapter 1](#Chapter1)
+-  [Chapter 2](#Chapter2)
+
+<div id="Chapter1"/>
+### Chapter 1
 
 Some text here.  
 Some text here. Some text here.
 
-## Chapter 2 <span id="Chapter2"><span>
+<span id="Chapter2"/>
+### Chapter 2
 
 Some text here.  
 Some text here. Some text here.
 ```
+
+<div id="Chapter1"/>
+
+#### Chapter 1
+
+Some text here.  
+Some text here. Some text here.
+
+<span id="Chapter2"/>
+
+#### Chapter 2
+
+Some text here.  
+Some text here. Some text here.
 
 ## Images
 
 ```git
 ![Tux, the Linux mascot](/assets/images/tux.png)
 ![Tux, the Linux mascot](https://...)
+
+<img src="https://latex.codecogs.com/svg.image?x^{2}&space;&plus;&space;a&space;^{2}&space;=&space;&space;25" title="x^{2} + a ^{2} = 25" />
 ```
+
+<img src="https://latex.codecogs.com/svg.image?x^{2}&space;&plus;&space;a&space;^{2}&space;=&space;&space;25" title="x^{2} + a ^{2} = 25" />
 
 ![Tux, the Linux mascot](https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg)
 
-## Code and Syntax Highlighting
+<div id="math"/>
 
----
+## Mathematical Formula in markdown
+
+[https://latex.codecogs.com/](https://latex.codecogs.com/)\
+[https://www.codecogs.com](https://www.codecogs.com/latex/eqneditor.php)\
+[http://www.sciweavers.org/](http://www.sciweavers.org/free-online-latex-equation-editor)
+
+## Code and Syntax Highlighting
 
 ```
 Inline `code` has `back-ticks around` it.
@@ -219,13 +240,9 @@ or,
 
 ## Gist
 
----
-
 [Gist](https://gist.github.com/dev-SR)
 
 ## Clear Git Cache
-
----
 
 [Ref](https://devconnected.com/how-to-clear-git-cache/)
 
@@ -261,7 +278,7 @@ option for recursive.**
  git rm -r --cached .
 ```
 
-<div id="alias"></div>
+<div id="alias"/>
 
 ## Git Alias
 
@@ -388,7 +405,7 @@ option for recursive.**
     ........
 ```
 
-<div id="githubrepo"></div>
+<div id="githubrepo"/>
 
 ## Commands for Github Repo
 
