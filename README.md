@@ -14,6 +14,7 @@
    -  [.gitignore commited files](#clear-git-cache).
    -  [Alias](#alias)
    -  [Commands for Github Repo](#githubrepo)
+   -  [Change the URI (URL) for a remote Git repository](#changeremote)
 -  Unicode For Better Comments
    -  [Unicodes](#unicodes)
 
@@ -435,6 +436,26 @@ git push -u origin main
 git remote add origin <url>
 git branch -M main
 git push -u origin main
+```
+
+<div id="changeremote"/>
+
+## Change the URI (URL) for a remote Git repository.
+
+```bash
+git remote -v
+# View existing remotes
+# origin  https://github.com/user/repo.git (fetch)
+# origin  https://github.com/user/repo.git (push)
+
+git remote set-url origin https://github.com/user/repo2.git
+# Change the 'origin' remote's URL
+
+git remote -v
+# Verify new remote URL
+# origin  https://github.com/user/repo2.git (fetch)
+# origin  https://github.com/user/repo2.git (push)
+
 ```
 
 # Unicodes
