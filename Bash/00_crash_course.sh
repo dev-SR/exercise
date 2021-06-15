@@ -78,36 +78,38 @@ if [ -e "$FILE" ]; then
 else
 	echo "$FILE does NOT exist"
 fi
+echo
+echo
+# !CASE STATEMENT
+read -r -p "Are you 21 or over? Y/N " ANSWER
+case "$ANSWER" in
+[yY] | [yY][eE][sS])
+	# any char 'y' or word 'yes'
+	echo "You can have a beer :)"
+	;;
+[nN] | [nN][oO])
+	echo "Sorry, no drinking"
+	;;
+*)
+	echo "Please enter y/yes or n/no"
+	;;
+esac
+echo
+echo
+# !SIMPLE FOR LOOP
+NAMES="Brad Kevin Alice Mark"
+for NAME in $NAMES; do
+	echo "Hello $NAME"
+done
 
-#CASE STATEMENT
-# read -p "Are you 21 or over? Y/N " ANSWER
-# case "$ANSWER" in
-#   [yY] | [yY][eE][sS])
-#     echo "You can have a beer :)"
-#     ;;
-#   [nN] | [nN][oO])
-#     echo "Sorry, no drinking"
-#     ;;
-#   *)
-#     echo "Please enter y/yes or n/no"
-#     ;;
-# esac
-
-# SIMPLE FOR LOOP
-# NAMES="Brad Kevin Alice Mark"
-# for NAME in $NAMES
-#   do
-#     echo "Hello $NAME"
-# done
-
-# FOR LOOP TO RENAME FILES
-# FILES=$(ls *.txt)
-# NEW="new"
-# for FILE in $FILES
-#   do
-#     echo "Renaming $FILE to new-$FILE"
-#     mv $FILE $NEW-$FILE
-# done
+# !FOR LOOP TO RENAME FILES
+# rename files [1.loop 2.loop 3.loop] to [new-1.loop new-2.loop new-3.loop]
+FILES=$(ls *.loop)
+NEW="new"
+for FILE in $FILES; do
+	echo "Renaming $FILE to new-$FILE"
+	mv $FILE $NEW-$FILE
+done
 
 # WHILE LOOP - READ THROUGH A FILE LINE BY LINE
 # LINE=1
