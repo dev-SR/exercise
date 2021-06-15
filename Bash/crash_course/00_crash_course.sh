@@ -103,7 +103,7 @@ for NAME in $NAMES; do
 done
 
 # !FOR LOOP TO RENAME FILES
-# rename files [1.loop 2.loop 3.loop] to [new-1.loop new-2.loop new-3.loop]
+# # rename files [1.loop 2.loop 3.loop] to [new-1.loop new-2.loop new-3.loop]
 FILES=$(ls *.loop)
 NEW="new"
 for FILE in $FILES; do
@@ -111,7 +111,7 @@ for FILE in $FILES; do
 	mv $FILE $NEW-$FILE
 done
 
-# WHILE LOOP - READ THROUGH A FILE LINE BY LINE
+# !WHILE LOOP - READ THROUGH A FILE LINE BY LINE
 # LINE=1
 # while read -r CURRENT_LINE
 #   do
