@@ -101,27 +101,33 @@ NAMES="Brad Kevin Alice Mark"
 for NAME in $NAMES; do
 	echo "Hello $NAME"
 done
+echo
+echo
 
 # !FOR LOOP TO RENAME FILES
 # # rename files [1.loop 2.loop 3.loop] to [new-1.loop new-2.loop new-3.loop]
-FILES=$(ls *.loop)
-NEW="new"
-for FILE in $FILES; do
-	echo "Renaming $FILE to new-$FILE"
-	mv $FILE $NEW-$FILE
-done
+# FILES=$(ls *.loop)
+# NEW="new"
+# for FILE in $FILES; do
+# 	echo "Renaming $FILE to new-$FILE"
+# 	mv $FILE $NEW-$FILE
+# done
+
+echo
+echo
 
 # !WHILE LOOP - READ THROUGH A FILE LINE BY LINE
-# LINE=1
-# while read -r CURRENT_LINE
-#   do
-#     echo "$LINE: $CURRENT_LINE"
-#     ((LINE++))
-# done < "./new-1.txt"
+LINE=1
+while read -r CURRENT_LINE; do
+	echo "$LINE: $CURRENT_LINE"
+	((LINE++))
+done <"./read_file.txt"
 
-# FUNCTION
+echo
+echo
+# !FUNCTION
 # function sayHello() {
-#   echo "Hello World"
+# 	echo "Hello World"
 # }
 # sayHello
 
