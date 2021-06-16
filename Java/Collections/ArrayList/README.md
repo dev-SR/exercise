@@ -2,7 +2,7 @@
 
 ## Add/Remove
 
-### `public boolean `**`add`**`(Object element)`
+#### `public boolean add(Object element)`
 
 -  Add element to ArrayList
 
@@ -10,7 +10,7 @@
 _.add("John");
 ```
 
-### `public void `**`add`**`(int index, Object element)`
+#### `public void add(int index, Object element)`
 
 -  Add element at particular index of ArrayList
 
@@ -18,17 +18,7 @@ _.add("John");
 _.add(1,"John");
 ```
 
-### `public boolean `**`addAll`**` (Collection c)`
-
--  Append Collection elements to ArrayList
-
-```java
-ArrayList l1 =new ArrayList(Arrays.asList(1,2,3));
-ArrayList l2 =new ArrayList(Arrays.asList(4,5));
-l1.addAll(l2); //[1, 2, 3, 4, 5]
-```
-
-### `public boolean `**`addAll`**`(int index, Collection c)`
+#### `public boolean addAll(int index, Collection c)`
 
 -  Insert all the collection elements to the specified position in ArrayList |
 
@@ -39,7 +29,7 @@ System.out.println(l1);
 l1.addAll(1,l2);//[1, 4, 5, 2, 3]
 ```
 
-### `public Object `**`remove`**`(int index)`
+#### `public Object remove(int index)`
 
 > Specifications:
 
