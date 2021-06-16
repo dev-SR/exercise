@@ -5,6 +5,7 @@ Overview:
 # Array List Methods
 
 <div id="addremove" class=""></div>
+
 ## Add/Remove
 
 #### `public boolean add(Object element)`
