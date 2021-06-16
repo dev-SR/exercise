@@ -2,9 +2,9 @@
 
 ## Add/Remove
 
-| Method                                        | Description              |
-| :-------------------------------------------- | :----------------------- |
-| `public boolean` **`add`** `(Object element)` | Add element to ArrayList |
+| Method                                    | Description              |
+| :---------------------------------------- | :----------------------- |
+| `public boolean **add** (Object element)` | Add element to ArrayList |
 
 ```java
 _.add("John");
@@ -55,3 +55,7 @@ l1.addAll(1,l2);//[1, 4, 5, 2, 3]
 //Removing 3rd element from the remaining list
 Integer e = list.remove(2);
 ```
+
+<pre>
+sample <b>sample</b> sample
+</pre>
