@@ -2,25 +2,25 @@
 
 ## Add/Remove
 
-| Method                                             | Description              |
-| :------------------------------------------------- | :----------------------- |
-| <pre>public boolean **add** (Object element)</pre> | Add element to ArrayList |
+### `public boolean `**`add`**`(Object element)`
+
+-  Add element to ArrayList
 
 ```java
 _.add("John");
 ```
 
-| Method                                                     | Description                                  |
-| :--------------------------------------------------------- | :------------------------------------------- |
-| <pre>public void **add** (int index, Object element)</pre> | Add element at particular index of ArrayList |
+### `public void `**`add`**`(int index, Object element)`
+
+-  Add element at particular index of ArrayList
 
 ```java
 _.add(1,"John");
 ```
 
-| Method                                             | Description                             |
-| :------------------------------------------------- | :-------------------------------------- |
-| <pre>public boolean **addAll**(Collection c)</pre> | Append Collection elements to ArrayList |
+### `public boolean `**`addAll`**` (Collection c)`
+
+-  Append Collection elements to ArrayList
 
 ```java
 ArrayList l1 =new ArrayList(Arrays.asList(1,2,3));
@@ -28,9 +28,9 @@ ArrayList l2 =new ArrayList(Arrays.asList(4,5));
 l1.addAll(l2); //[1, 2, 3, 4, 5]
 ```
 
-| Method                                                        | Description                                                               |
-| :------------------------------------------------------------ | :------------------------------------------------------------------------ |
-| <pre>public boolean **addAll**(int index, Collection c)</pre> | Insert all the collection elements to the specified position in ArrayList |
+### `public boolean `**`addAll`**`(int index, Collection c)`
+
+-  Insert all the collection elements to the specified position in ArrayList |
 
 ```java
 ArrayList l1 =new ArrayList(Arrays.asList(1,2,3));
@@ -39,12 +39,11 @@ System.out.println(l1);
 l1.addAll(1,l2);//[1, 4, 5, 2, 3]
 ```
 
-| Method                                          | Description                                          |
-| :---------------------------------------------- | :--------------------------------------------------- |
-| <pre>public Object **remove** (int index)</pre> | Remove element from the specified index in ArrayList |
+### `public Object `**`remove`**`(int index)`
 
 > Specifications:
 
+-  Remove element from the specified index in ArrayList
 -  It removes an element and returns the same.
 -  It throws `IndexOutOfBoundsException` if the specified index is less than
    zero or greater than the size of the list (index size of ArrayList).
