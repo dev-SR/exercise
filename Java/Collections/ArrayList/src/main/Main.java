@@ -2,33 +2,10 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
-class Employee {
-    private Integer id;
-    private String firstName;
-    private String lastName;
-    private Integer age;
-
-    public Employee(Integer id, String firstName, String lastName, Integer age){
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
-    }
-
-    //Other getter and setter methods
-
-    @Override
-    public String toString() {
-        return "\n["+this.id+","+this.firstName+","+this.lastName+","+this.age+"]";
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-}
 public class Main {
 
     public static void main(String[] args) {
@@ -64,30 +41,15 @@ public class Main {
         }
         System.out.println();
 
-        ArrayList l1 =new ArrayList(Arrays.asList(1,2,3));
-        ArrayList l2 =new ArrayList(Arrays.asList(4,5));
+        ArrayList<Integer> l1 = new ArrayList<>(Arrays.asList(1, 2, 3));
+        ArrayList<Integer> l2 = new ArrayList<>(Arrays.asList(4, 5));
         System.out.println(l1);
         l1.addAll(l2);//[1, 4, 5, 2, 3]
         System.out.println(l1);
 
-        List<Employee> employees  = new ArrayList<>();
-        employees.add(new Employee(6,"Yash", "Chopra", 25));
-        employees.add(new Employee(2,"Aman", "Sharma", 28));
-        employees.add(new Employee(3,"Aakash", "Yaadav", 52));
-        employees.add(new Employee(5,"David", "Kameron", 19));
-        employees.add(new Employee(4,"James", "Hedge", 72));
-        employees.add(new Employee(8,"Balaji", "Subbu", 88));
-        employees.add(new Employee(7,"Karan", "Johar", 59));
-        employees.add(new Employee(1,"Lokesh", "Gupta", 32));
-        employees.add(new Employee(9,"Vishu", "Bissi", 33));
-        employees.add(new Employee(10,"Lokesh", "Ramachandran", 60));
-        employees.sort(Comparator.comparing(em -> em.getFirstName()));
+        Color.printStart(30,Color.RED_BRIGHT,Color.YELLOW_BACKGROUND);
+        Color.printStartWithMsg(50,Color.CYAN_BOLD_BRIGHT,"Hello World",Color.BLUE_BACKGROUND_BRIGHT);
 
-        //OR you can use below
-        employees.sort(Comparator.comparing(Employee::getFirstName));
-
-        //Let's print the sorted list
-        System.out.println(employees);
     }
 
 }

@@ -1,4 +1,10 @@
 package main;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Color {
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
@@ -72,4 +78,54 @@ public class Color {
     public static final String PURPLE_BACKGROUND_BRIGHT = "\033[0;105m"; // PURPLE
     public static final String CYAN_BACKGROUND_BRIGHT = "\033[0;106m";  // CYAN
     public static final String WHITE_BACKGROUND_BRIGHT = "\033[0;107m";   // WHITE
+
+
+    public static void printStart(int n, String color) {
+        List<Character> l = Collections.nCopies(n, '*');
+        String s = l.stream().map(String::valueOf).collect(Collectors.joining(""));
+        //(n-> String.valueOf(n))
+        System.out.print(color);
+        System.out.println(s);
+        System.out.print(Color.RESET);
+    }
+
+    public static void printStart(int n, String color, String bg) {
+        List<Character> l = Collections.nCopies(n, '*');
+        String s = l.stream().map(String::valueOf).collect(Collectors.joining(""));
+        System.out.print(color);
+        System.out.print(bg);
+        System.out.println(s);
+        System.out.print(Color.RESET);
+    }
+
+    public static void printStartWithMsg(int n, String color, String msg) {
+        List<Character> l = Collections.nCopies(n, '*');
+        int len = l.size();
+        int mid = Math.round(len / 2);
+        List<Character> p1 = new ArrayList(l.subList(0, mid));
+        List<Character> p2 = new ArrayList(l.subList(mid, len));
+        String s1 = p1.stream().map(String::valueOf).collect(Collectors.joining(""));
+        String s2 = p2.stream().map(String::valueOf).collect(Collectors.joining(""));
+        System.out.print(color);
+        System.out.print(s1);
+        System.out.print(" " + msg + " ");
+        System.out.print(s2);
+        System.out.print(Color.RESET);
+    }
+
+    public static void printStartWithMsg(int n, String color, String msg, String bg) {
+        List<Character> l = Collections.nCopies(n, '*');
+        int len = l.size();
+        int mid = Math.round(len / 2);
+        List<Character> p1 = new ArrayList(l.subList(0, mid));
+        List<Character> p2 = new ArrayList(l.subList(mid, len));
+        String s1 = p1.stream().map(String::valueOf).collect(Collectors.joining(""));
+        String s2 = p2.stream().map(String::valueOf).collect(Collectors.joining(""));
+        System.out.print(color);
+        System.out.print(bg);
+        System.out.print(s1);
+        System.out.print(" " + msg + " ");
+        System.out.print(s2);
+        System.out.print(Color.RESET);
+    }
 }
