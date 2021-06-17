@@ -703,6 +703,33 @@ public class TestSorting
 }
 
 ```
+<div id="com4"></div>
+
+#### 2.6.3.3. Comparator in Java 8
+
+Latest Lambda changes have made using `Comparator` a lot easier than ever
+before.
+
+```java
+
+List<Employee> employees  = getEmployeesFromDB();
+
+//Sort all employees by first name
+employees.sort(Comparator.comparing(e -> e.getFirstName()));
+
+//OR you can use below
+employees.sort(Comparator.comparing(Employee::getFirstName));
+
+//Sort all employees by first name in reverse order
+Comparator<Employee> comparator = Comparator.comparing(e -> e.getFirstName());
+employees.sort(comparator.reversed());
+
+//Sorting on multiple fields; Group by.
+Comparator<Employee> groupByComparator = Comparator.comparing(Employee::getFirstName).thenComparing(Employee::getLastName);
+employees.sort(groupByComparator);
+
+```
+
 > Full Example:
 
 ```java
@@ -753,49 +780,6 @@ public class ArrayListObjectSortExample {
     }
 }
 
-```
-
-
-
-<div id="com4"></div>
-
-#### 2.6.3.3. Comparator in Java 8
-
-Latest Lambda changes have made using `Comparator` a lot easier than ever
-before.
-
-```java
-
-List<Employee> employees  = getEmployeesFromDB();
-
-//Sort all employees by first name
-employees.sort(Comparator.comparing(e -> e.getFirstName()));
-
-//OR you can use below
-employees.sort(Comparator.comparing(Employee::getFirstName));
-
-//Sort all employees by first name in reverse order
-Comparator<Employee> comparator = Comparator.comparing(e -> e.getFirstName());
-employees.sort(comparator.reversed());
-
-//Sorting on multiple fields; Group by.
-Comparator<Employee> groupByComparator = Comparator.comparing(Employee::getFirstName).thenComparing(Employee::getLastName);
-employees.sort(groupByComparator);
-
-```
-
-> Note: create getFirstName() method in class
-
-```java
-// where create method
-class Employee {
-    private Integer id;
-    private String firstName;
-    //....
-    public String getFirstName() {
-        return firstName;
-    }
-}
 ```
 
 <div id="com5"></div>
