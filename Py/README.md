@@ -22,9 +22,9 @@ deactivate
 ```bash
 # ipython nbconvert --to FORMAT notebook.ipynb
 
-jupyter nbconvert --to html test.ipynb
-jupyter nbconvert --to markdown test.ipynb
-jupyter nbconvert --to pdf test.ipynb
+jupyter nbconvert --to html test.ipynb --output README.md
+jupyter nbconvert --to markdown test.ipynb --output README.md
+jupyter nbconvert --to pdf test.ipynb --output README.md
 
 
 ```
