@@ -1,19 +1,23 @@
-Overview:
+# 1. Overview
 
--  [Initialize ArrayList](#i)
--  [Loop ArrayList](#itr)
--  [Find length of ArrayList](#len)
--  [Add/Remove](#addremove)
--  [Get/Search](#gs)
--  [Sort](#sort)
+- [Basic Array List Methods](#m)
+  - [Initialize ArrayList](#i)
+  - [Loop ArrayList](#itr)
+  - [Find length of ArrayList](#len)
+  - [Add/Remove](#addremove)
+  - [Get/Search](#gs)
+  - [Sort](#sort)
+- [Working with ArrayList](#w)
 
-# Array List Methods
+<div id="m"/>
+
+# 2. Basic ArrayList Methods
 
 <div id="i" class=""></div>
 
-## Initialize ArrayList
+## 2.1. Initialize ArrayList
 
-### Arrays.asList() – Initialize ArrayList from array
+### 2.1.1. Arrays.asList() – Initialize ArrayList from array
 
 To initialize an arraylist in single line statement, get all elements in form of
 array using `Arrays.asList` method and pass the `array` argument to `ArrayList`
@@ -23,7 +27,7 @@ constructor.
 ArrayList<String> names = new ArrayList<String>( Arrays.asList("alex", "brian", "charles") );
 ```
 
-### List.of() – Immutable list – Java 9
+### 2.1.2. List.of() – Immutable list – Java 9
 
 We can use `List.of()` static factory methods to create **`immutable`** lists.
 Only drawback is that `add` operation is **not supported** in these lists.
@@ -32,38 +36,38 @@ Only drawback is that `add` operation is **not supported** in these lists.
 List<String> names = List.of("alex", "brian");
 ```
 
-### Use Collections.ncopies(count, element)
+### 2.1.3. Use Collections.ncopies(count, element)
 
 ```java
 ArrayList<Integer> intlist = new ArrayList<Integer>(Collections.nCopies(10, 5));
 //ArrayList items: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
 ```
 
-### Anonymous inner class method to initialize ArrayList
+### 2.1.4. Anonymous inner class method to initialize ArrayList
 
 syntax:
 
 ```java
 ArrayList<T> obj = new ArrayList<T>(){{
-		   add(Object o1);
-		   add(Object o2);
-		   add(Object o3);
+     add(Object o1);
+     add(Object o2);
+     add(Object o3);
                    ...
                    ...
-		   }};
+     }};
 ```
 
 ex:
 
 ```java
   ArrayList<String> cities = new ArrayList<String>(){{
-		   add("Apple");
-		   add("Mango");
-		   add("Banana");
-		   }};
+     add("Apple");
+     add("Mango");
+     add("Banana");
+     }};
 ```
 
-### Create ArrayList and add objects – ArrayList constructor
+### 2.1.5. Create ArrayList and add objects – ArrayList constructor
 
 ```java
 ArrayList<String> l = new ArrayList<>();
@@ -83,7 +87,7 @@ l.addAll(ll.keySet());
 //[alex, brian, charles, max, john, keanu]
 ```
 
-### Initialize ArrayList of lists
+### 2.1.6. Initialize ArrayList of lists
 
 ```java
 List<List<Integer>> l = new ArrayList<>();
@@ -111,7 +115,7 @@ l.add(new ArrayList<Integer>( Arrays.asList(10, 20, 30) ));
 
 <div id="len" class=""></div>
 
-## Find length of ArrayList
+## 2.2. Find length of ArrayList
 
 ```java
 l.size()
@@ -119,15 +123,15 @@ l.size()
 
 <div id="itr" class=""></div>
 
-## Iterate through ArrayList of objects
+## 2.3. Iterate through ArrayList of objects
 
 There are five ways to loop ArrayList.
 
--  For Loop
--  Advanced for loop
--  List Iterator
--  While Loop
--  Java 8 Stream
+- For Loop
+- Advanced for loop
+- List Iterator
+- While Loop
+- Java 8 Stream
 
 ```java
 /* For Loop for iterating ArrayList */
@@ -166,22 +170,22 @@ l.forEach(name -> System.out.println(name));
 
 <div id="addremove" class=""></div>
 
-## Add/Remove
+## 2.4. Add/Remove
 
--  [Add element to ArrayList](#1)
--  [Add element at particular index of ArrayList](#2)
--  [Add only selected items to arraylist](#ad1)
--  [Append Collection elements to ArrayList](#3)
--  [Insert all the collection elements to the specified position in ArrayList](#4)
--  [Replace element at specified index](#r1)
--  [Replace element in ArrayList while iterating](#r2)
--  [Remove element from the specified index in ArrayList](#5)
--  [Remove specified element from ArrayList](#6)
--  [Remove all element from arraylist by value](#7)
+- [Add element to ArrayList](#1)
+- [Add element at particular index of ArrayList](#2)
+- [Add only selected items to arraylist](#ad1)
+- [Append Collection elements to ArrayList](#3)
+- [Insert all the collection elements to the specified position in ArrayList](#4)
+- [Replace element at specified index](#r1)
+- [Replace element in ArrayList while iterating](#r2)
+- [Remove element from the specified index in ArrayList](#5)
+- [Remove specified element from ArrayList](#6)
+- [Remove all element from arraylist by value](#7)
 
 <div id="1"/>
 
-### Add element to ArrayList
+### 2.4.1. Add element to ArrayList
 
 `public boolean add(Object element)`
 
@@ -191,7 +195,7 @@ l.add("John");
 
 <div id="2"/>
 
-### Add element at particular index of ArrayList
+### 2.4.2. Add element at particular index of ArrayList
 
 `public void add(int index, Object element)`
 
@@ -201,7 +205,7 @@ l.add(1,"John");
 
 <div id="ad1"/>
 
-### Add only selected items to arraylist
+### 2.4.3. Add only selected items to arraylist
 
 This method uses `Java 8 stream` API. We create a stream of elements from first
 list, add filter to get the desired elements only, and then collect filtered
@@ -222,7 +226,7 @@ namesList.stream()
 
 <div id="3"/>
 
-### Append Collection elements to ArrayList
+### 2.4.4. Append Collection elements to ArrayList
 
 `public boolean addAll(Collection c)`
 
@@ -234,7 +238,7 @@ l1.addAll(l2);//[1, 2, 3, 4, 5]
 
 <div id="4"/>
 
-### Insert all the collection elements to the specified position in ArrayList
+### 2.4.5. Insert all the collection elements to the specified position in ArrayList
 
 `public boolean addAll(int index, Collection c)`
 
@@ -246,7 +250,7 @@ l1.addAll(1,l2);//[1, 4, 5, 2, 3]
 
 <div id="r1"/>
 
-### Replace element at specified index
+### 2.4.6. Replace element at specified index
 
 `ArrayList.set(int index, E element)`
 
@@ -259,7 +263,7 @@ l.set(0, "Lokesh");
 
 <div id="r2"/>
 
-### Replace element in ArrayList while iterating
+### 2.4.7. Replace element in ArrayList while iterating
 
 ```java
 ArrayList<String> l = new ArrayList<String>(Arrays.asList( "alex", "brian", "charles") );
@@ -275,12 +279,12 @@ for(int i=0; i < l.size(); i++)
 
 <div id="5"/>
 
-### Remove element from the specified index in ArrayList
+### 2.4.8. Remove element from the specified index in ArrayList
 
 `public Object remove(int index)`
 
--  It removes an element and **returns the same**.
--  It throws `IndexOutOfBoundsException` if the specified index is less than
+- It removes an element and **returns the same**.
+- It throws `IndexOutOfBoundsException` if the specified index is less than
    zero or greater than the size of the list (index size of ArrayList).
 
 ```java
@@ -292,12 +296,12 @@ Integer e = list.remove(2);
 
 <div id="6"/>
 
-### Remove specified element from ArrayList
+### 2.4.9. Remove specified element from ArrayList
 
 `public boolean remove(Object obj)`
 
--  It returns `false` if the specified element doesn’t exist in the list.
--  If there are duplicate elements present in the list it removes the first
+- It returns `false` if the specified element doesn’t exist in the list.
+- If there are duplicate elements present in the list it removes the first
    occurrence of the specified element from the list.
 
 ```java
@@ -326,23 +330,23 @@ l.removeIf( name -> name.equals("alex"));
 
 <div id="gs" class=""></div>
 
-## Get/Search
+## 2.5. Get/Search
 
--  [Get element from ArrayList](#g1)
--  [Get the index of first occurrence of the element in the ArrayList](#g2)
--  [Get the index of last occurrence of the element in the ArrayList](#g3)
--  [Check whether element exists in ArrayList](#g4)
--  [ Get Sub List of ArrayList](#g5)
-   -  [Remove Sub list of ArrayList](#g6)
+- [Get element from ArrayList](#g1)
+- [Get the index of first occurrence of the element in the ArrayList](#g2)
+- [Get the index of last occurrence of the element in the ArrayList](#g3)
+- [Check whether element exists in ArrayList](#g4)
+- [Get Sub List of ArrayList](#g5)
+  - [Remove Sub list of ArrayList](#g6)
 
 <div id="g1"></div>
 
-### Get element from ArrayList
+### 2.5.1. Get element from ArrayList
 
 `public Element get(int index)`
 
--  returns the value present at the specified index.
--  This method throws `IndexOutOfBoundsException` if the index is _less_ than
+- returns the value present at the specified index.
+- This method throws `IndexOutOfBoundsException` if the index is _less_ than
    `zero` or _greater_ than the `size` of the list (index<0 OR index>= size of
    the list).
 
@@ -352,11 +356,11 @@ _.get(0)
 
 <div id="g2"></div>
 
-### Get the index of first occurrence of the element in the ArrayList
+### 2.5.2. Get the index of first occurrence of the element in the ArrayList
 
 `public int indexOf(Object o)`
 
--  This method returns `-1` if the specified element is not present in the list.
+- This method returns `-1` if the specified element is not present in the list.
 
 ```java
 l.indexOf("AB")//5
@@ -365,11 +369,11 @@ l.indexOf("AA")//-1
 
 <div id="g3"></div>
 
-### Get the index of last occurrence of the element in the ArrayList
+### 2.5.3. Get the index of last occurrence of the element in the ArrayList
 
 `public int lastIndexOf(Object obj)`
 
--  It returns `-1` if the specified element does not exist in the list.
+- It returns `-1` if the specified element does not exist in the list.
 
 ```java
 l.lastIndexOf("AB")//5
@@ -378,12 +382,12 @@ l.lastIndexOf("AA")//-1
 
 <div id="g4"></div>
 
-### Check whether element exists in ArrayList
+### 2.5.4. Check whether element exists in ArrayList
 
 `public boolean contains(Object element)`
 
 -
--  It returns `true` if the specified element is found in the list else it gives
+- It returns `true` if the specified element is found in the list else it gives
    `false`.
 
 ```java
@@ -394,12 +398,12 @@ l.contains(1)
 
 <div id="g5"></div>
 
-### Get Sub List of ArrayList
+### 2.5.5. Get Sub List of ArrayList
 
 `List subList(int fromIndex, int toIndex)`
 
--  Here `fromIndex` is **inclusive** and `toIndex` is **exclusive**.
--  The subList method throws `IndexOutOfBoundsException` – if the specified
+- Here `fromIndex` is **inclusive** and `toIndex` is **exclusive**.
+- The subList method throws `IndexOutOfBoundsException` – if the specified
    indexes are out of the range of ArrayList **(fromIndex < 0 || toIndex >
    size)**. `IllegalArgumentException` – if the starting index is greater than
    the end point index **(fromIndex > toIndex)**.
@@ -411,7 +415,7 @@ List sublist = new ArrayList(l.subList(2, 6) );//[2, 3, 4, 5]
 
 <div id="g6"></div>
 
-#### Remove Sub list of ArrayList
+#### 2.5.5.1. Remove Sub list of ArrayList
 
 ```java
 List l = new ArrayList(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
@@ -420,24 +424,24 @@ l.subList(2, 6).clear();//[0, 1, 6, 7, 8, 9]
 
 <div id="sort"/>
 
-## Sort ArrayList
+## 2.6. Sort ArrayList
 
--  [Sort arraylist of Strings](#s1)
-   -  [List.sort() method](#s2)
-   -  [Collections.sort() method](#s3)
-   -  [ with Java 8 stream](#s4)
--  [Sort arraylist of Integer](#s5)
--  [Sort ArrayList of Objects using Comparable and Comparator](#s6)
--  [Sort ArrayList of objects by multiple fields](#s7)
--  [Sort ArrayList of objects using Collections.sort() method](#s8)
+- [Sort arraylist of Strings](#s1)
+  - [List.sort() method](#s2)
+  - [Collections.sort() method](#s3)
+  - [with Java 8 stream](#s4)
+- [Sort arraylist of Integer](#s5)
+- [Sort ArrayList of Objects using Comparable and Comparator](#s6)
+- [Sort ArrayList of objects by multiple fields](#s7)
+- [Sort ArrayList of objects using Collections.sort() method](#s8)
 
 <div id="s1"></div>
 
-### Sort arraylist of strings
+### 2.6.1. Sort arraylist of strings
 
 <div id="s2"></div>
 
-#### List.sort() method
+#### 2.6.1.1. List.sort() method
 
 Java program to sort any arraylist of strings alphabetically and _descending_
 order.
@@ -459,7 +463,7 @@ l.sort( Comparator.comparing( String::toString ).reversed() );
 
 <div id="s3"></div>
 
-#### Collections.sort() method
+#### 2.6.1.2. Collections.sort() method
 
 ```java
 //Unsorted list
@@ -478,7 +482,7 @@ Collections.sort(l, Collections.reverseOrder());
 
 <div id="s4"></div>
 
-#### Sort arraylist of strings with Java 8 stream
+#### 2.6.1.3. Sort arraylist of strings with Java 8 stream
 
 ```java
 //Unsorted list
@@ -498,7 +502,7 @@ List<String> reverseSorted =
 
 <div id="s5"></div>
 
-### Sort arraylist of integers
+### 2.6.2. Sort arraylist of integers
 
 ```java
 /Unsorted list
@@ -519,7 +523,7 @@ Collections.sort(l, Collections.reverseOrder());  //[5, 4, 3, 2, 1]
 
 <div id="s6"></div>
 
-### Java sort arraylist of objects – Comparable and Comparator
+### 2.6.3. Java sort arraylist of objects – Comparable and Comparator
 
 1. [Employee - Model Class](#com1")
 2. [Comparable Interface](#com2)
@@ -529,9 +533,9 @@ Collections.sort(l, Collections.reverseOrder());  //[5, 4, 3, 2, 1]
 
 <div id="com2"></div>
 
-#### Comparable Example
+#### 2.6.3.1. Comparable Example
 
-##### Implementing ` compareTo(T o)` method of `Comparable` interface
+##### 2.6.3.1.1. Implementing `compareTo(T o)` method of `Comparable` interface
 
 `Comparable` interface provides one method `compareTo(T o)` to implement in any
 class so that two instances of that class can be compared.
@@ -580,7 +584,7 @@ public class TestSorting {
 
 <div id="com3"></div>
 
-#### Comparator Example
+#### 2.6.3.2. Comparator Example
 
 So, now we can sort a list of employees by their `id`. Now let’s consider a case
 where we want to sort employees list based on some user input which is
@@ -627,7 +631,7 @@ public class AgeSorter implements Comparator<Employee> {
 }
 ```
 
-> **Now, compare with Comparator: **
+> **Now, compare with Comparator:**
 
 ```java
 public class TestSorting
@@ -654,7 +658,7 @@ public class TestSorting
 
 <div id="com4"></div>
 
-#### Comparator in Java 8
+#### 2.6.3.3. Comparator in Java 8
 
 Latest Lambda changes have made using `Comparator` a lot easier than ever
 before.
@@ -695,18 +699,64 @@ class Employee {
 
 <div id="com5"></div>
 
-#### hashCode() and equals()
+#### 2.6.3.4. hashCode() and equals()
 
 <div id="s7"></div>
 
-### Sort ArrayList of objects by multiple fields
+### 2.6.4. Sort ArrayList of objects by multiple fields
 
 [https://howtodoinjava.com/java/sort/groupby-sort-multiple-comparators/](https://howtodoinjava.com/java/sort/groupby-sort-multiple-comparators/)
 
 <div id="s8"></div>
 
-### Java Collections sort() Method
+### 2.6.5. Java Collections sort() Method
 
 [https://howtodoinjava.com/java/sort/collections-sort/](https://howtodoinjava.com/java/sort/collections-sort/)
 
-<div id="s9"></div>
+<div id="w"/>
+
+# 3. Working with ArrayList
+
+- [Compare two ArrayLists](#o1)
+- [Synchronize ArrayList](#o2)
+- [Swap two elements in ArrayList](#o3)
+- [Serialize ArrayList](#o4)
+- [Join two ArrayList](#o5)
+- [Make ArrayList Empty](#o61)
+- [Check whether ArrayList is empty or not](#o7)
+- [Replace the value of existing element in ArrayList](#o8)
+- [Remove duplicate elements in ArrayList](#o9)
+
+<div id="o1"></div>
+
+## 3.1. Compare two ArrayLists
+
+1. [Compare for equality](#cc1)
+2. [Compare and find additional elements](#cc2)
+3. [Compare and find missing elements](#cc3)
+4. [Compare and find common elements](#cc4)
+
+<div id="cc1"></div>
+
+### 3.1.1. Compare for equality
+
+<div id="cc2"></div>
+
+### 3.1.2. Compare and find additional element
+
+<div id="cc3"></div>
+
+### 3.1.3. Compare and find missing elements
+
+<div id="cc4"></div>
+
+### 3.1.4. Compare and find common elements
+
+<div id="o2"></div>
+<div id="o3"></div>
+<div id="o4"></div>
+<div id="o5"></div>
+<div id="o6"></div>
+<div id="o7"></div>
+<div id="o8"></div>
+<div id="o9"></div>
