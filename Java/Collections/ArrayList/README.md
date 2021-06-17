@@ -134,38 +134,60 @@ There are five ways to loop ArrayList.
 - Java 8 Stream
 
 ```java
-/* For Loop for iterating ArrayList */
-for(int i = 0; i < l.size(); i++)
-{
-    System.out.println(l.get(i));
-}
+        List<String> tvShows = new ArrayList<>();
+        tvShows.add("Breaking Bad");
+        tvShows.add("Game Of Thrones");
+        tvShows.add("Friends");
+        tvShows.add("Prison break");
 
-/* Advanced For Loop*/
-for(String name : l)
-{
-    System.out.println(name);
-}
-      /* While Loop for iterating ArrayList*/
-int index = 0;
-while (l.size() > index)
-{
-   System.out.println(l.get(index++));
-}
+        System.out.println("=== Iterate using Java 8 forEach and lambda ===");
+        tvShows.forEach(tvShow -> {
+            System.out.println(tvShow);
+        });
 
-/*Looping Array List using Iterator*/
-ListIterator<String> listItr = l.listIterator();
-while(listItr.hasNext())
-{
-    System.out.println(listItr.next());
-}
-/**
- * Iterate arraylist with stream api
-*/
-ArrayList<String> l = new ArrayList<String>(Arrays.asList( "alex", "brian", "charles") );
+        System.out.println("\n=== Iterate using an iterator() ===");
+        Iterator<String> tvShowIterator = tvShows.iterator();
+        while (tvShowIterator.hasNext()) {
+            String tvShow = tvShowIterator.next();
+            System.out.println(tvShow);
+        }
 
-l.forEach(name -> System.out.println(name));
+        System.out.println("\n=== Iterate using an iterator() and Java 8 forEachRemaining() method ===");
+        tvShowIterator = tvShows.iterator();
+        tvShowIterator.forEachRemaining(tvShow -> {
+            System.out.println(tvShow);
+        });
+
+        System.out.println("\n=== Iterate using a listIterator() to traverse in both directions ===");
+        // Here, we start from the end of the list and traverse backwards.
+        ListIterator<String> tvShowListIterator = tvShows.listIterator(tvShows.size());
+        while (tvShowListIterator.hasPrevious()) {
+            String tvShow = tvShowListIterator.previous();
+            System.out.println(tvShow);
+        }
+
+        System.out.println("\n=== Iterate using simple for-each loop ===");
+        for(String tvShow: tvShows) {
+            System.out.println(tvShow);
+        }
+
+        System.out.println("\n=== Iterate using for loop with index ===");
+        for(int i = 0; i < tvShows.size(); i++) {
+            System.out.println(tvShows.get(i));
+        }
+```
+
+> Note: The `iterator()` and `listIterator()` methods are useful when you need to `modify` the ArrayList while traversing.
 
 
+```java
+        Iterator<Integer> numbersIterator = numbers.iterator();
+        while (numbersIterator.hasNext()) {
+            Integer num = numbersIterator.next();
+            if(num % 2 != 0) {
+                numbersIterator.remove();
+            }
+        }
 ```
 
 <div id="addremove" class=""></div>
@@ -461,6 +483,32 @@ l.sort( Comparator.comparing( String::toString ).reversed() );
 //[David, Charles, Brian, Alex]
 ```
 
+> More Comparator :
+```java
+
+        List<String> names = new ArrayList<>();
+        names.add("Lisa");
+        names.add("Jennifer");
+        names.add("Mark");
+        names.add("David");
+        System.out.println("Names : " + names);
+
+        // Sort an ArrayList using its sort() method. You must pass a Comparator to the ArrayList.sort() method.
+        names.sort(new Comparator<String>() {
+            @Override
+            public int compare(String name1, String name2) {
+                return name1.compareTo(name2);
+            }
+        });
+
+        // The above `sort()` method call can also be written simply using lambda expression
+        names.sort((name1, name2) -> name1.compareTo(name2));
+
+        // Following is an even more concise solution
+        names.sort(Comparator.naturalOrder());  
+
+```
+
 <div id="s3"></div>
 
 #### 2.6.1.2. Collections.sort() method
@@ -655,6 +703,59 @@ public class TestSorting
 }
 
 ```
+> Full Example:
+
+```java
+
+class Person {
+    private String name;
+    private Integer age;
+
+    public Person(String name, Integer age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+}
+
+public class ArrayListObjectSortExample {
+    public static void main(String[] args) {
+        List<Person> people = new ArrayList<>();
+        people.add(new Person("Sachin", 47));
+        people.add(new Person("Chris", 34));
+        people.add(new Person("Rajeev", 25));
+        people.add(new Person("David", 31));
+
+        // Sort People by their Age
+        people.sort((person1, person2) -> {
+            return person1.getAge() - person2.getAge();
+        });
+        // A more concise way of writing the above sorting function
+        people.sort(Comparator.comparingInt(Person::getAge));
+
+        // You can also sort using Collections.sort() method by passing the custom Comparator
+        Collections.sort(people, Comparator.comparing(Person::getName));
+    }
+}
+
+```
+
+
 
 <div id="com4"></div>
 
