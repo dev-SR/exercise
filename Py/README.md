@@ -22,11 +22,11 @@ deactivate
 ```bash
 # ipython nbconvert --to FORMAT notebook.ipynb
 
-jupyter nbconvert --to html test.ipynb --output README.md
+jupyter nbconvert --to html test.ipynb 
 jupyter nbconvert --to markdown test.ipynb --output README.md
-jupyter nbconvert --to pdf test.ipynb --output README.md
+jupyter nbconvert --to pdf test.ipynb 
 
-
+# Note: VsCode jupyter notebooks has built in converter 
 ```
 [https://ipython.org/ipython-doc/3/notebook/nbconvert.html](https://ipython.org/ipython-doc/3/notebook/nbconvert.html)
 
