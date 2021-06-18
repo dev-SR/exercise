@@ -1,26 +1,26 @@
-# Quick Navigation
+# 1. Quick Navigation
 
--  Vs Code Setting
-   -  [Font](#font)
-   -  [Terminal](#terminal)
--  Markdown Guides
-   -  [Cheatsheets](#Cheatsheet)
-   -  [Links](#links)
-   -  [Images](#images)
-   -  [Mathematical Formula in markdown](#math)
-   -  [Code and Syntax Highlighting](#code-and-syntax-highlighting)
--  Git and Github
-   -  [Gist](#gist)
-   -  [.gitignore commited files](#clear-git-cache).
-   -  [Alias](#alias)
-   -  [Commands for Github Repo](#githubrepo)
-   -  [Change the URI (URL) for a remote Git repository](#changeremote)
--  Unicode For Better Comments
-   -  [Unicodes](#unicodes)
+- Vs Code Setting
+  - [Font](#font)
+  - [Terminal](#terminal)
+- Markdown Guides
+  - [Cheatsheets](#Cheatsheet)
+  - [Links](#links)
+  - [Images](#images)
+  - [Mathematical Formula in markdown](#math)
+  - [Code and Syntax Highlighting](#code-and-syntax-highlighting)
+- Git and Github
+  - [Gist](#gist)
+  - [.gitignore commited files](#clear-git-cache).
+  - [Alias](#alias)
+  - [Commands for Github Repo](#githubrepo)
+  - [Change the URI (URL) for a remote Git repository](#changeremote)
+- Unicode For Better Comments
+  - [Unicodes](#unicodes)
 
-# Vs Code Setting:
+# 2. Vs Code Setting
 
-## font
+## 2.1. font
 
 **For Editor:** _`FiraCode-Regular.ttf`_ and _`FiraCode-Bold.ttf`_ from:
 [tonsky/FiraCode](https://github.com/tonsky/FiraCode)
@@ -28,11 +28,13 @@
 **For Terminal:** _`FiraMono NF`_ from
 [Nerd Font](https://github.com/tonsky/FiraCode)
 
-## Terminal
+## 2.2. Terminal
 
-### For Windows Terminal:
+### 2.2.1. For Windows Terminal
 
 ---
+
+![img1](img/posh.png)
 
 [mohyposh](https://github.com/jandedobbeleer/oh-my-posh)\
 PowerShell Installation:
@@ -62,15 +64,15 @@ fileName: `Microsoft.PowerShell_profile.ps1`
 Set-PoshPrompt -Theme pure
 ```
 
-# Markdown Guide
+# 3. Markdown Guide
 
-## Cheatsheets
+## 3.1. Cheatsheets
 
 > [Cheatsheet-1](https://www.markdownguide.org/basic-syntax/)
 
 > [Cheatsheet-1](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
-## Links
+## 3.2. Links
 
 ```
 [I'm an inline-style link](https://www.google.com)
@@ -83,7 +85,7 @@ Set-PoshPrompt -Theme pure
 
 [I'm a relative reference to a repository file](C++/0string)
 
-### **Anchor to a heading in github flavored markdown**
+### 3.2.1. **Anchor to a heading in github flavored markdown**
 
 Github automatically parses anchor tags out of your headers. So you can do the
 following:
@@ -104,9 +106,9 @@ In the above case, the Foo header has generated an anchor tag with the name foo.
 
 > **Note:**
 
--  just **_one #_** for all **heading** sizes
--  **no space** between # and anchor name
--  anchor tag names must be **_lowercase_**, and **_delimited by dashes_** if
+- just **_one #_** for all **heading** sizes
+- **no space** between # and anchor name
+- anchor tag names must be **_lowercase_**, and **_delimited by dashes_** if
    multi-word.
 
 ```
@@ -117,8 +119,8 @@ In the above case, the Foo header has generated an anchor tag with the name foo.
 
 > ### HACK: Referencing Empty Div
 
--  [Chapter 1](#Chapter1)
--  [Chapter 2](#Chapter2)
+- [Chapter 1](#Chapter1)
+- [Chapter 2](#Chapter2)
 
 ```md
 -  [Chapter 1](#Chapter1)
@@ -139,19 +141,19 @@ Some text here. Some text here.
 
 <div id="Chapter1"/>
 
-#### Chapter 1
+#### 3.2.1.1. Chapter 1
 
 Some text here.  
 Some text here. Some text here.
 
 <span id="Chapter2"/>
 
-#### Chapter 2
+#### 3.2.1.2. Chapter 2
 
 Some text here.  
 Some text here. Some text here.
 
-## Images
+## 3.3. Images
 
 ```git
 ![Tux, the Linux mascot](/assets/images/tux.png)
@@ -166,13 +168,13 @@ Some text here. Some text here.
 
 <div id="math"/>
 
-## Mathematical Formula in markdown
+## 3.4. Mathematical Formula in markdown
 
 [https://latex.codecogs.com/](https://latex.codecogs.com/)\
 [https://www.codecogs.com](https://www.codecogs.com/latex/eqneditor.php)\
 [http://www.sciweavers.org/](http://www.sciweavers.org/free-online-latex-equation-editor)
 
-## Code and Syntax Highlighting
+## 3.5. Code and Syntax Highlighting
 
 ```
 Inline `code` has `back-ticks around` it.
@@ -237,13 +239,13 @@ or,
  npm run build
 ```
 
-# GIT and GITHUB
+# 4. GIT and GITHUB
 
-## Gist
+## 4.1. Gist
 
 [Gist](https://gist.github.com/dev-SR)
 
-## Clear Git Cache
+## 4.2. Clear Git Cache
 
 [Ref](https://devconnected.com/how-to-clear-git-cache/)
 
@@ -265,7 +267,7 @@ the `–cached` option.**
 > **Note** o not forget the `--cached` option or your file will be deleted from
 > the filesystem.
 
-### Clear Entire Git Cache
+### 4.2.1. Clear Entire Git Cache
 
 In some cases, you may want to clear the cache of your entire Git staging area.
 
@@ -278,146 +280,146 @@ option for recursive.**
 1. apply below cmd to un-stage all files:
 
 ```properties
-	git rm -r --cached .
+ git rm -r --cached .
 ```
 
 2. add intended file to `.gitignore`
 3. then, get all files back simply by :
 
 ```properties
-	git add .
+ git add .
 ```
 
 <div id="alias"/>
 
-## Git Alias
+## 4.3. Git Alias
 
 ```properties
 [alias]
-	a = add --all
-	#############
-	b = branch
-	ba = branch -a
-	bd = branch -d
-	bdd = branch -D
-	#############
-	c = commit
-	ca = commit -a
-	cm = commit -m
-	cam = commit -am
-	cd = commit --amend
-	cad = commit -a --amend
-	######
-	conf = config --global -e
-	#############
-	cl = clone
-	#############
-	f = fetch
-	fo = fetch origin
-	fu = fetch upstream
-	#############
-	l = log --oneline
-	lg = log --oneline --graph --decorate
-	#############
-	m = merge
-	ma = merge --abort
-	mc = merge --continue
-	ms = merge --skip
-	#############
-	o = checkout
-	om = checkout main
-	ob = checkout -b
-	#############
-	ps = push
-	psf = push -f
-	psu = push -u
-	pst = push --tags
-	#############
-	pso = push origin
-	psao = push --all origin
-	psfo = push -f origin
-	psuo = push -u origin
-	#############
-	psom = push origin main
-	psaom = push --all origin main
-	psfom = push -f origin main
-	psuom = push -u origin main
-	#############
-	pl = pull
-	pb = pull --rebase
-	#############
-	plo = pull origin
-	pbo = pull --rebase origin
-	plom = pull origin main
-	ploc = !git pull origin $(git bc)
-	pbom = pull --rebase origin main
-	pboc = !git pull --rebase origin $(git bc)
-	#############
-	plu = pull upstream
-	plum = pull upstream main
-	pluc = !git pull upstream $(git bc)
-	pbum = pull --rebase upstream main
-	pbuc = !git pull --rebase upstream $(git bc)
-	#############
-	rb = rebase
-	rba = rebase --abort
-	rbc = rebase --continue
-	rbi = rebase --interactive
-	rbs = rebase --skip
-	#############
-	re = reset
-	rh = reset HEAD
-	reh = reset --hard
-	rem = reset --mixed
-	res = reset --soft
-	rehh = reset --hard HEAD
-	remh = reset --mixed HEAD
-	resh = reset --soft HEAD
-	rehom = reset --hard origin/main
-	#############
-	r = remote
-	ra = remote add
-	rr = remote rm
-	rv = remote -v
-	rn = remote rename
-	rp = remote prune
-	rs = remote show
-	rao = remote add origin
-	rau = remote add upstream
-	rro = remote remove origin
-	rru = remote remove upstream
-	rso = remote show origin
-	rsu = remote show upstream
-	rpo = remote prune origin
-	rpu = remote prune upstream
-	#############
-	rmf = rm -f
-	rmrf = rm -r -f
-	#############
-	s = status
-	sb = status -s -b
-	#############
-	sa = stash apply
-	sc = stash clear
-	sd = stash drop
-	sl = stash list
-	sp = stash pop
-	ss = stash save
-	ssk = stash save -k
-	sw = stash show
-	#############
-	t = tag
-	td = tag -d
-	#############
-	w = show
-	wp = show -p
-	wr = show -p --no-color
+ a = add --all
+ #############
+ b = branch
+ ba = branch -a
+ bd = branch -d
+ bdd = branch -D
+ #############
+ c = commit
+ ca = commit -a
+ cm = commit -m
+ cam = commit -am
+ cd = commit --amend
+ cad = commit -a --amend
+ ######
+ conf = config --global -e
+ #############
+ cl = clone
+ #############
+ f = fetch
+ fo = fetch origin
+ fu = fetch upstream
+ #############
+ l = log --oneline
+ lg = log --oneline --graph --decorate
+ #############
+ m = merge
+ ma = merge --abort
+ mc = merge --continue
+ ms = merge --skip
+ #############
+ o = checkout
+ om = checkout main
+ ob = checkout -b
+ #############
+ ps = push
+ psf = push -f
+ psu = push -u
+ pst = push --tags
+ #############
+ pso = push origin
+ psao = push --all origin
+ psfo = push -f origin
+ psuo = push -u origin
+ #############
+ psom = push origin main
+ psaom = push --all origin main
+ psfom = push -f origin main
+ psuom = push -u origin main
+ #############
+ pl = pull
+ pb = pull --rebase
+ #############
+ plo = pull origin
+ pbo = pull --rebase origin
+ plom = pull origin main
+ ploc = !git pull origin $(git bc)
+ pbom = pull --rebase origin main
+ pboc = !git pull --rebase origin $(git bc)
+ #############
+ plu = pull upstream
+ plum = pull upstream main
+ pluc = !git pull upstream $(git bc)
+ pbum = pull --rebase upstream main
+ pbuc = !git pull --rebase upstream $(git bc)
+ #############
+ rb = rebase
+ rba = rebase --abort
+ rbc = rebase --continue
+ rbi = rebase --interactive
+ rbs = rebase --skip
+ #############
+ re = reset
+ rh = reset HEAD
+ reh = reset --hard
+ rem = reset --mixed
+ res = reset --soft
+ rehh = reset --hard HEAD
+ remh = reset --mixed HEAD
+ resh = reset --soft HEAD
+ rehom = reset --hard origin/main
+ #############
+ r = remote
+ ra = remote add
+ rr = remote rm
+ rv = remote -v
+ rn = remote rename
+ rp = remote prune
+ rs = remote show
+ rao = remote add origin
+ rau = remote add upstream
+ rro = remote remove origin
+ rru = remote remove upstream
+ rso = remote show origin
+ rsu = remote show upstream
+ rpo = remote prune origin
+ rpu = remote prune upstream
+ #############
+ rmf = rm -f
+ rmrf = rm -r -f
+ #############
+ s = status
+ sb = status -s -b
+ #############
+ sa = stash apply
+ sc = stash clear
+ sd = stash drop
+ sl = stash list
+ sp = stash pop
+ ss = stash save
+ ssk = stash save -k
+ sw = stash show
+ #############
+ t = tag
+ td = tag -d
+ #############
+ w = show
+ wp = show -p
+ wr = show -p --no-color
     ........
 ```
 
 <div id="githubrepo"/>
 
-## Commands for Github Repo
+## 4.4. Commands for Github Repo
 
 …or create a new repository on the command line
 
@@ -440,7 +442,7 @@ git push -u origin main
 
 <div id="changeremote"/>
 
-## Change the URI (URL) for a remote Git repository.
+## 4.5. Change the URI (URL) for a remote Git repository
 
 ```bash
 git remote -v
@@ -458,15 +460,15 @@ git remote -v
 
 ```
 
-# Unicodes
+# 5. Unicodes
 
-### LINKS
+### 5.0.1. LINKS
 
 [Arrows](https://unicode-table.com/en/sets/arrow-symbols/)
 
 [Box Drawing](https://unicode-table.com/en/blocks/box-drawing/)
 
-### Examples:
+### 5.0.2. Examples
 
 ```
     /**
