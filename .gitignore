@@ -7,3 +7,7 @@ node_modules
 test.cpp
 tempCodeRunnerFile.cpp
 test_c.c
+
+# python bytecode
+__pycache__/
+*.py[cod]
