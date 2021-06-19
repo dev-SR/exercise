@@ -4,11 +4,11 @@
   - [Font](#font)
   - [Terminal](#terminal)
 - Markdown Guides
-  - [Cheatsheets](#Cheatsheet)
+  - [Cheatsheets](#cheatsheet)
   - [Links](#links)
   - [Images](#images)
   - [Mathematical Formula in markdown](#math)
-  - [Code and Syntax Highlighting](#code-and-syntax-highlighting)
+  - [Code and Syntax Highlighting](#highlighting)
 - Git and Github
   - [Gist](#gist)
   - [.gitignore commited files](#clear-git-cache).
@@ -66,11 +66,15 @@ Set-PoshPrompt -Theme pure
 
 # 3. Markdown Guide
 
+<div id="cheatsheet"/>
+
 ## 3.1. Cheatsheets
 
 > [Cheatsheet-1](https://www.markdownguide.org/basic-syntax/)
 
 > [Cheatsheet-1](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
+
+<div id="links"/>
 
 ## 3.2. Links
 
@@ -153,82 +157,54 @@ Some text here. Some text here.
 Some text here.  
 Some text here. Some text here.
 
+<div id="images"/>
+
 ## 3.3. Images
 
-```md
+```git
 ![Tux, the Linux mascot](/assets/images/tux.png)
 ![Tux, the Linux mascot](https://...)
 
-<img src="https://latex.codecogs.com/svg.image?x^{2}&space;&plus;&space;a&space;^{2}&space;=&space;&space;25" title="x^{2} + a ^{2} = 25" />
 ```
 
-<img src="https://latex.codecogs.com/svg.image?x^{2}&space;&plus;&space;a&space;^{2}&space;=&space;&space;25" title="x^{2} + a ^{2} = 25" />
+![Tux, the Linux mascot](https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg)
 
-### How to Style Images With Markdown:
 
-Basic:
-```md
-<img src="img/quran.jfif" alt="Table Datas" width="700" height="200"/>
+###  Aligning images
 
-<img src="img/quran.jfif" alt="Table Datas" width="700" height="200" style="object-fit:contain"/>
+####  `left` alignment
+
+<img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100">
+
+This is the code you need to align images to the left:
 ```
-<!-- <img src="img/quran.jfif" alt="Table Datas" width="700" height="200"/>
-
-<img src="img/quran.jfif" alt="Table Datas" width="700" height="200" style="object-fit:contain"/> -->
-
-
-Use CSS And Special URL Parameters: 
-
-```css
-![Kitten](/media/2018/08/kitten.jpg#thumbnail)
-
-<style>
- img[src*="#thumbnail"] {
-    width:150px;
-    height:100px;
-  }
-</style>
-```  
-
-
-![Quran](img/quran.jfif#thumbnail)
-
-<style>
-img[src*="#thumbnail"] {
-   width:150px;
-   height:100px;
-   object-fit:contain;
-}
-</style>
-
-The `*=` selector syntax matches if `#thumbnail` appears anywhere in the `src` attribute. You could also anchor the matching to the end of the URL with `$="#thumbnail"`.
-
-Abuse Image Attributes As CSS Selector Targets:
-
-```css
-![quran](img/quran.jfif)
-
-<style>
-img[alt=quran] {
-   width:400px;
-   height:200px;
-   object-fit:contain;
-   object-position: 50% 50%;
-}
-</style>
+<img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100">
 ```
-![quran](img/quran.jfif)
-<style>
-img[alt=quran] {
-   width:200px;
-   height:200px;
-   object-fit:contain;
-   object-position: 50% 50%;
-}
-</style>
 
-For, More info see [here](https://www.xaprb.com/blog/how-to-style-images-with-markdown/)
+---
 
+####  `right` alignment
+
+<img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100">
+
+This is the code you need to align images to the right:
+```
+<img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100">
+```
+
+---
+
+####  `center` alignment example
+
+<p align="center">
+  <img width="460" height="300" src="http://www.fillmurray.com/460/300">
+</p>
+
+```
+<p align="center">
+  <img width="460" height="300" src="http://www.fillmurray.com/460/300">
+</p>
+```
 
 <div id="math"/>
 
@@ -237,6 +213,8 @@ For, More info see [here](https://www.xaprb.com/blog/how-to-style-images-with-ma
 [https://latex.codecogs.com/](https://latex.codecogs.com/)\
 [https://www.codecogs.com](https://www.codecogs.com/latex/eqneditor.php)\
 [http://www.sciweavers.org/](http://www.sciweavers.org/free-online-latex-equation-editor)
+
+<div id="highlighting"/>
 
 ## 3.5. Code and Syntax Highlighting
 
@@ -358,128 +336,7 @@ option for recursive.**
 
 ## 4.3. Git Alias
 
-```properties
-[alias]
- a = add --all
- #############
- b = branch
- ba = branch -a
- bd = branch -d
- bdd = branch -D
- #############
- c = commit
- ca = commit -a
- cm = commit -m
- cam = commit -am
- cd = commit --amend
- cad = commit -a --amend
- ######
- conf = config --global -e
- #############
- cl = clone
- #############
- f = fetch
- fo = fetch origin
- fu = fetch upstream
- #############
- l = log --oneline
- lg = log --oneline --graph --decorate
- #############
- m = merge
- ma = merge --abort
- mc = merge --continue
- ms = merge --skip
- #############
- o = checkout
- om = checkout main
- ob = checkout -b
- #############
- ps = push
- psf = push -f
- psu = push -u
- pst = push --tags
- #############
- pso = push origin
- psao = push --all origin
- psfo = push -f origin
- psuo = push -u origin
- #############
- psom = push origin main
- psaom = push --all origin main
- psfom = push -f origin main
- psuom = push -u origin main
- #############
- pl = pull
- pb = pull --rebase
- #############
- plo = pull origin
- pbo = pull --rebase origin
- plom = pull origin main
- ploc = !git pull origin $(git bc)
- pbom = pull --rebase origin main
- pboc = !git pull --rebase origin $(git bc)
- #############
- plu = pull upstream
- plum = pull upstream main
- pluc = !git pull upstream $(git bc)
- pbum = pull --rebase upstream main
- pbuc = !git pull --rebase upstream $(git bc)
- #############
- rb = rebase
- rba = rebase --abort
- rbc = rebase --continue
- rbi = rebase --interactive
- rbs = rebase --skip
- #############
- re = reset
- rh = reset HEAD
- reh = reset --hard
- rem = reset --mixed
- res = reset --soft
- rehh = reset --hard HEAD
- remh = reset --mixed HEAD
- resh = reset --soft HEAD
- rehom = reset --hard origin/main
- #############
- r = remote
- ra = remote add
- rr = remote rm
- rv = remote -v
- rn = remote rename
- rp = remote prune
- rs = remote show
- rao = remote add origin
- rau = remote add upstream
- rro = remote remove origin
- rru = remote remove upstream
- rso = remote show origin
- rsu = remote show upstream
- rpo = remote prune origin
- rpu = remote prune upstream
- #############
- rmf = rm -f
- rmrf = rm -r -f
- #############
- s = status
- sb = status -s -b
- #############
- sa = stash apply
- sc = stash clear
- sd = stash drop
- sl = stash list
- sp = stash pop
- ss = stash save
- ssk = stash save -k
- sw = stash show
- #############
- t = tag
- td = tag -d
- #############
- w = show
- wp = show -p
- wr = show -p --no-color
-    ........
-```
+[gist](https://gist.github.com/dev-SR/bf82b701864366b77b3320b543fbef75)
 
 <div id="githubrepo"/>
 
