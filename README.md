@@ -155,7 +155,7 @@ Some text here. Some text here.
 
 ## 3.3. Images
 
-```git
+```md
 ![Tux, the Linux mascot](/assets/images/tux.png)
 ![Tux, the Linux mascot](https://...)
 
@@ -164,7 +164,71 @@ Some text here. Some text here.
 
 <img src="https://latex.codecogs.com/svg.image?x^{2}&space;&plus;&space;a&space;^{2}&space;=&space;&space;25" title="x^{2} + a ^{2} = 25" />
 
-![Tux, the Linux mascot](https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg)
+### How to Style Images With Markdown:
+
+Basic:
+```md
+<img src="img/quran.jfif" alt="Table Datas" width="700" height="200"/>
+
+<img src="img/quran.jfif" alt="Table Datas" width="700" height="200" style="object-fit:contain"/>
+```
+<!-- <img src="img/quran.jfif" alt="Table Datas" width="700" height="200"/>
+
+<img src="img/quran.jfif" alt="Table Datas" width="700" height="200" style="object-fit:contain"/> -->
+
+
+Use CSS And Special URL Parameters: 
+
+```css
+![Kitten](/media/2018/08/kitten.jpg#thumbnail)
+
+<style>
+ img[src*="#thumbnail"] {
+    width:150px;
+    height:100px;
+  }
+</style>
+```  
+
+
+![Quran](img/quran.jfif#thumbnail)
+
+<style>
+img[src*="#thumbnail"] {
+   width:150px;
+   height:100px;
+   object-fit:contain;
+}
+</style>
+
+The `*=` selector syntax matches if `#thumbnail` appears anywhere in the `src` attribute. You could also anchor the matching to the end of the URL with `$="#thumbnail"`.
+
+Abuse Image Attributes As CSS Selector Targets:
+
+```css
+![quran](img/quran.jfif)
+
+<style>
+img[alt=quran] {
+   width:400px;
+   height:200px;
+   object-fit:contain;
+   object-position: 50% 50%;
+}
+</style>
+```
+![quran](img/quran.jfif)
+<style>
+img[alt=quran] {
+   width:200px;
+   height:200px;
+   object-fit:contain;
+   object-position: 50% 50%;
+}
+</style>
+
+For, More info see [here](https://www.xaprb.com/blog/how-to-style-images-with-markdown/)
+
 
 <div id="math"/>
 
