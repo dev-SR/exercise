@@ -15,6 +15,7 @@
   - [Alias](#alias)
   - [Commands for Github Repo](#githubrepo)
   - [Change the URI (URL) for a remote Git repository](#changeremote)
+- [Vim](#vi)
 - Unicode For Better Comments
   - [Unicodes](#unicodes)
 
@@ -379,6 +380,35 @@ git remote -v
 # origin  https://github.com/user/repo2.git (fetch)
 # origin  https://github.com/user/repo2.git (push)
 
+```
+
+
+<div id="vi"></div>
+
+# Vim
+
+## Linux(ubuntu)
+Install Vim (Enhanced version of vi which is preinstalled)
+
+```bash
+
+sudo apt install vim
+
+```
+
+Configure .vimrc
+
+```bash
+# search if.vimrc exits
+ls -a | grep .vim
+# open .vimrc
+vim .vimrc
+```
+
+```vim
+inoremap jj <Esc>
+syntax on
+set number
 ```
 
 # 5. Unicodes
