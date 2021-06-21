@@ -171,9 +171,9 @@ Some text here. Some text here.
 ![Tux, the Linux mascot](https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg)
 
 
-###  Aligning images
+###  3.3.1. Aligning images
 
-####  `left` alignment
+####  3.3.1.1. `left` alignment
 
 <img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100">
 
@@ -184,7 +184,7 @@ This is the code you need to align images to the left:
 
 ---
 
-####  `right` alignment
+####  3.3.1.2. `right` alignment
 
 <img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100">
 
@@ -195,7 +195,7 @@ This is the code you need to align images to the right:
 
 ---
 
-####  `center` alignment example
+####  3.3.1.3. `center` alignment example
 
 <p align="center">
   <img width="460" height="300" src="http://www.fillmurray.com/460/300">
@@ -385,9 +385,9 @@ git remote -v
 
 <div id="vi"></div>
 
-# Vim
+# 5. Vim
 
-## Linux(ubuntu)
+## 5.1. Linux(ubuntu)
 Install Vim (Enhanced version of vi which is preinstalled)
 
 ```bash
@@ -411,15 +411,15 @@ syntax on
 set number
 ```
 
-# 5. Unicodes
+# 6. Unicodes
 
-### 5.0.1. LINKS
+### 6.0.1. LINKS
 
 [Arrows](https://unicode-table.com/en/sets/arrow-symbols/)
 
 [Box Drawing](https://unicode-table.com/en/blocks/box-drawing/)
 
-### 5.0.2. Examples
+### 6.0.2. Examples
 
 ```
     /**
