@@ -129,4 +129,15 @@ public class Color {
         System.out.println(s2);
         System.out.print(Color.RESET);
     }
+    public static void printMsg(String color, String msg) {
+        System.out.print(color);
+        System.out.println(msg );
+        System.out.print(Color.RESET);
+    }
+    public static void printMsg(String color, String msg, String bg) {
+        System.out.print(color);
+        System.out.print(bg);
+        System.out.println(msg );
+        System.out.print(Color.RESET);
+    }
 }
