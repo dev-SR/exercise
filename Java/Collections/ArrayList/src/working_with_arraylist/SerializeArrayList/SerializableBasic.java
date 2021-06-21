@@ -19,7 +19,7 @@ class Employee implements java.io.Serializable {
     }
 }
 
-public class Serializable {
+public class SerializableBasic {
     static String cwd = Path.of("").toAbsolutePath().toString();
     static String filePath = cwd + "\\src\\working_with_arraylist\\SerializeArrayList\\tmp\\employee.ser";
 
