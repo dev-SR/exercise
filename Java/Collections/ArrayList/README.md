@@ -8,7 +8,6 @@
   - [Add/Remove](#addremove)
   - [Get/Search](#gs)
   - [Sort](#sort)
-- [Working with ArrayList](#w)
 
 <div id="m"/>
 
@@ -911,49 +910,3 @@ public class ArrayListObjectSortExample {
 [https://howtodoinjava.com/java/sort/collections-sort/](https://howtodoinjava.com/java/sort/collections-sort/)
 
 <div id="w"/>
-
-# 3. 3.WorkingwithArrayList
-
-- [Compare two ArrayLists](#o1)
-- [Synchronize ArrayList](#o2)
-- [Swap two elements in ArrayList](#o3)
-- [Serialize ArrayList](#o4)
-- [Join two ArrayList](#o5)
-- [Make ArrayList Empty](#o61)
-- [Check whether ArrayList is empty or not](#o7)
-- [Replace the value of existing element in ArrayList](#o8)
-- [Remove duplicate elements in ArrayList](#o9)
-
-<div id="o1"></div>
-
-## 3.1. Compare two ArrayLists
-
-1. [Compare for equality](#cc1)
-2. [Compare and find additional elements](#cc2)
-3. [Compare and find missing elements](#cc3)
-4. [Compare and find common elements](#cc4)
-
-<div id="cc1"></div>
-
-### 3.1.1. Compare for equality
-
-<div id="cc2"></div>
-
-### 3.1.2. Compare and find additional element
-
-<div id="cc3"></div>
-
-### 3.1.3. Compare and find missing elements
-
-<div id="cc4"></div>
-
-### 3.1.4. Compare and find common elements
-
-<div id="o2"></div>
-<div id="o3"></div>
-<div id="o4"></div>
-<div id="o5"></div>
-<div id="o6"></div>
-<div id="o7"></div>
-<div id="o8"></div>
-<div id="o9"></div>
