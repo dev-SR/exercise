@@ -2,6 +2,7 @@
 
 - [Basic Array List Methods](#m)
   - [Initialize ArrayList](#i)
+  - [Array of ArrayList](#arrofarr)
   - [Loop ArrayList](#itr)
   - [Find length of ArrayList](#len)
   - [Add/Remove](#addremove)
@@ -17,7 +18,17 @@
 
 ## 2.1. Initialize ArrayList
 
-### 2.1.1. Arrays.asList() – Initialize ArrayList from array
+### 2.1.1. ArrayList Constructors
+
+There are three constructors in Java ArrayList class.
+
+- `public ArrayList():` Most widely used Java ArrayList constructor. This ArrayList constructor will return an empty list with initial capacity of 10.
+  
+- `public ArrayList(int initialCapacity):` This ArrayList constructor will return an empty list with initial capacity as specified by the initialCapacity argument. This constructor is useful when you know that your list will contain huge data and you want to save time of reallocation by providing a large value of initial capacity. If the initialCapacity argument is negative, it will throw IllegalArgumentException.
+  
+- `public ArrayList(Collection<? extends E> c):` This ArrayList constructor will return a list containing the elements of the specified collection, in the order they are returned by the collection’s iterator. It will throw famous NullPointerException if the specified collection argument is null.
+
+### 2.1.2. Arrays.asList() – Initialize ArrayList from array
 
 To initialize an arraylist in single line statement, get all elements in form of
 array using `Arrays.asList` method and pass the `array` argument to `ArrayList`
@@ -27,7 +38,7 @@ constructor.
 ArrayList<String> names = new ArrayList<String>( Arrays.asList("alex", "brian", "charles") );
 ```
 
-### 2.1.2. List.of() – Immutable list – Java 9
+### 2.1.3. List.of() – Immutable list – Java 9
 
 We can use `List.of()` static factory methods to create **`immutable`** lists.
 Only drawback is that `add` operation is **not supported** in these lists.
@@ -36,14 +47,14 @@ Only drawback is that `add` operation is **not supported** in these lists.
 List<String> names = List.of("alex", "brian");
 ```
 
-### 2.1.3. Use Collections.ncopies(count, element)
+### 2.1.4. Use Collections.ncopies(count, element)
 
 ```java
 ArrayList<Integer> intlist = new ArrayList<Integer>(Collections.nCopies(10, 5));
 //ArrayList items: [5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
 ```
 
-### 2.1.4. Anonymous inner class method to initialize ArrayList
+### 2.1.5. Anonymous inner class method to initialize ArrayList
 
 syntax:
 
@@ -67,7 +78,7 @@ ex:
      }};
 ```
 
-### 2.1.5. Create ArrayList and add objects – ArrayList constructor
+### 2.1.6. Create ArrayList and add objects – ArrayList constructor
 
 ```java
 ArrayList<String> l = new ArrayList<>();
@@ -87,7 +98,7 @@ l.addAll(ll.keySet());
 //[alex, brian, charles, max, john, keanu]
 ```
 
-### 2.1.6. Initialize ArrayList of lists
+### 2.1.7. Initialize ArrayList of lists
 
 ```java
 List<List<Integer>> l = new ArrayList<>();
@@ -113,9 +124,109 @@ instance in below manner.
 l.add(new ArrayList<Integer>( Arrays.asList(10, 20, 30) ));
 ```
 
+<div id="arrofarr" class=""></div>
+
+## 2.2. Array of ArrayList
+
+### 2.2.1. Array of ArrayList
+
+```java
+        List<String> l1 = new ArrayList<>();
+        l1.add("1");
+        l1.add("2");
+
+        List<String> l2 = new ArrayList<>();
+        l2.add("3");
+        l2.add("4");
+        l2.add("5");
+
+        List<String>[] arrayOfList = new List[2];
+        arrayOfList[0] = l1;
+        arrayOfList[1] = l2;
+
+        for (int i = 0; i < arrayOfList.length; i++) {
+            List<String> l = arrayOfList[i];
+            System.out.println(l);
+        }
+        //[1, 2]
+        //[3, 4, 5]
+```
+
+Notice that we can’t use `generics` while creating the array because java doesn’t support generic array. So if we try to use below code, it will produce compile time error as `“Cannot create a generic array of List<String>”`.
+
+```java
+List<String>[] arrayOfList = new List<String>[2];
+```
+
+### 2.2.2. ArrayList of Array
+
+```java
+  List<String[]> list = new ArrayList<String[]>();
+  
+  String[] arr1 = { "a", "b", "c" };
+  String[] arr2 = { "1", "2", "3", "4" };
+  list.add(arr1);
+  list.add(arr2);
+  for (String[] strArr : list) {
+   System.out.println(Arrays.toString(strArr));
+  }
+ }
+```
+### 2.2.3. ArrayList of Object Array
+
+```java
+class B {
+    private String name;
+    B(String name) {this.name = name;}
+    @Override
+    public String toString() {
+        return "B{" + "name='" + name + '\'' + '}';
+    }
+    public String getName() {return name;}
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // list of Object arrays to hold different types of array
+        List<Object[]> list = new ArrayList();
+        String[] arr1 = {"a", "b", "c"};
+        String[] arr2 = {"1", "2", "3", "4"};
+
+        B[] b = {new B("A"), new B("B")};
+
+        Main aa = new Main();
+        Main.Inner[] arr3 = {aa.new Inner("AA"), aa.new Inner("BB")};
+
+        list.add(arr1);list.add(arr2); list.add(arr3);
+        list.add(b);
+
+        for (Object[] objArr : list) {
+            System.out.println(Arrays.toString(objArr));
+            for (Object obj : objArr) {
+                if (obj instanceof String) {
+                } else if (obj instanceof B) {
+                    System.out.println(((B) obj).getName());
+                } else if (obj instanceof Inner) {
+                    System.out.println(((Inner) obj).name);
+                }
+            }
+        }
+    }
+    public class Inner {
+        public String name;
+        public Inner(String n) {this.name = n; }
+        @Override
+        public String toString() {
+            return "Inner{" +"name='" + name + '\'' + '}';
+        }
+    }//Inner
+}//Main
+```
+
+
 <div id="len" class=""></div>
 
-## 2.2. Find length of ArrayList
+## 2.3. Find length of ArrayList
 
 ```java
 l.size()
@@ -123,7 +234,7 @@ l.size()
 
 <div id="itr" class=""></div>
 
-## 2.3. Iterate through ArrayList of objects
+## 2.4. Iterate through ArrayList of objects
 
 There are five ways to loop ArrayList.
 
@@ -179,7 +290,6 @@ There are five ways to loop ArrayList.
 
 > Note: The `iterator()` and `listIterator()` methods are useful when you need to `modify` the ArrayList while traversing.
 
-
 ```java
         Iterator<Integer> numbersIterator = numbers.iterator();
         while (numbersIterator.hasNext()) {
@@ -192,7 +302,7 @@ There are five ways to loop ArrayList.
 
 <div id="addremove" class=""></div>
 
-## 2.4. Add/Remove
+## 2.5. Add/Remove
 
 - [Add element to ArrayList](#1)
 - [Add element at particular index of ArrayList](#2)
@@ -207,7 +317,7 @@ There are five ways to loop ArrayList.
 
 <div id="1"/>
 
-### 2.4.1. Add element to ArrayList
+### 2.5.1. Add element to ArrayList
 
 `public boolean add(Object element)`
 
@@ -217,7 +327,7 @@ l.add("John");
 
 <div id="2"/>
 
-### 2.4.2. Add element at particular index of ArrayList
+### 2.5.2. Add element at particular index of ArrayList
 
 `public void add(int index, Object element)`
 
@@ -227,7 +337,7 @@ l.add(1,"John");
 
 <div id="ad1"/>
 
-### 2.4.3. Add only selected items to arraylist
+### 2.5.3. Add only selected items to arraylist
 
 This method uses `Java 8 stream` API. We create a stream of elements from first
 list, add filter to get the desired elements only, and then collect filtered
@@ -248,7 +358,7 @@ namesList.stream()
 
 <div id="3"/>
 
-### 2.4.4. Append Collection elements to ArrayList
+### 2.5.4. Append Collection elements to ArrayList
 
 `public boolean addAll(Collection c)`
 
@@ -260,7 +370,7 @@ l1.addAll(l2);//[1, 2, 3, 4, 5]
 
 <div id="4"/>
 
-### 2.4.5. Insert all the collection elements to the specified position in ArrayList
+### 2.5.5. Insert all the collection elements to the specified position in ArrayList
 
 `public boolean addAll(int index, Collection c)`
 
@@ -272,7 +382,7 @@ l1.addAll(1,l2);//[1, 4, 5, 2, 3]
 
 <div id="r1"/>
 
-### 2.4.6. Replace element at specified index
+### 2.5.6. Replace element at specified index
 
 `ArrayList.set(int index, E element)`
 
@@ -285,7 +395,7 @@ l.set(0, "Lokesh");
 
 <div id="r2"/>
 
-### 2.4.7. Replace element in ArrayList while iterating
+### 2.5.7. Replace element in ArrayList while iterating
 
 ```java
 ArrayList<String> l = new ArrayList<String>(Arrays.asList( "alex", "brian", "charles") );
@@ -301,7 +411,7 @@ for(int i=0; i < l.size(); i++)
 
 <div id="5"/>
 
-### 2.4.8. Remove element from the specified index in ArrayList
+### 2.5.8. Remove element from the specified index in ArrayList
 
 `public Object remove(int index)`
 
@@ -318,7 +428,7 @@ Integer e = list.remove(2);
 
 <div id="6"/>
 
-### 2.4.9. Remove specified element from ArrayList
+### 2.5.9. Remove specified element from ArrayList
 
 `public boolean remove(Object obj)`
 
@@ -352,7 +462,7 @@ l.removeIf( name -> name.equals("alex"));
 
 <div id="gs" class=""></div>
 
-## 2.5. Get/Search
+## 2.6. Get/Search
 
 - [Get element from ArrayList](#g1)
 - [Get the index of first occurrence of the element in the ArrayList](#g2)
@@ -363,7 +473,7 @@ l.removeIf( name -> name.equals("alex"));
 
 <div id="g1"></div>
 
-### 2.5.1. Get element from ArrayList
+### 2.6.1. Get element from ArrayList
 
 `public Element get(int index)`
 
@@ -378,7 +488,7 @@ _.get(0)
 
 <div id="g2"></div>
 
-### 2.5.2. Get the index of first occurrence of the element in the ArrayList
+### 2.6.2. Get the index of first occurrence of the element in the ArrayList
 
 `public int indexOf(Object o)`
 
@@ -391,7 +501,7 @@ l.indexOf("AA")//-1
 
 <div id="g3"></div>
 
-### 2.5.3. Get the index of last occurrence of the element in the ArrayList
+### 2.6.3. Get the index of last occurrence of the element in the ArrayList
 
 `public int lastIndexOf(Object obj)`
 
@@ -404,7 +514,7 @@ l.lastIndexOf("AA")//-1
 
 <div id="g4"></div>
 
-### 2.5.4. Check whether element exists in ArrayList
+### 2.6.4. Check whether element exists in ArrayList
 
 `public boolean contains(Object element)`
 
@@ -420,7 +530,7 @@ l.contains(1)
 
 <div id="g5"></div>
 
-### 2.5.5. Get Sub List of ArrayList
+### 2.6.5. Get Sub List of ArrayList
 
 `List subList(int fromIndex, int toIndex)`
 
@@ -437,7 +547,7 @@ List sublist = new ArrayList(l.subList(2, 6) );//[2, 3, 4, 5]
 
 <div id="g6"></div>
 
-#### 2.5.5.1. Remove Sub list of ArrayList
+#### 2.6.5.1. Remove Sub list of ArrayList
 
 ```java
 List l = new ArrayList(Arrays.asList(0,1,2,3,4,5,6,7,8,9));
@@ -446,7 +556,7 @@ l.subList(2, 6).clear();//[0, 1, 6, 7, 8, 9]
 
 <div id="sort"/>
 
-## 2.6. Sort ArrayList
+## 2.7. Sort ArrayList
 
 - [Sort arraylist of Strings](#s1)
   - [List.sort() method](#s2)
@@ -459,11 +569,11 @@ l.subList(2, 6).clear();//[0, 1, 6, 7, 8, 9]
 
 <div id="s1"></div>
 
-### 2.6.1. Sort arraylist of strings
+### 2.7.1. Sort arraylist of strings
 
 <div id="s2"></div>
 
-#### 2.6.1.1. List.sort() method
+#### 2.7.1.1. List.sort() method
 
 Java program to sort any arraylist of strings alphabetically and _descending_
 order.
@@ -484,6 +594,7 @@ l.sort( Comparator.comparing( String::toString ).reversed() );
 ```
 
 > More Comparator :
+
 ```java
 
         List<String> names = new ArrayList<>();
@@ -511,7 +622,7 @@ l.sort( Comparator.comparing( String::toString ).reversed() );
 
 <div id="s3"></div>
 
-#### 2.6.1.2. Collections.sort() method
+#### 2.7.1.2. Collections.sort() method
 
 ```java
 //Unsorted list
@@ -530,7 +641,7 @@ Collections.sort(l, Collections.reverseOrder());
 
 <div id="s4"></div>
 
-#### 2.6.1.3. Sort arraylist of strings with Java 8 stream
+#### 2.7.1.3. Sort arraylist of strings with Java 8 stream
 
 ```java
 //Unsorted list
@@ -550,7 +661,7 @@ List<String> reverseSorted =
 
 <div id="s5"></div>
 
-### 2.6.2. Sort arraylist of integers
+### 2.7.2. Sort arraylist of integers
 
 ```java
 /Unsorted list
@@ -571,7 +682,7 @@ Collections.sort(l, Collections.reverseOrder());  //[5, 4, 3, 2, 1]
 
 <div id="s6"></div>
 
-### 2.6.3. Java sort arraylist of objects – Comparable and Comparator
+### 2.7.3. Java sort arraylist of objects – Comparable and Comparator
 
 1. [Employee - Model Class](#com1")
 2. [Comparable Interface](#com2)
@@ -581,9 +692,9 @@ Collections.sort(l, Collections.reverseOrder());  //[5, 4, 3, 2, 1]
 
 <div id="com2"></div>
 
-#### 2.6.3.1. Comparable Example
+#### 2.7.3.1. Comparable Example
 
-##### 2.6.3.1.1. Implementing `compareTo(T o)` method of `Comparable` interface
+##### 2.7.3.1.1. Implementing `compareTo(T o)` method of `Comparable` interface
 
 `Comparable` interface provides one method `compareTo(T o)` to implement in any
 class so that two instances of that class can be compared.
@@ -632,7 +743,7 @@ public class TestSorting {
 
 <div id="com3"></div>
 
-#### 2.6.3.2. Comparator Example
+#### 2.7.3.2. Comparator Example
 
 So, now we can sort a list of employees by their `id`. Now let’s consider a case
 where we want to sort employees list based on some user input which is
@@ -703,9 +814,10 @@ public class TestSorting
 }
 
 ```
+
 <div id="com4"></div>
 
-#### 2.6.3.3. Comparator in Java 8
+#### 2.7.3.3. Comparator in Java 8
 
 Latest Lambda changes have made using `Comparator` a lot easier than ever
 before.
@@ -784,23 +896,23 @@ public class ArrayListObjectSortExample {
 
 <div id="com5"></div>
 
-#### 2.6.3.4. hashCode() and equals()
+#### 2.7.3.4. hashCode() and equals()
 
 <div id="s7"></div>
 
-### 2.6.4. Sort ArrayList of objects by multiple fields
+### 2.7.4. Sort ArrayList of objects by multiple fields
 
 [https://howtodoinjava.com/java/sort/groupby-sort-multiple-comparators/](https://howtodoinjava.com/java/sort/groupby-sort-multiple-comparators/)
 
 <div id="s8"></div>
 
-### 2.6.5. Java Collections sort() Method
+### 2.7.5. Java Collections sort() Method
 
 [https://howtodoinjava.com/java/sort/collections-sort/](https://howtodoinjava.com/java/sort/collections-sort/)
 
 <div id="w"/>
 
-# 3. Working with ArrayList
+# 3. 3.WorkingwithArrayList
 
 - [Compare two ArrayLists](#o1)
 - [Synchronize ArrayList](#o2)
