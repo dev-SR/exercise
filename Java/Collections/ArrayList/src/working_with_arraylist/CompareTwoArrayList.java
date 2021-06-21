@@ -73,6 +73,6 @@ public class CompareTwoArrayList {
         ArrayList<String> listOne = new ArrayList<>(Arrays.asList("a", "b", "c", "d", "f"));
         ArrayList<String> listTwo = new ArrayList<>(Arrays.asList("a", "b", "c", "d", "e"));
         listOne.retainAll(listTwo);
-        System.out.println(listOne);
+        System.out.println(listOne);// [a, b, c, d]
     }
 }
