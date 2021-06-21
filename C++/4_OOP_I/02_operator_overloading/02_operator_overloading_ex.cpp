@@ -111,6 +111,7 @@ int main() {
     cout << c2 << endl;
 
     Circle c3, c4;
+    //ifstream is special sub type of istream; used for taking input from file
     ifstream fin("circle_data.txt");
     if (!fin) {
         cout << "Invalid file name" << endl;
@@ -118,6 +119,7 @@ int main() {
     }
     fin >> c3 >> c4;
     cout << c3 << c4;
+    //ofstream is special sub type of ostream; used for file output
     ofstream fout("out_data.txt");
     fout << c3 << c4;
     return 0;
