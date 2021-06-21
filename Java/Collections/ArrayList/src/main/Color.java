@@ -109,8 +109,9 @@ public class Color {
         System.out.print(color);
         System.out.print(s1);
         System.out.print(" " + msg + " ");
-        System.out.print(s2);
+        System.out.println(s2);
         System.out.print(Color.RESET);
+
     }
 
     public static void printStartWithMsg(int n, String color, String msg, String bg) {
@@ -125,7 +126,7 @@ public class Color {
         System.out.print(bg);
         System.out.print(s1);
         System.out.print(" " + msg + " ");
-        System.out.print(s2);
+        System.out.println(s2);
         System.out.print(Color.RESET);
     }
 }

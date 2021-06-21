@@ -40,16 +40,6 @@ public class Main {
             System.out.print(i + " ");
         }
         System.out.println();
-
-        ArrayList<Integer> l1 = new ArrayList<>(Arrays.asList(1, 2, 3));
-        ArrayList<Integer> l2 = new ArrayList<>(Arrays.asList(4, 5));
-        System.out.println(l1);
-        l1.addAll(l2);//[1, 4, 5, 2, 3]
-        System.out.println(l1);
-
-        Color.printStart(30,Color.RED_BRIGHT,Color.YELLOW_BACKGROUND);
-        Color.printStartWithMsg(50,Color.CYAN_BOLD_BRIGHT,"Hello World",Color.BLUE_BACKGROUND_BRIGHT);
-
     }
 
 }
