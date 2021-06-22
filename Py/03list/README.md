@@ -1,10 +1,11 @@
-# LIST
+# 1. LIST
 
-### Indexing/Slicing of List works same as String
+### 1.0.1. Indexing/Slicing of List works same as String
 
 
 
 ```python
+
 l = [1,2,3,4,5,6]
 
 print(l[0])
@@ -12,8 +13,8 @@ print(l[-1])
 print(l[1:-1])
 
 # because of mutable property
-my_list[0] = 5
-print(my_list)
+l[0] = 5
+print(l)
 ```
 
     1
@@ -22,63 +23,43 @@ print(my_list)
     [5, 2, 3, 4, 5, 6]
     
 
-## Some methods for list 
-
 
 ```python
-# add the given element at the end of the list
-l.append(33)
-print(l)
-
+numbers = list(range(20))
+print(numbers[::2])
 ```
 
-    [1, 2, 3, 4, 5, 6, 33]
+    [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
     
 
+### 1.0.2. List Unpacking
+
 
 ```python
-# insert 10 at index 1
-l.insert(1,10)
-print(l)
+# rest equivalent
+n = list(range(5))
+first,second,*other =n
+
+print(first)
+print(second)
+print(other)
+
+first,*other,last =n
+
+print(first)
+print(last)
+print(other)
 ```
 
-    [1, 10, 2, 3, 4, 5, 6, 33]
+    0
+    1
+    [2, 3, 4]
+    0
+    4
+    [1, 2, 3]
     
 
-
-```python
-# pop():
-# delete the last element
-# can also delete from specified index
-l.pop()
-print(l)
-l.pop(1)
-print(l)
-
-# remove(idx)
-l.remove(1)
-print(l)
-```
-
-    [1, 10, 2, 3, 4, 5, 6]
-    [1, 2, 3, 4, 5, 6]
-    [2, 3, 4, 5, 6]
-    
-
-
-```python
-# reverse
-l.reverse()
-print(l)
-```
-
-    [6, 5, 4, 3, 2]
-    
-
-
-```python
-
-```
+### 1.0.3. iteration
 
 
 ```python
@@ -91,19 +72,16 @@ print(v)
 for lan in programming_lan:
     print(lan)
 
-# accessing List
 print()
-print(f"at 3: {programming_lan[2]}") 
-print(f"first 2 item: {programming_lan[0:2]}") 
-print(f"last: {programming_lan[-1]}") 
 
-#common methods:
+# looping with enumerate()
+for lan in enumerate(programming_lan):
+    print(lan)
+
 print()
-l=[2,4,6,8]
-print(min(l))
-print(max(l))
-print(len(l))
-
+# also returns each item with its index postion.
+for i,v in enumerate(programming_lan):
+    print(f"{i+1}: {v}")
 
 ```
 
@@ -114,50 +92,94 @@ print(len(l))
     Kotlin
     TypeScript
     
-    at 3: C++
-    first 2 item: ['Java', 'C']
-    last: TypeScript
+    (0, 'Java')
+    (1, 'C')
+    (2, 'C++')
+    (3, 'Kotlin')
+    (4, 'TypeScript')
     
-    2
-    8
-    4
+    1: Java
+    2: C
+    3: C++
+    4: Kotlin
+    5: TypeScript
     
 
-## List Comprehension
+## 1.1. Some methods for list 
+
+### 1.1.1. add
 
 
 ```python
-l = [1,2,3,4,5,6]
-# creating a new list of squares of each element
-new_l = []
-for el in l:
-    new_l.append(el**2)
-
-print(new_l)
-
-# With List Comprehension:
-
-new_l = [el**2 for el in new_l] # [(What to Store ) for each element of list]
-print(new_l)
+# add the given element at the end of the list
+l.append(33)
+print(l)
+# insert 10 at index 1
+l.insert(1,10)
+print(l)
 
 ```
 
-    [1, 4, 9, 16, 25, 36]
-    [1, 16, 81, 256, 625, 1296]
+    [5, 2, 3, 4, 5, 6, 33]
+    [5, 10, 2, 3, 4, 5, 6, 33]
+    
+
+### 1.1.2. remove
+
+
+```python
+# pop():
+# delete the last element
+# can also delete from specified index
+l.pop()
+print(l)
+l.pop(1)
+print(l)
+
+# remove()
+l.remove(5)
+print(l)
+
+del l[0:3]
+print(l)
+
+l.clear()
+print(l)
+```
+
+    [5, 10, 2, 3, 4, 5, 6]
+    [5, 2, 3, 4, 5, 6]
+    [2, 3, 4, 5, 6]
+    [5, 6]
+    []
     
 
 
 ```python
-# e.g of heterogenous list
-
-l2 = [4,True,98.4,[6,9,1],"Py"]
-print(l2)
+# reverse
+l.reverse()
+print(l)
 ```
 
-    [4, True, 98.4, [6, 9, 1], 'Py']
+    [6, 5, 4, 3, 2]
     
 
-### 2D list 
+### 1.1.3. Finding Items
+
+
+```python
+letters = ["a","b","c"]
+print(letters.count("d"))
+
+if "b" in letters:
+    print(letters.index("b"))
+```
+
+    0
+    1
+    
+
+## 1.2. 2D list 
 
 
 ```python
@@ -175,56 +197,7 @@ print(list_2d[1][0])
     4
     
 
-## Built-in Function:
-
-### enumerate():
-##### returns each item with its index postion.
-
-
-```python
-programming_lan= ["Java","C","C++","Kotlin","TypeScript"]
-
-# looping
-for lan in enumerate(programming_lan):
-    print(lan)
-
-print()
-
-for i,v in enumerate(programming_lan):
-    print(f"{i+1}: {v}")
-
-str
-```
-
-    (0, 'Java')
-    (1, 'C')
-    (2, 'C++')
-    (3, 'Kotlin')
-    (4, 'TypeScript')
-    
-    1: Java
-    2: C
-    3: C++
-    4: Kotlin
-    5: TypeScript
-    
-
-### any(iterable)
-##### returns True if any element of the iterable is true. 
-
-
-```python
-print(any([1,0]))
-print(any([False,0,"",]))
-print(any([]))
-```
-
-    True
-    False
-    False
-    
-
-## Sorting
+## 1.3. Sorting
 
 
 ```python
@@ -255,59 +228,161 @@ print(l)
     ['a', 'B', 'c', 'D', 'e']
     
 
-## Generating List
+
+```python
+items = [
+    ("product 1",10),
+    ("product 2",5),
+    ("product 4",45),
+    ("product 5",23),
+]
+
+def sorted_item(i):
+    return i[1] #return price
+
+items.sort(key=sorted_item)
+print(items)
+```
+
+    [('product 2', 5), ('product 1', 10), ('product 5', 23), ('product 4', 45)]
+    
+
+#### 1.3.0.1. Using lembda:
+
+syntax:
+
+`lembda parameters:expression` 
 
 
 ```python
-lists =[]
-for i in range(1,10):
-    lists.append(str(i))
-print(lists)
-
-print()
-
-lists = [str(i) for i in range(10,15)]
-print(lists)
+items = [
+    ("product 1",10),
+    ("product 2",5),
+    ("product 4",45),
+    ("product 5",23),
+]
+# def sorted_item(i):
+#     return i[1]
+items.sort(key=lambda i:i[1])
+print(items)
 ```
 
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9']
-    
-    ['10', '11', '12', '13', '14']
+    [('product 2', 5), ('product 1', 10), ('product 5', 23), ('product 4', 45)]
     
 
-## Creating List
+## 1.4. Map Function
+
+
+```python
+items = [
+    ("product 1",10),
+    ("product 2",5),
+    ("product 4",45),
+    ("proeduct 5",23),
+]
+# extracting price from list of tuples
+prices = []
+for item in items:
+    prices.append(item[1])
+
+print(prices)
+print()
+# using map
+prices_mapped = map(lambda item:item[1],items)
+print(type(prices_mapped))
+prices = list(prices_mapped)
+print(prices)
+```
+
+    [10, 5, 45, 23]
+    
+    <class 'map'>
+    [10, 5, 45, 23]
+    
+
+## 1.5. Filter Function
+
+
+```python
+filtered = list(filter(lambda item:item[1]>=10,items ))
+print(filtered)
+```
+
+    [('product 1', 10), ('product 4', 45), ('proeduct 5', 23)]
+    
+
+## 1.6. List Comprehension
+
+`[expression for item in list]`
+
+```python
+letters = list(map(lambda x: x, 'human'))
+print(letters) # ['h','u','m','a','n']
+
+```
+
+
+```python
+l = [1,2,3,4,5,6]
+# creating a new list of squares of each element
+new_l = []
+for el in l:
+    new_l.append(el**2)
+
+print(new_l)
+
+# With List Comprehension:
+
+new_l = [el**2 for el in new_l] # [(What to Store ) for each element of list]
+print(new_l)
+
+```
+
+    [1, 4, 9, 16, 25, 36]
+    [1, 16, 81, 256, 625, 1296]
+    
+
+### 1.6.1. Replacing Map and Filter function with list comprehension
+
+
+```python
+items = [
+    ("product 1",10),
+    ("product 2",5),
+    ("product 4",45),
+    ("proeduct 5",23),
+]
+
+# prices = list(map(lambda item:item[1],items))
+prices = [item[1] for item in items]
+# filtered = list(filter(lambda item:item[1]>=10,items ))
+filtered = [item for item in items if item[1] >= 10]
+
+
+print(prices)
+print(filtered)
+```
+
+    [10, 5, 45, 23]
+    [('product 1', 10), ('product 4', 45), ('proeduct 5', 23)]
+    
+
+## 1.7. Zip Function
 
 
 ```python
 l1 = [1,2,3]
-l2= [4,5,6]
-l=l1+l2
-print(l)
-print()
+l2= [10,20,30]
 
-l3=sorted(l,reverse=True)
-print(l3)
-
-# digits = list('22')
-# print(digits)
-
-print()
-copy = l[:]
-print(copy)
-copy =l.copy()
-print(copy)
-# copy() is more efficient 
+print(list(zip(l1,l2)))
+print(list(zip("abc",l1,l2)))
 ```
 
-    [1, 2, 3, 4, 5, 6]
-    
-    [6, 5, 4, 3, 2, 1]
-    
-    [1, 2, 3, 4, 5, 6]
-    [1, 2, 3, 4, 5, 6]
+    [(1, 10), (2, 20), (3, 30)]
+    [('a', 1, 10), ('b', 2, 20), ('c', 3, 30)]
     
 
-# Examples
+# 2. Examples
 
 
 ```python
