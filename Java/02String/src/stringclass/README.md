@@ -46,7 +46,7 @@ hoved to `Heap Memory`._
 Immutable Class In Java , it makes sense to cache and shares them in JVM. Java creators introduced this String pool construct as an optimization on the way String objects are allocated and stored. It is a simple implementation of the Flyweight pattern, which in essence, says this: when a lot of data is common among several objects, it is better to just share the same instance of that data than creating several different “copies” of it.
 
 
-### 1. Direct Initialization
+### 2. Object Initialization
 
 ```java
 Srting str = new String("abc");
@@ -65,6 +65,18 @@ memory String object only.
 
 ![literral vs object string](../img/string-1.jpg)
 
+> Final result:
 
+```java
+        String s1 = "abc";
+        String s2 = "abc";
+        String s3 = new String("abc");
+        String s4 = "Abc";
+        String s5 = new String("abc");
 
+//      `abc` == `abc` : s1==s2 > true
+//      `abc` == String(abc) : s1==s3 > false
+//      `abc` == `Abc` : s1==s3 > false
+//       String(abc) == String(abc) : s3==s5 > false
+```
 
