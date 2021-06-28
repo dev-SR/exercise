@@ -1,4 +1,4 @@
-# 1. Quick Navigation
+# Quick Navigation
 
 - Vs Code Setting
   - [Font](#font)
@@ -19,9 +19,9 @@
 - Unicode For Better Comments
   - [Unicodes](#unicodes)
 
-# 2. Vs Code Setting
+# Vs Code Setting
 
-## 2.1. font
+## font
 
 **For Editor:** _`FiraCode-Regular.ttf`_ and _`FiraCode-Bold.ttf`_ from:
 [tonsky/FiraCode](https://github.com/tonsky/FiraCode)
@@ -29,9 +29,9 @@
 **For Terminal:** _`FiraMono NF`_ from
 [Nerd Font](https://github.com/tonsky/FiraCode)
 
-## 2.2. Terminal
+## Terminal
 
-### 2.2.1. For Windows Terminal
+### For Windows Terminal
 
 ---
 
@@ -65,11 +65,11 @@ fileName: `Microsoft.PowerShell_profile.ps1`
 Set-PoshPrompt -Theme pure
 ```
 
-# 3. Markdown Guide
+# Markdown Guide
 
 <div id="cheatsheet"/>
 
-## 3.1. Cheatsheets
+## Cheatsheets
 
 > [Cheatsheet-1](https://www.markdownguide.org/basic-syntax/)
 
@@ -77,7 +77,7 @@ Set-PoshPrompt -Theme pure
 
 <div id="links"/>
 
-## 3.2. Links
+## Links
 
 ```
 [I'm an inline-style link](https://www.google.com)
@@ -90,7 +90,7 @@ Set-PoshPrompt -Theme pure
 
 [I'm a relative reference to a repository file](C++/0string)
 
-### 3.2.1. **Anchor to a heading in github flavored markdown**
+### **Anchor to a heading in github flavored markdown**
 
 Github automatically parses anchor tags out of your headers. So you can do the
 following:
@@ -146,21 +146,21 @@ Some text here. Some text here.
 
 <div id="Chapter1"/>
 
-#### 3.2.1.1. Chapter 1
+#### Chapter 1
 
 Some text here.  
 Some text here. Some text here.
 
 <span id="Chapter2"/>
 
-#### 3.2.1.2. Chapter 2
+#### Chapter 2
 
 Some text here.  
 Some text here. Some text here.
 
 <div id="images"/>
 
-## 3.3. Images
+## Images
 
 ```git
 ![Tux, the Linux mascot](/assets/images/tux.png)
@@ -171,9 +171,9 @@ Some text here. Some text here.
 ![Tux, the Linux mascot](https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg)
 
 
-###  3.3.1. Aligning images
+###  Aligning images
 
-####  3.3.1.1. `left` alignment
+####  `left` alignment
 
 <img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100">
 
@@ -184,7 +184,7 @@ This is the code you need to align images to the left:
 
 ---
 
-####  3.3.1.2. `right` alignment
+####  `right` alignment
 
 <img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100">
 
@@ -195,7 +195,7 @@ This is the code you need to align images to the right:
 
 ---
 
-####  3.3.1.3. `center` alignment example
+####  `center` alignment example
 
 <p align="center">
   <img width="460" height="300" src="http://www.fillmurray.com/460/300">
@@ -209,7 +209,7 @@ This is the code you need to align images to the right:
 
 <div id="math"/>
 
-## 3.4. Mathematical Formula in markdown
+## Mathematical Formula in markdown
 
 [https://latex.codecogs.com/](https://latex.codecogs.com/)\
 [https://www.codecogs.com](https://www.codecogs.com/latex/eqneditor.php)\
@@ -217,7 +217,7 @@ This is the code you need to align images to the right:
 
 <div id="highlighting"/>
 
-## 3.5. Code and Syntax Highlighting
+## Code and Syntax Highlighting
 
 ```
 Inline `code` has `back-ticks around` it.
@@ -282,13 +282,13 @@ or,
  npm run build
 ```
 
-# 4. GIT and GITHUB
+# GIT and GITHUB
 
-## 4.1. Gist
+## Gist
 
 [Gist](https://gist.github.com/dev-SR)
 
-## 4.2. Clear Git Cache
+## Clear Git Cache
 
 [Ref](https://devconnected.com/how-to-clear-git-cache/)
 
@@ -310,7 +310,7 @@ the `–cached` option.**
 > **Note** o not forget the `--cached` option or your file will be deleted from
 > the filesystem.
 
-### 4.2.1. Clear Entire Git Cache
+### Clear Entire Git Cache
 
 In some cases, you may want to clear the cache of your entire Git staging area.
 
@@ -335,13 +335,13 @@ option for recursive.**
 
 <div id="alias"/>
 
-## 4.3. Git Alias
+## Git Alias
 
 [gist](https://gist.github.com/dev-SR/bf82b701864366b77b3320b543fbef75)
 
 <div id="githubrepo"/>
 
-## 4.4. Commands for Github Repo
+## Commands for Github Repo
 
 …or create a new repository on the command line
 
@@ -364,7 +364,7 @@ git push -u origin main
 
 <div id="changeremote"/>
 
-## 4.5. Change the URI (URL) for a remote Git repository
+## Change the URI (URL) for a remote Git repository
 
 ```bash
 git remote -v
@@ -385,9 +385,9 @@ git remote -v
 
 <div id="vi"></div>
 
-# 5. Vim
+# Vim
 
-## 5.1. Linux(ubuntu)
+## Linux(ubuntu)
 Install Vim (Enhanced version of vi which is preinstalled)
 
 ```bash
@@ -411,15 +411,15 @@ syntax on
 set number
 ```
 
-# 6. Unicodes
+# Unicodes
 
-### 6.0.1. LINKS
+### LINKS
 
 [Arrows](https://unicode-table.com/en/sets/arrow-symbols/)
 
 [Box Drawing](https://unicode-table.com/en/blocks/box-drawing/)
 
-### 6.0.2. Examples
+### Examples
 
 ```
     /**
