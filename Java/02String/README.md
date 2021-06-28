@@ -1,5 +1,13 @@
 # Working with String in Java
 
+To perform String operations in Java applications, JAVA has provided predefined library in the form of the
+following predefined classes.
+
+1.java.lang. String
+2.java.lang.StringBuffer
+3.java.lang. StringBuilder
+4.java.util.StringTokenizer
+
 **Strings** in Java are Objects that are backed internally by a `char` array. Since arrays are `immutable`(cannot grow), **Strings are immutable** as well. Whenever a change to a String is made, an entirely new String is created
 
 Since, Java **String** is `immutable` and `final`, so a new String is created whenever we do String manipulation. As String manipulations are resource consuming, Java provides two utility classes: `StringBuffer` and `StringBuilder`.
@@ -33,7 +41,7 @@ public class Main {
         s3.append("World");
     }
 
-    public static void main(String[] args) {
+    public static void stringclass_vs_otherclasses(String[] args) {
         String s1 = "Hello";
         // s1 is not changed
         concat1(s1);
@@ -54,9 +62,9 @@ public class Main {
 
 > Explanation:
 
-1. **Concat1:** In this method, we pass a string "Hello" and perform “s1 = s1 + "World". The string passed from main() is not changed, this is due to the fact that String is `immutable`. Altering the value of string creates another object and s1 in `concat1()` stores reference of the new string. _References s1 in `main()` and `cocat1()` refer to different strings_.
+1. **Concat1:** In this method, we pass a string "Hello" and perform “s1 = s1 + "World". The string passed from stringclass_vs_otherclasses() is not changed, this is due to the fact that String is `immutable`. Altering the value of string creates another object and s1 in `concat1()` stores reference of the new string. _References s1 in `stringclass_vs_otherclasses()` and `cocat1()` refer to different strings_.
 
-2. **Concat2:** In this method, we pass a string "Hello" and perform “s2.append("World")” which changes the actual value of the string (in main) to "HelloWorld". This is due to the simple fact that `StringBuilder` is `mutable` and hence changes its value.
+2. **Concat2:** In this method, we pass a string "Hello" and perform “s2.append("World")” which changes the actual value of the string (in stringclass_vs_otherclasses) to "HelloWorld". This is due to the simple fact that `StringBuilder` is `mutable` and hence changes its value.
 
 3. **Concat3:** StringBuffer is similar to `StringBuilder` except for one difference that `StringBuffer` is `thread-safe`, i.e., multiple threads can use it without any issue. The thread-safety brings a penalty of performance
 
