@@ -3,8 +3,10 @@
 - [Overview](#overview)
 - [Compiling and Running Java Code](#compiling-and-running-java-code)
   - [Manual](#manual)
-  - [IntelliJ IDEA](#intellij-idea)
   - [Vs Code's Project Manager for Java (microsoft)](#vs-codes-project-manager-for-java-microsoft)
+  - [IntelliJ IDEA](#intellij-idea)
+    - [Basic dir setup with template checked:](#basic-dir-setup-with-template-checked)
+    - [Basic dir setup with template un-checked:](#basic-dir-setup-with-template-un-checked)
 
 # Compiling and Running Java Code
 
@@ -59,16 +61,6 @@ run:
 java .\com\company\Main.java
 ```
 
-## IntelliJ IDEA
-
-**Basic dir setup:**
-
-![intellij init](../img/java_vscode_6.jpg)
-
-Run Configuration:
-
-![run config](../img/java_vscode_7.jpg)
-
 ## Vs Code's Project Manager for Java (microsoft)
 
 ![Vs code](../img/java_vscode.jpg)
@@ -86,3 +78,31 @@ But not compatible with IntelliJ IDEA!!
 Making this setup compatible with IntelliJ IDEA by making a sub dir/package
 
 ![intellij solve](../img/java_vscode_5.jpg)
+
+## IntelliJ IDEA
+
+### Basic dir setup with template checked:
+
+init:
+
+![temp checked](../img/template-Checked.jpg)
+
+
+![intellij init](../img/java_vscode_6.jpg)
+
+Run Configuration:
+
+![run config](../img/java_vscode_7.jpg)
+
+### Basic dir setup with template un-checked:
+
+init:
+
+![temp un-checked](../img/template-unChecked.jpg)
+
+
+![intellij init un](../img/java-pro-2.jpg)
+
+Run Configuration:
+
+![run config-2](../img/java-pro-2-1.jpg)
