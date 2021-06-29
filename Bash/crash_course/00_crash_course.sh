@@ -233,6 +233,16 @@ echo
 echo
 
 # !WHILE LOOP - READ THROUGH A FILE LINE BY LINE
+i=1
+# while [ $i -le 3 ]
+while ((i<=3))
+do
+	echo $i
+	((i++))
+	# i=$(($i+1))
+done
+
+
 LINE=1
 while read -r CURRENT_LINE; do
 	echo "$LINE: $CURRENT_LINE"
