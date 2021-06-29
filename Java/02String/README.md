@@ -3,10 +3,10 @@
 To perform String operations in Java applications, JAVA has provided predefined library in the form of the
 following predefined classes.
 
-1.java.lang. String
-2.java.lang.StringBuffer
-3.java.lang. StringBuilder
-4.java.util.StringTokenizer
+1. `java.lang. String`
+2. `java.lang.StringBuffer`
+3. `java.lang. StringBuilder`
+4. `java.util.StringTokenizer`
 
 **Strings** in Java are Objects that are backed internally by a `char` array. Since arrays are `immutable`(cannot grow), **Strings are immutable** as well. Whenever a change to a String is made, an entirely new String is created
 
