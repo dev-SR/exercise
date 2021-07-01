@@ -1,6 +1,9 @@
 # Modules and Packages
 
-![img](../img/im1.png)
+<p align="center">
+  <img src="../img/im1.png">
+</p>
+
 
 ## Differences Between Python Modules and Packages
 
