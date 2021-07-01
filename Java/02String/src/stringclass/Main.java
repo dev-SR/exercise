@@ -109,6 +109,10 @@ public class Main {
     }
 
     public static void CommonMethods() {
+        Equals();
+    }
+
+    public static void Equals() {
         Color.printMsg(Color.GREEN_BRIGHT, "equals(); Diff between == and .equals()");
         String eq1 = new String("abc");
         String eq2 = new String("def");
