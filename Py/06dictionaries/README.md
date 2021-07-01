@@ -195,3 +195,57 @@ print(values)
     
     {0: 0, 1: 2, 2: 4, 3: 6}
     
+
+## Unpacking Operator
+
+`**` is used for dictionaries ...
+
+
+
+```python
+## Unpaking Operator
+num_dict = {'a': 1, 'b': 2, 'c': 3}
+print(*num_dict) # keys
+print()
+
+
+new_dict = {**num_dict}
+print(new_dict)
+print()
+
+f= {"x":1}
+sec ={ "x":10,"y":2}
+comb={**f,**sec}
+print(comb) # last 'x' is used
+```
+
+    a b c
+    
+    {'a': 1, 'b': 2, 'c': 3}
+    
+    {'x': 10, 'y': 2}
+    
+
+
+```python
+
+# A Python program to demonstrate packing of
+# dictionary items using **
+def fun(**kwargs):
+ 
+    # kwargs is a dict
+    print(type(kwargs))
+ 
+    # Printing dictionary items
+    for key in kwargs:
+        print("%s = %s" % (key, kwargs[key]))
+ 
+# Driver code
+fun(name="Apple", ID="101", language="Python")
+```
+
+    <class 'dict'>
+    name = Apple
+    ID = 101
+    language = Python
+    
