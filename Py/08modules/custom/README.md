@@ -1,40 +1,9 @@
-> **`my_custom.py`**
+# Modules and Packages
 
-```python
-def greetings(name):
-    """greetings
+![img](../img/im1.png)
 
-    Args:
-        name (string): Your name
+## Differences Between Python Modules and Packages
 
-    Returns:
-        string: returns your name with greetings
-
-    NOTES: use 'generate docstring' commands to generate DocStr
-
-
-    """
-    return "Hello, " + name
-```
-
-
-> **`py_custom_mod.ipynb`**
-```python
-import my_custom
-print(dir(my_custom))
-```
-
-    ['__builtins__', '__cached__', '__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'greetings']
-    
-
-
-```python
-my_custom.greetings("soikat")
-```
-
-
-
-
-    'Hello, soikat'
-
-
+- A **module** is a `file` containing Python code. A **package**, however, is like a `directory` that holds `sub-packages` and `modules`.
+- A package must hold the file `__init__.py`. This does not apply to modules.
+- To import everything from a module, we use the wildcard *. But this does not work with packages
