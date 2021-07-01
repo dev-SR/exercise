@@ -70,7 +70,7 @@ print("Execution continues...")
     Execution continues...
     
 
-## Releasing external resources with`Finally` and 'With`
+## Releasing external resources with`Finally` and `With`
 
 
 ```python
