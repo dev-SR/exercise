@@ -1,7 +1,7 @@
 # Dictionary
 
 - stores data in key-value pair
-- unordered 
+- unordered
 - unindexable
 - access the values, with help of keys
 
@@ -16,11 +16,7 @@ print(user_info)
 type(user_info)
 ```
 
-    {'name': 'Soikat', 'age': 69}
-    
-
-
-
+{'name': 'Soikat', 'age': 69}
 
     dict
 
@@ -36,8 +32,6 @@ print(user_info['age'])
     Soikat
     69
     
-
-
 ```python
 # unkown key gives error
 print(user_info['loves'])
@@ -62,9 +56,13 @@ print(user_info['loves'])
 user_info.get('loves')
 u = user_info.get('loves')
 print(u)
+
+u = user_info.get('loves','default_value')
+print(u)
 ```
 
     None
+    default_value
     
 
 
@@ -83,13 +81,7 @@ print(user_info)
 user_info.keys()
 ```
 
-
-
-
-    dict_keys(['name', 'age', 'hobby'])
-
-
-
+dict_keys(['name', 'age', 'hobby'])
 
 ```python
 # displays all values
@@ -99,7 +91,7 @@ user_info.values()
 
 
 
-    dict_values(['Soikat', 69, ['Gamming', 'Coding', 'Football']])
+dict_values(['Soikat', 69, ['Gamming', 'Coding', 'Football']])
 
 
 
@@ -109,20 +101,24 @@ user_info.values()
 user_info.items()
 ```
 
-
-
-
-    dict_items([('name', 'Soikat'), ('age', 69), ('hobby', ['Gamming', 'Coding', 'Football'])])
-
-
+dict_items([('name', 'Soikat'), ('age', 69), ('hobby', ['Gamming', 'Coding', 'Football'])])
 
 
 ```python
 # iterate
 for k,v in user_info.items():
     print(k," : ",v)
+
+print()
+
+for k in user_info:
+    print(k," : ",user_info[k])
 ```
 
+    name  :  Soikat
+    age  :  69
+    hobby  :  ['Gamming', 'Coding', 'Football']
+    
     name  :  Soikat
     age  :  69
     hobby  :  ['Gamming', 'Coding', 'Football']
@@ -134,10 +130,14 @@ for k,v in user_info.items():
 deleted_value = user_info.pop('hobby')
 print(deleted_value)
 print(user_info)
+
+del user_info["age"]
+print(user_info)
 ```
 
     ['Gamming', 'Coding', 'Football']
     {'name': 'Soikat', 'age': 69}
+    {'name': 'Soikat'}
     
 
 
@@ -147,5 +147,5 @@ user_info['name'] = "DevSR"
 print(user_info)
 ```
 
-    {'name': 'DevSR', 'age': 69}
+    {'name': 'DevSR'}
     
