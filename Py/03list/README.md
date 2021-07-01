@@ -1,6 +1,6 @@
-# 1. LIST
+# LIST
 
-### 1.0.1. Indexing/Slicing of List works same as String
+### Indexing/Slicing of List works same as String
 
 
 
@@ -32,7 +32,7 @@ print(numbers[::2])
     [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
     
 
-### 1.0.2. List Unpacking
+### Unpacking Operator
 
 
 ```python
@@ -44,22 +44,30 @@ print(first)
 print(second)
 print(other)
 
+print()
 first,*other,last =n
 
 print(first)
 print(last)
 print(other)
+
+print()
+n = [*range(5),*"Hello"]
+print(n)
 ```
 
     0
     1
     [2, 3, 4]
+    
     0
     4
     [1, 2, 3]
     
+    [0, 1, 2, 3, 4, 'H', 'e', 'l', 'l', 'o']
+    
 
-### 1.0.3. iteration
+### iteration
 
 
 ```python
@@ -105,9 +113,9 @@ for i,v in enumerate(programming_lan):
     5: TypeScript
     
 
-## 1.1. Some methods for list 
+## Some methods for list 
 
-### 1.1.1. add
+### add
 
 
 ```python
@@ -124,7 +132,7 @@ print(l)
     [5, 10, 2, 3, 4, 5, 6, 33]
     
 
-### 1.1.2. remove
+### remove
 
 
 ```python
@@ -164,7 +172,7 @@ print(l)
     [6, 5, 4, 3, 2]
     
 
-### 1.1.3. Finding Items
+### Finding Items
 
 
 ```python
@@ -179,7 +187,7 @@ if "b" in letters:
     1
     
 
-## 1.2. 2D list 
+## 2D list 
 
 
 ```python
@@ -197,7 +205,7 @@ print(list_2d[1][0])
     4
     
 
-## 1.3. Sorting
+## Sorting
 
 
 ```python
@@ -247,7 +255,7 @@ print(items)
     [('product 2', 5), ('product 1', 10), ('product 5', 23), ('product 4', 45)]
     
 
-#### 1.3.0.1. Using lembda:
+#### Using lembda:
 
 syntax:
 
@@ -270,7 +278,7 @@ print(items)
     [('product 2', 5), ('product 1', 10), ('product 5', 23), ('product 4', 45)]
     
 
-## 1.4. Map Function
+## Map Function
 
 
 ```python
@@ -300,7 +308,7 @@ print(prices)
     [10, 5, 45, 23]
     
 
-## 1.5. Filter Function
+## Filter Function
 
 
 ```python
@@ -311,7 +319,7 @@ print(filtered)
     [('product 1', 10), ('product 4', 45), ('proeduct 5', 23)]
     
 
-## 1.6. List Comprehension
+## List Comprehension
 
 `[expression for item in list]`
 
@@ -342,7 +350,7 @@ print(new_l)
     [1, 16, 81, 256, 625, 1296]
     
 
-### 1.6.1. Replacing Map and Filter function with list comprehension
+### Replacing Map and Filter function with list comprehension
 
 
 ```python
@@ -367,7 +375,60 @@ print(filtered)
     [('product 1', 10), ('product 4', 45), ('proeduct 5', 23)]
     
 
-## 1.7. Zip Function
+### Difference between Generator Expressions and List Comprehensions
+
+**What are Generator Expressions?**
+
+Generator Expressions are somewhat similar to list comprehensions, but the former doesn’t construct list object. Instead of creating a list and keeping the whole sequence in the memory, the generator generates the next element in demand.
+When a normal function with a return statement is called, it **terminates** whenever it gets a return statement. But a function with a yield statement **saves the state of the function and can be picked up from the same state, next time the function is called.**
+
+The Generator Expression allows us to create a generator _without the yield keyword._without
+
+
+
+```python
+# List Comprehension
+list_comprehension = [i for i in range(11) if i % 2 == 0]
+  
+print(list_comprehension)
+
+# Generator Expression
+generator_expression = (i for i in range(11) if i % 2 == 0)
+print(generator_expression)
+for i in generator_expression:
+    print(i, end=" ")
+```
+
+    [0, 2, 4, 6, 8, 10]
+    <generator object <genexpr> at 0x00000242AFC14C80>
+    0 2 4 6 8 10 
+
+**So what’s the difference between Generator Expressions and List Comprehensions?**
+
+The generator yields one item at a time and generates item only when in demand. Whereas, in a list comprehension, Python reserves memory for the whole list. Thus we can say that the generator expressions are memory efficient than the lists. Generator expressions are also faster than list comprehension and hence time efficient.
+
+
+```python
+# import getsizeof from sys module
+from sys import getsizeof
+  
+comp = [i for i in range(10000)]
+gen = (i for i in range(10000))
+  
+#gives size for list comprehension
+x = getsizeof(comp) 
+print("x = ", x)
+  
+#gives size for generator expression
+y = getsizeof(gen) 
+print("y = ", y)
+```
+
+    x =  87616
+    y =  112
+    
+
+## Zip Function
 
 
 ```python
@@ -382,7 +443,7 @@ print(list(zip("abc",l1,l2)))
     [('a', 1, 10), ('b', 2, 20), ('c', 3, 30)]
     
 
-# 2. Examples
+# Examples
 
 
 ```python
