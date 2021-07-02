@@ -8,6 +8,7 @@
 ```python
 import bs4
 import requests
+import html5lib
 ```
 
 
@@ -27,7 +28,8 @@ res
 
 ```python
 text = res.content
-soup = bs4.BeautifulSoup(text) # full web c
+# soup = bs4.BeautifulSoup(text) # full web c
+soup = bs4.BeautifulSoup(text, 'html5lib')
 type(soup)
 ```
 
