@@ -110,6 +110,8 @@ public class Main {
 
     public static void CommonMethods() {
         Equals();
+        Compare();
+        StartAndEndWith();
     }
 
     public static void Equals() {
@@ -125,6 +127,40 @@ public class Main {
         String eq5 = "abc";
         System.out.println("`abc`[@" + eq4.hashCode() + "] == String(abc)[@" + eq1.hashCode() + "] : " + (eq1 == eq4));
         System.out.println("`abc`[@" + eq4.hashCode() + "] == `abc`[@" + eq5.hashCode() + "] : " + (eq4 == eq5));
+
+        Color.printMsg(Color.YELLOW_BRIGHT, "equalsIgnoreCase():");
+        String eq6 = "ABC";
+        String eq7 = new String("ABC");
+
+        System.out.println("String(abc).equalsIgnoreCase(`ABC`)) : " + eq1.equalsIgnoreCase(eq6));
+        System.out.println("String(abc).equalsIgnoreCase(String(ABC)) : " + eq1.equalsIgnoreCase(eq7));
+
+    }
+
+    public static void Compare() {
+        Color.printMsg(Color.GREEN_BRIGHT, "compareTo(String s) and compareToIgnoreCase(String s)");
+        String c1 = "abc";
+        String c2 = "def";
+        String c3 = "abc";
+        System.out.println("`abc`.compareTo(`def`): " + c1.compareTo(c2));
+        System.out.println("`def`.compareTo(`abc`): " + c2.compareTo(c1));
+        System.out.println("`abc`.compareTo(`abc`): " + c1.compareTo(c3));
+        Color.printMsg(Color.YELLOW_BRIGHT, "compareToIgnoreCase()");
+        String c4 = "ABC";
+        System.out.println("`abc`.compareTo(`ABC`): " + c1.compareTo(c4));
+        System.out.println("`abc`.compareToIgnoreCase(`ABC`): " + c1.compareToIgnoreCase(c4));
+
+    }
+
+    public static void StartAndEndWith() {
+        Color.printMsg(Color.GREEN_BRIGHT, "startWith and endWith()");
+        Color.printMsg(Color.YELLOW_BRIGHT, "startsWith()");
+        String s = "Hello World";
+        System.out.println("`Hello World`.startsWith('llo',2) : " + s.startsWith("llo", 2));
+        System.out.println("`Hello World`.startsWith('Hello') : " + s.startsWith("Hello"));
+
+        Color.printMsg(Color.YELLOW_BRIGHT, "endWith()");
+        System.out.println("`Hello World`.endWith('World') : " + s.endsWith("World"));
     }
 
     public static void TakeInput() {

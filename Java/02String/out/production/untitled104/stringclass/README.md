@@ -10,8 +10,12 @@
     - [from `StringBuffer` and `StringBuilder` to **mutable** data **immutable**](#from-stringbuffer-and-stringbuilder-to-mutable-data-immutable)
     - [String Objects Immutability Nature](#string-objects-immutability-nature)
   - [String Methods](#string-methods)
-    - [`public boolean equals(Object obj)`](#public-boolean-equalsobject-obj)
+    - [`char charAt(int index)`](#char-charatint-index)
+    - [`boolean equals(Object obj)` and `boolean equalsIgnoreCase(String str)`](#boolean-equalsobject-obj-and-boolean-equalsignorecasestring-str)
+      - [`boolean equalsIgnoreCase(String string)`](#boolean-equalsignorecasestring-string)
       - [Difference between == and .equals() method in Java](#difference-between--and-equals-method-in-java)
+    - [`compareTo(String s)` and  `int compareToIgnoreCase(String s)`](#comparetostring-s-and--int-comparetoignorecasestring-s)
+    - [`startsWith()` and `endWith()`](#startswith-and-endwith)
 
 ## String Literal Vs String Object
 
@@ -23,7 +27,6 @@ String str = "abc";
 Srting str = new String("abc");
 ```
 
-							
 ### 1. Direct Initialization
 
 ```java
@@ -58,7 +61,6 @@ hoved to `Heap Memory`._
 **String pool** in Java is a pool of String literals and interned Strings in JVM for efficient use of String object. Since String is
 Immutable Class In Java , it makes sense to cache and shares them in JVM. Java creators introduced this String pool construct as an optimization on the way String objects are allocated and stored. It is a simple implementation of the Flyweight pattern, which in essence, says this: when a lot of data is common among several objects, it is better to just share the same instance of that data than creating several different “copies” of it.
 
-
 ### 2. Object Initialization
 
 ```java
@@ -74,7 +76,6 @@ that String objects are eligible for Garbage Collection.
   
 - In the above context, str is able to refer heap
 memory String object only.
-
 
 ![literral vs object string](../img/string-1.jpg)
 
@@ -169,7 +170,25 @@ return the same existed object reference value.
 
 ## String Methods
 
-### `public boolean equals(Object obj)`
+### `char charAt(int index)`
+
+- Returns the character at the specified index.
+- Specified index value should be between `'0' to 'length() -1'` both **inclusive**.
+- It throws `IndexOutOfBoundsException` if index is invalid/ out of range.
+
+```java
+        String s = "Hello World";
+        for (int i = 0; i < s.length(); i++) {
+            System.out.print(s.charAt(i) + " ");
+        }// H e l l o   W o r l d 
+        System.out.println();
+        Color.printMsg(Color.GREEN_BRIGHT, "Last char:");
+        System.out.println(s.charAt(s.length() - 1));//d
+        // System.out.println(s.charAt(s.length())); 
+        // exception: StringIndexOutOfBoundsException
+```
+
+### `boolean equals(Object obj)` and `boolean equalsIgnoreCase(String str)`
 
 - It can be used to check whether two String objects content
 is same or not, if two String objects content is same then
@@ -184,10 +203,89 @@ content is not same then `equals()` method will return `false` value.
         System.out.println("String(abc).equal(String(abc)) : " + eq1.equals(eq3));//true
 ```
 
+#### `boolean equalsIgnoreCase(String string)`
+
+– Compares same as equals method but in case insensitive way.
+
+IN String class, `equals()` method is able to perform **case sensitive** comparison between two String objects content, but, `equalsIgnoreCase()` method will perform **case insensitive** comparison between two String objects contents.
+
+```java
+        String eq1 = new String("abc");
+        String eq6 = "ABC";
+        String eq7 = new String("ABC");
+
+        System.out.println("String(abc).equalsIgnoreCase(`ABC`)) : " + eq1.equalsIgnoreCase(eq6));//true
+        System.out.println("String(abc).equalsIgnoreCase(String(ABC)) : " + eq1.equalsIgnoreCase(eq7));//true
+```
+
 #### Difference between == and .equals() method in Java
 
 We can use == operators for reference comparison (address comparison) and .equals() method for content comparison. In simple words, == checks if both objects point to the same memory location whereas .equals() evaluates to the comparison of values in the objects.
 
+```java
+String eq1 = new String("abc");
+String eq2 = new String("def");
+String eq3 = new String("abc");
+System.out.println("String(abc)[@" + eq1.hashCode() + "] == String(def)[@" + eq2.hashCode() + "] : " + (eq1 == eq2));
+System.out.println("String(abc)[@" + eq1.hashCode() + "] == String(abc)[@" + eq3.hashCode() + "] : " + (eq1 == eq3));
+System.out.println("String(abc)[@" + eq1.hashCode() + "].equal(String(def))[@" + eq2.hashCode() + "] : " + eq1.equals(eq2));
+System.out.println("String(abc)[@" + eq1.hashCode() + "].equal(String(abc))[@" + eq3.hashCode() + "] : " + eq1.equals(eq3));
+String eq4 = "abc";
+String eq5 = "abc";
+System.out.println("`abc`[@" + eq4.hashCode() + "] == String(abc)[@" + eq1.hashCode() + "] : " + (eq1 == eq4));
+System.out.println("`abc`[@" + eq4.hashCode() + "] == `abc`[@" + eq5.hashCode() + "] : " + (eq4 == eq5));
+
+// String(abc)[@96354] == String(def)[@99333] : false
+// String(abc)[@96354] == String(abc)[@96354] : false
+// String(abc)[@96354].equal(String(def))[@99333] : false
+// String(abc)[@96354].equal(String(abc))[@96354] : true
+// `abc`[@96354] == String(abc)[@96354] : false
+// `abc`[@96354] == `abc`[@96354] : true
+```
+
+So, If we provide == operator in between two String objects reference variables then it will perform references
+comparison, but, if access equals() on a String reference the variable then equals() method will perform String objects
+content comparison.
+
+[more info](https://www.geeksforgeeks.org/difference-equals-method-java/)
+
+### `compareTo(String s)` and  `int compareToIgnoreCase(String s)`  
+
+`int compareTo(String s)` 
+
+Compares the two strings **lexicographically** (dictionary) based on the Unicode value of each character in the strings.
+
+1. If `str1` comes first when compared with `str2` in dictionary order then compareTo() method will return `-ve` value.
+2. If `str2` comes first when compared with `str1` in dictionary
+order then compareTo() method will return `+ve` value.
+3. If str1 and str2 are at the same position in dictionary order then compareTo() method will return `0` value.
+
+```java
+        String c1 = "abc";
+        String c2 = "def";
+        String c3 = "abc";
+        System.out.println("`abc`.compareTo(`def`): " +c1.compareTo(c2));//-3
+        System.out.println("`def`.compareTo(`abc`): " +c2.compareTo(c1));//3
+        System.out.println("`abc`.compareTo(`abc`): " +c1.compareTo(c3));//0
+```
+
+`compareToIgnoreCase`:
+
+```java
+        String c1 = "abc";
+        String c4 = "ABC";
+        System.out.println("`abc`.compareTo(`ABC`): " +c1.compareTo(c4));//32
+        System.out.println("`abc`.compareToIgnoreCase(`ABC`): " +c1.compareToIgnoreCase(c4));//0
+```
+
+### `startsWith()` and `endWith()`
+
+`boolean startsWith(String prefix, int offset)`
+
+ - Checks whether the String is having the specified prefix or not – starting from the specified offset index.
 
 
+`boolean startsWith(String prefix)`
 
+
+- Tests whether the string is having specified prefix, if yes then it returns true else false. The offset index value is 0 in this overloaded method.
