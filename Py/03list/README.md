@@ -1,7 +1,41 @@
 # LIST
 
-### Indexing/Slicing of List works same as String
+- [LIST](#list)
+  - [Example](#example)
+  - [Indexing/Slicing of List works same as String](#indexingslicing-of-list-works-same-as-string)
+  - [Unpacking Operator](#unpacking-operator)
+  - [iteration](#iteration)
+  - [Some methods for list](#some-methods-for-list)
+    - [add](#add)
+    - [remove](#remove)
+    - [Finding Items](#finding-items)
+  - [2D list](#2d-list)
+  - [Sorting](#sorting)
+      - [Using lembda:](#using-lembda)
+  - [Map Function](#map-function)
+  - [Filter Function](#filter-function)
+  - [List Comprehension](#list-comprehension)
+    - [Using with String](#using-with-string)
+    - [Making Nested List Comprehension](#making-nested-list-comprehension)
+    - [Replacing Map and Filter function with list comprehension](#replacing-map-and-filter-function-with-list-comprehension)
+    - [Difference between Generator Expressions and List Comprehensions](#difference-between-generator-expressions-and-list-comprehensions)
+  - [Zip Function](#zip-function)
+- [Examples](#examples)
 
+## Example
+
+
+```python
+# ex
+print(list(range(10)))
+print([i**2 for i in range(20) if i % 2 == 0])
+```
+
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    [0, 4, 16, 36, 64, 100, 144, 196, 256, 324]
+    
+
+## Indexing/Slicing of List works same as String
 
 
 ```python
@@ -11,7 +45,7 @@ l = [1,2,3,4,5,6]
 print(l[0])
 print(l[-1])
 print(l[1:-1])
-
+print(l[::2])
 # because of mutable property
 l[0] = 5
 print(l)
@@ -20,19 +54,11 @@ print(l)
     1
     6
     [2, 3, 4, 5]
+    [1, 3, 5]
     [5, 2, 3, 4, 5, 6]
     
 
-
-```python
-numbers = list(range(20))
-print(numbers[::2])
-```
-
-    [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
-    
-
-### Unpacking Operator
+## Unpacking Operator
 
 
 ```python
@@ -67,12 +93,13 @@ print(n)
     [0, 1, 2, 3, 4, 'H', 'e', 'l', 'l', 'o']
     
 
-### iteration
+## iteration
 
 
 ```python
 programming_lan= ["Java","C","C++","Kotlin","TypeScript"]
 
+# List Membership Test
 v = "C" in programming_lan
 print(v)
 
@@ -126,10 +153,22 @@ print(l)
 l.insert(1,10)
 print(l)
 
+odd = [2, 4, 6, 8]
+# change 2nd to 4th items
+odd[1:4] = [3, 5, 7]  
+print(odd)
+
+# Concatenating and repeating lists
+print(odd + [9, 7, 5])
+print(["re"] * 3)
+
 ```
 
-    [5, 2, 3, 4, 5, 6, 33]
-    [5, 10, 2, 3, 4, 5, 6, 33]
+    ['', 10, 'A', '', 'B', '', 'C', 33, 33]
+    ['', 10, 10, 'A', '', 'B', '', 'C', 33, 33]
+    [2, 3, 5, 7]
+    [2, 3, 5, 7, 9, 7, 5]
+    ['re', 're', 're']
     
 
 ### remove
@@ -348,6 +387,71 @@ print(new_l)
 
     [1, 4, 9, 16, 25, 36]
     [1, 16, 81, 256, 625, 1296]
+    
+
+
+```python
+l =[1,2,3,4,5,6,7,8]
+# filtering even elements
+filtered = [i for i in l if i % 2==0]
+print(filtered)
+
+print()
+# removing empty string from the list
+l =["","A","","B","","C"]
+removed = [i for i in l if i]
+print(removed) 
+```
+
+    [2, 4, 6, 8]
+    
+    ['A', 'B', 'C']
+    
+
+### Using with String
+
+
+```python
+
+list_string = ['maNgo', 'BanAna', 'PytHoN iS Love', 'Cat iS not doG']
+
+# make the list of string to list of list of words
+list_of_list = [sentence.split() for sentence in list_string]
+print(list_of_list)
+
+words = sum(list_of_list, [])  # make the list of list to a single list
+print(words)  # print the list of word
+
+# modify the case
+correct_case = [str.upper(word[0])+str.lower(word[1:]) for word in words if len(word) > 1]
+
+# print the list of word with desired case
+print(correct_case)
+```
+
+    [['maNgo'], ['BanAna'], ['PytHoN', 'iS', 'Love'], ['Cat', 'iS', 'not', 'doG']]
+    ['maNgo', 'BanAna', 'PytHoN', 'iS', 'Love', 'Cat', 'iS', 'not', 'doG']
+    ['Mango', 'Banana', 'Python', 'Is', 'Love', 'Cat', 'Is', 'Not', 'Dog']
+    
+
+### Making Nested List Comprehension
+
+However, you can also use nested List comprehension. That means, you can use a list comprehension inside another list comprehension. For example, the previous example code can be written shorter using nested Python list Comprehension. Like this,
+
+
+```python
+
+list_string = ['maNgo', 'BanAna', 'PytHoN iS Love', 'Cat iS not doG']
+
+correct_case = [str.upper(word[0])+str.lower(word[1:])
+                for word in sum([sentence.split() for sentence in list_string], [])
+                if len(word) > 1]
+
+# print the list of word with desired case
+print(correct_case)
+```
+
+    ['Mango', 'Banana', 'Python', 'Is', 'Love', 'Cat', 'Is', 'Not', 'Dog']
     
 
 ### Replacing Map and Filter function with list comprehension
