@@ -61,5 +61,6 @@ For Example - Singly Linked List
 Forward Iterator that can move in both directions.
 
 **Random Access Iterators:**
+
 Random Access Iterator is an iterator that can read/write in both directions and also can take
 jumps.
