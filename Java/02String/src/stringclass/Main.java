@@ -4,6 +4,7 @@ import dev.Color;
 
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -112,6 +113,59 @@ public class Main {
         Equals();
         Compare();
         StartAndEndWith();
+        Index();
+        Split();
+        Replace();
+        SubString();
+        Miscellaneous();
+    }
+
+    public static void TakeInput() {
+        System.out.println("No. of Inputs :");
+        int m = sin.nextInt();
+/*      the `input.nextInt()` method - it only reads the int value.
+        So when you continue reading with `input.nextLine()` you receive the "\n" Enter key.
+        So to skip this you have to add the input.nextLine().
+
+        !You will encounter the similar behaviour when you use 'Scanner.nextLine` after `Scanner.next()`
+        or any `Scanner.nextFoo` method (except nextLine itself).
+
+        Workaround:
+
+        int option = input.nextInt();
+        input.nextLine();  // Consume newline left-over
+        String str1 = input.nextLine();
+
+https://stackoverflow.com/questions/13102045/scanner-is-skipping-nextline-after-using-next-or-nextfoo
+https://www.geeksforgeeks.org/why-is-scanner-skipping-nextline-after-use-of-other-next-functions/
+
+        */
+
+        sin.nextLine();// // Consume newline left-over
+
+        ArrayList<String> s = new ArrayList<>();
+        for (int i = 0; i < m; i++) {
+            //String in = sin.next(); whitespace not
+            s.add(sin.nextLine());
+        }
+        for (String i : s) {
+            System.out.println(i);
+        }
+    }
+
+    public static void Position() {
+        System.out.println("Inter some text: ");
+        String s = sin.nextLine();
+
+        for (int i = 0; i < s.length(); i++) {
+            System.out.print(s.charAt(i) + " ");
+
+        }
+        System.out.println();
+        Color.printMsg(Color.GREEN_BRIGHT, "Last char:");
+        System.out.println(s.charAt(s.length() - 1));
+        // System.out.println(s.charAt(s.length())); exception:
+        // StringIndexOutOfBoundsException
     }
 
     public static void Equals() {
@@ -163,53 +217,86 @@ public class Main {
         System.out.println("`Hello World`.endWith('World') : " + s.endsWith("World"));
     }
 
-    public static void TakeInput() {
-        System.out.println("No. of Inputs :");
-        int m = sin.nextInt();
-/*      the `input.nextInt()` method - it only reads the int value.
-        So when you continue reading with `input.nextLine()` you receive the "\n" Enter key.
-        So to skip this you have to add the input.nextLine().
+    public static void Index() {
+        Color.printMsg(Color.GREEN_BRIGHT, "indexOf() and lastIndexOf()");
+        Color.printMsg(Color.YELLOW_BRIGHT, "indexOf():");
+        System.out.println("\"hello world\".indexOf(\"world\"): " + "hello world".indexOf("world"));   //6
+        System.out.println("\"hello world\".indexOf(\"earth\") : " + "hello world".indexOf("earth"));   //-1
+        System.out.println("\"hello world\".indexOf(\"world\",6) : " + "hello world".indexOf("world", 6));    //6
+        System.out.println("\"hello world\".indexOf(\"world\",2) : " + "hello world".indexOf("world", 2));    //6
+        System.out.println("\"hello world\".indexOf(\'w\') : " + "hello world".indexOf('w'));       //6
+        System.out.println("\"hello world\".indexOf(\'w\',6) : " + "hello world".indexOf('w', 6));    //6
+        System.out.println("\"hello world\".indexOf(\'k\') : " + "hello world".indexOf('k'));       //-1
 
-        !You will encounter the similar behaviour when you use 'Scanner.nextLine` after `Scanner.next()`
-        or any `Scanner.nextFoo` method (except nextLine itself).
-
-        Workaround:
-
-        int option = input.nextInt();
-        input.nextLine();  // Consume newline left-over
-        String str1 = input.nextLine();
-
-https://stackoverflow.com/questions/13102045/scanner-is-skipping-nextline-after-using-next-or-nextfoo
-https://www.geeksforgeeks.org/why-is-scanner-skipping-nextline-after-use-of-other-next-functions/
-
-        */
-
-        sin.nextLine();// // Consume newline left-over
-
-        ArrayList<String> s = new ArrayList<>();
-        for (int i = 0; i < m; i++) {
-            //String in = sin.next(); whitespace not
-            s.add(sin.nextLine());
-        }
-        for (String i : s) {
-            System.out.println(i);
-        }
+        Color.printMsg(Color.YELLOW_BRIGHT, "lastIndexOf():");
+        System.out.println("\"hello world\".lastIndexOf(\"world\"): " + "hello world".lastIndexOf("world"));   //6
+        System.out.println("\"hello world\".lastIndexOf(\"earth\") : " + "hello world".lastIndexOf("earth"));   //-1
+        //[searching backward from index 6 `hello w`]
+        System.out.println("\"hello world\".lastIndexOf(\"world\",6) : " + "hello world".lastIndexOf("world", 6));    //6
+        //[searching backward from index 2 `hel`]
+        System.out.println("\"hello world\".lastIndexOf(\"world\",2) : " + "hello world".lastIndexOf("world", 2));    //-1
+        System.out.println("\"hello world\".lastIndexOf(\'w\') : " + "hello world".lastIndexOf('w'));       //6
+        System.out.println("\"hello world\".lastIndexOf(\'w\',6) : " + "hello world".lastIndexOf('w', 6));    //6
+        System.out.println("\"hello world\".lastIndexOf(\'k\') : " + "hello world".lastIndexOf('k'));       //-1
     }
 
-    public static void Position() {
-        System.out.println("Inter some text: ");
-        String s = sin.nextLine();
-
-        for (int i = 0; i < s.length(); i++) {
-            System.out.print(s.charAt(i) + " ");
-
-        }
-        System.out.println();
-        Color.printMsg(Color.GREEN_BRIGHT, "Last char:");
-        System.out.println(s.charAt(s.length() - 1));
-        // System.out.println(s.charAt(s.length())); exception:
-        // StringIndexOutOfBoundsException
+    public static void Split() {
+        Color.printMsg(Color.GREEN_BRIGHT, "split()....");
+        String str = "A-B-C-D";
+        String[] strArray = str.split("-");
+        System.out.println(Arrays.toString(strArray));//[A, B, C, D]
+        String s1 = "Hello World";
+        System.out.println(Arrays.toString(s1.split(" ")));//[Hello, World]
+        System.out.println(Arrays.toString(s1.split("\\s")));//[Hello, World]
+        System.out.println(Arrays.toString(str.split("-", 3)));//[A, B, C-D]
     }
 
+    public static void Replace() {
+        Color.printMsg(Color.GREEN_BRIGHT, "replace() and replaceAll()");
+        //replace(char oldChar,  char newChar)
+        String s = "Hello World";
+        s = s.replace('l', 'm');
+        System.out.println("After Replacing l with m :");
+        Color.printMsg(Color.YELLOW_BRIGHT, s);//Hemmo Wormd
 
+        //replaceAll(String regex, String replacement)
+        String s1 = "Hello World, Hello Earth";
+        s1 = s1.replaceAll("Hello", "Hi");
+        System.out.println("After Replacing :");
+        Color.printMsg(Color.YELLOW_BRIGHT, s1);//Hi World, Hi Earth
+
+        //replaceFirst(String regex, String replacement)
+        String s2 = "Hello guys, Hello world";
+        s2 = s2.replaceFirst("Hello", "Hi");
+        System.out.println("After Replacing :");
+        Color.printMsg(Color.YELLOW_BRIGHT, s2);//Hi guys, Hello world
+    }
+
+    public static void SubString() {
+        Color.printMsg(Color.GREEN_BRIGHT, "substring()...");
+        String text = "Lorem Ipsum is simply dummy text";
+        String sub1 = text.substring(3);
+        System.out.println(sub1);//em Ipsum is simply dummy text
+        String sub2 = text.substring(3, 10);
+        System.out.println(sub2);//em Ipsu
+    }
+
+    public static void Miscellaneous() {
+        Color.printMsg(Color.GREEN_BRIGHT, "Miscellaneous: length(), isEmpty(), contains(), hashCode()..");
+        Color.printMsg(Color.YELLOW_BRIGHT, "length():");
+        String s = "Hello World";
+        System.out.println(s.length());//11
+        System.out.println(s.isEmpty());//false
+        System.out.println("".isEmpty());//true
+        /**
+         * hashcode() – Returns a unique integer value for the object in runtime.
+         * By default, integer value is mostly derived from memory address of the object in heap
+         * (but it’s not mandatory always).*/
+        Color.printMsg(Color.YELLOW_BRIGHT, "hashCode()");
+        System.out.println(s.hashCode());
+
+        Color.printMsg(Color.YELLOW_BRIGHT, "contains():");
+        System.out.println(s.contains("World"));//true
+        System.out.println(s.contains("w"));//false
+    }
 }

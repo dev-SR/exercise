@@ -10,12 +10,22 @@
     - [from `StringBuffer` and `StringBuilder` to **mutable** data **immutable**](#from-stringbuffer-and-stringbuilder-to-mutable-data-immutable)
     - [String Objects Immutability Nature](#string-objects-immutability-nature)
   - [String Methods](#string-methods)
-    - [`char charAt(int index)`](#char-charatint-index)
-    - [`boolean equals(Object obj)` and `boolean equalsIgnoreCase(String str)`](#boolean-equalsobject-obj-and-boolean-equalsignorecasestring-str)
+    - [`char charAt()`](#char-charat)
+    - [`equals()` and `equalsIgnoreCase()`](#equals-and-equalsignorecase)
       - [`boolean equalsIgnoreCase(String string)`](#boolean-equalsignorecasestring-string)
       - [Difference between == and .equals() method in Java](#difference-between--and-equals-method-in-java)
-    - [`compareTo(String s)` and  `int compareToIgnoreCase(String s)`](#comparetostring-s-and--int-comparetoignorecasestring-s)
+    - [`compareTo()` and  `compareToIgnoreCase()`](#compareto-and--comparetoignorecase)
     - [`startsWith()` and `endWith()`](#startswith-and-endwith)
+    - [`indexOf()` and `lastIndexOf()`](#indexof-and-lastindexof)
+      - [`indexOf()`](#indexof)
+      - [`lastIndexOf()`](#lastindexof)
+    - [`Split()`](#split)
+    - [`replace()` and `replaceAll()`](#replace-and-replaceall)
+    - [`substring()`](#substring)
+    - [Miscellaneous](#miscellaneous)
+      - [`boolean isEmpty()`](#boolean-isempty)
+      - [`hashCode()`](#hashcode)
+      - [`contains()`](#contains)
 
 ## String Literal Vs String Object
 
@@ -170,7 +180,7 @@ return the same existed object reference value.
 
 ## String Methods
 
-### `char charAt(int index)`
+### `char charAt()`
 
 - Returns the character at the specified index.
 - Specified index value should be between `'0' to 'length() -1'` both **inclusive**.
@@ -188,7 +198,7 @@ return the same existed object reference value.
         // exception: StringIndexOutOfBoundsException
 ```
 
-### `boolean equals(Object obj)` and `boolean equalsIgnoreCase(String str)`
+### `equals()` and `equalsIgnoreCase()`
 
 - It can be used to check whether two String objects content
 is same or not, if two String objects content is same then
@@ -249,9 +259,9 @@ content comparison.
 
 [more info](https://www.geeksforgeeks.org/difference-equals-method-java/)
 
-### `compareTo(String s)` and  `int compareToIgnoreCase(String s)`  
+### `compareTo()` and  `compareToIgnoreCase()`  
 
-`int compareTo(String s)` 
+`int compareTo(String s)`
 
 Compares the two strings **lexicographically** (dictionary) based on the Unicode value of each character in the strings.
 
@@ -282,10 +292,179 @@ order then compareTo() method will return `+ve` value.
 
 `boolean startsWith(String prefix, int offset)`
 
- - Checks whether the String is having the specified prefix or not – starting from the specified offset index.
-
+- Checks whether the String is having the specified prefix or not **starting from the specified `offset` index.**
 
 `boolean startsWith(String prefix)`
 
-
 - Tests whether the string is having specified prefix, if yes then it returns true else false. The offset index value is 0 in this overloaded method.
+
+`boolean endsWith(String suffix)`
+
+- Checks whether the string ends with the specified suffix
+
+```java
+//`Hello World`.startsWith('llo',2) : true
+//`Hello World`.startsWith('Hello') : true
+//`Hello World`.endWith('World') : true
+```
+
+### `indexOf()` and `lastIndexOf()`
+
+The Java String indexOf() method returns the **index of given character or string** as method argument. If argument is not found in string, method returns `-1`. The index counter for a string starts from `0`.
+
+#### `indexOf()`
+
+| METHOD_SYNTAX                                  | DESCRIPTION                                                                     |
+| ---------------------------------------------- | ------------------------------------------------------------------------------- |
+| `int indexOf(String substring)`                | returns index position for the given `substring`                                |
+| `int indexOf(String substring, int fromIndex)` | returns index position for the given `substring` and from `fromIndex` location  |
+| `int indexOf(int ch)`                          | returns index position for the given `char` value                               |
+| `int indexOf(int ch, int fromIndex)`           | returns index position for the given `char` value and from `fromIndex` location |
+
+`null` argument is not allowed
+
+```java
+system.out.println( blogName.indexOf(null) );
+//Program output: Exception in thread "main" java.lang.NullPointerException
+```
+
+```java
+
+        System.out.println("hello world".indexOf("world"));   //6
+        System.out.println( "hello world".indexOf("earth"));   //-1
+        System.out.println("hello world".indexOf("world", 6));    //6
+        System.out.println("hello world".indexOf("world", 2));    //6
+        System.out.println("hello world".indexOf('w'));       //6
+        System.out.println("hello world".indexOf('w', 6));    //6
+        System.out.println("hello world".indexOf('k'));       //-1
+```
+
+#### `lastIndexOf()`
+
+
+| METHOD SYNTAX                                      | DESCRIPTION                                                                                                    |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `int lastIndexOf(String substring)`                | returns last index position for the given `substring`                                                          |
+| `int lastIndexOf(String substring, int fromIndex)` | returns last index position for the given `substring` searching backward starting at the specified `fromIndex` |
+| `int lastIndexOf(int ch)`                          | returns last index position for the given `char` value                                                         |
+| `int lastIndexOf(int ch, int fromIndex)`           | returns index position for the given `char` value searching backward starting at the specified `fromIndex`     |
+
+```java
+
+        System.out.println("\"hello world\".lastIndexOf(\"world\"): " + "hello world".lastIndexOf("world"));   //6
+        System.out.println("\"hello world\".lastIndexOf(\"earth\") : " + "hello world".lastIndexOf("earth"));   //-1
+        //[searching backward from index 6 `hello w`]
+        System.out.println("\"hello world\".lastIndexOf(\"world\",6) : " + "hello world".lastIndexOf("world", 6));    //6
+        //[searching backward from index 2 `hel`]
+        System.out.println("\"hello world\".lastIndexOf(\"world\",2) : " + "hello world".lastIndexOf("world", 2));    //-1 
+        System.out.println("\"hello world\".lastIndexOf(\'w\') : " + "hello world".lastIndexOf('w'));       //6
+        System.out.println("\"hello world\".lastIndexOf(\'w\',6) : " + "hello world".lastIndexOf('w', 6));    //6
+        System.out.println("\"hello world\".lastIndexOf(\'k\') : " + "hello world".lastIndexOf('k'));       //-1
+```
+
+
+### `Split()`
+
+Java String `split()` method is used to split the string using given expression. 
+
+There are two variants of split() method.
+
+- `split(String regex):` This method splits the string using given regex expression and returns array of string.
+- `split(String regex, int limit):` This version of the method also splits the string, **but the maximum number of tokens can not exceed limit argument**. After the method has found given the number of tokens, the rest of the **unsplitted string is returned as the last token**, even if it may contain the delimiters.
+
+**NOTE:** split() throws `PatternSyntaxException` if the regular expression’s syntax is invalid. In given example, "[" is invalid regular expression.
+
+```java
+String[] strArray = "hello world".split("[");
+//PatternSyntaxException: Unclosed character class near index 0
+```
+
+> ex:
+
+```java
+        String str = "A-B-C-D";
+        String[] strArray = str.split("-");
+        System.out.println(Arrays.toString(strArray));//[A, B, C, D]
+        String s1 = "Hello World";
+        System.out.println(Arrays.toString(s1.split(" ")));//[Hello, World]
+        System.out.println(Arrays.toString(s1.split("\\s")));//[Hello, World]
+        System.out.println(Arrays.toString(str.split("-", 3)));//[A, B, C-D]
+```
+
+### `replace()` and `replaceAll()`
+
+
+| METHOD SYNTAX                                            | DESCRIPTION                                                                                                                       |
+| -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `replace(char oldChar, char newChar)`                    | his method replace **all the occurrence of** `oldChar` with `newChar` in string.                                                  |
+| `replace(CharSequence target, CharSequence replacement)` | This method replace **each**`target` literals with `replacement` literals in string.                                              |
+| `replaceAll(String regex, String replacement)`           | This method replace **all the occurrence of substring** matches with specified `regex` with specified `replacement` in string.    |
+| `replaceFirst(String regex, String replacement)`         | This method replace **first occurrence of substring** that matches with specified `regex` with specified `replacement` in string. |
+
+```java
+
+        Color.printMsg(Color.GREEN_BRIGHT, "replace() and replaceAll()");
+        //replace(char oldChar,  char newChar)
+        String s = "Hello World";
+        s = s.replace('l', 'm');
+        System.out.println("After Replacing l with m :");
+        Color.printMsg(Color.YELLOW_BRIGHT, s);//Hemmo Wormd
+
+        //replaceAll(String regex, String replacement)
+        String s1 = "Hello World, Hello Earth";
+        s1 = s1.replaceAll("Hello", "Hi");
+        System.out.println("After Replacing :");
+        Color.printMsg(Color.YELLOW_BRIGHT, s1);//Hi World, Hi Earth
+
+        //replaceFirst(String regex, String replacement)
+        String s2 = "Hello guys, Hello world";
+        s2 = s2.replaceFirst("Hello", "Hi");
+        System.out.println("After Replacing :");
+        Color.printMsg(Color.YELLOW_BRIGHT, s2);//Hi guys, Hello world
+```
+
+### `substring()`
+
+**The substring() method arguments are:**
+
+- `beginIndex` – the beginning index, `inclusive`.
+- `endIndex` – the ending index, `exclusive`.  
+  
+**Return Value:** It returns the substring from the given string.
+
+It throws `IndexOutOfBoundsException` if the `beginIndex` is less than zero or greater than the length of the given string (N). Also, `endIndex` should be greater than or equal to `beginIndex` and less than the length of the given string (N).
+
+```java
+
+        String text = "Lorem Ipsum is simply dummy text";
+        String sub1 = text.substring(3);
+        System.out.println(sub1);//em Ipsum is simply dummy text
+        String sub2 = text.substring(3, 10);
+        System.out.println(sub2);//em Ipsu
+```
+
+### Miscellaneous
+
+#### `boolean isEmpty()`
+
+- Returns true if the given string has 0 length else returns false.
+
+#### `hashCode()`
+
+- Returns a unique integer value for the object in runtime. By default, integer value is mostly derived from memory address of the object in heap (but it’s not mandatory always)
+
+
+#### `contains()`
+
+Java String contains() methods checks if string contains specified sequence of character or not. This method returns `true` if string contains specified sequence of character, else returns `false`. This method is case sensitive.
+
+```java
+
+        String s = "Hello World";
+        System.out.println(s.length());//11
+        System.out.println(s.isEmpty());//false
+        System.out.println("".isEmpty());//true
+        System.out.println(s.hashCode());//-862545276
+        System.out.println(s.contains("World"));//true
+        System.out.println(s.contains("w"));//false
+```
