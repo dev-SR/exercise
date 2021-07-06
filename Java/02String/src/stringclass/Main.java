@@ -5,6 +5,7 @@ import dev.Color;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Main {
@@ -118,6 +119,8 @@ public class Main {
         Replace();
         SubString();
         Miscellaneous();
+        // create a new locale
+        Intern();
     }
 
     public static void TakeInput() {
@@ -298,5 +301,42 @@ https://www.geeksforgeeks.org/why-is-scanner-skipping-nextline-after-use-of-othe
         Color.printMsg(Color.YELLOW_BRIGHT, "contains():");
         System.out.println(s.contains("World"));//true
         System.out.println(s.contains("w"));//false
+
+        Color.printMsg(Color.YELLOW_BRIGHT, "toLowerCase() and toUpperCase()");
+        System.out.println("hello world".toUpperCase(Locale.getDefault()));//HELLO WORLD
+        System.out.println("Γειά σου Κόσμε".toUpperCase(Locale.US));//ΓΕΙΆ ΣΟΥ ΚΌΣΜΕ
+        System.out.println("Γειά σου Κόσμε".toUpperCase());//ΓΕΙΆ ΣΟΥ ΚΌΣΜΕ
+        System.out.println("Hello World".toLowerCase(Locale.getDefault()));//hello world
+        System.out.println("Γειά σου Κόσμε".toLowerCase(Locale.US));//γειά σου κόσμε
+
+        Color.printMsg(Color.YELLOW_BRIGHT, "trim()");
+        System.out.println("    hello world ".trim());//'hello world'
+
+        Color.printMsg(Color.YELLOW_BRIGHT, "valueOf()");
+        int number = 23;
+        String numStr = String.valueOf(number);
+        char vowel[] = {'A', 'E', 'I', 'O', 'U'};
+        String strChar = String.valueOf(vowel);
+        System.out.println(numStr);
+        System.out.println(strChar);//AEIOU
     }
+
+    public static void Intern() {
+        Color.printStartWithMsg(20, Color.CYAN_BRIGHT, "intern()");
+        String s1 = new String("hello world");
+        //String `literal` in `pool`
+        String s2 = "hello world";
+        //String `literal` in `pool`
+        String s3 = "hello world";
+        //String object interned to literal
+        //It will refer to existing string literal str2,str3(both are same)
+        String s4 = s1.intern();
+        System.out.println(s1 == s2);       //false
+        System.out.println(s2 == s3);       //true
+        System.out.println(s2 == s4);       //true
+        System.out.println(s1.hashCode());//1794106052
+        System.out.println(s2.hashCode());//1794106052
+        System.out.println(s4.hashCode());//1794106052
+    }
+
 }

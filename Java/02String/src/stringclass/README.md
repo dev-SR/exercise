@@ -2,6 +2,7 @@
 
 - [String CLass](#string-class)
   - [String Literal Vs String Object](#string-literal-vs-string-object)
+    - [String pool](#string-pool)
     - [1. Direct Initialization](#1-direct-initialization)
     - [2. Object Initialization](#2-object-initialization)
   - [Other Constructors](#other-constructors)
@@ -26,6 +27,10 @@
       - [`boolean isEmpty()`](#boolean-isempty)
       - [`hashCode()`](#hashcode)
       - [`contains()`](#contains)
+      - [`toLowerCase()` and `toUpperCase()`](#tolowercase-and-touppercase)
+      - [`trim()`](#trim)
+      - [`valueOf()`](#valueof)
+    - [`intern()`](#intern)
 
 ## String Literal Vs String Object
 
@@ -36,6 +41,18 @@ Statements?
 String str = "abc";
 Srting str = new String("abc");
 ```
+
+In above example, both ways are used to create strings, but later is recommended which uses string literals. **String literals always go to string pool.**
+
+When we create string with new keyword, two objects will be created i.e. one in the Heap Area and another in the String constant pool. The created string object reference always points to heap area object. To get the reference of same object created in string pool, use [`intern()`](#intern) method.
+
+### String pool
+
+String pool is a reserved memory area in heap memory which Java uses for storing string constants. Since String is Immutable Class In Java , it makes sense to cache and shares them in JVM.
+
+Java stores only one copy of every distinct String value in the string pool. It helps to reuse String objects to save memory during program execution. There may be many references to a string in running program, but there will be only copy of string inside string pool.
+
+<div align="center"><img src="../img/string-1.jpg" alt="poool" class=""></div>
 
 ### 1. Direct Initialization
 
@@ -68,9 +85,6 @@ only String Constant Pool Area data will be removed. In
 later Versions of Java String Constant Pool Area is
 hoved to `Heap Memory`._
 
-**String pool** in Java is a pool of String literals and interned Strings in JVM for efficient use of String object. Since String is
-Immutable Class In Java , it makes sense to cache and shares them in JVM. Java creators introduced this String pool construct as an optimization on the way String objects are allocated and stored. It is a simple implementation of the Flyweight pattern, which in essence, says this: when a lot of data is common among several objects, it is better to just share the same instance of that data than creating several different “copies” of it.
-
 ### 2. Object Initialization
 
 ```java
@@ -86,8 +100,6 @@ that String objects are eligible for Garbage Collection.
   
 - In the above context, str is able to refer heap
 memory String object only.
-
-![literral vs object string](../img/string-1.jpg)
 
 > Final result:
 
@@ -341,7 +353,6 @@ system.out.println( blogName.indexOf(null) );
 
 #### `lastIndexOf()`
 
-
 | METHOD SYNTAX                                      | DESCRIPTION                                                                                                    |
 | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | `int lastIndexOf(String substring)`                | returns last index position for the given `substring`                                                          |
@@ -362,10 +373,9 @@ system.out.println( blogName.indexOf(null) );
         System.out.println("\"hello world\".lastIndexOf(\'k\') : " + "hello world".lastIndexOf('k'));       //-1
 ```
 
-
 ### `Split()`
 
-Java String `split()` method is used to split the string using given expression. 
+Java String `split()` method is used to split the string using given expression.
 
 There are two variants of split() method.
 
@@ -392,7 +402,6 @@ String[] strArray = "hello world".split("[");
 ```
 
 ### `replace()` and `replaceAll()`
-
 
 | METHOD SYNTAX                                            | DESCRIPTION                                                                                                                       |
 | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
@@ -453,7 +462,6 @@ It throws `IndexOutOfBoundsException` if the `beginIndex` is less than zero or g
 
 - Returns a unique integer value for the object in runtime. By default, integer value is mostly derived from memory address of the object in heap (but it’s not mandatory always)
 
-
 #### `contains()`
 
 Java String contains() methods checks if string contains specified sequence of character or not. This method returns `true` if string contains specified sequence of character, else returns `false`. This method is case sensitive.
@@ -467,4 +475,87 @@ Java String contains() methods checks if string contains specified sequence of c
         System.out.println(s.hashCode());//-862545276
         System.out.println(s.contains("World"));//true
         System.out.println(s.contains("w"));//false
+```
+
+#### `toLowerCase()` and `toUpperCase()`
+
+The method `toLowerCase()` and `toUpperCase()` converts the characters of a String into lower\upper case characters. It has two variants:
+
+String `toLowerCase(Locale locale)` and `toUpperCase(Locale locale)`: It converts the string into Lower\upper case using the rules defined by specified `Locale`.
+
+ex :>
+
+```java
+        
+        System.out.println("hello world".toUpperCase(Locale.getDefault()));//HELLO WORLD
+        System.out.println("Γειά σου Κόσμε".toUpperCase(Locale.US));//ΓΕΙΆ ΣΟΥ ΚΌΣΜΕ
+        System.out.println("Γειά σου Κόσμε".toUpperCase());//ΓΕΙΆ ΣΟΥ ΚΌΣΜΕ
+        System.out.println("Hello World".toLowerCase(Locale.getDefault()));//hello world
+        System.out.println("Γειά σου Κόσμε".toLowerCase(Locale.US));//γειά σου κόσμε
+```
+
+> _The Java `Locale` class object represents a specific geographic, cultural, or political region. It is a mechanism to for identifying objects, not a container for the objects themselves. A Locale object logically consists of the fields like languages, script, country, variant, extensions._
+
+```java
+
+        Locale l = new Locale("BD", "Bangladesh");
+        // print locale
+        System.out.println("Locale: " + l);//Locale: bd_BANGLADESH
+        // print language
+        System.out.println("Language: " + l.getDisplayLanguage());//Language: bd
+        // print country
+        System.out.println("Country Name: " + l.getDisplayCountry());//Country Name: BANGLADESH
+```
+
+#### `trim()`
+
+It returns a String after removing leading and trailing white spaces from the input String. For e.g. `"     Hello   ".trim()` would return the String `"Hello"`.
+
+#### `valueOf()`
+
+Java String valueOf() method returns the **String representation of the boolean, char, char array, int, long, float and double arguments**. We have different versions of this method for each type of arguments.
+
+```java
+
+        int number = 23;
+        String numStr = String.valueOf(number);
+        char vowel[] = {'A', 'E', 'I', 'O', 'U'};
+        String strChar = String.valueOf(vowel);
+        System.out.println(numStr);
+        System.out.println(strChar);//AEIOU
+```
+
+### `intern()`
+
+The Java String `intern()` return the reference of a equal string literal present in string pool. If there is an existing string literal present in string pool then it’s reference is returned. Otherwise a new string with same content is created and the reference of new string is returned.
+
+It can be used to send an object from Heap memory to String constant pool area if it does not exist already in String Constant Pool Area, if it exists already in String constant Pool Area then the existed Object reference value will be returned.
+
+In Java we can create strings in two ways:
+
+```java
+String str1 = new String("hello world");
+String str2 = "hello world";
+```
+
+- String literals always go to string pool.
+
+- When we create string with new keyword, two objects will be created i.e. one in the Heap Area and another in the String constant pool. The created string object reference always points to heap area object.**To get the reference of same object created in string pool, use `intern()` method.**
+
+```java
+
+        String s1 = new String("hello world");
+        //String `literal` in `pool`
+        String s2 = "hello world";
+        //String `literal` in `pool`
+        String s3 = "hello world";
+        //String object interned to literal
+        //It will refer to existing string literal str2,str3(both are same)
+        String s4 = s1.intern();
+        System.out.println(s1 == s2);       //false
+        System.out.println(s2 == s3);       //true
+        System.out.println(s2 == s4);       //true
+        System.out.println(s1.hashCode());//1794106052
+        System.out.println(s2.hashCode());//1794106052
+        System.out.println(s4.hashCode());//1794106052
 ```
