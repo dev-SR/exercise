@@ -5,7 +5,12 @@
 - unindexable
 - access the values, with help of keys
 
-
+- [Dictionary](#dictionary)
+  - [accessing elements](#accessing-elements)
+  - [iterate](#iterate)
+  - [delete element](#delete-element)
+  - [Dictionary Comprehensions](#dictionary-comprehensions)
+  - [Unpacking Operator](#unpacking-operator)
 
 ```python
 user_info = {
@@ -26,9 +31,10 @@ type(user_info)
 
 
 
+## accessing elements
+
 
 ```python
-# accessing elements
 print(user_info['name'])
 print(user_info['age'])
 ```
@@ -120,9 +126,10 @@ user_info.items()
 
 
 
+## iterate
+
 
 ```python
-# iterate
 for k,v in user_info.items():
     print(k," : ",v)
 
@@ -141,9 +148,10 @@ for k in user_info:
     hobby  :  ['Gamming', 'Coding', 'Football']
     
 
+## delete element
+
 
 ```python
-# delete key with value
 deleted_value = user_info.pop('hobby')
 print(deleted_value)
 print(user_info)
@@ -176,24 +184,40 @@ for x in range(5):
     values.append(x*2)
 print(values)
 
-# using list comprehensions:
+# generate list using list comprehensions:
 values = [x*2 for x in range(4)]
 print(values)
 
 print()
 
-# dict comprehensions:
+# generate dict with  dict comprehensions:
 # values = {}
 # for x in range(5):
 #     values[x] = x*2
 values = {x: x*2 for x in range(4)}
 print(values)
+
+d= {
+    "name":"Jhon",
+    "pass":"pass",
+    "id":191
+}
+values = [d[key] for key in d]
+keys = [key for key in d]
+keys_str = "-".join([key for key in d]) 
+
+print(values)
+print(keys)
+print(keys_str)
 ```
 
     [0, 2, 4, 6, 8]
     [0, 2, 4, 6]
     
     {0: 0, 1: 2, 2: 4, 3: 6}
+    ['Jhon', 'pass', 191]
+    ['name', 'pass', 'id']
+    name-pass-id
     
 
 ## Unpacking Operator
