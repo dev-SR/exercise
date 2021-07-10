@@ -1,6 +1,6 @@
-# Basic OOP in python
+# OOP in python
 
-- [Basic OOP in python](#basic-oop-in-python)
+- [OOP in python](#oop-in-python)
   - [Basics](#basics)
     - [Private members](#private-members)
       - [force accessing private methods using `__dict__`](#force-accessing-private-methods-using-__dict__)
@@ -8,6 +8,9 @@
     - [Comparing Objects](#comparing-objects)
     - [Custom containers](#custom-containers)
   - [Inheritance](#inheritance)
+    - [Method Overriding with super()](#method-overriding-with-super)
+    - [Multiple Inheritance](#multiple-inheritance)
+  - [Abstract Base Classes](#abstract-base-classes)
   - [Polymorphism](#polymorphism)
   
 ## Basics
@@ -46,7 +49,6 @@ class Human():
     population = 0
     id_seq = 0
 
-    # constructor
     def __init__(self,name,age,is_alive = True):
         # instance variables
         self.name = name
@@ -451,14 +453,6 @@ Syntax :
 class ChildClassName(ParentClassName)
 ```
 
-## Polymorphism
-
-- One function Name can have different functionality.
-
-**Function overriding** - If derived class defines same function in it's base class, it known as function overriding. This is used to achieve Polymorphism.
-
-
-
 
 ```python
 # Child class
@@ -550,7 +544,263 @@ bond.intro()
     Hi, my nam is James, I've killed 1 people
     
 
+### Method Overriding with super()
+
+The `super()` builtin returns a proxy object (temporary object of the superclass) that allows us to access methods of the base class.
+
+In Python, `super()` has two major use cases:
+
+- Allows us to avoid using the base class name explicitly
+- Working with Multiple Inheritance
+
+
+```python
+class Animal():
+    def __init__(self):
+        print("Animal constructor")
+        self.age = 1
+    
+   
+class Mammal(Animal):
+    def __init__(self):
+        print("Mammal constructor")
+        self.weight = 2
+        super().__init__()
+    
+m = Mammal()
+print(m.age)
+print(m.weight)
+```
+
+    Mammal constructor
+    Animal constructor
+    1
+    2
+    
+
+### Multiple Inheritance
+
+
+```python
+class Employee:
+    def greet(self):
+        print("Employee greeting...")
+
+class Person:
+    def greet(self):
+        print("Person greeting...")
+
+
+class Manager(Employee,Person):
+    pass
+
+m = Manager()
+m.greet()
+```
+
+    Employee greeting...
+    
+
+
+```python
+class Manager(Person, Employee):
+    pass
+
+m = Manager()
+m.greet()
+```
+
+    Person greeting...
+    
+
+## Abstract Base Classes
+
+> lets build a class:
+
 
 ```python
 
 ```
+
+
+```python
+class InvalidOperationError(Exception):
+    pass
+
+class Stream:
+    def __init__(self):
+        self.opened = False
+    
+    def open(self):
+        if self.opened:
+            raise InvalidOperationError("Stream is Already opened")
+        self.opened = True
+    
+    def close(self):
+        if self.opened:
+            raise InvalidOperationError("Stream is Already opened")
+        self.opened = True
+
+class FileStream(Stream):
+    def read(self):
+        print("Reading data from a file")
+    
+
+class NetworkStream(Stream):
+    def read(self):
+        print("Reading data from a network")
+
+```
+
+**Whats wrong with below code:::**
+
+```py
+stream = Stream()
+print(stream.opened)
+stream.open()
+print(stream.opened)
+```
+
+We should not allow `Stream()` class to be instantiated as above beacuse `Stream()` is abstruct idea... we don't know what type of stream we are talking about?? is it  `FileStream` or `NetworkStream`
+
+
+
+```python
+from abc import ABC,abstractmethod
+```
+
+
+```python
+
+class InvalidOperationError(Exception):
+    pass
+
+class Stream(ABC):
+    def __init__(self):
+        self.opened = False
+    
+    def open(self):
+        if self.opened:
+            raise InvalidOperationError("Stream is Already opened")
+        self.opened = True
+    
+    def close(self):
+        if self.opened:
+            raise InvalidOperationError("Stream is Already opened")
+        self.opened = True
+
+    @abstractmethod
+    def read(self):
+        pass
+
+class FileStream(Stream):
+    def read(self):
+        print("Reading data from a file")
+    
+
+class NetworkStream(Stream):
+    def read(self):
+        print("Reading data from a network")
+
+```
+
+> abstruct class can't be instantiated
+
+
+```python
+stream = Stream()
+stream.open()
+```
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    <ipython-input-24-1456ce223969> in <module>
+    ----> 1 stream = Stream()
+          2 stream.open()
+    
+
+    TypeError: Can't instantiate abstract class Stream with abstract methods read
+
+
+> Also we now  must implement `read()` method
+
+
+```python
+class MemoryStream(Stream):
+    pass
+
+mem = MemoryStream()
+```
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    <ipython-input-25-e4845ed35a73> in <module>
+          2     pass
+          3 
+    ----> 4 mem = MemoryStream()
+    
+
+    TypeError: Can't instantiate abstract class MemoryStream with abstract methods read
+
+
+
+```python
+class MemoryStream(Stream):
+    def read():
+        print("Memory Stream")
+
+mem = MemoryStream()
+mem.open()
+print(mem.opened)
+```
+
+    True
+    
+
+## Polymorphism
+
+- One function Name can have different functionality.
+
+**Function overriding** - If derived class defines same function in it's base class, it known as function overriding. This is used to achieve Polymorphism.
+
+
+```python
+from abc import ABC,abstractmethod
+
+class UIControl(ABC):
+    @abstractmethod
+    def draw(self):
+        pass
+
+class TextBox(UIControl):
+    def draw(self):
+        print("TextBox...")
+
+class DropDownList(UIControl):
+    def draw(self):
+        print("DropDownList....")
+    
+
+def draw(controls):
+    for c in controls:
+        c.draw()
+```
+
+
+```python
+
+ddl = DropDownList()
+txtbx = TextBox()
+
+draw([ddl,txtbx])
+```
+
+    DropDownList....
+    TextBox...
+    
