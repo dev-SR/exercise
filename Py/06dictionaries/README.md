@@ -209,6 +209,17 @@ keys_str = "-".join([key for key in d])
 print(values)
 print(keys)
 print(keys_str)
+
+print()
+#Creating a new dictionary with only pairs where the value is larger than 2
+d = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+new_dict = {k:v for k, v in d.items() if v > 2}
+print(new_dict)
+
+#We can also perform operations on the key value pairs
+d = {'a':1,'b':2,'c':3,'d':4,'e':5}
+d = {k + 'c':v * 2 for k, v in d.items() if v > 2}
+print(d)
 ```
 
     [0, 2, 4, 6, 8]
@@ -218,6 +229,9 @@ print(keys_str)
     ['Jhon', 'pass', 191]
     ['name', 'pass', 'id']
     name-pass-id
+    
+    {'c': 3, 'd': 4}
+    {'cc': 6, 'dc': 8, 'ec': 10}
     
 
 ## Unpacking Operator
