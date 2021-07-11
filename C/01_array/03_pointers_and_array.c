@@ -11,13 +11,10 @@
 // #include <stdlib.h>
 
 int main() {
-    printf("\n=== Pointers and Arrays ===\n\n");
+    printf("=== Pointers and Arrays ===\n");
 
     int x[] = {9, 8, 7, 6, 5};
     int n = sizeof(x) / sizeof(x[0]);
-    for (int i = 0; i < n; i++) {
-        printf("x[i]: %d\n", x[i]);
-    }
 
     /* Let's recall:
      *  - an array is an ordered collection of items of the same type
@@ -26,7 +23,7 @@ int main() {
      * Can we access the elements of an array through pointers? Yes!
      * 
      * */
-    printf(GRN "Array address, &x[0]==x ?? :\n" NC);
+    printf(GRN "Array address, &x[0]==x ??\n" NC);
     printf("&x[0]: %llX\n", &x[0]);
     printf("x:     %llX\n", x);
 
@@ -54,12 +51,6 @@ int main() {
     return 0;
 }
 // === Pointers and Arrays ===
-
-// x[i]: 9
-// x[i]: 8
-// x[i]: 7
-// x[i]: 6
-// x[i]: 5
 // Array address, &x[0]==x ?? :
 // &x[0]: 4012E00061FEF8
 // x:     4012E00061FEF8
