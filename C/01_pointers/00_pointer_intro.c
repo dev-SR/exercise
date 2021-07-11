@@ -8,6 +8,15 @@
 #define NC "\e[0m"
 int main() {
     // Declare and Access
+    /* You can use %x or %X or %p; all of them are correct.
+
+    If you use %x, the address is given as lowercase, for example: a3bfbc4
+    If you use %X, the address is given as uppercase, for example: A3BFBC4
+    Both of these are correct.
+
+    If you use %x or %X it's considering six positions for the address, and 
+    if you use %p it's considering eight positions for the address.
+    */
     int a = 12;
     int *ptr = &a;
     printf(RED "ptr:" NC " %p  %x  %X", ptr, ptr, ptr);
