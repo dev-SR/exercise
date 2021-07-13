@@ -8,15 +8,6 @@ using namespace std;
 #define CYN "\e[0;96m"
 #define NC "\e[0m"
 
-#define debug(x) cerr << #x << " is " << x << endl;
-#define print(x) cerr << x << " ";
-#define init(arr, val) memset(arr, val, sizeof(arr))
-#define FOR(i, a, b) for (int i = a; i < b; i++)
-#define FORe(i, a, b) for (int i = a; i <= b; i++)
-#define RFOR(i, a, b) for (int i = a; i >= b; i--)
-#define FORS(i, a, b, step) for (int i = a; i < b; i += step)
-#define RFORS(i, a, b, step) for (int i = a; i >= b; i -= step)
-
 // #define V vector
 #define all(a) a.begin(), a.end()
 
