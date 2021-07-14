@@ -1,5 +1,17 @@
 # String Conversion
 
+- [String Conversion](#string-conversion)
+  - [String Primitive Conversions](#string-primitive-conversions)
+    - [Conversion between String , int or Integer](#conversion-between-string--int-or-integer)
+      - [String to int or Integer](#string-to-int-or-integer)
+      - [int or Integer to String](#int-or-integer-to-string)
+    - [Converting String to CharArray](#converting-string-to-chararray)
+      - [String to char[]](#string-to-char)
+      - [char[] to String](#char-to-string)
+    - [Converting String to ByteArray](#converting-string-to-bytearray)
+      - [String to byte[]](#string-to-byte)
+    - [Converting String to Date or LocalDateTime](#converting-string-to-date-or-localdatetime)
+
 ## String Primitive Conversions
 
 ### Conversion between String , int or Integer
