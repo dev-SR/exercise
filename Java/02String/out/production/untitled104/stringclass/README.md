@@ -542,3 +542,20 @@ String str2 = "hello world";
 
 - When we create string with new keyword, two objects will be created i.e. one in the Heap Area and another in the String constant pool. The created string object reference always points to heap area object.**To get the reference of same object created in string pool, use `intern()` method.**
 
+```java
+
+        String s1 = new String("hello world");
+        //String `literal` in `pool`
+        String s2 = "hello world";
+        //String `literal` in `pool`
+        String s3 = "hello world";
+        //String object interned to literal
+        //It will refer to existing string literal str2,str3(both are same)
+        String s4 = s1.intern();
+        System.out.println(s1 == s2);       //false
+        System.out.println(s2 == s3);       //true
+        System.out.println(s2 == s4);       //true
+        System.out.println(s1.hashCode());//1794106052
+        System.out.println(s2.hashCode());//1794106052
+        System.out.println(s4.hashCode());//1794106052
+```
