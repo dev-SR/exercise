@@ -19,6 +19,18 @@
       - [`np.where()` to select elements or indices from an array](#npwhere-to-select-elements-or-indices-from-an-array)
   - [3D Arrays](#3d-arrays)
     - [Converting to 1D array with `flatten()` method](#converting-to-1d-array-with-flatten-method)
+  - [Manipulating Arrays](#manipulating-arrays)
+    - [Matrix Arithmetic](#matrix-arithmetic)
+    - [Dot Product](#dot-product)
+    - [Matrix Aggregation](#matrix-aggregation)
+  - [Broadcasting](#broadcasting)
+  - [Shape Manipulation - Transposing, Reshaping, Stacking etc](#shape-manipulation---transposing-reshaping-stacking-etc)
+    - [flatten()](#flatten)
+    - [reshape()](#reshape)
+    - [Transpose](#transpose)
+    - [Stacking of Array](#stacking-of-array)
+  - [Vectorization](#vectorization)
+    - [Machine Learning context](#machine-learning-context)
 
 ```python
 import numpy as np
@@ -101,6 +113,7 @@ a2D = np.array([[1, 2], [3, 4]])
 print(a2D) 
 print("total item: ",a2D.size)  
 print("shape: ",a2D.shape)  
+print("shape is indexable: ",a2D.shape[0],"~",a2D.shape[1])  
 ```
 
     [1 2 3 4]
@@ -113,6 +126,7 @@ print("shape: ",a2D.shape)
      [3 4]]
     total item:  4
     shape:  (2, 2)
+    shape is indexable:  2 ~ 2
 
 ### 2) Intrinsic NumPy array creation functions
 
@@ -282,6 +296,7 @@ plt.show()
   - size of the array.
 
 ```python
+print(np.arange(10)) # Remember!! not random but sequential
 print(np.random.randint(20)) #generates a random integer exclusive of 20
 print()
 print(np.random.randint(2, 20))#generates a random integer including 2 but excluding 20
@@ -366,6 +381,10 @@ a = np.array([[1 , 2, 3, 4],
               [13 , 14, 15, 16]])
 ```
 
+<div align="center"><img src="img/indexing.jpg" alt="dfs" width="800px"></div>
+
+<div align="center"><img src="img/index_slice.jpg" alt="Itrtype" width="800px" ></div>
+
 ```python
 print(a[0:2,0:2])
 print()
@@ -378,7 +397,23 @@ print(a[:2,:2])
     [[1 2]
      [5 6]]
 
-<div align="center"><img src="img/index_slice.jpg" alt="Itrtype" ></div>
+```python
+# diff. ways of indexing first two rows
+print(a[0:2]) 
+print()
+print(a[:2,:])
+print()
+print(a[:2])
+```
+
+    [[1 2 3 4]
+     [5 6 7 8]]
+    
+    [[1 2 3 4]
+     [5 6 7 8]]
+    
+    [[1 2 3 4]
+     [5 6 7 8]]
 
 ```python
 print(a[:,1]) #all rows of column 2
@@ -536,7 +571,7 @@ the second array represents the column indices where the values are found.
 
 ## 3D Arrays
 
- <div align="center"><img src="img/array_creation.jpg" alt="Itrtype" ></div>
+<div align="center"><img src="img/array_creation.jpg" alt="Itrtype" width="800px"></div>
 
 ```python
 a = np.array([[[1,2],[3,4],[5,6]],# first axis array
@@ -633,3 +668,490 @@ print('Printing as a single array :','\n',a[1:,0:2,0:2].flatten())
     
      [[17 18]
       [15 16]]]
+
+## Manipulating Arrays
+
+### Matrix Arithmetic
+
+We can add and multiply matrices using `arithmetic operators (+-*/)` if the two matrices are the **same size**. NumPy handles those as **`position-wise`** operations:
+
+<div align="center"><img src="img/Matrix Arithmetic.jpg" alt="Itrtype" width="800px"></div>
+
+We can get away with doing these arithmetic operations on matrices of **different size** only if the different dimension is one (e.g. the matrix has only one column or one row), in which case NumPy uses its **`broadcast`** rules for that operation:
+
+<div align="center"><img src="img/Matrix Arithmetic 2.jpg" alt="Itrtype" width="800px"></div>
+
+```python
+a = np.array([10,20,30,40])
+b = np.arange(1,5)
+print(a)
+print(b)
+```
+
+    [10 20 30 40]
+    [1 2 3 4]
+
+```python
+a + b
+```
+
+    array([11, 22, 33, 44])
+
+```python
+a - b
+```
+
+    array([ 9, 18, 27, 36])
+
+```python
+a * b
+```
+
+    array([ 10,  40,  90, 160])
+
+```python
+b*2
+```
+
+    array([2, 4, 6, 8])
+
+```python
+b**2
+```
+
+    array([ 1,  4,  9, 16], dtype=int32)
+
+```python
+# Masking
+a>15
+```
+
+    array([False,  True,  True,  True])
+
+```python
+np.log(b)
+```
+
+    array([0.        , 0.69314718, 1.09861229, 1.38629436])
+
+```python
+np.sin(a)
+```
+
+    array([-0.54402111,  0.91294525, -0.98803162,  0.74511316])
+
+```python
+a = np.array([[1,2],[3,4]])
+b = np.array([1,1])
+b
+```
+
+    array([1, 1])
+
+```python
+a + b
+```
+
+    array([[2, 3],
+           [4, 5]])
+
+### Dot Product
+
+To multiply an `m×n` matrix by an `n×p` matrix, the `n`s must be the same,
+and the result is an `m×p` matrix.
+
+A key distinction to make with arithmetic is the case of matrix multiplication using the dot product. NumPy gives every matrix a dot() method we can use to carry-out dot product operations with other matrices:
+
+<div align="center"><img src="img/dot.jpg" alt="Itrtype" width="800px"></div>
+
+I’ve added matrix dimensions at the bottom of this figure to stress that the two matrices have to have the same dimension on the side they face each other with. You can visualize this operation as looking like this:
+
+<div align="center"><img src="img/dot1.jpg" alt="Itrtype" width="800px"></div>
+
+```python
+# A = np.random.randint(0,5,(3,4))
+# B = np.random.randint(0,5,(4,2))
+A = np.array([1,2,3])
+B = np.array([[1,10],[100,1000],[10000,100000]])
+print(A)
+print()
+print(B)
+```
+
+    [1 2 3]
+    
+    [[     1     10]
+     [   100   1000]
+     [ 10000 100000]]
+
+```python
+# Dot product
+A.dot(B)
+```
+
+    array([ 30201, 302010])
+
+### Matrix Aggregation
+
+We can aggregate matrices the same way we aggregated vectors:
+
+<div align="center"><img src="img/agg.jpg" alt="Itrtype" width="800px"></div>
+
+Not only can we aggregate all the values in a matrix, but we can also aggregate across the rows or columns by using the `axis` parameter:
+
+<div align="center"><img src="img/agg1.jpg" alt="Itrtype" width="800px"></div>
+
+```python
+print("1:------------\n",np.sum(B))
+print("2:------------\n",np.sum(B,axis=0))
+print("3:------------\n",np.sum(B,axis=1))
+
+print("4:------------\n",np.sqrt(B))
+print("5:------------\n",np.mean(B))
+print("6:------------\n",np.mean(B,axis=0))
+```
+
+    1:------------
+     111111
+    2:------------
+     [ 10101 101010]
+    3:------------
+     [    11   1100 110000]
+    4:------------
+     [[  1.           3.16227766]
+     [ 10.          31.6227766 ]
+     [100.         316.22776602]]
+    5:------------
+     18518.5
+    6:------------
+     [ 3367. 33670.]
+
+## Broadcasting
+
+Broadcasting is a process performed by NumPy that allows mathematical operations to work with objects that don't necessarily have compatible dimensions.
+
+- First rule of Numpy: 2 Array can perform operaiton only when they have same shapes
+- `Broadcasting` let two Arrays of different shapes to do some operaitons.
+  - The `small` Array will repeat itself, and convert to the same shape as of another array.
+
+<div align="center"><img src="img/Matrix Arithmetic 2.jpg" alt="Itrtype" width="800px"></div>
+
+<div align="center"><img src="img/broadcast.jpg" alt="Itrtype" width="600px"></div>
+
+```python
+A = np.array([[1,2,1],[2,3,1],[3,4,1]])
+a = np.array([[1,2,3]])
+```
+
+```python
+A + 4
+```
+
+    array([[5, 6, 5],
+           [6, 7, 5],
+           [7, 8, 5]])
+
+```python
+A + a
+```
+
+    array([[2, 4, 4],
+           [3, 5, 4],
+           [4, 6, 4]])
+
+```python
+a.T
+```
+
+    array([[1],
+           [2],
+           [3]])
+
+```python
+A + a.T
+```
+
+    array([[2, 3, 2],
+           [4, 5, 3],
+           [6, 7, 4]])
+
+## Shape Manipulation - Transposing, Reshaping, Stacking etc
+
+```python
+A = np.array([[1,2,3],[4,5,6]])
+```
+
+    array([[1, 2, 3],
+           [4, 5, 6]])
+
+### flatten()
+
+```python
+A.flatten()
+```
+
+    array([1, 2, 3, 4, 5, 6])
+
+### reshape()
+
+```python
+print(A.reshape(2,3))
+print()
+print(A.reshape(3,2))
+```
+
+    [[1 2 3]
+     [4 5 6]]
+    
+    [[1 2]
+     [3 4]
+     [5 6]]
+
+<div align="center"><img src="img/reshape.jpg" alt="dfgdfg" width="800px"></div>
+
+### Transpose
+
+A common need when dealing with matrices is the need to **rotate** them. This is often the case when we need to take the dot product of two matrices and need to align the dimension they share. NumPy arrays have a convenient property called T to get the `transpose` of a matrix:
+
+<div align="center"><img src="img/trans.jpg" alt="dfgdfg" width="800px"></div>
+
+```python
+print(A.flatten())
+X = A.reshape(2,3)
+Y = A.reshape(3,2)
+print()
+print("X:---------------\n",X)
+print()
+print("Y:---------------\n",Y)
+print()
+print("X.T=Y:-----------\n",X.T)
+print()
+print("Y.T=X:-----------\n",Y.T)
+```
+
+    [1 2 3 4 5 6]
+    
+    X:---------------
+     [[1 2 3]
+     [4 5 6]]
+    
+    Y:---------------
+     [[1 2]
+     [3 4]
+     [5 6]]
+    
+    X.T=Y:-----------
+     [[1 4]
+     [2 5]
+     [3 6]]
+    
+    Y.T=X:-----------
+     [[1 3 5]
+     [2 4 6]]
+
+### Stacking of Array
+
+<div align="center"><img src="img/stack.jpg" alt="dfgdfg" width="800px"></div>
+
+```python
+a = np.arange(0,5)
+b = np.arange(5,10)
+print('Array 1 :','\n',a)
+print('Array 2 :','\n',b)
+print('Vertical stacking :','\n',np.vstack((a,b)))
+print('Horizontal stacking :','\n',np.hstack((a,b)))
+```
+
+    Array 1 : 
+     [0 1 2 3 4]
+    Array 2 : 
+     [5 6 7 8 9]
+    Vertical stacking : 
+     [[0 1 2 3 4]
+     [5 6 7 8 9]]
+    Horizontal stacking : 
+     [0 1 2 3 4 5 6 7 8 9]
+
+## Vectorization
+
+- performing operation directly on Arrays
+
+Vectorization is the process of modifying code to utilize array operation methods. Array operations can be computed internally by NumPy using a lower-level language, which leads to many benefits:
+
+- Vectorized code tends to execute much faster than equivalent code that uses loops (such as for-loops and while-loops). Usually a lot faster. Therefore, vectorization can be very important for machine learning, where we often work with large datasets
+
+- Vectorized code can often be more compact. Having fewer lines of code to write can potentially speed-up the code-writing process, make code more readable, and reduce the risk of errors
+
+```python
+# find the distance between any two points (x1, y1) and (x2, y2)
+p1 = np.array([1,2,3,4])  # [x1,x2,x3.....,xn]
+p2 = np.array([5,5,3,4])  # [y1,y2,x3.....,xn]
+```
+
+```python
+s=0
+for i in range(3):
+    s += (p2[i] - p1[i])**2
+
+print(s**0.5)
+```
+
+    5.0
+
+```python
+# efficient
+def point_distance(p1,p2):
+    return np.sqrt(np.sum((p2-p1)**2))
+
+print(point_distance(p1,p2))
+```
+
+    5.0
+
+### Machine Learning context
+
+Let's imagine a machine learning problem where we use a linear regression algorithm to model the cost of electricity.
+
+Let's denote our model features as `x1,x2...xn`. Features could represent things like **the amount of available wind energy**, **the current gas price**, and **the current load on the grid**.
+
+After we train the algorithm, we obtain model parameters, `θ0,θ1,θ2...θn`. These model parameters constitute the _weights_ that should be used for each feature.
+
+For instance, `x2` might represent the price of gas. The model might find that gas prices are particularly decisive in determining the price of electricity. The corresponding weight of `θ2` would then be expected to be much larger in magnitude than other weights for less important features. The result (hypothesis/prediction) returned by our linear regression model for a given set of x is a linear expression:
+
+`h=θo+x1.θ1+x2.θ2+...+xn.θn`
+
+Furthermore, let's assume we have a set of `m` test examples. In other words, we have `m` sets of `x` for which we would like to obtain the model's prediction. The linear expression, `h`, is to be calculated for each of the test examples. There will be a total of `m` individual hypothesis outputs.
+
+First, define a `10x4` array (x) in which each row is a training set. Here, m=10 and n=4:
+
+```python
+x = np.arange(1,41).reshape(10,4) 
+# x is now a range of 40 numbers reshaped to be 10 rows by 4 columns.
+print('x:\n', x)
+```
+
+    x:
+     [[ 1  2  3  4]
+     [ 5  6  7  8]
+     [ 9 10 11 12]
+     [13 14 15 16]
+     [17 18 19 20]
+     [21 22 23 24]
+     [25 26 27 28]
+     [29 30 31 32]
+     [33 34 35 36]
+     [37 38 39 40]]
+
+Now, add a column of ones to represent `x0`, known in machine learning as the `bias` term. `x` is now a `10x5` array:
+
+```python
+# print(np.full((4,1),1)) # uncomment before run
+ones = np.full((10,1),1)
+x = np.hstack((ones,x))
+print('x:\n', x)
+# Using np.full, we created a 10x1 array full of ones then horizontally stacked it (np.hstack) to the front of x.
+print('shape : \n', x.shape)
+print('x.shape[0] : \n', x.shape[0])
+print('x.shape[1] : \n', x.shape[1])
+```
+
+    [[1]
+     [1]
+     [1]
+     [1]]
+    x:
+     [[ 1  1  2  3  4]
+     [ 1  5  6  7  8]
+     [ 1  9 10 11 12]
+     [ 1 13 14 15 16]
+     [ 1 17 18 19 20]
+     [ 1 21 22 23 24]
+     [ 1 25 26 27 28]
+     [ 1 29 30 31 32]
+     [ 1 33 34 35 36]
+     [ 1 37 38 39 40]]
+    shape : 
+     (10, 5)
+    x.shape[0] : 
+     10
+    x.shape[1] : 
+     5
+
+Now let's initialize our model parameters as a `5x1` array
+
+```python
+theta = np.arange(1,6).reshape(5,1)
+print('theta:\n', theta)
+```
+
+    theta:
+     [[1]
+     [2]
+     [3]
+     [4]
+     [5]]
+
+Armed with our matrix `x` and vector `θ`, we'll proceed to define vectorized and non-vectorized versions of evaluating the linear expressions to compare the computation time.
+
+```python
+#Non-vectorized version
+def non_vectorized_output(x, theta):
+    h = []
+    for i in range(x.shape[0]): # range(10) row
+        total = 0
+        for j in range(x.shape[1]): # range(5) column
+            total = total + x[i, j] * theta[j, 0]  
+            # ∑Xeach_row_all_colum_el.θeach_row`~~`h=θo+x1.θ1+x2.θ2+...+xn.θn` 
+        h.append(total)
+    return h
+    
+#Vectorized version
+def vectorized_output(x, theta):
+    h = np.matmul(x, theta) # NumPy's matrix multiplication function
+    return h
+```
+
+```python
+print(vectorized_output(x,theta))
+```
+
+    [[ 41]
+     [ 97]
+     [153]
+     [209]
+     [265]
+     [321]
+     [377]
+     [433]
+     [489]
+     [545]]
+
+<div align="center"><img src="img/vectorization.jpg" alt="dfgdfg" width="800px"></div>
+
+```python
+nv_time = %timeit -o non_vectorized_output(x, theta)
+```
+
+    80.5 µs ± 11 µs per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+
+```python
+v_time = %timeit -o vectorized_output(x, theta)
+```
+
+    4.62 µs ± 280 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+
+```python
+print('Non-vectorized version:', f'{1E6 * nv_time.average:0.2f}', 'microseconds per execution, average')
+
+print('Vectorized version:', f'{1E6 * v_time.average:0.2f}', 'microseconds per execution, average')
+
+print('Computation was', "%.0f" % (nv_time.average / v_time.average), 'times faster using vectorization')
+```
+
+    Non-vectorized version: 80.53 microseconds per execution, average
+    Vectorized version: 4.62 microseconds per execution, average
+    Computation was 17 times faster using vectorization
+
+Note that in both examples, NumPy's vectorized calculations significantly outperformed native Python calculations using loops. The improved performance is substantial.
+
+However, vectorization does have potential disadvantages. Vectorized code can be less intuitive to those who do not know how to read it. It can also be more memory intensive.
