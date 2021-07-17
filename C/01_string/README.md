@@ -10,6 +10,7 @@
     - [Array of Strings](#array-of-strings)
     - [Array of Pointers](#array-of-pointers)
     - [Reading a String](#reading-a-string)
+  - [String manipulations](#string-manipulations)
 
 ## Introduction
 
@@ -147,3 +148,23 @@ char input_str[10];
         printf("\nCurrent size for string block: %d", bytes_read);
     }
 ```
+
+## String manipulations
+
+| Function             | Description                                                                                            |
+| -------------------- | ------------------------------------------------------------------------------------------------------ |
+| `strcat(s1,s2)`      | concats or joins first string with second string. The result of the string is stored in first string.  |
+| `strlen(s)`          | returns the length of string name.                                                                     |
+| `strcpy(des,src,[n)` | copies the contents of source string to destination string.                                            |
+| `strcmp(s1,s2)`      | compares the first string with second string. If both strings are same, it returns `0` otherwise `-1`. |
+| `strcmpi(s1,s2)`     | Same as strcmp() function. But, this function negotiates case.  `A` and `a` are treated as same.       |
+| `strlwr(s)`          | returns string characters in lowercase.                                                                |
+| `strupr(s)`          | returns string characters in uppercase.                                                                |
+| `strrev(s)`          | returns reverse string.                                                                                |
+| `strchr(s,ch)`       | Returns pointer to first occurrence of `ch` in `s`                                                     |
+| `strrchr(s,ch)`      | Returns pointer to last occurrence of `ch` in `s`  d                                                   |
+| `strstr(s1,s2)`      | Returns pointer to first occurrence of `s2` in `s1`                                                    |
+| `strrstr(s1,s2)`     | Returns pointer to last occurrence of `s2` in `s1`                                                     |
+| `strtok()`           | Tokenizing given string using delimiter                                                                |
+| `strnset()`          | Sets all character in a string to given character                                                      |
+| `strnset()`          | It sets the portion of characters in a string to given character                                       |
