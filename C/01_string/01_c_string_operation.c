@@ -9,7 +9,12 @@
 #define NC "\e[0m"
 
 int main() {
-    printf(GRN "String Length:\n" NC);
+    printf(GRN "String concatenation:\n\n" NC);
+    char s1[] = "Hello";
+    char s2[] = "World";
+    strcat(s1, s2);
+    printf("Output string after concatenation: %s\n", s1);
+    printf(GRN "\nString Length:\n\n" NC);
     char s[] = "I love programming in C!";
     printf("%s\n", s);
     int i = 0;
@@ -22,7 +27,7 @@ int main() {
     printf("Sizeof string: %d\n", sizeof(s));
     printf("String length (built in): %d\n", strlen(s));
 
-    printf(GRN "String Copy: strcpy, strncpy\n" NC);
+    printf(GRN "\nString Copy: strcpy, strncpy\n" NC);
     char another_string[] = "Programming is funny";
     printf(YEL "strcpy......................\n" NC);
     printf("1. Before copy: \"%s\"\n", s);
@@ -45,7 +50,7 @@ int main() {
     s[sizeof(s) - 1] = '\0';
     printf("8. After copy: \"%s\"\n\n", s);
 
-    /* String Compare: strcmp, strncmp */
+    printf(GRN "\nString Compare: strcmp, strncmp\n\n" NC);
     char str_1[] = "abc";
     char str_2[] = "abcaaaaa";
 
