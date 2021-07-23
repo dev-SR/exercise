@@ -1,21 +1,22 @@
 # IO Stream
 
 - [IO Stream](#io-stream)
-	- [Introduction to Stream](#introduction-to-stream)
-	- [Byte Streams](#byte-streams)
-		- [InputStream](#inputstream)
-			- [Java InputStream class](#java-inputstream-class)
-			- [Methods of InputStream](#methods-of-inputstream)
-		- [OutputStream class](#outputstream-class)
-			- [Methods of OutputStream](#methods-of-outputstream)
-	- [Character streams in Java](#character-streams-in-java)
-		- [Java Reader class](#java-reader-class)
-			- [Method with Description](#method-with-description)
-		- [Java Writer class](#java-writer-class)
-			- [Method with Description](#method-with-description-1)
-	- [Layered (or Chained) I/O Streams](#layered-or-chained-io-streams)
-		- [✔✔ Buffered Stream ✔✔](#-buffered-stream-)
-			- [Two Types of Buffer Stream:](#two-types-of-buffer-stream)
+  - [Introduction to Stream](#introduction-to-stream)
+  - [Byte Streams](#byte-streams)
+    - [InputStream](#inputstream)
+      - [Java InputStream class](#java-inputstream-class)
+      - [Methods of InputStream](#methods-of-inputstream)
+    - [OutputStream class](#outputstream-class)
+      - [Methods of OutputStream](#methods-of-outputstream)
+  - [Character streams in Java](#character-streams-in-java)
+    - [Java Reader class](#java-reader-class)
+      - [Method with Description](#method-with-description)
+    - [Java Writer class](#java-writer-class)
+      - [Method with Description](#method-with-description-1)
+  - [Layered (or Chained) I/O Streams](#layered-or-chained-io-streams)
+    - [✔✔ Buffered Stream ✔✔](#-buffered-stream-)
+      - [Types of Buffer Stream](#types-of-buffer-stream)
+      - [Examples](#examples)
 
 ## Introduction to Stream
 
@@ -338,21 +339,11 @@ The I/O streams are often layered or chained with other I/O streams, for purpose
 
 **BufferedReader/BufferedWriter**: To increase performance. Data to be read will be buffered in to memory for quick access.
 
-The `read()/write()` method in `InputStream/OutputStream` are designed to read/write a single byte of data on each call. This is grossly **inefficient**, as each call is handled by the underlying operating system (which may trigger a disk access, or other expensive operations). `Buffering`, which reads/writes a block of bytes from the external device into/from a memory buffer **in a single I/O operation**n, is commonly applied to speed up the I/O.
+Most of the examples we've seen so far use unbuffered I/O. This means each read or write request is handled directly by the underlying OS. This can make a program much less efficient, since each such request often triggers disk access, network activity, or some other operation that is relatively expensive.
 
-`FileInputStream/FileOutputStream` is not buffered. It is often chained to a `BufferedInputStream` or `BufferedOutputStream`, which provides the buffering. To chain the streams together, simply pass an instance of one stream into the constructor of another stream. For example, the following codes chain a FileInputStream to a BufferedInputStream, and finally, a DataInputStream:
+In general, disk access is much slower than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. 
 
-```java
-FileInputStream fileIn = new FileInputStream("in.dat");
-BufferedInputStream bufferIn = new BufferedInputStream(fileIn);
-DataInputStream dataIn = new DataInputStream(bufferIn);
-// or
-DataInputStream in = new DataInputStream(
-                        new BufferedInputStream(
-                           new FileInputStream("in.dat")));
-```
-
-In general, disk access is much slower than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. To minimize the number of times the disk is accessed, Java provides buffers, which serve as reservoirs of data.
+To reduce this kind of overhead, the Java platform implements buffered I/O streams. `Buffering`, which reads/writes a block of bytes from the external device into/from a memory buffer _in a single I/O operation_, is commonly applied to speed up the I/O.*The native input API is called only when the buffer is empty. Similarly, buffered output streams write data to a buffer, and the native output API is called only when the buffer is full.*
 
 <div align="center">
 <img src="img/buffer_pool.jpg" alt="stream" width="700px">
@@ -363,11 +354,43 @@ In reading File with `FileInputStream` then `BufferedInputStream`, the class `Bu
 The main idea here is to minimize disk access. Buffered streams are not changing the type of the original streams
 ;they just make reading more efficient. A program performs stream chaining (or stream piping) to connect streams, just as pipes are connected in plumbing.
 
-#### Two Types of Buffer Stream:
+#### Types of Buffer Stream
 
-- `BufferedInputStream` for raw bytes
-- `BufferedReader` for characters
+There are four buffered stream classes used to wrap un-buffered streams:
 
-`BufferedInputStream` reads the data in the buffer as bytes by using `InputStream`.
+- `BufferedInputStream` and `BufferedOutputStream` create buffered `byte` streams.
+- `BufferedReader` and `BufferedWriter` create buffered `character` streams.
 
-`BufferedReader` reads the text but not as bytes by using `Reader` and BufferedReader is efficient reading of characters,arrays and lines.
+#### Examples
+
+A program can convert an `un-buffered` stream into a buffered stream using the wrapping idiom we've used several times now, where the un-buffered stream object is passed to the constructor for a buffered stream class. Here's how you might modify the constructor invocations in the CopyCharacters example to use buffered I/O:
+
+```java
+inputStream = new BufferedReader(new FileReader("xanadu.txt"));
+outputStream = new BufferedWriter(new FileWriter("characteroutput.txt"));
+```
+
+To chain the streams together, simply pass an instance of one stream into the constructor of another stream. For example, the following codes chain a FileInputStream to a BufferedInputStream, and finally, a DataInputStream:
+
+```java
+FileInputStream fileIn = new FileInputStream("in.dat");
+BufferedInputStream bufferIn = new BufferedInputStream(fileIn);
+DataInputStream dataIn = new DataInputStream(bufferIn);
+// or
+DataInputStream in = new DataInputStream(
+                        new BufferedInputStream(
+                           new FileInputStream("in.dat")));
+
+```
+
+> An `InputStream` is the base class to read `bytes` from a stream (network or file). `DataInputStream` is a kind of InputStream to read data directly as `primitive data` types.
+
+More Examples:
+
+```java
+BufferedReader userInput = new BufferedReader(
+                            new InputStreamReader(System.in)));
+
+BufferedReader in = new BufferedReader(
+                    new InputStreamReader(socket.getInputStream())));
+```
