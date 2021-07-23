@@ -1,4 +1,4 @@
-package p2;
+package A_simple_server_clients.p2;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

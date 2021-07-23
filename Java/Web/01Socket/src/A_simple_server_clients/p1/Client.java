@@ -1,9 +1,8 @@
-package p1;
+package A_simple_server_clients.p1;
 
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Locale;
 
 public class Client {
     public static void main(String[] args) throws IOException {

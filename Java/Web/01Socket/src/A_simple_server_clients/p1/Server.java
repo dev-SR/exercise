@@ -1,4 +1,4 @@
-package p1;
+package A_simple_server_clients.p1;
 
 import java.io.*;
 import java.net.ServerSocket;
