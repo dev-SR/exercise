@@ -28,21 +28,82 @@ echo
 echo -e " NAME: ${RED}$NAME${NC}, ID: ${RED}$ID${NC}, PASS: ${RED}$PASS${NC}" >00_file_1.any
 cat 00_file_1.any
 
+echo -e "${RED}....if..fi........${NC}"
 # !IF
 if [ "$NAME" == "soikat" ]; then
 	echo "if[]: Your name is Soikat"
 fi
 
+echo -e "${RED}....if..elif_else..fi........${NC}"
 # !ELSE-IF
 if [ "$NAME" == "soikat" ]; then
-	echo "else-if[]: Your name is Soikat"
+	echo "else-if[]: Your name is soikat"
 elif [ "$NAME" == "bob" ]; then
 	echo "else-if[]:our name is Bob"
 else
 	echo "else-if[]:our name is not Soikot or Bob"
 fi
 
+
+# !Arithmetic Operations
+echo -e "${RED}....Arithmetic Operations........${NC}"
+echo "ex1"
+# ?Example – 1: Using ‘expr’ command
+# expr '10 + 30'# Works as string
+# expr 10+30 # Works as string
+# expr 10 + 30 #Perform the addition
+# expr 30 % 9 #Find out the remainder value
+v1=`expr 30 / 10`#Using expr with backtick
+echo $v1
+v2=$( expr 30 - 10 ) #Using expr within command substitute
+echo $v2
+echo
+
+# ?Example – 2: Using ‘let’ command
+echo "ex2"
+let v1=9*3
+echo $v1
+ 
+let "v2 = v1 / 3"
+echo $v2
+ 
+let v3=9-3
+echo $v3
+ 
+let v4=7
+let v4++
+echo $v4
+i=10
+let "v5=50+$i"
+echo $v5
+echo
+
+
+# ?Example – 3: Using double brackets
+echo "ex3"
+
+# Calculate the mathematical expression
+val1=$((10*5+15))
+echo $val1
+ 
+# Using post or pre increment/decrement operator
+((val1++))
+echo $val1
+val2=41
+((--val2))
+echo $val2
+ 
+# Using shorthand operator
+(( val2 += 60 ))
+echo $val2
+ 
+# Dividing 40 by 6
+(( val3 = 40/6 ))
+echo $val3
+echo
+
 # !COMPARISON
+echo -e "${RED}....COMPARISON........${NC}"
 ########
 # val1 -eq val2 Returns true if the values are equal
 # val1 -ne val2 Returns true if the values are not equal
@@ -168,12 +229,12 @@ done
 
 echo -e "$RED ex: (seq START STEP END) $NC"
 
-for i in $(seq 1 2 6)
+for i in $(seq 1 2 6) 
 do
 	echo $i
 done
 
-for i in $(seq 10 -2 6)
+for i in $(seq 10 -2 6);
 do
 	echo $i
 done
@@ -196,7 +257,8 @@ read n
 for i in $( eval echo {1..$n} )
 do
     read -p  "Enter value:" n2
-   sum=$(($sum+$n2 ))
+#    sum=$(($sum+$i ))
+   sum=$((sum+n2 ))
 done
 
 echo "SUM: " $sum
@@ -229,6 +291,7 @@ while ((i<=3))
 do
 	echo $i
 	((i++))
+	# let i++
 	# i=$(($i+1))
 done
 
@@ -323,8 +386,11 @@ echo "iterate with while...."
 i=0
 while [ $i -lt ${#ar[@]} ]
 do
-    echo -n ${ar[$i]}" "
-    i=$(expr $i + 1)
+    # echo -n ${ar[$i]}" "
+	echo -n ${ar[i]}" "
+    # i=$(expr $i + 1)
+	# let i++
+	((i++))
 done
 
 
