@@ -1,3 +1,5 @@
+# Clear Entire Git Cache
+# git rm -r --cached .
 node_modules
 *.jar
 *.exe
@@ -11,3 +13,5 @@ test.sh
 # python bytecode
 __pycache__/
 *.py[cod]
+# itellij 
+out/
