@@ -1,5 +1,17 @@
 # String Conversion
 
+- [String Conversion](#string-conversion)
+  - [String Primitive Conversions](#string-primitive-conversions)
+    - [Conversion between String , int or Integer](#conversion-between-string--int-or-integer)
+      - [String to int or Integer](#string-to-int-or-integer)
+      - [int or Integer to String](#int-or-integer-to-string)
+    - [Converting String to CharArray](#converting-string-to-chararray)
+      - [String to char[]](#string-to-char)
+      - [char[] to String](#char-to-string)
+    - [Converting String to ByteArray](#converting-string-to-bytearray)
+      - [String to byte[]](#string-to-byte)
+    - [Converting String to Date or LocalDateTime](#converting-string-to-date-or-localdatetime)
+
 ## String Primitive Conversions
 
 ### Conversion between String , int or Integer
@@ -63,12 +75,31 @@ String s2 = String.valueOf(ch);
 
 ```java
 String s = "Hello";
-byte[] bytes = s.getBytes();
+byte[] bytes = s.getBytes();//"US-ASCII"/UTF-8
 for (byte b : bytes) System.out.println("char: " + (char) b + ", byte: " + b);
 // char: H, byte: 72
 // char: e, byte: 101
 // char: l, byte: 108
 // char: l, byte: 108
 // char: o, byte: 111
+
+//https://docs.oracle.com/javase/8/docs/technotes/guides/intl/encoding.doc.html
+try {
+ byte[] bytes = s.getBytes("UTF-16");
+ for (byte b : bytes) System.out.println("char: " + (char) b + ", byte: " + b);
+
+} catch (UnsupportedEncodingException e) {
+ e.printStackTrace();
+}
+
+// char: ￾, byte: -2
+// char: ￿, byte: -1
+// char:  , byte: 0
+// char: H, byte: 72
+// char:  , byte: 0
+// char: e, byte: 101
+// char:  , byte: 0
+// ..........
 ```
+
 ### Converting String to Date or LocalDateTime

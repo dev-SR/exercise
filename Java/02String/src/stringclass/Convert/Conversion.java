@@ -2,7 +2,13 @@ package stringclass.Convert;
 
 import dev.Color;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.nio.charset.StandardCharsets;
 
 public class Conversion {
     public static void main(String[] args) {
@@ -71,17 +77,6 @@ public class Conversion {
 //        } catch (UnsupportedEncodingException e) {
 //            e.printStackTrace();
 //        }
-    }
-
-    public static void IOConversions() {
-/*
-TODO:
-        Java InputStream to String
-        Java String to InputStream
-        Java – String to Reader
-        Java – Reader to String
-*/
-
     }
 }
 
