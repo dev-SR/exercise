@@ -1,7 +1,7 @@
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
-public class C_FileOutputStream {
+public class B_FileOutputStream {
     public static void main(String[] args) {
         String data = "Writing data into files....";
         // Converts the string into bytes

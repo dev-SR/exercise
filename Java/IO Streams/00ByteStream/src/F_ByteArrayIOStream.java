@@ -3,7 +3,7 @@ import dev.Color;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-public class ByteArrayIOStream {
+public class F_ByteArrayIOStream {
     public static void main(String[] args) {
         Color.printMsg(Color.CYAN_BRIGHT, "ByteArrayInputStream");
         byte b[] = {'a', 'b', 'c'};

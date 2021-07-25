@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 
-public class B_FileInputStream {
+public class A_FileInputStream {
     public static void main(String[] args) {
         method1();
         method2();

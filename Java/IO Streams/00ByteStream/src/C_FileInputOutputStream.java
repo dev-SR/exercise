@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class A_FileInputOutputStream {
+public class C_FileInputOutputStream {
     public static void main(String[] args) {
         InputStream fis = null;
         OutputStream fos = null;
