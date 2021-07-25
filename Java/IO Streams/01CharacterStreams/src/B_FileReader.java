@@ -3,9 +3,32 @@ import java.io.Reader;
 
 public class B_FileReader {
     public static void main(String[] args) {
+        method1();
+        method2();
+
+    }
+
+    public static void method1() {
+        System.out.println("Method 2");
+        try {
+            Reader reader = new FileReader("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\01CharacterStreams\\src\\input.txt");
+            String data = "";
+            int asci = reader.read();
+            while (asci != -1) {
+                data = data + (char) asci;
+                asci = reader.read();
+            }
+            System.out.println(data);
+            reader.close();
+        } catch (Exception e) {
+            e.getStackTrace();
+        }
+    }
+
+    public static void method2() {
+        System.out.println("Method 1");
         // Creates an array of character
         char[] array = new char[100];
-
         try {
             // Creates a reader using the FileReader
             Reader input = new FileReader("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\01CharacterStreams\\src\\input.txt");
@@ -23,4 +46,5 @@ public class B_FileReader {
             e.getStackTrace();
         }
     }
+
 }
