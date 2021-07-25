@@ -385,6 +385,10 @@ DataInputStream in = new DataInputStream(
 
 > An `InputStream` is the base class to read `bytes` from a stream (network or file). `DataInputStream` is a kind of InputStream to read data directly as `primitive data` types.
 
+<div align="center">
+<img src="img/datainputstream.png" alt="stream" width="700px">
+</div>
+
 More Examples:
 
 ```java
