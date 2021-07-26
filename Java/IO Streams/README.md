@@ -329,16 +329,6 @@ The I/O streams are often layered or chained with other I/O streams, for purpose
 
 **How do an InputStream, InputStreamReader and BufferedReader work together in Java?**
 
-<div align="center">
-<img src="img/Java_Stream_Readers_BufferedReaders.jpg" alt="stream" width="700px">
-</div>
-
-**Streams**: Used to deal with byte level data
-
-**Reader/Writer**: Used to deal with character level. It supports various character encoding also.
-
-**BufferedReader/BufferedWriter**: To increase performance. Data to be read will be buffered in to memory for quick access.
-
 Most of the examples we've seen so far use unbuffered I/O. This means each read or write request is handled directly by the underlying OS. This can make a program much less efficient, since each such request often triggers disk access, network activity, or some other operation that is relatively expensive.
 
 In general, disk access is much slower than the processing performed in memory; that’s why it’s not a good idea to access the disk a thousand times to read a file of 1,000 bytes. 
@@ -349,7 +339,29 @@ To reduce this kind of overhead, the Java platform implements buffered I/O strea
 <img src="img/buffer_pool.jpg" alt="stream" width="700px">
 </div>
 
-In reading File with `FileInputStream` then `BufferedInputStream`, the class `BufferedInputStream` works as a **middleman** between `FileInputStream` and the `file` itself. ***It reads a big chunk of bytes from a file into memory (a buffer) in one shot, and the `FileInputStream` object then reads single bytes from there, which are fast memory-to-memory operations.*** `BufferedOutputStream` works similarly with the class `FileOutputStream`.
+**Buffer** :- Transferring a big amount of data after converting it into small chunks of data. These small chunks can be used simultaneously, without waiting for the whole amount of the data to download.For example - Watching a youtube video,without downloading the whole file.
+
+<div align="center">
+<img src="img/buffer.jpg" alt="stream" width="700px">
+</div>
+
+**Streams** :-Stream is just a process of flow of data from the data source to the buffer and from the buffer to the client.All these bits flow in a stream.
+
+<div align="center">
+<img src="img/buffer-2.jpg" alt="stream" width="700px">
+</div>
+
+In Java, when reading file with `FileInputStream` then `BufferedInputStream`, the class `BufferedInputStream` works as a **middleman** between `FileInputStream` and the `file` itself. ***It reads a big chunk of bytes from a file into memory (a buffer) in one shot, and the `FileInputStream` object then reads single bytes from there, which are fast memory-to-memory operations.*** `BufferedOutputStream` works similarly with the class `FileOutputStream`.
+
+<div align="center">
+<img src="img/Java_Stream_Readers_BufferedReaders.jpg" alt="stream" width="700px">
+</div>
+
+**Streams**: Used to deal with byte level data
+
+**Reader/Writer**: Used to deal with character level. It supports various character encoding also.
+
+**BufferedReader/BufferedWriter**: To increase performance. Data to be read will be buffered in to memory for quick access.
 
 The main idea here is to minimize disk access. Buffered streams are not changing the type of the original streams
 ;they just make reading more efficient. A program performs stream chaining (or stream piping) to connect streams, just as pipes are connected in plumbing.
@@ -386,8 +398,20 @@ DataInputStream in = new DataInputStream(
 > An `InputStream` is the base class to read `bytes` from a stream (network or file). `DataInputStream` is a kind of InputStream to read data directly as `primitive data` types.
 
 <div align="center">
-<img src="img/datainputstream.png" alt="stream" width="700px">
+<img src="img/datainputstream.png" alt="stream" width="600px">
 </div>
+
+<div align="center">
+<img src="img/Data-streams-in-java.png" alt="stream" width="400px" width="400px">
+</div>
+
+```java
+DataInputStream dis = new DataInputStream (System.in);
+
+System.out.println(“Enter  value : ”);
+int n1= Integer.parseInt(dis.readLine());
+```
+
 
 More Examples:
 
