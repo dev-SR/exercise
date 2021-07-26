@@ -2,20 +2,23 @@ import java.io.*;
 
 public class A_FIleReaderWriter {
     public static void main(String[] args) {
-        BufferedReader br = null;
-        PrintWriter pw = null;
         try {
-            br = new BufferedReader(new FileReader("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\01CharacterStreams\\src\\input.txt"));
-            pw = new PrintWriter(new FileWriter("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\01CharacterStreams\\src\\output.txt"));
-
-            String line;
-            while ((line = br.readLine()) != null) {
-                pw.println(line);
+            System.out.println("Reading file...............");
+            FileReader fr = new FileReader("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\01CharacterStreams\\src\\hello.docx");
+            String data = "";
+            int x;
+            while ((x = fr.read()) != -1) {
+                data = data + (char) x;
             }
-            System.out.println("Done!!!");
-            br.close();
-            pw.close();
+            System.out.println("Coping file...............");
+            FileWriter fw = new FileWriter("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\01CharacterStreams\\src\\hello-copy.docx");
+            char ch[] = data.toCharArray();
+            fw.write(ch);
+            System.out.println("Data copied !!");
+            fr.close();
+            fw.close();
         } catch (Exception e) {
+
             System.out.println("Error");
         }
     }
