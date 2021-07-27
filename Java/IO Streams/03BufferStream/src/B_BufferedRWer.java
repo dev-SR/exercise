@@ -15,17 +15,21 @@ public class B_BufferedRWer {
     }
 
     public static void ReadingFromConsole() throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter Data: ");
+        String dataLine = in.readLine();
+        System.out.println("Enter the same data again: ");
+        int read = in.read();
+        System.out.println("readLine(): " + dataLine);
+        System.out.println("read(): " + (char) read);
 
-        InputStreamReader isr = new InputStreamReader(System.in);
-        BufferedReader in = new BufferedReader(isr);
+        in.readLine();// discard
 
-        String name = "";
-
-        System.out.print("Please enter your name: ");
-
-        name = in.readLine();
-
-        System.out.println("Hello, " + name + "!");
+        System.out.println("Enter number n1: ");
+        int n1 = Integer.parseInt(in.readLine());
+        System.out.println("Enter number n2: ");
+        int n2 = Integer.parseInt(in.readLine());
+        System.out.println("Addition: " + (n1 + n2));
     }
 
     public static void ReadingFromFile() throws IOException {
@@ -183,8 +187,8 @@ public class B_BufferedRWer {
     }
 
 
-    public static void write_i(){
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\03BufferStream\\src\\output.my"))){
+    public static void write_i() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\03BufferStream\\src\\output.my"))) {
             bw.write(65); //writes A
             bw.write(66); //writes B
             bw.write(67); //writes C
@@ -192,29 +196,32 @@ public class B_BufferedRWer {
             e.printStackTrace();
         }
     }
-    public static void write_ii(){
+
+    public static void write_ii() {
         String str = "This is a test String-write_ii";
         char[] buffer = str.toCharArray();
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\03BufferStream\\src\\output.my"))){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\03BufferStream\\src\\output.my"))) {
             bw.write(buffer, 0, 7);// takes portion from index 0..6
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static void write_iii(){
+
+    public static void write_iii() {
         String str = "This is a test String-write_iii";
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\03BufferStream\\src\\output.my"))){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\03BufferStream\\src\\output.my"))) {
             bw.write(str, 0, 7);// takes substring from index 0..6
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public static void newLine(){
+
+    public static void newLine() {
         String str = "This is a test String-newline";
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\03BufferStream\\src\\output.my"))){
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("D:\\CSE\\Others\\Codes\\Java\\IO Streams\\03BufferStream\\src\\output.my"))) {
             bw.write(str, 0, 7);// takes substring from index 0..6
             bw.newLine(); // new line
-            bw.write(str, 7, str.length()-7);
+            bw.write(str, 7, str.length() - 7);
             bw.flush(); // flushes the stream
         } catch (IOException e) {
             e.printStackTrace();
