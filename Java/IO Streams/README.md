@@ -192,7 +192,7 @@ In Java IO byte stream classes are used when working with bytes or binary object
 All character stream classes descend from Reader and Writer abstract classes.
 
 <div align="center">
-<img src="img/IO_InputOutputReadersWriters.png" alt="stream" width="700px">
+<img src="img/IO_InputOutputReadersWriters.jpg" alt="stream" width="700px">
 </div>
 
 > Example:
