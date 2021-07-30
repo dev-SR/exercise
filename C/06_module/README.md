@@ -1,26 +1,59 @@
-# GNU MAKE
+# Modular Programming
 
-- [GNU MAKE](#gnu-make)
-	- [A Simple Example](#a-simple-example)
-		- [Makefile ex1](#makefile-ex1)
-		- [Makefile 2](#makefile-2)
-		- [Makefile 3](#makefile-3)
-		- [Makefile 4](#makefile-4)
-		- [Makefile 5](#makefile-5)
+- [Modular Programming](#modular-programming)
+	- [Native Modular Build](#native-modular-build)
+		- [Multiple Definition Guard](#multiple-definition-guard)
+		- [Build and Run](#build-and-run)
+	- [Build Using GNU MAKE](#build-using-gnu-make)
+		- [A Simple Example](#a-simple-example)
+			- [Makefile ex1](#makefile-ex1)
+			- [Makefile 2](#makefile-2)
+			- [Makefile 3](#makefile-3)
+			- [Makefile 4](#makefile-4)
+			- [Makefile 5](#makefile-5)
 
-Makefiles are a simple way to organize code compilation. This tutorial does not even scratch the surface of what is possible using _make_, but is intended as a starters guide so that you can quickly and easily create your own makefiles for small to medium-sized projects.
+## Native Modular Build
+
+<div align="center"><img src="./../../img/cmod-1.jpg" alt="DMA" width="700px"></div>
+
+<div align="center"><img src="./../../img/cmod-2.jpg" alt="DMA" width="700px"></div>
+
+### Multiple Definition Guard
+
+<div align="center"><img src="./../../img/cmod-3.jpg" alt="DMA" width="700px"></div>
+
+<div align="center"><img src="./../../img/cmod-4.jpg" alt="DMA" width="700px"></div>
+
+### Build and Run
+
+```powershell
+gcc main.c -o main
+# undefined reference to `print_mod1'
+# undefined reference to `print_mod2'
+```
+
+```powershell
+# build
+gcc main.c mod1.c mod2.c led.c -o mainexe
+# run
+.\mainexe
+```
+
+## Build Using GNU MAKE
+
+`Makefiles` are a simple way to organize code compilation. This tutorial does not even scratch the surface of what is possible using _make_, but is intended as a starters guide so that you can quickly and easily create your own makefiles for small to medium-sized projects.
 
 [GNU Make](https://www.gnu.org/software/make/manual/make.html)
 [https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/](https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/)
 
-## A Simple Example
+### A Simple Example
 
 Let's start off with the following three files, `hellomake.c`, `hellofunc.c`, and `hellomake.h`, which would represent a typical main program, some functional code in a separate file, and an include file, respectively.
 
 `hellomake.c`
 
 ```c
-// #include "hellomake.h" with out -I flag 
+// #include "hellomake.h" without -I . flag 
 #include <hellomake.h>
 
 int main() {
@@ -39,7 +72,7 @@ int main() {
 
 void myPrintHelloMake(void) {
 
-  printf("Hello makefiles!\\n");
+  printf("Hello makefiles!\n");
 
   return;
 }
@@ -57,11 +90,11 @@ void myPrintHelloMake(void);
 
 Normally, you would compile this collection of code by executing the following command:
 
-```bash
-gcc -o hellomake hellomake.c hellofunc.c -I.
+```powershell
+gcc -o hellomake hellomake.c hellofunc.c -I .
 ```
 
-This compiles the two `.c` files and names the executable `hellomake`. The `-I`. is included so that gcc will look in the current directory (.) for the include file `hellomake.h`.
+This compiles the two `.c` files and names the executable `hellomake`. The `-I .` is included so that gcc will look in the current directory `(.)` for the include file `hellomake.h`.
 
 Without a makefile, the typical approach to the test/modify/debug cycle is to use the up arrow in a terminal to go back to your last compile command so you don't have to type it each time, especially once you've added a few more `.c` files to the mix.
 
@@ -69,7 +102,7 @@ Unfortunately, this approach to compilation has two downfalls. First, if you los
 
 The simplest makefile you could create would look something like:
 
-### Makefile ex1
+#### Makefile ex1
 
 `Makefile`
 
@@ -86,7 +119,7 @@ One very important thing to note is that there is a tab before the gcc command i
 
 In order to be a bit more efficient, let's try the following:
 
-### Makefile 2
+#### Makefile 2
 
 ```makefile
 CC=gcc
@@ -101,7 +134,7 @@ So now we've defined some constants CC and CFLAGS. It turns out these are specia
 
 Using this form of makefile is sufficient for most small scale projects. However, there is one thing missing: dependency on the include files. If you were to make a change to hellomake.h, for example, make would not recompile the .c files, even though they needed to be. In order to fix this, we need to tell make that all .c files depend on certain .h files. We can do this by writing a simple rule and adding it to the makefile.
 
-### Makefile 3
+#### Makefile 3
 
 ```makefile
 CC=gcc
@@ -119,7 +152,7 @@ This addition first creates the macro DEPS, which is the set of .h files on whic
 
 As a final simplification, let's use the special macros $@ and $^, which are the left and right sides of the :, respectively, to make the overall compilation rule more general. In the example below, all of the include files should be listed as part of the macro DEPS, and all of the object files should be listed as part of the macro OBJ.
 
-### Makefile 4
+#### Makefile 4
 
 ```makefile
 CC=gcc
@@ -136,7 +169,7 @@ hellomake: $(OBJ)
 
 So what if we want to start putting our .h files in an include directory, our source code in a src directory, and some local libraries in a lib directory? Also, can we somehow hide those annoying .o files that hang around all over the place? The answer, of course, is yes. The following makefile defines paths to the include and lib directories, and places the object files in an obj subdirectory within the src directory. It also has a macro defined for any libraries you want to include, such as the math library \-lm. This makefile should be located in the src directory. Note that it also includes a rule for cleaning up your source and object directories if you type make clean. The .PHONY rule keeps make from doing something with a file named clean.
 
-### Makefile 5
+#### Makefile 5
 
 ```makefile
 IDIR =../include
