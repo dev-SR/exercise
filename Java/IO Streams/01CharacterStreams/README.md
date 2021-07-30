@@ -1,5 +1,9 @@
 # CharacterStream
 
+<div align="center">
+<img src="../img/IO_InputOutputReadersWriters.jpg" alt="stream" width="700px">
+</div>
+
 ## FileReader
 
 The Java FileReader class, `java.io.FileReader` makes it possible to read the contents of a file as a **stream of characters**. It works much like the FileInputStream except the FileInputStream reads *bytes*, whereas the FileReader reads characters. The FileReader is intended to read text, in other words. One character may correspond to one or more bytes depending on the character encoding scheme.
@@ -39,7 +43,6 @@ This read(char[]) method takes the char array to read the characters into as fir
 
 You can add transparent, automatic reading and buffering of an array of bytes from a FileReader using a Java `BufferedReader` . The BufferedReader reads a chunk of chars into a char array from the underlying FileReader. You can then read the bytes one by one from the BufferedReader and still get a lot of the speedup that comes from reading an array of chars rather than one character at a time. Here is an example of wrapping a Java FileReader in a BufferedReader :
 
-
 ```java
 Reader input = new BufferedReader(
                       new FileReader("c:\\data\\input-file.txt"),
@@ -54,3 +57,55 @@ Notice, that a BufferedReader is a Reader subclass and can be used in any place 
 The Java FileReader assumes that you want to decode the bytes in the file using the default character encoding for the computer your application is running on. This may not always be what you want, and you cannot change it!
 
 *If you want to specify a different character decoding scheme, don't use a FileReader. Use an Java InputStreamReader on a FileInputStream instead. The InputStreamReader lets you specify the character encoding scheme to use when reading the bytes in the underlying file.*
+
+## PrintWriter
+
+The `PrintWriter` class of the java.io package can be used to write output data in a commonly readable form (text).
+
+Unlike other writers, PrintWriter converts the primitive data (int, float, char, etc.) into the text format. It then writes that formatted data to the writer.
+
+Also, the PrintWriter class does not throw any input/output exception. Instead, we need to use the checkError() method to find any error in it.
+
+> Note: The PrintWriter class also has a feature of auto flushing. This means it forces the writer to write all data to the destination if one of the println() or printf() methods is called.
+
+### Create a PrintWriter
+
+1. Using other writers
+
+```java
+// Creates a FileWriter
+FileWriter file = new FileWriter("output.txt");
+
+// Creates a PrintWriter
+PrintWriter output = new PrintWriter(file, autoFlush);
+```
+
+2. Using other output streams
+
+```java
+// Creates a FileOutputStream
+FileOutputStream file = new FileOutputStream("output.txt");
+
+// Creates a PrintWriter
+PrintWriter output = new PrintWriter(file, autoFlush);
+```
+
+3. Using filename
+
+```java
+// Creates a PrintWriter
+PrintWriter output = new PrintWriter(String file, boolean autoFlush);
+// Creates a PrintWriter using some character encoding
+PrintWriter output = new PrintWriter(String file, boolean autoFlush, Charset cs);
+```
+
+### Methods of PrintWriter
+
+The PrintWriter class provides various methods that allow us to print data to the output.
+
+- `print()` - prints the specified data to the writer
+- `println()` - prints the data to the writer along with a new line character at the end
+- `printf()` - Method
+- `close()` - closes the print writer
+- `checkError()` - checks if there is an error in the writer and returns a boolean result
+- `append()` - appends the specified data to the writer
