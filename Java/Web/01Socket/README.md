@@ -9,3 +9,15 @@ Socket allows the program to treat the network connection as a `stream`, Data is
 ## Java Socket Programming
 
 <div align="center"><img src="./img/tcp_socket.jpg" alt="DMA" width="700px"></div>
+
+### Recommended IO
+
+```java
+// Input
+BufferedReader userInput new BufferedReader,
+new InputStreamReader(System.in));
+BufferedReader in = new BufferedReaders
+new InputStreamReader(soc.getInputStream()));
+// Output
+Printwriter out = new PrintWriter(soc.getOutputStream());
+```
