@@ -11,6 +11,7 @@ test.c
 tempCodeRunnerFile.cpp
 test_c.c
 test.sh
+test.ts
 # python bytecode
 __pycache__/
 *.py[cod]

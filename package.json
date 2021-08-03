@@ -1,25 +1,18 @@
 {
-   "name": "Codes",
-   "version": "1.0.0",
-   "description": "",
-   "main": "index.js",
-   "scripts": {
-      "dev:watch-ts": "tsc -w",
-      "dev:watch-node": "nodemon TS/build/index.js",
-      "dev-x": "concurrently npm:start:*",
-      "watch-ts": "tsc -w",
-      "watch-node": "nodemon TS/build/index.js",
-      "dev": "concurrently \"npm run watch-ts\" \"npm run watch-node\"",
-      "start": "node TS/build/index.js"
-   },
-   "keywords": [],
-   "author": "",
-   "license": "ISC",
-   "devDependencies": {
-      "concurrently": "^6.0.0",
-      "nodemon": "^2.0.7"
-   },
-   "dependencies": {
-      "colors": "^1.4.0"
-   }
+	"name": "exercise",
+	"version": "1.0.0",
+	"description": "",
+	"main": "TS/src/index.ts",
+	"scripts": {
+		"build": "rimraf build && tsc",
+		"dev": "ts-node-dev --respawn TS/src/index.ts",
+		"run:test": "ts-node-dev --respawn TS/src/test.ts"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"ts-node-dev": "^1.1.8",
+		"typescript": "^4.3.5"
+	}
 }
