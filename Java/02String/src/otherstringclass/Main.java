@@ -1,4 +1,4 @@
-package stringclass_vs_otherclasses;
+package otherstringclass;
 
 import dev.Color;
 
@@ -9,7 +9,50 @@ public class Main {
         DiffInConcat();
         Color.printStartWithMsg(20, Color.GREEN_BRIGHT, "Time Differentials:");
         DiffInTime();
+        Color.printStartWithMsg(20, Color.GREEN_BRIGHT, "String vs Buffer");
+        StringVsBuffer();
+        Color.printStartWithMsg(20, Color.GREEN_BRIGHT, "StringBuilder vs StringBuffer Performance");
+        StringBufferVsBuilder();
+    }
 
+    private static void StringBufferVsBuilder() {
+        long start = System.currentTimeMillis();
+        long startMemory = Runtime.getRuntime().freeMemory();
+        StringBuffer sb = new StringBuffer();
+        StringBuilder sbd = new StringBuilder();
+        for (int i = 0; i < 1000000; i++) {
+            sb.append(":").append(i);
+        }
+        long end = System.currentTimeMillis();
+        long endMemory = Runtime.getRuntime().freeMemory();
+        System.out.println("StringBuffer Time Taken: " + (end - start) + " ms");
+        System.out.println("StringBuffer Memory used: " + (startMemory - endMemory));
+        start = System.currentTimeMillis();
+        startMemory = Runtime.getRuntime().freeMemory();
+        for (int i = 0; i < 1000000; i++) {
+            sbd.append(":").append(i);
+        }
+        end = System.currentTimeMillis();
+        endMemory = Runtime.getRuntime().freeMemory();
+        System.out.println("StringBuilder Time Taken: " + (end - start) + " ms");
+        System.out.println("StringBuilder Memory used: " + (startMemory - endMemory));
+    }
+
+    private static void StringVsBuffer() {
+        Color.printMsg(Color.YELLOW_BRIGHT, "new String()");
+        String s = "Java!! ";
+        String s1 = s.concat("Hello");
+        String s2 = s1.concat(" World");
+        System.out.println(s);
+        System.out.println(s1);
+        System.out.println(s2);
+        Color.printMsg(Color.YELLOW_BRIGHT, "new StringBuffer()");
+        StringBuffer sb = new StringBuffer("Java!! ");
+        StringBuffer sb1 = sb.append("Hello");
+        StringBuffer sb2 = sb1.append(" World");
+        System.out.println(sb);
+        System.out.println(sb1);
+        System.out.println(sb2);
     }
 
     private static void DiffInTime() {
