@@ -13,7 +13,6 @@ import java.nio.charset.StandardCharsets;
 public class Conversion {
     public static void main(String[] args) {
         PrimitiveConversions();
-        IOConversions();
     }
 
     public static void PrimitiveConversions() {
