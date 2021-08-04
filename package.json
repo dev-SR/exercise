@@ -5,8 +5,8 @@
 	"main": "TS/src/index.ts",
 	"scripts": {
 		"build": "rimraf build && tsc",
-		"dev": "ts-node-dev --respawn TS/src/index.ts",
-		"run:test": "ts-node-dev --respawn TS/src/test.ts"
+		"dev": "ts-node-dev --respawn TS-JS/src/index.ts",
+		"run:test": "ts-node-dev --respawn TS-JS/src/test.ts"
 	},
 	"keywords": [],
 	"author": "",

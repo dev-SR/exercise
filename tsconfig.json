@@ -6,6 +6,6 @@
 		"strict": true,
 		"resolveJsonModule": true
 	},
-	"include": ["TS/src/**/*"],
+	"include": ["TS-JS/src/**/*"],
 	"exclude": ["node_modules"]
 }
