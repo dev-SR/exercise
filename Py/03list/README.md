@@ -1,33 +1,13 @@
 # LIST
 
-- [LIST](#list)
-  - [Example](#example)
-  - [Indexing/Slicing of List works same as String](#indexingslicing-of-list-works-same-as-string)
-  - [Unpacking Operator](#unpacking-operator)
-  - [iteration](#iteration)
-  - [Some methods for list](#some-methods-for-list)
-    - [add](#add)
-    - [remove](#remove)
-    - [Finding Items](#finding-items)
-  - [2D list](#2d-list)
-  - [Sorting](#sorting)
-      - [Using lembda:](#using-lembda)
-  - [Map Function](#map-function)
-  - [Filter Function](#filter-function)
-  - [List Comprehension](#list-comprehension)
-    - [Using with String](#using-with-string)
-    - [Making Nested List Comprehension](#making-nested-list-comprehension)
-    - [Replacing Map and Filter function with list comprehension](#replacing-map-and-filter-function-with-list-comprehension)
-    - [Difference between Generator Expressions and List Comprehensions](#difference-between-generator-expressions-and-list-comprehensions)
-  - [Zip Function](#zip-function)
-- [Examples](#examples)
+
 
 ## Example
 
 
 ```python
-# ex
-print(list(range(10)))
+# ex
+print(list(range(10)))
 print([i**2 for i in range(20) if i % 2 == 0])
 ```
 
@@ -39,15 +19,15 @@ print([i**2 for i in range(20) if i % 2 == 0])
 
 
 ```python
-
-l = [1,2,3,4,5,6]
-
-print(l[0])
-print(l[-1])
-print(l[1:-1])
-print(l[::2])
-# because of mutable property
-l[0] = 5
+
+l = [1,2,3,4,5,6]
+
+print(l[0])
+print(l[-1])
+print(l[1:-1])
+print(l[::2])
+# because of mutable property
+l[0] = 5
 print(l)
 ```
 
@@ -321,23 +301,23 @@ print(items)
 
 
 ```python
-items = [
-    ("product 1",10),
-    ("product 2",5),
-    ("product 4",45),
-    ("proeduct 5",23),
-]
-# extracting price from list of tuples
-prices = []
-for item in items:
-    prices.append(item[1])
-
-print(prices)
-print()
-# using map
-prices_mapped = map(lambda item:item[1],items)
-print(type(prices_mapped))
-prices = list(prices_mapped)
+items = [
+    ("product 1",10),
+    ("product 2",5),
+    ("product 4",45),
+    ("proeduct 5",23),
+]
+# extracting price from list of tuples
+prices = []
+for item in items:
+    prices.append(item[1])
+
+print(prices)
+print()
+# using map
+prices_mapped = map(lambda item:item[1],items)
+print(type(prices_mapped))
+prices = list(prices_mapped)
 print(prices)
 ```
 
@@ -351,37 +331,37 @@ print(prices)
 
 
 ```python
-filtered = list(filter(lambda item:item[1]>=10,items ))
+filtered = list(filter(lambda item:item[1]>=10,items ))
 print(filtered)
 ```
 
     [('product 1', 10), ('product 4', 45), ('proeduct 5', 23)]
     
 
-## List Comprehension
-
-`[expression for item in list]`
-
-```python
-letters = list(map(lambda x: x, 'human'))
-print(letters) # ['h','u','m','a','n']
-
+## List Comprehension
+
+`[expression for item in list]`
+
+```python
+letters = list(map(lambda x: x, 'human'))
+print(letters) # ['h','u','m','a','n']
+
 ```
 
 
 ```python
-l = [1,2,3,4,5,6]
-# creating a new list of squares of each element
-new_l = []
-for el in l:
-    new_l.append(el**2)
-
-print(new_l)
-
-# With List Comprehension:
-
-new_l = [el**2 for el in new_l] # [(What to Store ) for each element of list]
-print(new_l)
+l = [1,2,3,4,5,6]
+# creating a new list of squares of each element
+new_l = []
+for el in l:
+    new_l.append(el**2)
+
+print(new_l)
+
+# With List Comprehension:
+
+new_l = [el**2 for el in new_l] # [(What to Store ) for each element of list]
+print(new_l)
 
 ```
 
@@ -389,18 +369,23 @@ print(new_l)
     [1, 16, 81, 256, 625, 1296]
     
 
+### We can also add an if condition
+
 
 ```python
-l =[1,2,3,4,5,6,7,8]
-# filtering even elements
-filtered = [i for i in l if i % 2==0]
-print(filtered)
+l =[1,2,3,4,5,6,7,8]
+# filtering even elements
+filtered = [i for i in l if i % 2==0]
+print(filtered)
+
+# (If you're familiar with SQL, you might think of this as being like a "WHERE" clause)
+
+print()
+# removing empty string from the list
+l =["","A","","B","","C"]
+removed = [i for i in l if i]
+print(removed) 
 
-print()
-# removing empty string from the list
-l =["","A","","B","","C"]
-removed = [i for i in l if i]
-print(removed) 
 ```
 
     [2, 4, 6, 8]
@@ -412,20 +397,20 @@ print(removed)
 
 
 ```python
-
-list_string = ['maNgo', 'BanAna', 'PytHoN iS Love', 'Cat iS not doG']
-
-# make the list of string to list of list of words
-list_of_list = [sentence.split() for sentence in list_string]
-print(list_of_list)
-
-words = sum(list_of_list, [])  # make the list of list to a single list
-print(words)  # print the list of word
-
-# modify the case
-correct_case = [str.upper(word[0])+str.lower(word[1:]) for word in words if len(word) > 1]
-
-# print the list of word with desired case
+
+list_string = ['maNgo', 'BanAna', 'PytHoN iS Love', 'Cat iS not doG']
+
+# make the list of string to list of list of words
+list_of_list = [sentence.split() for sentence in list_string]
+print(list_of_list)
+
+words = sum(list_of_list, [])  # make the list of list to a single list
+print(words)  # print the list of word
+
+# modify the case
+correct_case = [str.upper(word[0])+str.lower(word[1:]) for word in words if len(word) > 1]
+
+# print the list of word with desired case
 print(correct_case)
 ```
 
