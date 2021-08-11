@@ -42,23 +42,23 @@ print(l)
 
 
 ```python
-# rest equivalent
-n = list(range(5))
-first,second,*other =n
-
-print(first)
-print(second)
-print(other)
-
-print()
-first,*other,last =n
-
-print(first)
-print(last)
-print(other)
-
-print()
-n = [*range(5),*"Hello"]
+# rest equivalent
+n = list(range(5))
+first,second,*other =n
+
+print(first)
+print(second)
+print(other)
+
+print()
+first,*other,last =n
+
+print(first)
+print(last)
+print(other)
+
+print()
+n = [*range(5),*"Hello"]
 print(n)
 ```
 
@@ -77,27 +77,33 @@ print(n)
 
 
 ```python
-programming_lan= ["Java","C","C++","Kotlin","TypeScript"]
-
-# List Membership Test
-v = "C" in programming_lan
-print(v)
-
-# looping
-for lan in programming_lan:
-    print(lan)
-
-print()
-
-# looping with enumerate()
-for lan in enumerate(programming_lan):
-    print(lan)
-
-print()
-# also returns each item with its index postion.
-for i,v in enumerate(programming_lan):
-    print(f"{i+1}: {v}")
-
+programming_lan= ["Java","C","C++","Kotlin","TypeScript"]
+
+# List Membership Test
+v = "C" in programming_lan
+print(v)
+
+# looping
+for lan in programming_lan:
+    print(lan)
+
+print()
+
+# !index
+
+# looping with enumerate()
+for lan in enumerate(programming_lan):
+    print(lan)
+
+print()
+# also returns each item with its index postion.
+for i,v in enumerate(programming_lan):
+    print(f"{i}: {v}")
+
+print()
+# Tricks
+for i in range(len(programming_lan)):
+    print(f"{i}: {programming_lan[i]}")
 ```
 
     True
@@ -113,11 +119,17 @@ for i,v in enumerate(programming_lan):
     (3, 'Kotlin')
     (4, 'TypeScript')
     
-    1: Java
-    2: C
-    3: C++
-    4: Kotlin
-    5: TypeScript
+    0: Java
+    1: C
+    2: C++
+    3: Kotlin
+    4: TypeScript
+    
+    0: Java
+    1: C
+    2: C++
+    3: Kotlin
+    4: TypeScript
     
 
 ## Some methods for list 
@@ -126,21 +138,21 @@ for i,v in enumerate(programming_lan):
 
 
 ```python
-# add the given element at the end of the list
-l.append(33)
-print(l)
-# insert 10 at index 1
-l.insert(1,10)
-print(l)
-
-odd = [2, 4, 6, 8]
-# change 2nd to 4th items
-odd[1:4] = [3, 5, 7]  
-print(odd)
-
-# Concatenating and repeating lists
-print(odd + [9, 7, 5])
-print(["re"] * 3)
+# add the given element at the end of the list
+l.append(33)
+print(l)
+# insert 10 at index 1
+l.insert(1,10)
+print(l)
+
+odd = [2, 4, 6, 8]
+# change 2nd to 4th items
+odd[1:4] = [3, 5, 7]  
+print(odd)
+
+# Concatenating and repeating lists
+print(odd + [9, 7, 5])
+print(["re"] * 3)
 
 ```
 
@@ -155,22 +167,22 @@ print(["re"] * 3)
 
 
 ```python
-# pop():
-# delete the last element
-# can also delete from specified index
-l.pop()
-print(l)
-l.pop(1)
-print(l)
-
-# remove()
-l.remove(5)
-print(l)
-
-del l[0:3]
-print(l)
-
-l.clear()
+# pop():
+# delete the last element
+# can also delete from specified index
+l.pop()
+print(l)
+l.pop(1)
+print(l)
+
+# remove()
+l.remove(5)
+print(l)
+
+del l[0:3]
+print(l)
+
+l.clear()
 print(l)
 ```
 
@@ -183,8 +195,8 @@ print(l)
 
 
 ```python
-# reverse
-l.reverse()
+# reverse
+l.reverse()
 print(l)
 ```
 
@@ -195,10 +207,10 @@ print(l)
 
 
 ```python
-letters = ["a","b","c"]
-print(letters.count("d"))
-
-if "b" in letters:
+letters = ["a","b","c"]
+print(letters.count("d"))
+
+if "b" in letters:
     print(letters.index("b"))
 ```
 
@@ -210,12 +222,12 @@ if "b" in letters:
 
 
 ```python
-list_2d = [[1,2,3],[4,5,6,],[7,8,9]]
-print(list_2d)
-
-# accessing element in 2D list
-print(list_2d[1])
-print(list_2d[1][0])
+list_2d = [[1,2,3],[4,5,6,],[7,8,9]]
+print(list_2d)
+
+# accessing element in 2D list
+print(list_2d[1])
+print(list_2d[1][0])
 
 ```
 
@@ -228,23 +240,23 @@ print(list_2d[1][0])
 
 
 ```python
-l=[1,2,3,4,5]
-
-l.sort(reverse=True)
-print(l)
-l.sort()
-print(l)
-
-# sorted() returns new list
-sorted_list =sorted(l,reverse=True)
-print(sorted_list)
-
-# Case-Insensitive Sorting
-l=['a','B','e','D','c']
-l.sort()
-print(l)
-l.sort(key=str.casefold)
-print(l)
+l=[1,2,3,4,5]
+
+l.sort(reverse=True)
+print(l)
+l.sort()
+print(l)
+
+# sorted() returns new list
+sorted_list =sorted(l,reverse=True)
+print(sorted_list)
+
+# Case-Insensitive Sorting
+l=['a','B','e','D','c']
+l.sort()
+print(l)
+l.sort(key=str.casefold)
+print(l)
 
 ```
 
@@ -257,17 +269,17 @@ print(l)
 
 
 ```python
-items = [
-    ("product 1",10),
-    ("product 2",5),
-    ("product 4",45),
-    ("product 5",23),
-]
-
-def sorted_item(i):
-    return i[1] #return price
-
-items.sort(key=sorted_item)
+items = [
+    ("product 1",10),
+    ("product 2",5),
+    ("product 4",45),
+    ("product 5",23),
+]
+
+def sorted_item(i):
+    return i[1] #return price
+
+items.sort(key=sorted_item)
 print(items)
 ```
 
@@ -282,15 +294,15 @@ syntax:
 
 
 ```python
-items = [
-    ("product 1",10),
-    ("product 2",5),
-    ("product 4",45),
-    ("product 5",23),
-]
-# def sorted_item(i):
-#     return i[1]
-items.sort(key=lambda i:i[1])
+items = [
+    ("product 1",10),
+    ("product 2",5),
+    ("product 4",45),
+    ("product 5",23),
+]
+# def sorted_item(i):
+#     return i[1]
+items.sort(key=lambda i:i[1])
 print(items)
 ```
 
@@ -425,14 +437,14 @@ However, you can also use nested List comprehension. That means, you can use a l
 
 
 ```python
-
-list_string = ['maNgo', 'BanAna', 'PytHoN iS Love', 'Cat iS not doG']
-
-correct_case = [str.upper(word[0])+str.lower(word[1:])
-                for word in sum([sentence.split() for sentence in list_string], [])
-                if len(word) > 1]
-
-# print the list of word with desired case
+
+list_string = ['maNgo', 'BanAna', 'PytHoN iS Love', 'Cat iS not doG']
+
+correct_case = [str.upper(word[0])+str.lower(word[1:])
+                for word in sum([sentence.split() for sentence in list_string], [])
+                if len(word) > 1]
+
+# print the list of word with desired case
 print(correct_case)
 ```
 
@@ -443,20 +455,20 @@ print(correct_case)
 
 
 ```python
-items = [
-    ("product 1",10),
-    ("product 2",5),
-    ("product 4",45),
-    ("proeduct 5",23),
-]
-
-# prices = list(map(lambda item:item[1],items))
-prices = [item[1] for item in items]
-# filtered = list(filter(lambda item:item[1]>=10,items ))
-filtered = [item for item in items if item[1] >= 10]
-
-
-print(prices)
+items = [
+    ("product 1",10),
+    ("product 2",5),
+    ("product 4",45),
+    ("proeduct 5",23),
+]
+
+# prices = list(map(lambda item:item[1],items))
+prices = [item[1] for item in items]
+# filtered = list(filter(lambda item:item[1]>=10,items ))
+filtered = [item for item in items if item[1] >= 10]
+
+
+print(prices)
 print(filtered)
 ```
 
@@ -476,15 +488,15 @@ The Generator Expression allows us to create a generator _without the yield keyw
 
 
 ```python
-# List Comprehension
-list_comprehension = [i for i in range(11) if i % 2 == 0]
-  
-print(list_comprehension)
-
-# Generator Expression
-generator_expression = (i for i in range(11) if i % 2 == 0)
-print(generator_expression)
-for i in generator_expression:
+# List Comprehension
+list_comprehension = [i for i in range(11) if i % 2 == 0]
+  
+print(list_comprehension)
+
+# Generator Expression
+generator_expression = (i for i in range(11) if i % 2 == 0)
+print(generator_expression)
+for i in generator_expression:
     print(i, end=" ")
 ```
 
@@ -498,18 +510,18 @@ The generator yields one item at a time and generates item only when in demand. 
 
 
 ```python
-# import getsizeof from sys module
-from sys import getsizeof
-  
-comp = [i for i in range(10000)]
-gen = (i for i in range(10000))
-  
-#gives size for list comprehension
-x = getsizeof(comp) 
-print("x = ", x)
-  
-#gives size for generator expression
-y = getsizeof(gen) 
+# import getsizeof from sys module
+from sys import getsizeof
+  
+comp = [i for i in range(10000)]
+gen = (i for i in range(10000))
+  
+#gives size for list comprehension
+x = getsizeof(comp) 
+print("x = ", x)
+  
+#gives size for generator expression
+y = getsizeof(gen) 
 print("y = ", y)
 ```
 
@@ -521,10 +533,10 @@ print("y = ", y)
 
 
 ```python
-l1 = [1,2,3]
-l2= [10,20,30]
-
-print(list(zip(l1,l2)))
+l1 = [1,2,3]
+l2= [10,20,30]
+
+print(list(zip(l1,l2)))
 print(list(zip("abc",l1,l2)))
 ```
 
@@ -532,38 +544,70 @@ print(list(zip("abc",l1,l2)))
     [('a', 1, 10), ('b', 2, 20), ('c', 3, 30)]
     
 
-# Examples
+## Examples
+
+### ex1
+
+`R` and `Python` have some libraries (like `numpy` and `pandas`) compare each element of the list to a number (i.e. do an 'element-wise' comparison) and give us a list of booleans like `[False, False, True, True]`.
 
 
 ```python
-op ="xx"
-lan = []
+L=[1,2,3,4]
+l = []
+for num in L:
+    if num > 2:
+        l.append(True)
+    else:
+        l.append(False)
+
+print(l)
+
+l=[]
+for ele in L:
+    l.append(ele > 2)
+print(l)
+
+l = [ele > 2 for ele in L]
+print(l)
+```
 
-while op !='0':
-    if op in "12345":
-        print(f"Adding {op}")
-        if op == '1':
-            lan.append("Java")
-        elif op =='2':
-            lan.append("C")
-        elif op =='3':
-            lan.append("C++")
-        elif op =='4':
-            lan.append("Kotlin")
-        elif op =='5':
-            lan.append("TypeScript")
-    else:
-        print("Please add options from the list below:")
-        print("1:Java")
-        print("2:C")
-        print("3:C++")
-        print("4:Kotlin")
-        print("5:TypeScript")
-        print()
+    [False, False, True, True]
+    [False, False, True, True]
+    [False, False, True, True]
     
-    op = input()
 
-print(f"Selected Language: {lan}")
+### Ex2
+
+
+```python
+op ="xx"
+lan = []
+
+while op !='0':
+    if op in "12345":
+        print(f"Adding {op}")
+        if op == '1':
+            lan.append("Java")
+        elif op =='2':
+            lan.append("C")
+        elif op =='3':
+            lan.append("C++")
+        elif op =='4':
+            lan.append("Kotlin")
+        elif op =='5':
+            lan.append("TypeScript")
+    else:
+        print("Please add options from the list below:")
+        print("1:Java")
+        print("2:C")
+        print("3:C++")
+        print("4:Kotlin")
+        print("5:TypeScript")
+        print()
+    
+    op = input()
+
+print(f"Selected Language: {lan}")
       
 ```
 
@@ -579,4 +623,89 @@ print(f"Selected Language: {lan}")
     Adding 2
     Adding 3
     Selected Language: ['Java', 'Java', 'C', 'C++']
+    
+
+### List to String vice-versa
+
+
+```python
+digits=["1","2","3","4","5"]
+s="".join(digits)
+print(s)
+
+datestr = '1956-01-31'
+year, month, day = datestr.split('-')
+s='/'.join([month, day, year])
+print(s)
+```
+
+    12345
+    01/31/1956
+    
+
+
+```python
+zip_code="12345x"
+digits = [digit for digit in zip_code if digit.isdigit()]
+print(zip_code)
+print()
+print(digits)
+
+```
+
+    12345x
+    
+    ['1', '2', '3', '4', '5']
+    
+
+### ex 3
+
+A researcher has gathered thousands of news articles. But she wants to focus her attention on articles including a specific word. Complete the function below to help her filter her list of articles.
+
+Your function should meet the following criteria:
+
+- Do not include documents where the keyword string shows up only as a part of a larger word. For example, if she were looking for the keyword “closed”, you would not include the string “enclosed.”
+- She does not want you to distinguish upper case from lower case letters. So the phrase “Closed the case.” would be included when the keyword is “closed”
+- Do not let periods or commas affect what is matched. “It is closed.” would be included when the keyword is “closed”. But you can assume there are no other types of punctuation.
+
+
+
+```python
+doc_list = ['The Learn Python Challenge Casino', 'They bought a car, and a horse',
+            'Casinoville?', "He bought a casino. That's crazy."]
+  # list to hold the indices of matching documents
+keyword = "casino"
+indeces=[]
+keyword_to_indices = {}
+
+# Iterate through the indices (i) and elements (doc) of documents
+for i,doc in enumerate(doc_list):
+	tokens = doc.split()
+	print([token for token in tokens])
+	normalized = [token.rstrip('.,?').lower() for token in tokens]
+	print(normalized)
+	print()
+	if keyword.lower() in normalized:
+		indeces.append(i)
+		keyword_to_indices[keyword] = i
+
+print("found at : "+str(indeces))
+print(keyword_to_indices)
+
+```
+
+    ['The', 'Learn', 'Python', 'Challenge', 'Casino']
+    ['the', 'learn', 'python', 'challenge', 'casino']
+    
+    ['They', 'bought', 'a', 'car,', 'and', 'a', 'horse']
+    ['they', 'bought', 'a', 'car', 'and', 'a', 'horse']
+    
+    ['Casinoville?']
+    ['casinoville']
+    
+    ['He', 'bought', 'a', 'casino.', "That's", 'crazy.']
+    ['he', 'bought', 'a', 'casino', "that's", 'crazy']
+    
+    found at : [0, 3]
+    {'casino': 3}
     
