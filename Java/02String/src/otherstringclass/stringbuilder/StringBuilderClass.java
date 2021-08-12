@@ -1,8 +1,8 @@
-package otherstringclass.stringbuffer;
+package otherstringclass.stringbuilder;
 
 import dev.Color;
 
-public class StringBufferClasses {
+public class StringBuilderClass {
     public static void main(String[] args) {
         Color.printMsg(Color.GREEN_BRIGHT, "Constructor(), Capacity(), length(): ");
         Construct();
@@ -12,10 +12,9 @@ public class StringBufferClasses {
 
     private static void CRUD() {
         Color.printMsg(Color.YELLOW_BRIGHT,"append()");
-        
-        StringBuffer sb = new StringBuffer("Java!! ");
-        StringBuffer sb1 = sb.append("Hello");
-        StringBuffer sb2 = sb1.append(" World");
+        StringBuilder sb = new StringBuilder("Java!! ");
+        StringBuilder sb1 = sb.append("Hello");
+        StringBuilder sb2 = sb1.append(" World");
 
         System.out.println(sb); //Java!! Hello World
         System.out.println(sb1); //Java!! Hello World
@@ -39,7 +38,7 @@ public class StringBufferClasses {
     }
 
     private static void Construct() {
-        StringBuffer sbf = new StringBuffer();
+        StringBuilder sbf = new StringBuilder();
         System.out.println("Capacity (16): " + sbf.capacity());
         System.out.println("Length: " + sbf.length());
         StringBuffer sbfc = new StringBuffer(20);
