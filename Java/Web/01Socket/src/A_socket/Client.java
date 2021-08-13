@@ -1,4 +1,4 @@
-package A_simple_server_clients;
+package A_socket;
 
 import dev.Color;
 
@@ -11,7 +11,7 @@ public class Client {
         Color.printStartWithMsg(20, Color.YELLOW_BRIGHT, "Client Started");
         Socket socket = null;
         try {
-            socket = new Socket("127.0.0.1", 22222);
+            socket = new Socket("127.0.0.1", 5000);
             Color.printMsg(Color.GREEN_BRIGHT, "Connected with Server");
             BufferedReader readFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter writeToServer = new PrintWriter(socket.getOutputStream(), true);

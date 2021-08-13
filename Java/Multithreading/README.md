@@ -1,5 +1,11 @@
 # Multithreading
 
+- [Multithreading](#multithreading)
+  - [What is multithreading?](#what-is-multithreading)
+  - [Process and Thread](#process-and-thread)
+  - [Creating a thread in Java](#creating-a-thread-in-java)
+  - [Life cycle of a Thread (Thread States)](#life-cycle-of-a-thread-thread-states)
+
 ## What is multithreading?
 
 `Multithreading` in java is a process of executing multiple threads simultaneously. Multithreading is a Java feature that allows concurrent execution of two or more parts of a program for maximum utilization of CPU. Each part of such program is called a thread.

@@ -1,4 +1,4 @@
-package A_simple_server_clients;
+package A_socket;
 
 import dev.Color;
 
@@ -9,7 +9,7 @@ import java.net.Socket;
 public class Server {
     public static void main(String[] args) throws IOException {
         Color.printStartWithMsg(20, Color.YELLOW_BRIGHT, "Server Started");
-        ServerSocket handshake = new ServerSocket(22222);
+        ServerSocket handshake = new ServerSocket(5000);
         System.out.println("Please, Start Client Server!!!");
         Socket serverSocket = handshake.accept();
         Color.printMsg(Color.GREEN_BRIGHT, "Client connected..");
