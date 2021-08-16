@@ -20,11 +20,11 @@ class Client {
             while (true) {
                 System.out.println("Enter a string: ");
                 message = in.nextLine();
+                writeToServer.println(message);
+
                 if (message.equals("done")) {
-                    writeToServer.println("done");
                     break;
                 }
-                writeToServer.println(message);
                 String fromServer = readFromServer.readLine();
                 System.out.print("Reply from the server 🚀🚀: ");
                 Color.printMsg(Color.RED_BRIGHT, fromServer);

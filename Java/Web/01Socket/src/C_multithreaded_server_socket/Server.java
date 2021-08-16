@@ -5,20 +5,21 @@ import dev.Color;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketAddress;
-import java.util.Objects;
 
-class MultiThreadedServer {
+public class Server {
     public static void main(String[] args) {
         try {
             ServerSocket server = new ServerSocket(5000);
             Color.printMsg(Color.CYAN_BRIGHT, "Server started");
             while (true) {
                 Socket socket = server.accept();
-                SocketAddress clientInfo = socket.getRemoteSocketAddress();
-                Color.printMsg(Color.GREEN_BRIGHT, "New client connected " + clientInfo);
-                Color.printMsg(Color.YELLOW_BRIGHT, "Creating new thread for " + clientInfo + " ....");
-                new ServerThread(socket).start();
+                String clientInfo = socket.getRemoteSocketAddress().toString().replace("/", "");
+                Color.printMsg(Color.GREEN_BRIGHT, "New client connected :" + clientInfo);
+                Color.printMsg(Color.YELLOW_BRIGHT, "Creating new thread for....");
+                //1. extends Thread
+                // new ServerThread(socket, clientInfo).start();
+                //2. implements Runnable
+                new ServerThread(socket, clientInfo);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -26,37 +27,40 @@ class MultiThreadedServer {
     }
 }
 
-class ServerThread extends Thread {
+//class ServerThread extends Thread {
+class ServerThread implements Runnable {
     private final Socket socket;
-    private final SocketAddress clientInfo;
+    private final String clientInfo;
 
-    public ServerThread(Socket socket) {
+    public ServerThread(Socket socket, String clientInfo) {
         this.socket = socket;
-        clientInfo = socket.getRemoteSocketAddress();
+        this.clientInfo = clientInfo;
+        //for Runnable
+        new Thread(this).start();
     }
 
+    @Override
     public void run() {
         PrintWriter writeToClient = null;
         BufferedReader readFromClient = null;
         try {
-            System.out.println("New Thread created : " + Thread.currentThread().getName());
+            System.out.println("New Thread created -> " + Thread.currentThread().getName());
             writeToClient = new PrintWriter(socket.getOutputStream(), true);
             readFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String line;
+            String clientMessage = "";
             while (true) {
                 System.out.println();
-                line = readFromClient.readLine();
-                if (line.equals("done")) {
+                clientMessage = readFromClient.readLine();
+                if (clientMessage.equals("done")) {
                     this.socket.close();
                     Color.printMsg(Color.RED_BRIGHT, clientInfo + " disconnected");
                     break;
                 }
-                System.out.print("Message from 👦 Client 👦 " + clientInfo + " : ");
-                Color.printMsg(Color.YELLOW_BRIGHT, line);
-                writeToClient.println(line.toUpperCase());
+                System.out.print("Message from Client 👨👨" + clientInfo + " : ");
+                Color.printMsg(Color.YELLOW_BRIGHT, clientMessage);
+                writeToClient.println(clientMessage.toUpperCase());
                 System.out.println("Response Sent 🚀🚀");
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
