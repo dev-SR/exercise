@@ -101,3 +101,16 @@ do
    fi
 done
 echo "greatest number in an array is $greatest"
+
+# ? Using variable condition "${#ar[@]}", "${m}", $((ar[i])) -gt "1"
+ar=(1 2 3 4 5)
+m=5
+for((i=0; i<"${#ar[@]}"; i++))
+do
+	for((j=0;j<"${m}";j++))
+	do
+		if [ $((ar[i])) -gt "1" ]; then
+			echo -n "${i}"
+		fi
+	done
+done
