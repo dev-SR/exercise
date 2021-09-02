@@ -15,5 +15,6 @@ test.ts
 # python bytecode
 __pycache__/
 *.py[cod]
-# itellij 
+# itellij
 out/
+target/
