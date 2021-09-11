@@ -53,3 +53,22 @@ case "$ANSWER" in
 	;;
 esac
 echo
+
+#  Write a Shell program to find all integer numbers for a given number (e.g., 100), that aren’t Divisible by either 2 or 3 but divisible by 5.
+
+# Enter any number: 100
+# Output:
+# The desired integers are: 5, 25, 35, 55, 65, 85, 95
+
+echo "Enter the range: "
+read N
+
+for (( i=0; i<N; i++ ))
+do
+   if [ $((i % 5)) -eq 0 ] ; then
+     if [ $((i % 2)) -ne 0 ] && [ $((i % 3)) -ne 0 ]; then
+       echo $i
+     fi
+   fi
+done
+
