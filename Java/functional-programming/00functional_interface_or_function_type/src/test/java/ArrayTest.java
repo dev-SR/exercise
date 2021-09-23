@@ -31,6 +31,10 @@ class ArrayTest {
             }
         };
         System.out.println(Array.filter(new int[]{1, 2, 3, 4}, isEven));
+
+        //Using Lambda Function
+        FunctionType isEven2 = n -> n % 2 == 0;
+        System.out.println(Array.filter(new int[]{1, 2, 3, 4}, isEven2));
     }
 
     @Test
