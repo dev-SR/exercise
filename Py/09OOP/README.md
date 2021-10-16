@@ -1,7 +1,6 @@
-# OOP in python
-
-- [OOP in python](#oop-in-python)
-  - [Basics](#basics)
+- [OOP](#oop)
+  - [OOP concept](#oop-concept)
+  - [OOP in Python](#oop-in-python)
     - [Private members](#private-members)
       - [force accessing private methods using `__dict__`](#force-accessing-private-methods-using-__dict__)
   - [Magic Methods](#magic-methods)
@@ -12,10 +11,35 @@
     - [Multiple Inheritance](#multiple-inheritance)
   - [Abstract Base Classes](#abstract-base-classes)
   - [Polymorphism](#polymorphism)
-  
-## Basics
 
-**Definig the constructor of a Class**
+# OOP
+
+## OOP concept
+
+**Abstraction**
+
+- Data Abstraction is the property through which only essential details are displayed to the user
+- Hiding the implementation
+- e.g. the working of a car
+
+**Encapsulation**
+
+- wrapping up of data into one unit
+- All the properties and methods are combined together
+
+**Inheritance**
+
+- It is the mechanism by which one class is allowed to inherit the feature (properties and methods) of another class
+- This offers a lot of reusability of code
+
+**Polymorphism**
+
+- The word polymorphism means having many forms
+- We can define polymorphism as the ability of a message to be displayed in more than one form
+
+## OOP in Python
+
+**Defining the constructor of a Class**
 
 - A constructor is a special member function of a class that is executed whenever we create new objects of the class.
 
@@ -25,7 +49,7 @@ def __init__(self):
     ...
 ```
 
-**Definig the methods of a instance**
+**Defining the methods of a instance**
 
 ```
 def intro(self):
@@ -33,28 +57,68 @@ def intro(self):
     ...
 ```
 
+In object-oriented programming, variables at the class level are referred to as class variables, whereas variables at the object level are called instance variables.
+
 **Class Variable**
 
-- Class Variables are common to all instances
+- defined within the _class construction_
+- shared by all instances of the class
 - They are associated with the class
 - Accessed by `class_name.variable`
+
+They therefore will generally have the same value for every instance unless you are using the class variable to initialize a variable.
+
+**Instance Variables**
+
+Instance variables are owned by instances of the class. This means that for each object or instance of a class, the instance variables are different.
+
+Unlike class variables, instance variables are defined within methods.
+
+Instance variables, owned by objects of the class, allow for each object or instance to have different values assigned to those variables.
+
+
+```python
+class Test:
+    # class variable - common to all
+	class_var= 0
+
+	def __init__(self,v):
+	 # instance variables - only availabe to instance
+		self.instance_var = v
+
+t1= Test(10)
+t2= Test(20)
+
+print(t1.class_var)
+print(t1.instance_var)
+print()
+print(t2.class_var)
+print(t2.instance_var)
+
+```
+
+    0
+    10
+
+    0
+    20
 
 
 
 ```python
-class Human():
+class Human:
 
-    # class variable
+    # class variable - common to all
     database = []
     population = 0
     id_seq = 0
 
     def __init__(self,name,age,is_alive = True):
-        # instance variables
+        # instance variables - only availabe to instance
         self.name = name
         self.age = age
         self.is_alive = is_alive
-        # 
+        #
         self.id = Human.id_seq
         Human.id_seq += 1
         Human.population += 1
@@ -63,7 +127,7 @@ class Human():
     # instance methods
     def intro(self):
         print("Hi, My name is",self.name,"My age is",self.age)
-    
+
     def die(self):
         if self.is_alive:
             print(self.name, "is dying")
@@ -87,7 +151,7 @@ h2.intro()
 
     Hi, My name is soikat My age is 22
     Hi, My name is Jhon My age is 69
-    
+
 
 
 ```python
@@ -109,7 +173,7 @@ print(h2.name)
     2
     soikat
     Jhon
-    
+
 
 
 ```python
@@ -129,7 +193,7 @@ h1.die()
 ```
 
     soikat is dying
-    
+
 
 
 ```python
@@ -149,7 +213,7 @@ h1.die()
 ```
 
     soikat is already dead
-    
+
 
 
 ```python
@@ -170,10 +234,10 @@ Human.population
 class FrqCounter():
     def __init__(self):
         self.d = {}
-    
+
     def add(self,v):
         self.d[v.lower()] = self.d.get(v.lower(),0) + 1
-    
+
     def __str__(self):
         return f"FC ({self.d})"
 ```
@@ -190,7 +254,7 @@ print(fcnt)
 ```
 
     FC ({'python': 10, 'c++': 1})
-    
+
 
 > making 'd' private
 
@@ -199,10 +263,10 @@ print(fcnt)
 class FrqCounter():
     def __init__(self):
         self.__d = {}
-    
+
     def add(self,v):
         self.__d[v.lower()] = self.__d.get(v.lower(),0) + 1
-    
+
     def __str__(self):
         return f"FC ({self.d})"
 ```
@@ -229,7 +293,7 @@ print(fcnt.__d) # AttributeError
     ----> 5 fcnt.d["python"] = 10 # AttributeError
           6 print(fcnt.d) # AttributeError
           7 print(fcnt.__d) # AttributeError
-    
+
 
     AttributeError: 'FrqCounter' object has no attribute 'd'
 
@@ -242,7 +306,7 @@ print(fcnt.__d) # AttributeError
 ```
 
     {'_FrqCounter__d': {'python': 2, 'c++': 1}}
-    
+
 
 
 ```python
@@ -250,13 +314,13 @@ print(fcnt._FrqCounter__d)
 ```
 
     {'python': 2, 'c++': 1}
-    
+
 
 ## Magic Methods
 
 - they are called automatically when some particular event occur
 
-- e.g. `__repr__`(toString) , `__init__`,, `__str__` 
+- e.g. `__repr__`(toString) , `__init__`,, `__str__`
 
 
 ```python
@@ -271,7 +335,7 @@ print(Human.database[1].name)
     [<__main__.Human object at 0x0000020FF9D60790>, <__main__.Human object at 0x0000020FF9D60430>]
     <__main__.Human object at 0x0000020FF9D60790>
     Jhon
-    
+
 
 
 ```python
@@ -288,7 +352,7 @@ class Human():
         self.name = name
         self.age = age
         self.is_alive = is_alive
-        # 
+        #
         self.id = Human.id_seq
         Human.id_seq += 1
         Human.population += 1
@@ -297,7 +361,7 @@ class Human():
     # instance methods
     def intro(self):
         print("Hi, My name is",self.name,"My age is",self.age)
-    
+
     def die(self):
         if self.is_alive:
             print(self.name, "is dying")
@@ -305,7 +369,7 @@ class Human():
             Human.population -= 1
         else:
             print("{} is already dead".format(self.name))
-    
+
     # __repr__ is a special method used to represent a class’s objects as a string
     def __repr__(self):
         return "%s(%r)" % (self.__class__, self.__dict__)
@@ -335,13 +399,13 @@ print("other magic methods: \n"+str(dir(Human)))
 ```
 
     [<class '__main__.Human'>({'name': 'soikat', 'age': 22, 'is_alive': True, 'id': 0}), <class '__main__.Human'>({'name': 'Jhon', 'age': 69, 'is_alive': True, 'id': 1})]
-    
+
     Human [0, soikat, 22, True]
     Human [0, soikat, 22, True]
     Human [0, soikat, 22, True]
-    other magic methods: 
+    other magic methods:
     ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'database', 'die', 'id_seq', 'intro', 'population']
-    
+
 
 ### Comparing Objects
 
@@ -351,16 +415,16 @@ class Point():
     def __init__(self,x,y):
         self.x=x
         self.y=y
-    
+
     def __eq__(self,other):
         return self.x==other.x and self.y==other.y
 
     def __gt__(self,other):
-        return self.x > other.x and self.y>other.y   
+        return self.x > other.x and self.y>other.y
 
     def __add__(self,o):
         return Point(self.x+o.x,self.y+o.y)
-    
+
     def __str__(self):
         return f"Point({self.x} , {self.y})"
 ```
@@ -379,7 +443,7 @@ print(p1+p2)
     True
     True
     Point(2 , 4)
-    
+
 
 ### Custom containers
 
@@ -404,7 +468,7 @@ class FreqCount():
 
     def __iter__(self):
         return iter(self.d)
-    
+
     def __str__(self):
         return f"FC ({self.d})"
 
@@ -435,12 +499,12 @@ for i in fc:
     3
     2
     FC ({'python': 3, 'c++': 10})
-    
+
     python -> 3
     c++ -> 10
-    
 
-## Inheritance 
+
+## Inheritance
 
 -  a process where one class acquire all the methods and properties of another class
 
@@ -457,18 +521,16 @@ class ChildClassName(ParentClassName)
 ```python
 # Child class
 class Hitman(Human):
-    # constructor
-
+    # re-initialize constructor
     def __init__(self,name,age):
         super().__init__(name,age)
-
-        # addtional hitman properties
+        # additional hitman properties
         self.kills  = 0
         self.kills_list = []
-    
+
     def kill(self,person):
         """
-        person will be an object of Human
+        `person` will be an object of Human
         """
         if person.is_alive:
             print("{} is killing {}".format(self.name,person.name))
@@ -493,7 +555,7 @@ print(Human.database)
 
     3
     [[0, soikat, 22, True], [1, Jhon, 69, True], [2, Bob, 10, True]]
-    
+
 
 
 ```python
@@ -506,7 +568,7 @@ print(Human.database)
     [3, James, 40, True]
     4
     [[0, soikat, 22, True], [1, Jhon, 69, True], [2, Bob, 10, True], [3, James, 40, True]]
-    
+
 
 
 ```python
@@ -523,7 +585,7 @@ print(bond.kills_list)
     Bob is dying
     1
     [[2, Bob, 10, False]]
-    
+
 
 
 ```python
@@ -531,18 +593,18 @@ bond.kill(h3)
 ```
 
     Bob is already dead.
-    
+
 
 
 ```python
-# Polymorphism 
+# Polymorphism
 h2.intro()
 bond.intro()
 ```
 
     Hi, My name is Jhon My age is 69
     Hi, my nam is James, I've killed 1 people
-    
+
 
 ### Method Overriding with super()
 
@@ -559,14 +621,14 @@ class Animal():
     def __init__(self):
         print("Animal constructor")
         self.age = 1
-    
-   
+
+
 class Mammal(Animal):
     def __init__(self):
         print("Mammal constructor")
         self.weight = 2
         super().__init__()
-    
+
 m = Mammal()
 print(m.age)
 print(m.weight)
@@ -576,7 +638,7 @@ print(m.weight)
     Animal constructor
     1
     2
-    
+
 
 ### Multiple Inheritance
 
@@ -599,7 +661,7 @@ m.greet()
 ```
 
     Employee greeting...
-    
+
 
 
 ```python
@@ -611,7 +673,7 @@ m.greet()
 ```
 
     Person greeting...
-    
+
 
 ## Abstract Base Classes
 
@@ -630,12 +692,12 @@ class InvalidOperationError(Exception):
 class Stream:
     def __init__(self):
         self.opened = False
-    
+
     def open(self):
         if self.opened:
             raise InvalidOperationError("Stream is Already opened")
         self.opened = True
-    
+
     def close(self):
         if self.opened:
             raise InvalidOperationError("Stream is Already opened")
@@ -644,7 +706,7 @@ class Stream:
 class FileStream(Stream):
     def read(self):
         print("Reading data from a file")
-    
+
 
 class NetworkStream(Stream):
     def read(self):
@@ -678,12 +740,12 @@ class InvalidOperationError(Exception):
 class Stream(ABC):
     def __init__(self):
         self.opened = False
-    
+
     def open(self):
         if self.opened:
             raise InvalidOperationError("Stream is Already opened")
         self.opened = True
-    
+
     def close(self):
         if self.opened:
             raise InvalidOperationError("Stream is Already opened")
@@ -696,7 +758,7 @@ class Stream(ABC):
 class FileStream(Stream):
     def read(self):
         print("Reading data from a file")
-    
+
 
 class NetworkStream(Stream):
     def read(self):
@@ -720,7 +782,7 @@ stream.open()
     <ipython-input-24-1456ce223969> in <module>
     ----> 1 stream = Stream()
           2 stream.open()
-    
+
 
     TypeError: Can't instantiate abstract class Stream with abstract methods read
 
@@ -742,9 +804,9 @@ mem = MemoryStream()
 
     <ipython-input-25-e4845ed35a73> in <module>
           2     pass
-          3 
+          3
     ----> 4 mem = MemoryStream()
-    
+
 
     TypeError: Can't instantiate abstract class MemoryStream with abstract methods read
 
@@ -761,7 +823,7 @@ print(mem.opened)
 ```
 
     True
-    
+
 
 ## Polymorphism
 
@@ -785,7 +847,7 @@ class TextBox(UIControl):
 class DropDownList(UIControl):
     def draw(self):
         print("DropDownList....")
-    
+
 
 def draw(controls):
     for c in controls:
@@ -803,4 +865,4 @@ draw([ddl,txtbx])
 
     DropDownList....
     TextBox...
-    
+
