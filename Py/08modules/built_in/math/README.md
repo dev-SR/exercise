@@ -8,6 +8,18 @@ print(dir(math))
 
 
 ```python
+math.pi
+```
+
+
+
+
+    3.141592653589793
+
+
+
+
+```python
 math.factorial(5)
 ```
 
@@ -27,6 +39,18 @@ math.ceil(9.4)
 
 
     10
+
+
+
+
+```python
+math.pow(3,2)
+```
+
+
+
+
+    9.0
 
 
 

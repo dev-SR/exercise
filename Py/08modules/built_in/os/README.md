@@ -41,3 +41,47 @@ os.listdir()
 # os.removedirs()
 # os.rename()
 ```
+
+
+```python
+import sys
+```
+
+
+```python
+sys.version
+```
+
+
+
+
+    '3.8.10 (default, May 19 2021, 13:12:57) [MSC v.1916 64 bit (AMD64)]'
+
+
+
+
+```python
+sys.path
+```
+
+
+
+
+    ['d:\\CSE\\Others\\Codes\\Py\\08modules\\built_in\\os',
+     'c:\\Users\\soiko\\.vscode\\extensions\\ms-toolsai.jupyter-2021.9.1101343141\\pythonFiles',
+     'c:\\Users\\soiko\\.vscode\\extensions\\ms-toolsai.jupyter-2021.9.1101343141\\pythonFiles\\lib\\python',
+     'C:\\ProgramData\\Anaconda3\\python38.zip',
+     'C:\\ProgramData\\Anaconda3\\DLLs',
+     'C:\\ProgramData\\Anaconda3\\lib',
+     'C:\\ProgramData\\Anaconda3',
+     '',
+     'C:\\Users\\soiko\\AppData\\Roaming\\Python\\Python38\\site-packages',
+     'C:\\ProgramData\\Anaconda3\\lib\\site-packages',
+     'C:\\ProgramData\\Anaconda3\\lib\\site-packages\\locket-0.2.1-py3.8.egg',
+     'C:\\ProgramData\\Anaconda3\\lib\\site-packages\\win32',
+     'C:\\ProgramData\\Anaconda3\\lib\\site-packages\\win32\\lib',
+     'C:\\ProgramData\\Anaconda3\\lib\\site-packages\\Pythonwin',
+     'C:\\ProgramData\\Anaconda3\\lib\\site-packages\\IPython\\extensions',
+     'C:\\Users\\soiko\\.ipython']
+
+

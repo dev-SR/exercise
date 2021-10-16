@@ -10,7 +10,19 @@ random.random()
 
 
 
-    0.5059455672116634
+    0.5772232466810346
+
+
+
+
+```python
+random.randint(0,20)
+```
+
+
+
+
+    14
 
 
 
@@ -29,7 +41,7 @@ random.random()+10
 
 
 ```python
-# between 1.xx.. - 10.xxxx
+# from 1.xx.. to 10.xx..
 random.random()*10
 ```
 
