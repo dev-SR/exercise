@@ -1,16 +1,92 @@
 # Python
 
 - [Python](#python)
-	- [Pipenv vs virtualenv vs conda environment](#pipenv-vs-virtualenv-vs-conda-environment)
+	- [Install both Anaconda & Python | Windows](#install-both-anaconda--python--windows)
+		- [Install Python 🐍](#install-python-)
+		- [Install Anaconda Distribution](#install-anaconda-distribution)
+		- [🤔 How to Access Anaconda & Python from cmd?](#-how-to-access-anaconda--python-from-cmd)
+			- [Accessing `Anaconda` from `VsCode`](#accessing-anaconda-from-vscode)
+			- [Accessing `Anaconda` from `cmd`](#accessing-anaconda-from-cmd)
+			- [Accessing `Python` from `cmd`](#accessing-python-from-cmd)
+		- [📥 Install packages differently](#-install-packages-differently)
+	- [`pipenv` vs `virtualenv` vs `conda` environment](#pipenv-vs-virtualenv-vs-conda-environment)
 		- [Virtualenv](#virtualenv)
 			- [with vscode](#with-vscode)
 			- [using cmd](#using-cmd)
-		- [PipEnv](#pipenv)
+		- [`pipenv` 🌟🌟🌟](#pipenv-)
 		- [Create Anaconda Environment](#create-anaconda-environment)
 	- [Using Pip to install packages to Anaconda Environment](#using-pip-to-install-packages-to-anaconda-environment)
 	- [Convert `ipynb` files into html, markdown, pdf and other format files](#convert-ipynb-files-into-html-markdown-pdf-and-other-format-files)
 
-## Pipenv vs virtualenv vs conda environment
+## Install both Anaconda & Python | Windows
+
+### Install Python 🐍
+
+- Make sure that you have checked out `ADD Python to PATH`.
+
+<div align="center" ><img src="../img/py_1.jpg" alt="py 1" width="700px" ></div>
+
+- Click on `Customize installation` and make few clicks on Next till you've got this page.
+
+<div align="center" ><img src="../img/py_2.jpg" alt="py 1" width="700px" ></div>
+
+- Choose a custom location other than the default. In this case I've choose `D:\Python310`.
+
+### Install Anaconda Distribution
+
+- Make sure you have checked out `Add Anaconda3 to my PATH environment variable`. This provides the flexibility to access the distribution of anaconda python anywhere from the PC.
+
+<div align="center" ><img src="../img/py_3.jpg" alt="py 3" width="700px" ></div>
+
+- Once installed, do a quick run of Anaconda Navigator and ensure it's running fine.
+
+### 🤔 How to Access Anaconda & Python from cmd?
+
+#### Accessing `Anaconda` from `VsCode`
+
+- Select Anaconda as the kernel
+
+<div align="center" ><img src="../img/py_4.jpg" alt="py 1" width="700px" ></div>
+
+#### Accessing `Anaconda` from `cmd`
+
+- Open command prompt and use the following command to activate conda base environment.
+
+```sh
+conda activate base
+```
+
+- Type `python` and you'll be welcomed with python from anaconda environment.
+
+<div align="center" ><img src="../img/py_5.jpg" alt="py 1" width="700px" ></div>
+
+- The `(base)` before the path indicates that conda environment is active.
+
+- To deactivate conda environment, use the following command
+
+> Note: Every anaconda distribution comes with base environment. Any additional virtual environments created inside anaconda can be activated using the `conda activate <envname>`
+
+#### Accessing `Python` from `cmd`
+
+- Just type `python` or `py` to open the python interpreter.
+
+### 📥 Install packages differently
+
+With both the distributions installed, you have control on installing packages separately for each distribution.
+
+- To install any package/dependency in **conda environment**, use the following command
+
+```python
+conda install <packageName>
+```
+
+- To install any package/dependency in **native python**, use the following command
+
+```python
+pip install <packageName>
+```
+
+## `pipenv` vs `virtualenv` vs `conda` environment
 
 ### Virtualenv
 
@@ -61,9 +137,9 @@ env\Scripts\activate
 deactivate
 ```
 
-### PipEnv
+### `pipenv` 🌟🌟🌟
 
-Pipenv was created due to many shortcomings of virtualenv such as it not making a distinction if project dependency and the dependies of the project dependency, not having mechanism to distinguish dev and production needs etc.
+Pipenv was created due to many shortcomings of virtualenv such as it not making a distinction if project dependency and the depending of the project dependency, not having mechanism to distinguish dev and production needs etc.
 
 To install pipenv, you need to install pip first. Then do
 
@@ -71,22 +147,26 @@ To install pipenv, you need to install pip first. Then do
 pip install pipenv
 ```
 
-Next, you create a new environment by using
+Creating a virtualenv for the project
 
-```bash
-pipenv install
+- `pipenv shell` The command **pipenv** creates a new **virtualenv** for the project along with `Pipfile` side by side.
+
+<div align="center" ><img src="../img/py_6.jpg" alt="py 1" width="700px"></div>
+
+- Installing/UnInstalling required packages for the project
+You'll install the two package named 'requests' and 'flask' in your Virtual Environment using the following command.
+
+```python
+pipenv install requests
+pipenv install flask
 ```
 
-This will look for a `pipenv` file, if it doesn’t exist, it will create a new environment and activate it. As you can already see, the workflow is simplified by not seperating the process of creating a new environment from scratch vs creating with a existing file. To activate you can run
+<div align="center" ><img src="../img/py_7.jpg" alt="py 1" width="700px"></div>
 
-```bash
-pipenv shell
-```
+- For the uninstallation of the package, use the following command.
 
-To install new packages do pip install package , and pipenv will automatically add the package to the pipenv file that’s called Pipfile. You can also install package for just the dev environement by calling
-
-```bash
-pip install <package> --dev
+```python
+pipenv uninstall flask
 ```
 
 ### Create Anaconda Environment
