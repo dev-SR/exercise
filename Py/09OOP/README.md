@@ -1,11 +1,21 @@
 - [OOP](#oop)
   - [OOP concept](#oop-concept)
   - [OOP in Python](#oop-in-python)
+    - [Instance Attribute and Class Attributes](#instance-attribute-and-class-attributes)
+      - [Class Attributes](#class-attributes)
+      - [Instance Variables](#instance-variables)
+    - [EX- 1](#ex--1)
     - [Private members](#private-members)
-      - [force accessing private methods using `__dict__`](#force-accessing-private-methods-using-__dict__)
-  - [Magic Methods](#magic-methods)
+      - [Name Mangling to access private members](#name-mangling-to-access-private-members)
+    - [Magic Methods](#magic-methods)
     - [Comparing Objects](#comparing-objects)
     - [Custom containers](#custom-containers)
+    - [Class method and Static method](#class-method-and-static-method)
+      - [Static Method](#static-method)
+      - [Class Method](#class-method)
+        - [When do you use the class method?](#when-do-you-use-the-class-method)
+          - [1. Factory methods](#1-factory-methods)
+          - [2. Correct instance creation in inheritance](#2-correct-instance-creation-in-inheritance)
   - [Inheritance](#inheritance)
     - [Method Overriding with super()](#method-overriding-with-super)
     - [Multiple Inheritance](#multiple-inheritance)
@@ -59,7 +69,9 @@ def intro(self):
 
 In object-oriented programming, variables at the class level are referred to as class variables, whereas variables at the object level are called instance variables.
 
-**Class Variable**
+### Instance Attribute and Class Attributes
+
+#### Class Attributes
 
 - defined within the _class construction_
 - shared by all instances of the class
@@ -68,7 +80,7 @@ In object-oriented programming, variables at the class level are referred to as 
 
 They therefore will generally have the same value for every instance unless you are using the class variable to initialize a variable.
 
-**Instance Variables**
+#### Instance Variables
 
 Instance variables are owned by instances of the class. This means that for each object or instance of a class, the instance variables are different.
 
@@ -85,6 +97,8 @@ class Test:
 	def __init__(self,v):
 	 # instance variables - only availabe to instance
 		self.instance_var = v
+		# local variable - only availabe to method
+		local_var = 0
 
 t1= Test(10)
 t2= Test(20)
@@ -94,7 +108,6 @@ print(t1.instance_var)
 print()
 print(t2.class_var)
 print(t2.instance_var)
-
 ```
 
     0
@@ -103,6 +116,52 @@ print(t2.instance_var)
     0
     20
 
+
+
+```python
+t1.local_var
+```
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    <ipython-input-28-bac5ddb7ca08> in <module>
+    ----> 1 t1.local_var
+
+
+    AttributeError: 'Test' object has no attribute 'local_var'
+
+
+
+```python
+print(t1.__dict__)
+print(t2.__dict__)
+```
+
+    {'instance_var': 10}
+    {'instance_var': 20}
+
+
+
+```python
+print(hasattr(t1,'instance_var'))
+print(hasattr(t1, 'class_var'))
+print(hasattr(t1, '__init__'))
+
+print(getattr(t1,'instance_var'))
+print(getattr(t1, 'class_var'))
+```
+
+    True
+    True
+    True
+    10
+    0
+
+
+### EX- 1
 
 
 ```python
@@ -258,17 +317,23 @@ print(fcnt)
 
 > making 'd' private
 
+The `private` members of a class are only accessible within the class. In Python, a private member can be defined by using a prefix `__` (double underscore).
+
+
 
 ```python
 class FrqCounter():
     def __init__(self):
+        # private member
         self.__d = {}
 
     def add(self,v):
+        # private members are accessible from a class
         self.__d[v.lower()] = self.__d.get(v.lower(),0) + 1
 
     def __str__(self):
         return f"FC ({self.d})"
+
 ```
 
 
@@ -298,15 +363,9 @@ print(fcnt.__d) # AttributeError
     AttributeError: 'FrqCounter' object has no attribute 'd'
 
 
-#### force accessing private methods using `__dict__`
+#### Name Mangling to access private members
 
-
-```python
- print(fcnt.__dict__)
-```
-
-    {'_FrqCounter__d': {'python': 2, 'c++': 1}}
-
+Python performs name mangling on private attributes. Every member with a double underscore will be changed to `object._class__variable`.
 
 
 ```python
@@ -316,7 +375,15 @@ print(fcnt._FrqCounter__d)
     {'python': 2, 'c++': 1}
 
 
-## Magic Methods
+
+```python
+ print(fcnt.__dict__)
+```
+
+    {'_FrqCounter__d': {'python': 2, 'c++': 1}}
+
+
+### Magic Methods
 
 - they are called automatically when some particular event occur
 
@@ -503,6 +570,196 @@ for i in fc:
     python -> 3
     c++ -> 10
 
+
+### Class method and Static method
+
+#### Static Method
+
+A static method does not receive an implicit first argument (`self`).
+
+Syntax:
+
+```python
+class C(object):
+    @staticmethod
+    def fun(arg1, arg2, ...):
+        ...
+returns: a static method for function fun.
+```
+
+- A static method is also a method that is bound to the class and not the object of the class.
+- A static method can’t access or modify the class state.
+- It is present in a class because it makes sense for the method to be present in class.
+
+
+```python
+class Student():
+	def __init__(self,name,age):
+		self.name = name
+		self.age = age
+
+	def __str__(self):
+		return f"Student [{self.name}, {self.age}]"
+
+	@staticmethod
+	def welcomeToSchool(): # self is not required
+		print("Welcome to School!!")
+
+	@staticmethod
+	def isTeen(self,age): # explicitly mentioning self
+		return age>=13 and age<=19
+
+s1 = Student("soikat",22)
+s1.welcomeToSchool()
+
+```
+
+    Welcome to School!!
+
+
+
+```python
+Student.welcomeToSchool()
+```
+
+    Welcome to School!!
+
+
+
+```python
+Student.isTeen(s1,22)
+```
+
+
+
+
+    False
+
+
+
+#### Class Method
+
+Class methods are methods that are called on the class itself, not on a specific object instance. Therefore, it belongs to a class level, and all class instances share a class method.
+
+- **A class method is bound to the class and not the object of the class**. It can access only class variables.
+- It can modify the class state by changing the value of a class variable that would apply across all the class objects.
+
+The difference between a static method and a class method is:
+
+- Static method knows nothing about the class and just deals with the parameters
+- Class method works with the class since its parameter is always the class itself.
+
+The class method can be called both by the class and its object.
+
+```python
+class C(object):
+    @classmethod
+    def fun(cls, arg1, arg2, ...):
+       ....
+# fun: function that needs to be converted into a class method
+# returns: a class method for function.
+```
+
+
+##### When do you use the class method?
+
+###### 1. Factory methods
+
+Class methods are used when we are dealing with factory methods. **Factory methods are those methods that return a class object for different use cases**. Thus, factory methods create concrete implementations of a common interface.
+
+It is similar to function overloading in C++. Since, Python doesn't have anything as such, class methods and static methods are used.
+
+
+
+```python
+from datetime import date
+
+
+class Student:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    @classmethod
+    def calculate_age(cls, name, birth_year):
+        # calculate age an set it as a age
+        # return new object
+        return cls(name, date.today().year - birth_year)
+
+    def show(self):
+        print(self.name + "'s age is: " + str(self.age))
+
+
+jessa = Student('Jessa', 20)
+jessa.show()
+
+# create new object using the factory method
+joy = Student.calculate_age("Joy", 1995)
+joy.show()
+
+```
+
+    Jessa's age is: 20
+    Joy's age is: 26
+
+
+The constructor takes normal parameters `name` and `age`. While, `fromBirthYear` takes `class`, `name` and `birthYear`, calculates the current age by subtracting it with the current year and returns the class instance.
+
+The `fromBirthYear` method takes `Person` class (not `Person` object) as the first parameter `cls` and **returns** the constructor by calling `cls(name, date.today().year - birthYear)`, which is equivalent to `Person(name, date.today().year - birthYear)`
+
+###### 2. Correct instance creation in inheritance
+
+Whenever you derive a class from implementing a factory method as a class method, it ensures correct instance creation of the derived class.
+
+You can create a static method for the above example but the object it creates, will always be hard coded as Base class.
+
+But, when you use a class method, it creates the correct instance of the derived class.
+
+
+```python
+from datetime import date
+
+# random Person
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    @staticmethod
+    def fromFathersAge(name, fatherAge, fatherPersonAgeDiff):
+        return Person(name, date.today().year - fatherAge + fatherPersonAgeDiff)
+
+    @classmethod
+    def fromBirthYear(cls, name, birthYear):
+        return cls(name, date.today().year - birthYear)
+
+    def display(self):
+        print(self.name + "'s age is: " + str(self.age))
+
+# Inheritance
+class Man(Person):
+    sex = 'Male'
+
+
+man = Man.fromBirthYear('John', 1985) # using classmethod
+print(isinstance(man, Man))
+
+man1 = Man.fromFathersAge('John', 1965, 20) # using staticmethod
+print(isinstance(man1, Man))
+
+```
+
+    True
+    False
+
+
+Here, using a `static` method to create a class instance wants us to hardcode the instance type during creation.
+
+This clearly causes a problem when inheriting `Person` to `Man`.
+
+`fromFathersAge` method **doesn't return** a `Man` object but its base class `Person`'s object.
+
+This violates the OOP paradigm. Using a class method as `fromBirthYear` can ensure the OOP-ness of the code since it takes the first parameter as the class itself and calls its factory method.
 
 ## Inheritance
 
