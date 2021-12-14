@@ -1,27 +1,40 @@
 # Quick Navigation
 
-- Vs Code Setting
-  - [Font](#font)
-  - [Terminal](#terminal)
-- Markdown Guides
-  - [Cheatsheets](#cheatsheet)
-  - [Links](#links)
-  - [Images](#images)
-  - [Mathematical Formula in markdown](#math)
-  - [Code and Syntax Highlighting](#highlighting)
-- Git and Github
-  - [Gist](#gist)
-  - [.gitignore commited files](#clear-git-cache).
-  - [Alias](#alias)
-  - [Commands for Github Repo](#githubrepo)
-  - [Change the URI (URL) for a remote Git repository](#changeremote)
-- [Vim](#vi)
-- Unicode For Better Comments
+- [Quick Navigation](#quick-navigation)
+  - [Vs Code Setting](#vs-code-setting)
+    - [font](#font)
+    - [snippets](#snippets)
+    - [Terminal](#terminal)
+      - [For Windows Terminal](#for-windows-terminal)
+  - [Markdown Guide](#markdown-guide)
+    - [Cheatsheets](#cheatsheets)
+    - [Links](#links)
+      - [**Anchor to a heading in github flavored markdown**](#anchor-to-a-heading-in-github-flavored-markdown)
+        - [Chapter 1](#chapter-1)
+        - [Chapter 2](#chapter-2)
+    - [Images](#images)
+      - [Aligning images](#aligning-images)
+        - [`left` alignment](#left-alignment)
+        - [`right` alignment](#right-alignment)
+        - [`center` alignment example](#center-alignment-example)
+    - [Mathematical Formula in markdown](#mathematical-formula-in-markdown)
+    - [Code and Syntax Highlighting](#code-and-syntax-highlighting)
+  - [GIT and GITHUB](#git-and-github)
+    - [Gist](#gist)
+    - [Clear Git Cache](#clear-git-cache)
+      - [Clear Entire Git Cache](#clear-entire-git-cache)
+    - [Git Alias](#git-alias)
+    - [Commands for Github Repo](#commands-for-github-repo)
+    - [Change the URI (URL) for a remote Git repository](#change-the-uri-url-for-a-remote-git-repository)
+  - [Vim](#vim)
+    - [Linux(ubuntu)](#linuxubuntu)
   - [Unicodes](#unicodes)
+      - [LINKS](#links-1)
+      - [Examples](#examples)
 
-# Vs Code Setting
+## Vs Code Setting
 
-## font
+### font
 
 **For Editor:** _`FiraCode-Regular.ttf`_ and _`FiraCode-Bold.ttf`_ from:
 [tonsky/FiraCode](https://github.com/tonsky/FiraCode)
@@ -29,9 +42,48 @@
 **For Terminal:** _`FiraMono NF`_ from
 [Nerd Font](https://github.com/tonsky/FiraCode)
 
-## Terminal
+### snippets
 
-### For Windows Terminal
+You can easily define your own snippets without any extension. To create or edit your own snippets,
+- select `User Snippets` under `File > Preferences > User Snippets` or `Setting > User Snippets`
+- then **select the language**(by typing language identifier) for which the snippets should appear,
+  - or type `New Global Snippets` file option if they should appear for all languages.
+
+[https://code.visualstudio.com/docs/editor/userdefinedsnippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets)
+
+- Each snippet is defined under a `snippet name` and has a `scope`, `prefix`, `body` and `description`.
+- Add comma separated ids of the languages where the snippet is applicable in the scope field.
+  - `"scope": "javascript,typescript"`
+- If scope is left empty or omitted, the snippet gets applied to all languages.
+- The `prefix` is what is used to **trigger the snippet** and the body will be expanded and inserted.
+  - Possible variables are:
+    - `$1`, `$2` for tab stops,
+    - `$0` for the final cursor position, and
+    - `${1:label}`, `${2:another}` for placeholders.
+      - Placeholders with the same ids are connected.
+
+```json
+{
+
+ "Print to console": {
+   "scope": "javascript,typescript",
+   "prefix": "log",
+   "body": ["for(int i = $1,i<=$2;i++){",
+     "    console.log(\"${3:string}\");",
+     "    console.log(\"${3:string}\");",
+     "}",
+     "$0"],
+   "description": "Log output to console"
+  }
+
+}
+```
+
+[https://snippet-generator.app](https://snippet-generator.app/): !!!To declare a placeholder (ctrl + i): ${1:example}
+
+### Terminal
+
+#### For Windows Terminal
 
 ---
 
@@ -65,11 +117,11 @@ fileName: `Microsoft.PowerShell_profile.ps1`
 Set-PoshPrompt -Theme pure
 ```
 
-# Markdown Guide
+## Markdown Guide
 
 <div id="cheatsheet"/>
 
-## Cheatsheets
+### Cheatsheets
 
 > [Cheatsheet-1](https://www.markdownguide.org/basic-syntax/)
 
@@ -77,7 +129,7 @@ Set-PoshPrompt -Theme pure
 
 <div id="links"/>
 
-## Links
+### Links
 
 ```
 [I'm an inline-style link](https://www.google.com)
@@ -90,7 +142,7 @@ Set-PoshPrompt -Theme pure
 
 [I'm a relative reference to a repository file](C++/0string)
 
-### **Anchor to a heading in github flavored markdown**
+#### **Anchor to a heading in github flavored markdown**
 
 Github automatically parses anchor tags out of your headers. So you can do the
 following:
@@ -105,7 +157,7 @@ following:
 ### Foo
 ```
 
-> ### Foo
+> #### Foo
 
 In the above case, the Foo header has generated an anchor tag with the name foo.
 
@@ -122,7 +174,7 @@ In the above case, the Foo header has generated an anchor tag with the name foo.
 ### My Multi Word Header
 ```
 
-> ### HACK: Referencing Empty Div
+> #### HACK: Referencing Empty Div
 
 - [Chapter 1](#Chapter1)
 - [Chapter 2](#Chapter2)
@@ -134,33 +186,33 @@ In the above case, the Foo header has generated an anchor tag with the name foo.
 <div id="Chapter1"/>
 ### Chapter 1
 
-Some text here.  
+Some text here.
 Some text here. Some text here.
 
 <span id="Chapter2"/>
 ### Chapter 2
 
-Some text here.  
+Some text here.
 Some text here. Some text here.
 ```
 
 <div id="Chapter1"/>
 
-#### Chapter 1
+##### Chapter 1
 
-Some text here.  
+Some text here.
 Some text here. Some text here.
 
 <span id="Chapter2"/>
 
-#### Chapter 2
+##### Chapter 2
 
-Some text here.  
+Some text here.
 Some text here. Some text here.
 
 <div id="images"/>
 
-## Images
+### Images
 
 ```git
 ![Tux, the Linux mascot](/assets/images/tux.png)
@@ -170,32 +222,33 @@ Some text here. Some text here.
 
 ![Tux, the Linux mascot](https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg)
 
+#### Aligning images
 
-###  Aligning images
-
-####  `left` alignment
+##### `left` alignment
 
 <img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100">
 
 This is the code you need to align images to the left:
+
 ```
 <img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100">
 ```
 
 ---
 
-####  `right` alignment
+##### `right` alignment
 
 <img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100">
 
 This is the code you need to align images to the right:
+
 ```
 <img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100">
 ```
 
 ---
 
-####  `center` alignment example
+##### `center` alignment example
 
 <p align="center">
   <img width="460" height="300" src="http://www.fillmurray.com/460/300">
@@ -209,7 +262,7 @@ This is the code you need to align images to the right:
 
 <div id="math"/>
 
-## Mathematical Formula in markdown
+### Mathematical Formula in markdown
 
 [https://latex.codecogs.com/](https://latex.codecogs.com/)\
 [https://www.codecogs.com](https://www.codecogs.com/latex/eqneditor.php)\
@@ -217,7 +270,7 @@ This is the code you need to align images to the right:
 
 <div id="highlighting"/>
 
-## Code and Syntax Highlighting
+### Code and Syntax Highlighting
 
 ```
 Inline `code` has `back-ticks around` it.
@@ -282,13 +335,13 @@ or,
  npm run build
 ```
 
-# GIT and GITHUB
+## GIT and GITHUB
 
-## Gist
+### Gist
 
 [Gist](https://gist.github.com/dev-SR)
 
-## Clear Git Cache
+### Clear Git Cache
 
 [Ref](https://devconnected.com/how-to-clear-git-cache/)
 
@@ -310,7 +363,7 @@ the `–cached` option.**
 > **Note** o not forget the `--cached` option or your file will be deleted from
 > the filesystem.
 
-### Clear Entire Git Cache
+#### Clear Entire Git Cache
 
 In some cases, you may want to clear the cache of your entire Git staging area.
 
@@ -335,13 +388,13 @@ option for recursive.**
 
 <div id="alias"/>
 
-## Git Alias
+### Git Alias
 
 [gist](https://gist.github.com/dev-SR/bf82b701864366b77b3320b543fbef75)
 
 <div id="githubrepo"/>
 
-## Commands for Github Repo
+### Commands for Github Repo
 
 …or create a new repository on the command line
 
@@ -364,7 +417,7 @@ git push -u origin main
 
 <div id="changeremote"/>
 
-## Change the URI (URL) for a remote Git repository
+### Change the URI (URL) for a remote Git repository
 
 ```bash
 git remote -v
@@ -382,12 +435,12 @@ git remote -v
 
 ```
 
-
 <div id="vi"></div>
 
-# Vim
+## Vim
 
-## Linux(ubuntu)
+### Linux(ubuntu)
+
 Install Vim (Enhanced version of vi which is preinstalled)
 
 ```bash
@@ -411,15 +464,15 @@ syntax on
 set number
 ```
 
-# Unicodes
+## Unicodes
 
-### LINKS
+#### LINKS
 
 [Arrows](https://unicode-table.com/en/sets/arrow-symbols/)
 
 [Box Drawing](https://unicode-table.com/en/blocks/box-drawing/)
 
-### Examples
+#### Examples
 
 ```
     /**
