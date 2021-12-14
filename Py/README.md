@@ -14,6 +14,9 @@
 			- [with vscode](#with-vscode)
 			- [using cmd](#using-cmd)
 		- [`pipenv` 🌟🌟🌟](#pipenv-)
+			- [Creating and Activating a virtualenv](#creating-and-activating-a-virtualenv)
+			- [Installing from a copied a `pipfile`](#installing-from-a-copied-a-pipfile)
+			- [UnInstalling packages](#uninstalling-packages)
 		- [Create Anaconda Environment](#create-anaconda-environment)
 	- [Using Pip to install packages to Anaconda Environment](#using-pip-to-install-packages-to-anaconda-environment)
 	- [Convert `ipynb` files into html, markdown, pdf and other format files](#convert-ipynb-files-into-html-markdown-pdf-and-other-format-files)
@@ -147,23 +150,33 @@ To install pipenv, you need to install pip first. Then do
 pip install pipenv
 ```
 
-Creating a virtualenv for the project
+#### Creating and Activating a virtualenv
 
-- `pipenv shell` The command **pipenv** creates a new **virtualenv** for the project along with `Pipfile` side by side.
+```bash
+### ~Desktop/project_name
+pipenv install django
+# Successfully created virtual environment!
+# Virtualenv location: C:\Users\X\.virtualenvs\project_name-zqtDNc_4
 
-<div align="center" ><img src="../img/py_6.jpg" alt="py 1" width="700px"></div>
-
-- Installing/UnInstalling required packages for the project
-You'll install the two package named 'requests' and 'flask' in your Virtual Environment using the following command.
-
-```python
-pipenv install requests
-pipenv install flask
+### Activate virtualenv
+pipenv shell
 ```
 
-<div align="center" ><img src="../img/py_7.jpg" alt="py 1" width="700px"></div>
+<div align="center" ><img src="../img/pipenv_v1.jpg" alt="py venv" width="700px"></div>
 
-- For the uninstallation of the package, use the following command.
+#### Installing from a copied a `pipfile`
+
+```bash
+pipenv sync
+# or
+pipenv install
+```
+
+[https://stackoverflow.com/questions/52171593/how-to-install-dependencies-from-a-copied-pipfile-inside-a-virtual-environment](https://stackoverflow.com/questions/52171593/how-to-install-dependencies-from-a-copied-pipfile-inside-a-virtual-environment)
+
+#### UnInstalling packages
+
+- For the unInstallation of the package, use the following command.
 
 ```python
 pipenv uninstall flask
