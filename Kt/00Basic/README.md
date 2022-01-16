@@ -9,9 +9,9 @@
   - [Null Safety in Kotlin](#null-safety-in-kotlin)
     - [Nullable References Types (`Type?`)](#nullable-references-types-type)
     - [Checking for `null` in conditions](#checking-for-null-in-conditions)
-      - [Safe Call operator(`var?.Method/Property`) : `If(!null)`, use it, otherwise **return null**](#safe-call-operatorvarmethodproperty--ifnull-use-it-otherwise-return-null)
+      - [Safe Call operator(`a?.b/b()`) : `If(!null)`, use it, otherwise **return null**](#safe-call-operatorabb--ifnull-use-it-otherwise-return-null)
+      - [Elvis Operator(`x=a?:b`) : `if(!null)`, use `a`, else use `b`](#elvis-operatorxab--ifnull-use-a-else-use-b)
       - [Not null assertion (`!!`) Operator : `if(null)`, Throws `NullPointerException`](#not-null-assertion--operator--ifnull-throws-nullpointerexception)
-      - [Elvis Operator(`?:`)](#elvis-operator)
 
 ## String Concatenation using `+` and `${}`
 
@@ -151,7 +151,7 @@ The most common way of checking null reference is using if-else expression. We c
     }
 ```
 
-#### Safe Call operator(`var?.Method/Property`) : `If(!null)`, use it, otherwise **return null**
+#### Safe Call operator(`a?.b/b()`) : `If(!null)`, use it, otherwise **return null**
 
 > WatchOut: `Safe Call Operator` is not same as Nullable Reference Types(`Type?`). see  [Nullable References Types (`Type?`)](#nullable-references-types-type)
 
@@ -183,6 +183,37 @@ examples:
 
     var name: String? = null
     println(name?.toUpperCase()) //null
+```
+
+#### Elvis Operator(`x=a?:b`) : `if(!null)`, use `a`, else use `b`
+
+The Elvis operator is used to return
+
+- a `non-null` value or
+- a `default value` when the original variable is null.
+
+In other words, if left expression is not null then elvis operator returns it, otherwise it returns the right expression. The right-hand side expression is evaluated only if the left-hand side found to be null.
+The following expression:
+
+ The following expression:
+
+```kotlin
+x = a ?: b //b works as default value
+```
+
+is equivalent to:
+
+```kotlin
+x = if(a !== null) a else b
+```
+
+```kotlin
+ var s:String? = null
+    var size: Int = s?.length ?: 0
+    println(size)//0
+    s = "Hello World"
+    size = s?.length ?: 0
+    println(size)//11
 ```
 
 #### Not null assertion (`!!`) Operator : `if(null)`, Throws `NullPointerException`
@@ -223,38 +254,4 @@ else{
  // non-null asserted call
     var size2: Int = s3?.length!!
     //Exception in thread "main" kotlin.KotlinNullPointerException
-```
-
-#### Elvis Operator(`?:`)
-
-The Elvis operator is used to return
-
-- a `non-null` value or
-- a `default value` when the original variable is null.
-
-In other words, if left expression is not null then elvis operator returns it, otherwise it returns the right expression. The right-hand side expression is evaluated only if the left-hand side found to be null.
-The following expression:
-
- The following expression:
-
-```kotlin
-val name = firstName ?: "Unknown"
-```
-
-is equivalent to:
-
-```kotlin
-val name = if(firstName!= null)
-         firstName
-      else
-         "Unknown"
-```
-
-```kotlin
- var s:String? = null
-    var size: Int = s?.length ?: 0
-    println(size)//0
-    s = "Hello World"
-    size = s?.length ?: 0
-    println(size)//11
 ```
