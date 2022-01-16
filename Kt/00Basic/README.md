@@ -1,17 +1,17 @@
 # Kotlin Fundamental
 
 - [Kotlin Fundamental](#kotlin-fundamental)
-	- [String Concatenation using `+` and `${}`](#string-concatenation-using--and-)
-	- [Declaring Variables in Kotlin](#declaring-variables-in-kotlin)
-		- [`val` : cannot be reassigned](#val--cannot-be-reassigned)
-		- [`var` : can be reassigned](#var--can-be-reassigned)
-	- [Late initialization](#late-initialization)
-	- [Null Safety in Kotlin](#null-safety-in-kotlin)
-		- [Safe Call Operator (`?.`)](#safe-call-operator-)
-		- [Not null assertion : `!!` Operator](#not-null-assertion---operator)
-		- [Checking for `null` in conditions](#checking-for-null-in-conditions)
-			- [Using Safe Call operator(`?.`)](#using-safe-call-operator)
-			- [Elvis Operator(`?:`)](#elvis-operator)
+  - [String Concatenation using `+` and `${}`](#string-concatenation-using--and-)
+  - [Declaring Variables in Kotlin](#declaring-variables-in-kotlin)
+    - [`val` : cannot be reassigned](#val--cannot-be-reassigned)
+    - [`var` : can be reassigned](#var--can-be-reassigned)
+  - [Late initialization](#late-initialization)
+  - [Null Safety in Kotlin](#null-safety-in-kotlin)
+    - [Nullable References Types (`Type?`)](#nullable-references-types-type)
+    - [Checking for `null` in conditions](#checking-for-null-in-conditions)
+      - [Safe Call operator(`var?.Method/Property`) : `If(!null)`, use it, otherwise **return null**](#safe-call-operatorvarmethodproperty--ifnull-use-it-otherwise-return-null)
+      - [Not null assertion (`!!`) Operator : `if(null)`, Throws `NullPointerException`](#not-null-assertion--operator--ifnull-throws-nullpointerexception)
+      - [Elvis Operator(`?:`)](#elvis-operator)
 
 ## String Concatenation using `+` and `${}`
 
@@ -41,7 +41,7 @@ reassigning `val` is not allowed:
     println(a)
 ```
 
->> Error: Val cannot be reassigned!!
+> Error: Val cannot be reassigned!!
 
 ### `var` : can be reassigned
 
@@ -70,7 +70,7 @@ In Kotlin Property must be initialized before being used.
 One way of achieving this is by assigning a `dummy value` to the variable like this:
 
 ```kotlin
-var v: String = "
+var v: String = ""
 fun main() {
  v = "Hello Kotlin"
  println(v)
@@ -106,14 +106,14 @@ Usage of `lateinit`
 
 ## Null Safety in Kotlin
 
-Kotlin type system has distinguish two types of references that can hold `null` (nullable references) and those that can not (non-null references). A variable of type `String` **can not hold** `null`. If we try to assign `null` to the variable, it gives compiler error.
+Kotlin type system has distinguish two types of references that can hold `null` (`nullable` references) and those that can not (`non-null` references). A variable of type `String` **can not hold** `null`. If we try to assign `null` to the variable, it gives compiler error.
 
 ```kotlin
 var s1: String = "Hello World"
     s1 = null // compilation error
 ```
 
-### Safe Call Operator (`?.`)
+### Nullable References Types (`Type?`)
 
 To allow a variable to hold `null`, we can declare a variable as nullable string, written `String?`:
 
@@ -128,29 +128,6 @@ But if we want to access the `length` of the string `s2`, that would not be safe
 ```kotlin
  var s2: String? = null
     var s = s2.length //  compiler error because string can be null
-```
-
-### Not null assertion : `!!` Operator
-
-The not null assertion (`!!`) operator converts **`any` value to a `non-null` type** and **throws an exception** if the value is `null`. If anyone want `NullPointerException` then he can ask explicitly using this operator.
-
-```kotlin
-    /**
-     * Not null assertion : `!!` Operator
-     * **/
-    var s3:String? = null
-    var size1 = s3?.length
-    println("size: any $size1")
-
-    // var size2: Int = s3?.length // [error]
-    /**
-     * Type mismatch.
-     * Required: Int
-     * Found: Int?
-     * **/
- // non-null asserted call
-    var size2: Int = s3?.length!!
-    //Exception in thread "main" kotlin.KotlinNullPointerException
 ```
 
 ### Checking for `null` in conditions
@@ -174,35 +151,78 @@ The most common way of checking null reference is using if-else expression. We c
     }
 ```
 
-#### Using Safe Call operator(`?.`)
+#### Safe Call operator(`var?.Method/Property`) : `If(!null)`, use it, otherwise **return null**
+
+> WatchOut: `Safe Call Operator` is not same as Nullable Reference Types(`Type?`). see  [Nullable References Types (`Type?`)](#nullable-references-types-type)
+
 
 Null Comparisons are simple but number of nested `if-else` expression could be burdensome. So, Kotlin has a Safe call operator, `?.` that reduces this complexity and execute an action only when the specific reference holds a `non-null` value. It allows us to combine a `null-check` and a method call in a single expression.
 
 The following expression:
 
 ```kotlin
-name?.toUpperCase()
+a?.b()
 ```
 
 is equivalent to:
 
 ```kotlin
-if(name != null)
-    name.toUpperCase()
-else
-    null
+if(a != null){
+    a.b()
+}
+else{
+    return null
+}
+```
+
+examples:
+
+```kotlin
+    var name: String? = "Soikat"
+    println(name?.toUpperCase()) //SOIKAT
+
+    var name: String? = null
+    println(name?.toUpperCase()) //null
+```
+
+#### Not null assertion (`!!`) Operator : `if(null)`, Throws `NullPointerException`
+
+The not null assertion (`!!`) operator converts **`any` value to a `non-null` type** and **throws an exception** if the value is `null`. If anyone want `NullPointerException` then he can ask explicitly using this operator.
+
+The following expression:
+
+```kotlin
+a!!.b()
+```
+
+is equivalent to:
+
+```kotlin
+if (a == null){
+    throw NullPointerException()
+}
+else{
+    a.b()
+}
 ```
 
 ```kotlin
- // Using Safe Call operator(?.)
-    var name: String? = "Soikat"
-    println(name?.toUpperCase())
-    /*  is equivalent to:
-        if(name != null)
-            name.toUpperCase()
-        else
-            null
-    */
+    /**
+     * Not null assertion : `!!` Operator
+     * **/
+    var s3:String? = null
+    var size1 = s3?.length
+    println("size: any $size1")
+
+    // var size2: Int = s3?.length // [error]
+    /**
+     * Type mismatch.
+     * Required: Int
+     * Found: Int?
+     * **/
+ // non-null asserted call
+    var size2: Int = s3?.length!!
+    //Exception in thread "main" kotlin.KotlinNullPointerException
 ```
 
 #### Elvis Operator(`?:`)

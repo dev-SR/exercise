@@ -58,6 +58,7 @@ fun lateInit() {
 
 // Null Safety:
 fun NullSafety() {
+    // Nullable Types: Type?
     var s1: String = "Hello World"
     //s1 = null // compilation error
     var s2: String? = "Hello World"
@@ -101,7 +102,8 @@ fun checkNullSafety() {
     }
 
     // Using Safe Call operator(?.)
-    var name: String? = "Soikat"
+    var name: String? = null
+    println("Null call:...")
     println(name?.toUpperCase())
     /*  is equivalent to:
         if(name != null)
@@ -109,6 +111,8 @@ fun checkNullSafety() {
         else
             null
     */
+
+
 
 }
 
