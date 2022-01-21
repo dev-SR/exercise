@@ -72,8 +72,61 @@ console.log([1, 2, 3, 4, 5].filter(isEven));
 
 ```
 
-## Java Implementation
+### Ex: android
 
+```typescript
+// Part of Android SDK
+class View {
+ id: string;
+ constructor(id: string) {
+  this.id = id;
+ }
+ getId() {
+  return this.id;
+ }
+}
+function findViewById(s: string) {
+ return new Button(s);
+}
+
+interface OnClickListener {
+ (v: View): void;
+}
+
+class Button {
+ v: View;
+ callback: OnClickListener;
+ constructor(view_id) {
+  this.v = new View(view_id);
+ }
+ setOnClickListener(cb: OnClickListener) {
+  this.callback = cb;
+ }
+
+ //called by the framework
+ runtime() {
+  console.log('App is running');
+  setTimeout(() => {
+   this.callback(this.v);
+  }, 2000);
+ }
+}
+
+// User Implementation
+const b: Button = findViewById('button');
+function myClickHandlerCallBack(v: View) {
+ if (v.getId() == 'button') {
+  console.log('Button clicked');
+ }
+}
+b.setOnClickListener(myClickHandlerCallBack);
+
+// While the App is running, the button will be clicked by the user,
+// and the callback will be called By the Android runtime.
+b.runtime();
+```
+
+## Java Implementation
 
 ```java
 class ArrayTest {
@@ -94,7 +147,7 @@ class ArrayTest {
          * JS/TS..................
          *
          * const isOdd = function (num) {
-         * 	return num % 2 != 0;
+         *  return num % 2 != 0;
          * };
          * console.log(MyFilter([1, 2, 3, 4, 5], isOdd));
          * */
@@ -127,7 +180,6 @@ class ArrayTest {
     }
 }
 ```
-
 
 ```java
 import java.util.ArrayList;
