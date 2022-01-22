@@ -1,6 +1,7 @@
 # Kotlin Fundamental
 
 - [Kotlin Fundamental](#kotlin-fundamental)
+  - [Creating new project with Intellij](#creating-new-project-with-intellij)
   - [String Concatenation using `+`, `$x` and `${x.y/y()}`](#string-concatenation-using--x-and-xyy)
   - [Declaring Variables in Kotlin](#declaring-variables-in-kotlin)
     - [`val` : cannot be reassigned](#val--cannot-be-reassigned)
@@ -32,6 +33,11 @@
 In Kotlin, Everything is an `Object`
 
 In Java we have primitive data types and their counterpart `Wrapper` class. For example: `int` and `Integer`. We can't call functions on an `int` variable. In Kotlin we only have objects.**Although Primitive types are used but internally.**
+
+## Creating new project with Intellij
+
+- File > New > Project > Select `Java` and Check `Kotlin` as additional L&F. Or,
+- File > New > Project > Select `Kotlin` and Console Application
 
 ## String Concatenation using `+`, `$x` and `${x.y/y()}`
 
