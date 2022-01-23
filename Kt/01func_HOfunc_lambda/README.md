@@ -143,6 +143,15 @@ Kotlin language has a fantastic support for functional programming. Kotlin funct
 
 ### Function Types
 
+We know data types. Similarly, we have function type too in kotlin.
+
+Signature / Syntax
+
+```bash
+    Name: (only comma separated data types) -> return data type
+    ft: (Int, Int) -> Int
+```
+
 ```kotlin
 fun main() {
     //Function Types 1️⃣
@@ -173,8 +182,6 @@ fun main() {
     println(f3.invoke("Hello"))//using invoke
     f3 = null
     f3?.invoke("Hello")
-
-
 
     // Other type of Function Declarations ✔️
     //Function references
@@ -273,6 +280,20 @@ printSum(2, 4) { x, y -> x + y }
 
 Lambdas expression and Anonymous function both are **function literals** means these functions are not declared but passed immediately as an expression.
 
+`Function literal`:
+
+Signature / Syntax: 1
+
+```kotlin
+{ comma separated pascal parameters -> business logic }
+```
+
+Example:
+
+```kotlin
+{ x: Int, y: Int -> x + y }
+```
+
 ### Lambda Expression
 
 As we know, syntax of Kotlin lambdas is similar to Java Lambdas. A function without name is called anonymous function. Lambdas Expressions are essentially anonymous functions that we can treat as values – we can, for example, pass them as arguments to functions, return them, or do any other thing we could do with a normal object.
@@ -288,7 +309,6 @@ val lambda_name : Data_type = { argument_List -> code_body }
 - A lambda expression is always surrounded by curly braces `{}`
 - Its `parameters` (if any) are declared before `->` (parameter types may be omitted)
 - The `body` goes after `->` (when present)
-
 
 ```kotlin
 fun main() {
