@@ -21,6 +21,10 @@
       - [Lambda argument should be moved out of parentheses](#lambda-argument-should-be-moved-out-of-parentheses)
     - [Anonymous Function](#anonymous-function)
     - [Closures](#closures)
+  - [Extension function and Receiver type](#extension-function-and-receiver-type)
+    - [Extension Function](#extension-function)
+    - [Receiver](#receiver)
+      - [Defining A function type with receiver](#defining-a-function-type-with-receiver)
 
 ## Function
 
@@ -474,4 +478,118 @@ fun main() {
     myList.forEach { res += it }
     println(res) //
 }
+```
+
+## Extension function and Receiver type
+
+In Kotlin it is possible to add a method (called member function in Kotlin) to an existing class. This is called an **extension function**.
+
+It is also possible to access a member function from a class inside a function literal. This is called a **function literal with receiver**.
+
+### Extension Function
+
+
+Syntax:
+
+In order to create an extension function, we write the class name (also known as a receiver type) followed by a dot, followed by our function as below:
+
+```kotlin
+//Here, OurClassName is called a receiver type
+fun OurClassName.ourExtensionFunction
+```
+
+
+
+Say you want to add a new member function to the `String` class, e.g. `thankYou()` that prints thank you massage. Because `String` is in the Java SDK, we cannot modify it. In Kotlin we can define an extension function that extends an existing class like `String` with a new member function.
+
+We define the `thankYou()` extension function as follows:
+
+For example:
+
+```kotlin
+/**
+ * Extension function. Here, String is known as receiver type.
+ * That means, we can call this function on any String.
+ * The extension function can be called only from the
+ * class where it is defined.
+ */
+fun String.thankYou() {
+    //We can access an instance of the receiver type using `this` keyword inside the business logic.
+    println("Thank You $this")
+}
+
+fun main() {
+    "Soikat".thankYou()//Thank You Soikat
+}
+```
+
+### Receiver
+
+We have seen a receiver type in an extension function. Similarly, a **function type, function literal, lambda expression** and an **anonymous function** can also have a receiver type.
+
+#### Defining A function type with receiver
+
+Where with extension functions you can add a new member function to an existing class, with a function literal with receiver you can access the **member functions of an existing class inside** (`append` from `StringBuilder` class) the lambda block (inside the curly braces `{}`) by defining a A Function Type - by which compiler knows which class you are refereeing to.
+
+Syntax/Signature of a function type with receiver:
+
+```kotlin
+ft: Int.(Int) -> Int // Here, the receiver type is: Int
+```
+
+Let's create a function literal with receiver that adds the string "s" to a string using the `StringBuilder` class.
+
+```kotlin
+    val appendS: StringBuilder.() -> StringBuilder = { this.append("s") }
+    val s = StringBuilder("The Boy").appendS()
+    println(s.toString())//The Boys
+```
+
+Function `Type` for the following expression:
+
+`val s = StringBuilder("The Boy").appendS()`
+
+is:
+
+`StringBuilder.() -> StringBuilder`
+
+because we are extending `StringBuilder` class with `appendS` function that takes No parameter - `()`.
+So, as a whole the function type is `StringBuilder.()`
+
+And it returns object of `StringBuilder`, denoted by `-> StringBuilder`
+
+So after defining the function type, we can use it (i.e `append` function) in the lambda expression.
+
+Again, `this` refers to the `StringBuilder` object, so we **omit** it:
+
+```kotlin
+    val appendS1: StringBuilder.() -> StringBuilder = { append("s") }
+    val ss = StringBuilder("The Boy").appendS1()
+    println(ss.toString())
+```
+
+More Example:
+
+```kotlin
+    val appendX: StringBuilder.(String) -> StringBuilder = { this.append(it) }
+    val x = StringBuilder("The Boy").appendX("x")
+    //StringBuilder.appendX(String) >> this.append("s") -> StringBuilder
+    println(x.toString())//The Boyx
+
+    val extendInt: Int.() -> Double = { (this).toDouble() }
+    val a = 10
+    println(a.extendInt())//10.0
+    // Int.extendInt() >> this.toDouble() -> Double
+
+    val printSum: Int.(Int) -> Unit = { println("The sum of $this and $it is ${this.plus(it)}") }
+    val b: Int = 6
+    b.printSum(7)//The sum of 6 and 7 is 13
+    // Int.printSum(Int) >> println("The sum of $this and $it is ${this.plus(it)}") -> Unit
+
+    // with Anonymous function and without `this` keyword
+    val printSum1: Int.(Int) -> Unit =
+        fun Int.(num: Int): Unit { println("The sum of $this and $num is ${plus(num)}") }
+        // fun Int.(num: Int): Unit = println("The sum of $this and $$num is ${plus(num)}")
+    val y = 6
+    y.printSum1(5)//The sum of 6 and 5 is 11
 ```
