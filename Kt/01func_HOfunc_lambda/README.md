@@ -659,6 +659,8 @@ fun main() {
 
 ## Extension function and Receiver type
 
+Sometimes you need to extend the functionality of a specific class. And, quite often, direct inheritance is not an option — your class could already extend another class, for example, or the required class isn't open for inheritance.
+
 In Kotlin it is possible to add a method (called member function in Kotlin) to an existing class. This is called an **extension function**.
 
 It is also possible to access a member function from a class inside a function literal. This is called a **function literal with receiver**.
@@ -674,8 +676,6 @@ In order to create an extension function, we write the class name (also known as
 //Here, OurClassName is called a receiver type
 fun OurClassName.ourExtensionFunction
 ```
-
-
 
 Say you want to add a new member function to the `String` class, e.g. `thankYou()` that prints thank you massage. Because `String` is in the Java SDK, we cannot modify it. In Kotlin we can define an extension function that extends an existing class like `String` with a new member function.
 
@@ -702,47 +702,56 @@ fun main() {
 
 ### Receiver
 
-We have seen a receiver type in an extension function. Similarly, a **function type, function literal, lambda expression** and an **anonymous function** can also have a receiver type.
+Just as you can specify a receiver for an extension function, you can do so for a lambda as well. Similarly, a **function type, function literal and an anonymous function** can also have a receiver type.
 
 #### Defining A function type with receiver
 
 Where with extension functions you can add a new member function to an existing class, with a function literal with receiver you can access the **member functions of an existing class inside** (`append` from `StringBuilder` class) the lambda block (inside the curly braces `{}`) by defining a A Function Type - by which compiler knows which class you are refereeing to.
 
-Syntax/Signature of a function type with receiver:
-
 ```kotlin
-ft: Int.(Int) -> Int // Here, the receiver type is: Int
-```
+class Dummy(val name: String) {
+    fun print(message: String) {
+        println("$name: \t$message")
+    }
+}
+fun testReceiver(fn: (Dummy) -> Unit) {
+    var dummy: Dummy = Dummy("A")
+    fn(dummy)
+}
 
-Let's create a function literal with receiver that adds the string "s" to a string using the `StringBuilder` class.
+fun callback(receives: Dummy) {
+    receives.print("Hello")
+}
+// How Can We define(Type) this callback function?
+// -> that it takes a Dummy(Dummy is a receiver type), no other parameter and returns nothing!!
+// -> Dummy.() -> Unit
 
-```kotlin
-    val appendS: StringBuilder.() -> StringBuilder = { this.append("s") }
-    val s = StringBuilder("The Boy").appendS()
-    println(s.toString())//The Boys
-```
+fun testReceiver1(fn: Dummy.() -> Unit) {
+    var dummy: Dummy = Dummy("A")
+    // Now I know Dummy is a receiver type......and fn is a function that can be called on Dummy
+    // You invoke the lambda//callback on the receiver `dummy` using `dummy.fn()`.
+    //fn(dummy)
+    dummy.fn()
+}
 
-Function `Type` for the following expression:
 
-`val s = StringBuilder("The Boy").appendS()`
+fun callback1(receives: Dummy, x: String) {
+    receives.print("Hello")
+    println(x)
+}
+// How Can We define(Type) this callback function?
+// -> that it takes a Dummy(Dummy is receiver type),and String as parameter and returns nothing!!
+// -> Dummy.(String) -> Unit
 
-is:
+fun testReceiver2(fn: Dummy.(String) -> Unit) {
+    var dummy: Dummy = Dummy("A")
+    dummy.fn("More")
+}
 
-`StringBuilder.() -> StringBuilder`
+    testReceiver(::callback)
+    testReceiver1(::callback)
 
-because we are extending `StringBuilder` class with `appendS` function that takes No parameter - `()`.
-So, as a whole the function type is `StringBuilder.()`
-
-And it returns object of `StringBuilder`, denoted by `-> StringBuilder`
-
-So after defining the function type, we can use it (i.e `append` function) in the lambda expression.
-
-Again, `this` refers to the `StringBuilder` object, so we **omit** it:
-
-```kotlin
-    val appendS1: StringBuilder.() -> StringBuilder = { append("s") }
-    val ss = StringBuilder("The Boy").appendS1()
-    println(ss.toString())
+    testReceiver2(::callback1)
 ```
 
 More Example:
