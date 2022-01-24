@@ -8,8 +8,9 @@
       - [`Named Arguments` Functions](#named-arguments-functions)
     - [`Varargs` parameters](#varargs-parameters)
     - [Unit-returning Functions](#unit-returning-functions)
-  - [Functional Programming](#functional-programming)
+    - [Functions as variables](#functions-as-variables)
     - [Function Types](#function-types)
+  - [Functional Programming](#functional-programming)
     - [Function Types for High Order Functions](#function-types-for-high-order-functions)
       - [Passing function as a parameter to Higher-Order function:`Callbacks`](#passing-function-as-a-parameter-to-higher-order-functioncallbacks)
       - [Returning a function from Higher-Order function](#returning-a-function-from-higher-order-function)
@@ -19,6 +20,8 @@
       - [Type declaration in lambdas](#type-declaration-in-lambdas)
       - [`it`: implicit name of a single parameter](#it-implicit-name-of-a-single-parameter)
       - [Lambda argument should be moved out of parentheses](#lambda-argument-should-be-moved-out-of-parentheses)
+      - [Custom sorting with lambdas](#custom-sorting-with-lambdas)
+      - [Iterating over collections with lambdas](#iterating-over-collections-with-lambdas)
     - [Anonymous Function](#anonymous-function)
     - [Closures](#closures)
   - [Extension function and Receiver type](#extension-function-and-receiver-type)
@@ -139,11 +142,54 @@ fun sumTwo(a:Int, b:Int){
 }
 ```
 
-## Functional Programming
+### Functions as variables
 
-Kotlin language has a fantastic support for functional programming. Kotlin functions can be stored in variables and data structures, passed as arguments to and returned from other higher-order functions. Kotlin functions are first-class, which means that they can be stored in variables and data structures, passed as arguments to and returned from other higher-order functions. You can operate with functions in any way that is possible for other non-function values.
+Functions in Kotlin are simply another data type. You can assign them to variables
+and constants just as you can any other type of value, such as an Int or a String.
 
-`High Order Functions` = A `function` that can **accept a function as a parameter** or can **return a function**.
+```kotlin
+fun add(a: Int, b: Int): Int {
+    return a + b
+}
+```
+
+You can assign this function to a variable using the **method reference operator**, `::`,
+like so:
+
+```kotlin
+var function = ::add
+```
+
+Here, the name of the variable is function and its type is inferred as
+`(Int, Int) -> Int` from the `add` function you assigned to it. The function variable is of a function
+type that takes two `Int` parameters and returns an `Int`.
+For More see:
+- [Function Types](#function-types)
+- [Function Types for High Order Functions](#function-types-for-high-order-functions)
+
+Now you can use the function variable in just the same way you’d use add, like so:
+
+```kotlin
+function(4, 2)
+```
+
+The fact that you can assign functions to variables comes in handy because it means
+you can pass functions to other functions as parameter(see [HOF](#passing-function-as-a-parameter-to-higher-order-functioncallbacks)).
+
+```kotlin
+fun printResult(function: (Int, Int) -> Int, a: Int, b: Int) {
+    val result = function(a, b)
+    print(result)
+}
+
+printResult(::add, 4, 2)//6
+```
+
+`printResult` takes three parameters:
+
+1. function is of a function type that takes two `Int` parameters and returns an `Int`,declared like so: `(Int, Int) -> Int`.
+2. `a` is of type `Int`.
+3. `b` is of type `Int`
 
 ### Function Types
 
@@ -200,6 +246,12 @@ fun addInt(a: Int, b: Int): Int {
     return a + b
 }
 ```
+
+## Functional Programming
+
+Kotlin language has a fantastic support for functional programming. Kotlin functions can be stored in variables and data structures, passed as arguments to and returned from other higher-order functions. Kotlin functions are first-class, which means that they can be stored in variables and data structures, passed as arguments to and returned from other higher-order functions. You can operate with functions in any way that is possible for other non-function values.
+
+`High Order Functions` = A `function` that can **accept a function as a parameter** or can **return a function**.
 
 ### Function Types for High Order Functions
 
@@ -302,10 +354,22 @@ Example:
 
 As we know, syntax of Kotlin lambdas is similar to Java Lambdas. A function without name is called anonymous function. Lambdas Expressions are essentially anonymous functions that we can treat as values – we can, for example, pass them as arguments to functions, return them, or do any other thing we could do with a normal object.
 
-Syntax of Lambda expression:
+You may ask, “If lambdas are functions without names, then how do you use them?” To use a lambda, you first have to assign it to a variable or constant, including as an argument to another function.
+
+Here’s a declaration of a variable that can hold a lambda:
 
 ```kotlin
-val lambda_name : Data_type = { argument_List -> code_body }
+var multiplyLambda: (Int, Int) -> Int
+```
+
+`multiplyLambda` takes two `Int` values and returns an `Int`. Notice that this is exactly
+the same as a variable declaration for a function.As was said, a lambda is simply a
+function without a name. The type of a lambda is a function type.
+
+You assign a lambda expression `(function literal)` to the variable like so:
+
+```kotlin
+multiplyLambda = { a: Int, b: Int -> a * b }
 ```
 
 - A lambda expression or an `anonymous` function is a `“function literal”`,
@@ -313,6 +377,18 @@ val lambda_name : Data_type = { argument_List -> code_body }
 - A lambda expression is always surrounded by curly braces `{}`
 - Its `parameters` (if any) are declared before `->` (parameter types may be omitted)
 - The `body` goes after `->` (when present)
+
+Shorthand syntax:
+
+Compared to functions, lambdas are designed to be lightweight. There are many
+ways to shorten their syntax. First, you can use Kotlin’s type inference to shorten the
+syntax by removing the type information:
+
+```kotlin
+val lambda: (Int) -> Int = { x -> x * 2 }
+```
+
+More Example:
 
 ```kotlin
 fun main() {
@@ -395,6 +471,107 @@ fun Callback(x: Int, fn: (Int) -> Unit) {
 // passing lambda as argument
 Callback(10, { x -> println(x) })
 Callback(10) { x -> println(x) }
+```
+
+For HOF that takes only one Callback as parameter, we can omit `()` al together.
+
+```kotlin
+    fun OnlyCallback(fn: (Int) -> Unit) {
+        fn(10)
+    }
+    OnlyCallback({ x -> println(x) })
+    OnlyCallback({ println(it) })
+    OnlyCallback { println(it) }
+
+    //ex:
+    val values = listOf(1, 2, 3, 4, 5, 6)
+    values.forEach {
+        println("$it: ${it * it}")
+    }
+    // is equivalent to:
+    values.forEach({ i: Int ->
+        println("$i: ${i * i}")
+    })
+```
+
+#### Custom sorting with lambdas
+
+```kotlin
+    val names = arrayOf("ZZZZZZ", "BB", "A", "CCCC", "EEEEE")
+    println(names.sorted())  // [A, BB, CCCC, EEEEE, ZZZZZZ]
+```
+
+By specifying a custom lambda passed to `compareBy()`, which returns a `Comparator`
+for `sortedWith()`, you can change the details of how the array is sorted.
+
+```kotlin
+    val sortByName = names.sortedWith(compareBy({ -it.length }))
+    println(sortByName)
+```
+
+#### Iterating over collections with lambdas
+
+`forEach(lambda)`
+
+```kotlin
+val values = listOf(1, 2, 3, 4, 5, 6)
+values.forEach {
+println("$it: ${it * it}")
+}
+// > 1: 1
+// > 2: 4
+// > 3: 9
+// > 4: 16
+// > 5: 25
+// > 6: 36
+```
+
+`filter(lambda)`
+
+```kotlin
+    var prices = listOf(1.5, 10.0, 4.99, 2.30, 8.19)
+    val largePrices = prices.filter {
+        it > 5.0
+    }
+    println(largePrices)//[10.0, 8.19]
+```
+
+`map(lambda)`
+
+```kotlin
+    val salePrices = prices.map {
+        it * 0.9
+    }
+    println(salePrices)
+    //[1.35, 9.0, 4.4910000000000005, 2.07, 7.3709999999999996]
+```
+
+`fold(x,lambda)`
+
+Another handy function is fold, which takes a starting value and a lambda. The
+lambda takes two values: the current value and an element from the list. The lambda
+returns the next value that should be passed into the lambda as the current value
+parameter.
+
+
+```kotlin
+    prices = listOf(1.0, 2.0, 3.0, 4.0)
+    var sum = prices.fold(5.0) { a, b ->
+        a + b
+    }
+    println(sum) // 15.0
+```
+
+`reduce(x,lambda)`
+
+A function closely related to fold is `reduce`. In Kotlin, `reduce` uses the **first element**
+in the collection as the **starting value**:
+
+```kotlin
+    var sum2 = prices.reduce { a, b ->
+        a + b
+    }
+    println(sum2)//10.0
 ```
 
 ### Anonymous Function

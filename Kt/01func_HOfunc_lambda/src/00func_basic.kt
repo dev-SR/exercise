@@ -12,7 +12,7 @@ fun displayTitleAndName(name: String = "John", title: String = "Dr.") {
 }
 
 // Named argument
-fun student( name: String="Rahim", student_id: Int=191902061) {
+fun student(name: String = "Rahim", student_id: Int = 191902061) {
     println("$name $student_id")
 }
 
@@ -22,6 +22,12 @@ fun varargExample(vararg names: Int) {
     names.forEach { print("$it, ") }
     println()
 }
+
+//Functions as variables
+fun subtract(a: Int, b: Int): Int {
+    return a - b
+}
+
 fun main() {
     println(square(2))
     println(square1(2))
@@ -42,4 +48,11 @@ fun main() {
     varargExample() // => Argument has 0 elements:
     varargExample(1) // => Argument has 1 elements:1,
     varargExample(1, 2, 3) // => Argument has 3 elements: 1, 2, 3
+
+    var function = ::subtract
+    function(4, 2)
+
+    //lambda
+    val lambda: (Int) -> Int = { x -> x * 2 }
+    println(lambda(2))
 }
