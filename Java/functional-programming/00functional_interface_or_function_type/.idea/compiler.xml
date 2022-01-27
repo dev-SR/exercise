@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="maven-junit-starter" />
         <module name="0000functional_interface_or_function_type" />
+        <module name="00functional_interface_or_function_type" />
       </profile>
     </annotationProcessing>
   </component>
