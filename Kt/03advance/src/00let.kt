@@ -1,31 +1,30 @@
-class Employee {
-    var firstName: String? = null
-    var age: Int = 0
-}
+data class Employee(var firstName: String, var age: Int)
 
 
 fun main(args: Array<String>) {
-    var str = "Hello World"
-    str.let { println("$it!!") }//Hello World!!
-
-    val employee: Employee? = Employee()
-    employee?.firstName = "Suneet"
-    employee?.age = 27
-
+    var employee: Employee? = null
     employee?.let {
-        println(it.age)
+        println("First Time : User $it")
+        println("First Time : User $employee")
+    }
+    employee = Employee("A", 20)
+    employee?.let {
+        println("Second Time : User $it")
+        println("Second Time : User $employee")
     }
     employee?.let { person ->
         person.firstName?.let { name ->
             println(name)
         }
     }
-    employee?.firstName?.let (::println)
+    employee?.firstName?.let(::println)
     var list = mutableListOf(6, 1, 5, 2, 4, 3)
     list.filter { it % 2 == 0 }.sortedBy { it }.let {
         println("Sorted even numbers are : $it")
     }
 
+    // returns last statement
+    var str = "Hello World"
     var strLength = str.let {
         println("$it!!")//Hello World!!
         "$it function".length
@@ -61,9 +60,6 @@ fun main(args: Array<String>) {
     println(y) //prints Kotlin Tutorials Outer let
 
 
-    var name : String? = "Kotlin let null check"
+    var name: String? = "Kotlin let null check"
     name?.let { println(it) } //prints Kotlin let null check
-    name = null
-//    name?.let { println(it) }
-
 }

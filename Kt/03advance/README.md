@@ -1,12 +1,16 @@
 # Advance Kotlin
 
 - [Advance Kotlin](#advance-kotlin)
-	- [Standard Library - Scope functions](#standard-library---scope-functions)
-		- [Kotlin `let`](#kotlin-let)
-			- [Chaining `let` functions](#chaining-let-functions)
-			- [Nesting let](#nesting-let)
-			- [let for null checks](#let-for-null-checks)
-		- [Kotlin `run`](#kotlin-run)
+  - [Standard Library - Scope functions](#standard-library---scope-functions)
+    - [`let`](#let)
+      - [Chaining `let` functions](#chaining-let-functions)
+      - [Nesting let](#nesting-let)
+    - [`with`](#with)
+    - [`Run`](#run)
+      - [run as extension](#run-as-extension)
+      - [run as function](#run-as-function)
+    - [`apply`](#apply)
+    - [`also`](#also)
 
 ## Standard Library - Scope functions
 
@@ -22,35 +26,33 @@ Here is a short guide for choosing scope functions depending on the intended pur
 - Additional effects: `also`
 - Grouping function calls on an object: `with`
 
-### Kotlin `let`
 
-`let` scope function is used to apply operations on an object and finally return the lambda expression from that scope function. The return type can also be void.
+If the property is nullable, you can use let or run
 
-This clarifies a few things:
 
-- The return type of the let function is nothing but the last expression we returned from our passed lambda parameter.
-- Since its an extension function to the Template class, it can be called on any object.
+### `let`
 
-An example demonstrating kotlin let function is given below.
+Mostly **used for `null` checks**, when applying `?.let` on an `object`, we can rest safe that every time we access that `object` inside the scope function, the object will be not `null`. To reference the object inside the scope function, we use the keyword `it`.
 
-```kotlin
-	var str = "Hello World"
-    str.let { println("$it!!") }//Hello World!!
-```
+- `Context Object` – `it`
+- `Returns` – **last statement**
+- `Use case` – let function is often used to provide **null safety calls**. Use safe call operator(`?.`) with `let`for `null` safety. It executes the block only with the non-null value.
 
 ```kotlin
-class Employee {
-    var firstName: String? = null
-    var age: Int = 0
-}
+data class Employee(var firstName: String, var age: Int)
 
-    val employee: Employee? = Employee()
-    employee?.firstName = "Suneet"
-    employee?.age = 27
-
+fun main(args: Array<String>) {
+    var employee: Employee? = null
     employee?.let {
-        println(it.age)
+        println("First Time : User $it")
+        println("First Time : User $employee")
     }
+    employee = Employee("A", 20)
+    employee?.let {
+        println("Second Time : User $it")
+        println("Second Time : User $employee")
+    }
+}
 ```
 
 So basically, let function will be:
@@ -85,7 +87,7 @@ employee?.firstName?.let(::println)
 ```kotlin
 	var strLength = str.let {
         println("$it!!")//Hello World!!
-        "$it function".length
+        "$it function".length // returns
     }
     println("strLength is $strLength") //prints strLength is 25
 ```
@@ -147,17 +149,189 @@ var y = "Y"
     println(y) //prints Kotlin Tutorials Outer let
 ```
 
-#### let for null checks
+### `with`
 
-Additionally, let is useful for checking Nullable properties as shown below.
+Similar to `apply` function, `with` is also **used to change properties of an instance i.e. object configuration**. The only difference is with is not an extension function. The last expression of with function returns a result.
+
+- `Context Object` – `this`
+- `Returns` – last statement
+- `Use Case` – Run multiple operations on an object
 
 ```kotlin
-	var name : String? = "Kotlin let null check"
-    name?.let { println(it) } //prints Kotlin let null check
-    name = null
-    name?.let { println(it) }
+data class User(var name: String, var address: String)
+
+fun main() {
+    val user = User("A","BD")
+    val username = with(user) {
+        name = "B"
+        address = "USA"
+        println("$user $this")
+        //User(name=B, address=USA) User(name=B, address=USA)
+        name// return value
+    }
+    println(username)//B
+}
 ```
 
-### Kotlin `run`
+We can avoid the use of `this` pointer or use it to avoid the conflicts between other properties or objects with the same name within that class. It points to the calling object only.
+
+we can **return** the last expression from the higher-order function passed to the with function.
+
+### `Run`
+
+`run` function can be said as the combination of `‘let’` and `‘with’` functions.
+
+- `Context Object` – `it`
+- `Returns` – last statement
+- `Use Case` – Used when the object lambda contains both initialization and the computation of the return value. Using run we can perform **null safety calls** as well as other computations.
+
+It is the only scope function that has two variants.
+
+#### run as extension
+
+used to create a scope to **run an operation over an object**, and **get a result**.
+
+```kotlin
+data class User(var name: String, var address: String)
+
+fun main() {
+    var user:User? = null
+    user?.run {
+        name = "John"
+        name
+    }
+    println(user)//null
+    user = User("a","London")
+    val username = user?.run {
+        name = name.uppercase(Locale.getDefault())
+        name
+    }
+    println(username)//A
+}
+
+```
+
+#### run as function
+
+run lets us execute a block of several statements where an expression is required.
+This is like defining our block and the variables which will be defined in that block will not be present outside.
+
+```kotlin
+    val alphaNumeric = run {
+        val digits = "0-9"
+        val aplhabets = "A-Za-z"
+
+        Regex("[$digits$aplhabets]+")
+    }
+    //digits = ".."//error``
+
+    for (match in alphaNumeric.findAll("+1234 -FFFF I-am?-a!string?!")) {
+        println(match.value)
+    }
+```
+
+Let’s combine the let and run functions together.
 
 
+```kotlin
+var p : String? = null
+    p?.let { println("p is $p") } ?: run {
+        println("p was null. Setting default value to: ")
+        p = "Kotlin"
+    }
+
+    println(p) //Kotlin
+```
+
+### `apply`
+
+Basically, if you are **initializing an object**, and setting a **bunch of properties** like in this case, you have a pretty solid candidate to apply this scope function.
+
+- `Context Object` – `this`
+- `Returns` – same object
+- `Use Case` – Initialize and configure an object
+
+```kotlin
+fun main() {
+    val user = User("A","BD")
+    val updatedUser = user.apply {
+        name = "B"
+        address = "London"
+    }
+    println(updatedUser)//User(name=B, address=London)
+}
+```
+
+```kotlin
+class Employee {
+    var firstName: String = ""
+    var age: Int = 0
+    fun somefunction(){
+        //do something here
+    }
+}
+
+Employee().apply{
+        this.firstName = "A"
+        this.age = 27
+    }.somefunction()
+```
+
+### `also`
+
+A common use also is for **side effects** - **without modifying the object**. We can use it for doing some operations on the intermediate results. also **does not transform** the object. It **returns the same object**.
+
+- `Context Object` – it
+- `Returns` – same object
+- `Use Case` – It is used where we have to perform additional operations when we have initialized the object members.
+
+```kotlin
+fun main() {
+    val user = User("A","BD")
+
+    val updatedUser = user.apply {
+        name = "B"
+        address = "London"
+    }.also {
+        println(it)
+    }
+}
+
+data class User(var name: String, var address: String)
+```
+
+```kotlin
+class ConnectionManager {
+    var endPoint: String = ""
+    var credentials: Pair<String, String> = Pair("", "")
+
+    fun connect() {
+        //make network connection
+    }
+}
+
+    val connectionManager = ConnectionManager()
+        .apply {
+            endPoint = "http://endpoint.com"
+            credentials = Pair("username", "password")
+        }
+        .also {
+            it.connect()
+        }
+        .also {
+            print("connection is made on ${it.endPoint}")
+        }
+```
+
+we can even use a named parameter in also.
+
+```kotlin
+val connectionManager = ConnectionManager()
+        .apply {
+            endPoint = "http://endpoint.com"
+            credentials = Pair("username", "password")
+        }
+        .also { manager ->
+            manager.connect()
+        }
+```
