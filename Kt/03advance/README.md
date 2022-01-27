@@ -12,6 +12,7 @@
     - [`apply`](#apply)
       - ["apply" use-case in Android Development](#apply-use-case-in-android-development)
     - [`also`](#also)
+    - [Summary](#summary)
 
 ## Standard Library - Scope functions
 
@@ -27,9 +28,7 @@ Here is a short guide for choosing scope functions depending on the intended pur
 - Additional effects: `also`
 - Grouping function calls on an object: `with`
 
-
 If the property is nullable, you can use let or run
-
 
 ### `let`
 
@@ -359,3 +358,13 @@ val connectionManager = ConnectionManager()
             manager.connect()
         }
 ```
+
+### Summary
+
+<div align="center">
+<img src="img/scope-1.jpg" alt="scope-1.jpg" width="700px">
+</div>
+
+<div align="center">
+<img src="img/scope-1.png" alt="scope-1.png" width="1000px">
+</div>
