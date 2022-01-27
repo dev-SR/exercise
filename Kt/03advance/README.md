@@ -6,10 +6,11 @@
       - [Chaining `let` functions](#chaining-let-functions)
       - [Nesting let](#nesting-let)
     - [`with`](#with)
-    - [`Run`](#run)
+    - [`run`](#run)
       - [run as extension](#run-as-extension)
       - [run as function](#run-as-function)
     - [`apply`](#apply)
+      - ["apply" use-case in Android Development](#apply-use-case-in-android-development)
     - [`also`](#also)
 
 ## Standard Library - Scope functions
@@ -177,7 +178,7 @@ We can avoid the use of `this` pointer or use it to avoid the conflicts between 
 
 we can **return** the last expression from the higher-order function passed to the with function.
 
-### `Run`
+### `run`
 
 `run` function can be said as the combination of `‘let’` and `‘with’` functions.
 
@@ -276,6 +277,29 @@ Employee().apply{
         this.age = 27
     }.somefunction()
 ```
+
+#### "apply" use-case in Android Development
+
+Specifically for Android Development, "apply" can be useful in many cases. We have many scenarios where we should **return an instance of `Intent` or an `Alert Dialog` etc., by adding specific attributes to them**. Let's take the example of an intent here:
+
+```kotlin
+// Normal approach
+fun createIntent(intentData: String, intentAction: String): Intent {
+    val intent = Intent()
+    intent.action = intentAction
+    intent.data = Uri.parse(intentData)
+    return intent
+}
+
+// Improved approach, by using apply
+fun createIntent(intentData: String, intentAction: String) =
+    Intent().apply {
+        action = intentAction
+        data = Uri.parse(intentData)
+    }
+```
+
+The improved approach from the above code snippet helps in avoiding variable name redundancy thereby enhancing the code readability and the principle of clean code.
 
 ### `also`
 
