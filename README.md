@@ -26,6 +26,7 @@
     - [Git Alias](#git-alias)
     - [Commands for Github Repo](#commands-for-github-repo)
     - [Change the URI (URL) for a remote Git repository](#change-the-uri-url-for-a-remote-git-repository)
+    - [error while pushing: RPC failed](#error-while-pushing-rpc-failed)
   - [Vim](#vim)
     - [Linux(ubuntu)](#linuxubuntu)
   - [Unicodes](#unicodes)
@@ -435,7 +436,35 @@ git remote -v
 
 ```
 
-<div id="vi"></div>
+### error while pushing: RPC failed
+
+<div align="center">
+<img src="img/git-RPC.jpg" alt="git-RPC.jpg" width="800px">
+</div>
+
+- Change network
+
+Or,
+
+- try increasing the buffer size.
+
+```bash
+git config http.postBuffer 524288000
+```
+
+Or,
+
+- downgrading version of HTTP from 2 to 1.1:
+
+```bash
+git config --global http.version HTTP/1.1
+```
+
+After this change, pushing was successful and change HTTP version to 2 again:
+
+```bash
+git config --global http.version HTTP/2
+```
 
 ## Vim
 
