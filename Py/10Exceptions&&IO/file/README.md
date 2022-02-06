@@ -1,26 +1,9 @@
 # File
 
-- [File](#file)
-	- [Basic](#basic)
-		- [Opening a File](#opening-a-file)
-			- [Python File Modes](#python-file-modes)
-		- [Closing a File](#closing-a-file)
-		- [Context Managers (with)](#context-managers-with)
-	- [Writing to a file](#writing-to-a-file)
-	- [Reading from a file](#reading-from-a-file)
-		- [Read line by line](#read-line-by-line)
-				- [using for loop](#using-for-loop)
-			- [using `readline()`, `readlines()`](#using-readline-readlines)
-		- [The file handle](#the-file-handle)
-		- [Read Block by Block](#read-block-by-block)
-		- [Find info from File](#find-info-from-file)
-	- [Appending to a file](#appending-to-a-file)
-	- [Changing the content in a file](#changing-the-content-in-a-file)
-
 
 ```python
 """
-cd '.\Py\10Exceptions&&IO\file\'
+cd '.\Py\10Exceptions&&IO\file\'  
 jupyter nbconvert --to markdown py_file.ipynb --output README.md
 """
 ```
@@ -81,7 +64,7 @@ f.close()
 ### Context Managers (with)
 
 - In Python, de-allocation of resources can be achieved by the usage of context managers which facilitate the
-proper handling of resources.
+proper handling of resources. 
 - The most common way of performing file operations is by using the `with` keyword.
 
 
@@ -96,7 +79,7 @@ print("Outside: ",f.closed) # `True` that means file is already closed
 
     Inside:  False
     Outside:  True
-
+    
 
 ## Writing to a file
 
@@ -115,7 +98,7 @@ with open('write.txt', 'w', encoding='utf-8') as f:
 ```
 
     14 3
-
+    
 
 ## Reading from a file
 
@@ -135,25 +118,25 @@ with open('read.txt', 'r') as f:
 	# reads only 5 chars
 	data = f.read(5)
 	print(data)
-
+	
 	# reads next 10 charaters
 	data = f.read(10)
 	print(data)
-
+	
 ```
 
-    This
-    is line 1
-
+    This 
+    is line 1 
+    
 
 > The difference between `file.read()`, `file.readline()`, `file.readlines()`
 
 
-| method                             | workings                                                                                                                                |
-| ---------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `single_string = file.read()`      | Reads **all the elements of the file** into a **single** `string`(`\n` characters might be included). EX: `"line 1\n line 2\n line3\n"` |
-| `line = file.readline()`           | **Reads the current line** where the cursor as a string is positioned and **moves to the next line**.  EX: `"line 1"`                   |
-| ` list_strings = file.readlines()` | **Makes a `list` of strings**. EX: `['line 1\n', 'line 2\n', 'line3\n'`]                                                                |
+|method  |workings  |
+|---------|---------|
+|`single_string = file.read()` |Reads **all the elements of the file** into a **single** `string`(`\n` characters might be included). EX: `"line 1\n line 2\n line3\n"` |
+|`line = file.readline()` | **Reads the current line** where the cursor as a string is positioned and **moves to the next line**.  EX: `"line 1"` |
+|` list_strings = file.readlines()`|  **Makes a `list` of strings**. EX: `['line 1\n', 'line 2\n', 'line3\n'`]|
 
 
 
@@ -174,18 +157,18 @@ with open('read.txt', 'r') as f:
     This is line 3.
     This is line 4.
     This is line 5.
-
+    
 
 
 ```python
 with open('read.txt', 'r') as f:
-
+	
 	# reads 1 line at a time
 	data= f.readline()
 	print(type(data))
 	print(len(data))
 	print(data)
-
+	
 	# reads 2nd lien
 	data= f.readline()
 	print(data)
@@ -194,15 +177,15 @@ with open('read.txt', 'r') as f:
     <class 'str'>
     44
     This is line 1 sen-1. This is line 1 sen-2.
-
+    
     This is line 2.
-
-
+    
+    
 
 
 ```python
 with open('read.txt', 'r') as f:
-
+	
 	# reads complete data and stores in list
 	data= f.readlines()
 	print(type(data))
@@ -213,7 +196,7 @@ with open('read.txt', 'r') as f:
     <class 'list'>
     ['This is line 1 sen-1. This is line 1 sen-2.\n', 'This is line 2.\n', 'This is line 3.\n', 'This is line 4.\n', 'This is line 5.']
     Total lines:  5
-
+    
 
 
 ```python
@@ -221,7 +204,7 @@ print("Total lines: ",len(open("read.txt").readlines()))
 ```
 
     Total lines:  5
-
+    
 
 ### Read line by line
 
@@ -239,7 +222,7 @@ with open('read.txt', 'r') as f:
     This is line 3.
     This is line 4.
     This is line 5.
-
+    
 
 
 ```python
@@ -261,7 +244,7 @@ with open('read.txt', 'r') as f:
 with open('read.txt', 'r') as f:
 	line = f.readline()
 	print(type(line))
-
+	
 	while line:
 		print(line.strip())
 		line = f.readline()
@@ -273,14 +256,14 @@ with open('read.txt', 'r') as f:
     This is line 3.
     This is line 4.
     This is line 5.
-
+    
 
 
 ```python
 with open('read.txt', 'r') as f:
 	data = f.readlines()
 	print(type(data))
-
+	
 	for line in data:
 		# print(line,end="")
 		print(line.strip())
@@ -293,21 +276,21 @@ with open('read.txt', 'r') as f:
     This is line 3.
     This is line 4.
     This is line 5.
-
+    
 
 ### The file handle
 
 
-**File handle** is like a `cursor`, which defines from where the data has to be read or written in the file.
-
-1. `tell()`: **current the position**
+**File handle** is like a `cursor`, which defines from where the data has to be read or written in the file. 
+ 
+1. `tell()`: **current the position** 
 2. `f.seek(offset, from_what)`:
    -  **change the position** of the File Handle to a given specific position.
-   - `Offset`: Number of positions to move forward
+   - `Offset`: Number of positions to move forward 
    - `from_what`: It defines point of reference `0,1,2`.
-       - `0`: sets the reference point at the `beginning` of the file
+       - `0`: sets the reference point at the `beginning` of the file 
        - `1`: sets the reference point at the `current` file position
-       - `2`: sets the reference point at the `end` of the file
+       - `2`: sets the reference point at the `end` of the file 
 
 
 ```python
@@ -332,7 +315,7 @@ with open('read.txt', 'r') as f:
     current pos: 0
     This is line 1 sen-1. This is line 1 sen-2.
     current pos: 45
-
+    
 
 
 ```python
@@ -369,15 +352,42 @@ with open('read.txt', 'r') as f:
     This is line 2.
     current pos: 62
     current pos: 111
-
-
+    
+    
 
 ### Read Block by Block
+
+Replacing `"CHAPTER I."` with `"CHAPTERI."`
+
+
+```python
+out = open("read_block_chapter.txt","w")
+with open('read_block.txt', 'r') as f:
+	data = f.read()
+	if "CHAPTER I." in data:
+		data = data.replace("CHAPTER I.","CHAPTERI.")
+		print(data,file=out)
+out.close()
+```
+
+
+```python
+with open('read_block_chapter.txt', 'r') as f:
+	data = f.read()
+	data = data.split()
+	if "CHAPTERI." in data:
+		print("F")
+	# print(data)
+
+```
+
+    F
+    
 
 
 ```python
 out = open('read_block_ws_removed.txt', 'w')
-with open('read_block.txt', 'r') as f:
+with open('read_block_chapter.txt', 'r') as f:
 	data = f.read()
 	# print(len(data.split()))
 	total_word = len(data.split())
@@ -385,12 +395,12 @@ with open('read_block.txt', 'r') as f:
 	indices = []
 	for i,w in enumerate(data):
 		# start reading from CHAPTER I.
-		if "I." in w:
+		if "CHAPTERI" in w:
 			indices.append(i)
 	last = indices[-1]
 	# print(last)
 	data = data[last+1:]
-
+	
 	n=10
 	for i in range(n):
 		s = round(total_word*i/n)
@@ -400,7 +410,7 @@ with open('read_block.txt', 'r') as f:
 		chunks = " ".join(chunks)
 		print(chunks,file=out)
 		print(100*"=",file=out)
-
+		
 out.close()
 ```
 
@@ -436,18 +446,18 @@ print()
 
 with open('read.txt', 'a') as f:
 	f.write("\nAppending this line at the end")
-
+	
 with open('read.txt', 'r') as f:
 	print(f.read())
 ```
 
     Hello World
     From file
-
+    
     Hello World
     From file
     Appending this line at the end
-
+    
 
 ## Changing the content in a file
 
@@ -463,7 +473,7 @@ print(data)
 ```
 
     ['Hello World\n', 'From file\n', 'Appending this line at the end']
-
+    
 
 
 ```python
@@ -473,7 +483,7 @@ print(data)
 ```
 
     ['Hello World\n', 'From file\n', 'Python is FUN !!❤❤']
-
+    
 
 
 ```python
