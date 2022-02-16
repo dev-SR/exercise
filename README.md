@@ -19,14 +19,17 @@
         - [`center` alignment example](#center-alignment-example)
     - [Mathematical Formula in markdown](#mathematical-formula-in-markdown)
     - [Code and Syntax Highlighting](#code-and-syntax-highlighting)
-  - [GIT and GITHUB](#git-and-github)
+  - [GIT and GITHUB 🚀🚀](#git-and-github-)
     - [Gist](#gist)
     - [Clear Git Cache](#clear-git-cache)
       - [Clear Entire Git Cache](#clear-entire-git-cache)
-    - [Git Alias](#git-alias)
+    - [Git Alias 🚀🚀](#git-alias-)
     - [Commands for Github Repo](#commands-for-github-repo)
     - [Change the URI (URL) for a remote Git repository](#change-the-uri-url-for-a-remote-git-repository)
     - [error while pushing: RPC failed](#error-while-pushing-rpc-failed)
+  - [Creating Snippets 🚀🚀](#creating-snippets-)
+    - [Live Templates in JetBrains IDE's](#live-templates-in-jetbrains-ides)
+    - [VSCode Snippets](#vscode-snippets)
   - [Vim](#vim)
     - [Linux(ubuntu)](#linuxubuntu)
   - [Unicodes](#unicodes)
@@ -46,6 +49,7 @@
 ### snippets
 
 You can easily define your own snippets without any extension. To create or edit your own snippets,
+
 - select `User Snippets` under `File > Preferences > User Snippets` or `Setting > User Snippets`
 - then **select the language**(by typing language identifier) for which the snippets should appear,
   - or type `New Global Snippets` file option if they should appear for all languages.
@@ -336,7 +340,7 @@ or,
  npm run build
 ```
 
-## GIT and GITHUB
+## GIT and GITHUB 🚀🚀
 
 ### Gist
 
@@ -389,7 +393,7 @@ option for recursive.**
 
 <div id="alias"/>
 
-### Git Alias
+### Git Alias 🚀🚀
 
 [gist](https://gist.github.com/dev-SR/bf82b701864366b77b3320b543fbef75)
 
@@ -408,7 +412,7 @@ git remote add origin <url>
 git push -u origin main
 ```
 
-…or push an existing repository from the command line
+…or push an existing repository from the command line 🚀
 
 ```
 git remote add origin <url>
@@ -465,6 +469,55 @@ After this change, pushing was successful and change HTTP version to 2 again:
 ```bash
 git config --global http.version HTTP/2
 ```
+
+## Creating Snippets 🚀🚀
+
+### Live Templates in JetBrains IDE's
+
+`Setting > Editor > Live Templates > Java`
+
+```java
+for(int $INDEX$ = 0; $INDEX$ < $LIMIT$; $INDEX$++) {
+  $END$
+}
+```
+
+- [https://www.jetbrains.com/help/idea/using-live-templates.html#live_templates_configure](https://www.jetbrains.com/help/idea/using-live-templates.html#live_templates_configure)
+
+<div align="center">
+<img src="img/sn.gif" alt="sn.gif" width="700px">
+</div>
+
+### VSCode Snippets
+
+```json
+{
+ // Place your snippets for markdown here. Each snippet is defined under a snippet name and has a prefix, body and
+ // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+ // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
+ // same ids are connected.
+ // Example:
+ // "Print to console": {
+ //  "prefix": "log",
+ //  "body": [
+ //   "console.log('$1');",
+ //   "$2"
+ //  ],
+ //  "description": "Log output to console"
+ // }
+ "markdown_image": {
+  "prefix": "!m-img",
+  "body": [
+   "<div align=\"center\">",
+   "<img src=\"img/${1:file_name}\" alt=\"${1:alt_text}\" width=\"${2:width}00px\">",
+   "</div>"
+  ],
+  "description": "markdown_image"
+ }
+}
+```
+
+- [snippet-generator](https://snippet-generator.app/?description=&tabtrigger=&snippet=+&mode=vscode)
 
 ## Vim
 
