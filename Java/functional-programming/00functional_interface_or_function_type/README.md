@@ -1,5 +1,15 @@
 # Functional Interface In Java
 
+- [Functional Interface In Java](#functional-interface-in-java)
+  - [TypeScript Function Types](#typescript-function-types)
+    - [UseCase - Callback Function](#usecase---callback-function)
+  - [Java Implementation](#java-implementation)
+    - [Single Abstract Method Interfaces (SAM Interfaces)](#single-abstract-method-interfaces-sam-interfaces)
+    - [UseCase - Callback Function in Java](#usecase---callback-function-in-java)
+  - [Ex: android sim](#ex-android-sim)
+  - [ex: Communication Between ClassA & ClassB](#ex-communication-between-classa--classb)
+
+
 ## TypeScript Function Types
 
 A function type has two parts: parameters and return type. When declaring a function type, you need to specify both parts with the following syntax:
@@ -268,4 +278,136 @@ b.setOnClickListener(myClickHandlerCallBack);
 // While the App is running, the button will be clicked by the user,
 // and the callback will be called By the Android runtime.
 b.runtime();
+```
+
+## ex: Communication Between ClassA & ClassB
+
+In Android, We communicate between the `Activity`and  `Fragment` using `Interface` method.
+
+For Example:
+
+- Calling Method of `Activity` from `Fragment`
+
+Let's say `ClassA` class have a method called `methodOfClassA` of type `ClassAMethodType` .
+
+```java
+interface ClassAMethodType {
+        void methodOfClassA();
+}
+```
+
+ Now, we want to call this method from `ClassB` class using `callMethodOfClassA`.
+
+```java
+
+public class ClassB {
+    ClassAMethodType cb;
+
+    public ClassB() {
+        System.out.println("ClassB");
+    }
+
+    public void callMethodOfClassA() {
+        cb.methodOfClassA();
+    }
+}
+```
+
+During the runtime, the `ClassB` will call the method of `ClassA`.
+
+```java
+public class ClassA {
+    public ClassA() {
+        System.out.println("ClassA constructor");
+    }
+}
+```
+
+```java
+class RunTime {
+    void onRunTime() {
+        ClassA a = new ClassA();
+        ClassB b = new ClassB();
+        b.callMethodOfClassA();
+    }
+}
+
+new RunTime().onRunTime();
+```
+
+But When calling `callMethodOfClassA()` of ClassB, we get the following error:
+
+`java.lang.NullPointerException: Cannot invoke "ClassAMethodType.methodOfClassA()" because "this.cb" is null`
+
+Because, we can't say that `ClassA` has a method called `methodOfClassA()`
+
+Therefore we have to make sure `ClassA` has a method called `methodOfClassA()`. We can do this by validating that  `ClassA` has implemented `ClassAMethodType` interface.
+
+```java
+public class ClassB {
+
+    ClassAMethodType cb;
+
+    public ClassB() {
+        System.out.println("ClassB");
+    }
+
+    public ClassB CheckParentHasMethod(ClassA parent) {
+        try {
+            cb = (ClassAMethodType) parent; // ClassA has implemented ClassAMethodType
+        } catch (ClassCastException e) {
+            throw new RuntimeException("ClassA does not have method");
+        }
+        return this;
+    }
+
+    public void callMethodOfClassA() {
+        if (cb != null) {
+            cb.methodOfClassA();
+        }
+    }
+}
+```
+
+```java
+class RunTime {
+    void onRunTime() {
+        ClassA a = new ClassA();
+        ClassB v = new ClassB().checkClassAHasMethod(a);
+        b.callMehtodOfClassA();
+    }
+}
+
+new RunTime().onRunTime();
+```
+
+Now we get a customized error if `ClassA` don't implement `ClassAMethodType` interface
+
+`java.lang.RuntimeException: ClassA does not have method`
+
+So,  if we implement `ClassAMethodType` in `ClassA` everything will work accordingly:
+
+```java
+public class ClassA implements ClassAMethodType {
+    public ClassA() {
+        System.out.println("ClassA constructor");
+    }
+
+    @Override
+    public void methodOfClassA() {
+        System.out.println("This is a parent method");
+    }
+}
+```
+
+```java
+class RunTime {
+    void onRunTime() {
+        ClassA a = new ClassA();
+        ClassB b = new ClassB().checkClassAHasMethod(parent);
+        b.callMehtodOfClassA();//This is a parent method
+    }
+}
+
+new RunTime().onRunTime();
 ```
