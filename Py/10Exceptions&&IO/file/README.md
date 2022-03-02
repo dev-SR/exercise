@@ -1,24 +1,26 @@
 # File
 
 - [File](#file)
-	- [Basic](#basic)
-		- [Opening a File](#opening-a-file)
-			- [Python File Modes](#python-file-modes)
-		- [Closing a File](#closing-a-file)
-		- [Context Managers (with)](#context-managers-with)
-	- [Writing to a file](#writing-to-a-file)
-	- [Reading from a file](#reading-from-a-file)
-		- [Read line by line](#read-line-by-line)
-				- [using for loop](#using-for-loop)
-			- [using `readline()`, `readlines()`](#using-readline-readlines)
-		- [The file handle](#the-file-handle)
-		- [Read Block by Block](#read-block-by-block)
-		- [Find info from File](#find-info-from-file)
-	- [Appending to a file](#appending-to-a-file)
-	- [Changing the content in a file](#changing-the-content-in-a-file)
-	- [Change File Name](#change-file-name)
-	- [Examples](#examples)
-		- [Rename Files having same name in different directories](#rename-files-having-same-name-in-different-directories)
+  - [Basic](#basic)
+    - [Opening a File](#opening-a-file)
+      - [Python File Modes](#python-file-modes)
+    - [Closing a File](#closing-a-file)
+    - [Context Managers (with)](#context-managers-with)
+  - [Writing to a file](#writing-to-a-file)
+  - [Reading from a file](#reading-from-a-file)
+    - [Read line by line](#read-line-by-line)
+        - [using for loop](#using-for-loop)
+      - [using `readline()`, `readlines()`](#using-readline-readlines)
+    - [The file handle](#the-file-handle)
+    - [Read Block by Block](#read-block-by-block)
+    - [Find info from File](#find-info-from-file)
+  - [Appending to a file](#appending-to-a-file)
+  - [Changing the content in a file](#changing-the-content-in-a-file)
+  - [Rename File and Folder](#rename-file-and-folder)
+    - [Rename File](#rename-file)
+    - [Rename Folder](#rename-folder)
+  - [Examples](#examples)
+    - [Rename Files having same name in different directories](#rename-files-having-same-name-in-different-directories)
 
 
 ```python
@@ -572,12 +574,21 @@ with open('temp.txt', 'w', encoding='utf-8') as f:
 	f.write(data_to_write)
 ```
 
-## Change File Name
+## Rename File and Folder
+
+Rename file: `os.rename(old_file_name, new_file_name)`
+
+Rename folder: `os.rename(old_folder_name, new_folder_name)`
+
+
+### Rename File
+
+Ex: rename file `"rename_old.txt"` to `"rename.txt"`
 
 
 ```python
-file = "rename_new.txt"
-new_file = file.replace("_new.txt",".txt")
+file = "rename_old.txt"
+new_file = file.replace("_old.txt",".txt")
 new_file
 ```
 
@@ -618,17 +629,46 @@ os.listdir()
 
 
 
+### Rename Folder
+
+EX: rename folder
+
+`[Kotlin 1.2 Android 4.3.1]  Kotlin Coroutines - Fundamentals (2020.04.30)`
+
+to ->
+
+`Kotlin Coroutines - Fundamentals (2020.04.30)`
+
+
+
 
 ```python
-os.getcwd()
+import os
+import argparse
+parser = argparse.ArgumentParser()
+# naming it "path"
+parser.add_argument(
+    "-f", "--find", help="Provide extention name i.e. text,pdf")
+args = parser.parse_args()
+
+
+to_find = None
+if not args.find:
+    parser.error('--find, -f is required. For help -h')
+to_find = args.find
+
+
+cur_dir_path = os.getcwd()
+dirs = os.listdir(cur_dir_path)
+for current_dir in dirs:
+    # at = current_dir.find("]")
+    at = current_dir.find(to_find)
+    if at != -1:
+        new_dir = current_dir[at+1:].strip()
+        os.rename(current_dir, new_dir)
 ```
 
-
-
-
-    'd:\\CSE\\Others\\Codes\\Py\\10Exceptions&&IO\\file'
-
-
+Run: `python main.py --find=]` or `python main.py -f=]`
 
 ## Examples
 
