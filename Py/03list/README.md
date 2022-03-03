@@ -952,9 +952,9 @@ AdjMatrix = [
 ]
 for i, r in enumerate(AdjMatrix):
 	print(f"{nodes[i]} ->", end="")
-	for i, c in enumerate(r):
+	for j, c in enumerate(r):
 		if(c == 1):
-			print(nodes[i], end="")
+			print(nodes[j], end="")
 	print()
 
 ```
@@ -1066,5 +1066,79 @@ while queue:
 
 	colour[current_node] = 2
 	PrintTable()
+```
+
+With Weighted Cost:
+
+<div align="center">
+<img src="img/bfswc.jpg" alt="bfswc.jpg" width="500px">
+</div>
+
+
+```python
+nodes = ["A", "E", "H", "F", "C"]
+AdjMatrix = [
+  #  A  E  H  F  C
+    [0, 1, 1, 0, 0], # A
+	[0, 0, 1, 1, 0], # E
+    [0, 0, 0, 1, 1], # H
+    [0, 0, 0, 0, 1], # F
+    [0, 0, 0, 0, 0]  # C
+]
+cost = [
+  #  A  E  H  F  C
+    [0, 5, 2, 0, 0],   # A
+   	[0, 0, 8, 20, 0],  # E
+    [0, 0, 0, 3, 5],   # H
+    [0, 0, 0, 0, 1],   # F
+    [0, 0, 0, 0, 0]    # C
+]
+
+for i, r in enumerate(AdjMatrix):
+	print(f"{nodes[i]} ->", end="")
+	for j, c in enumerate(r):
+		if(c == 1):
+			print(nodes[j], end="")
+			print(f"({cost[i][j]}) ", end="")
+	print()
 
 ```
+
+    A ->E(5) H(2)
+    E ->H(8) F(20)
+    H ->F(3) C(5)
+    F ->C(1)
+    C ->
+
+
+
+```python
+queue = []
+visited = []
+colour = [0] * 5
+d = [0] * 5
+p = [None] * 5
+start = 0
+colour[start] = 1
+queue.append(start)
+while queue:
+	current_node = queue.pop(0)
+	visited.append(current_node)
+	for i, child_of_current in enumerate(AdjMatrix[current_node]):
+		if child_of_current == 1:
+			if colour[i] == 0:
+				colour[i] = 1
+				queue.append(i)
+				d[i] = d[current_node] + cost[current_node][i]
+				p[i] = current_node
+
+	colour[current_node] = 2
+	PrintTable()
+```
+
+
+    Nodes: A E H F C
+    Color: B B B B B
+    Dist.: 0 5 2 25 7
+    Prev.: - A A E H
+
