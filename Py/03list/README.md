@@ -5,12 +5,22 @@
   - [Indexing/Slicing of List works same as String](#indexingslicing-of-list-works-same-as-string)
   - [🌟Unpacking Operator🌟](#unpacking-operator)
   - [🌟Iteration🌟](#iteration)
+    - [`for item in list`](#for-item-in-list)
+    - [`in range(start, end, step)`](#in-rangestart-end-step)
+    - [using indexing](#using-indexing)
+      - [`for i in range(len(list))`](#for-i-in-rangelenlist)
+      - [`for i,value in enumerate(list)`](#for-ivalue-in-enumeratelist)
   - [Some methods for list](#some-methods-for-list)
     - [add](#add)
     - [remove](#remove)
     - [Finding Items](#finding-items)
   - [Queue and Stack using List](#queue-and-stack-using-list)
   - [2D list](#2d-list)
+    - [Creating 2D list](#creating-2d-list)
+      - [Taking Input](#taking-input)
+    - [Accessing 2D list](#accessing-2d-list)
+    - [Iterating 2D list](#iterating-2d-list)
+    - [Operations on 2D list](#operations-on-2d-list)
   - [Sorting](#sorting)
       - [Using lembda:](#using-lembda)
   - [🌟Map Function🌟](#map-function)
@@ -28,6 +38,7 @@
     - [List to String vice-versa](#list-to-string-vice-versa)
     - [ex 3](#ex-3)
     - [ex4 - Rotation of a List](#ex4---rotation-of-a-list)
+    - [EX: 🌟Lo Shu Magic Square](#ex-lo-shu-magic-square)
     - [ex: 🌟 Breath First Search (CLRS) 🌟](#ex--breath-first-search-clrs-)
 
 ```python
@@ -128,6 +139,8 @@ print(n)
 
 ## 🌟Iteration🌟
 
+### `for item in list`
+
 
 ```python
 for i in "abc":
@@ -139,15 +152,7 @@ for i in "abc":
 
 
 ```python
-for i in range(5):
-	print(i,end=" ")
-```
-
-    0 1 2 3 4
-
-
-```python
-programming_lan= ["Java","C","C++","Kotlin","TypeScript"]
+programming_lan = ["Java", "C", "C++", "Kotlin", "TypeScript"]
 
 # List Membership Test
 v = "C" in programming_lan
@@ -159,7 +164,6 @@ for l in programming_lan:
     print(l)
 
 print()
-
 
 ```
 
@@ -173,7 +177,39 @@ print()
 
 
 
-**Above code doesn't give index of the element. It gives the element itself. Below are the ways to get the index of the element.**
+### `in range(start, end, step)`
+
+
+```python
+print(range(10))
+
+print(list(range(10)))
+
+print(list(range(2, 8)))
+
+print(list(range(2, 20, 3)))
+
+```
+
+    range(0, 10)
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    [2, 3, 4, 5, 6, 7]
+    [2, 5, 8, 11, 14, 17]
+
+
+
+```python
+for i in range(5):
+	print(i,end=" ")
+```
+
+    0 1 2 3 4
+
+### using indexing
+
+Above code doesn't give index of the element. It gives the element itself. Below are the ways to get the index of the element.
+
+#### `for i in range(len(list))`
 
 
 ```python
@@ -183,6 +219,22 @@ for i in range(len(programming_lan)):
     print(f"{i}: {programming_lan[i]}")
 
 print()
+
+
+```
+
+    0: Java
+    1: C
+    2: C++
+    3: Kotlin
+    4: TypeScript
+
+
+
+#### `for i,value in enumerate(list)`
+
+
+```python
 
 # looping with enumerate()
 for lan in enumerate(programming_lan):
@@ -196,12 +248,6 @@ for i, v in enumerate(programming_lan):
 print()
 
 ```
-
-    0: Java
-    1: C
-    2: C++
-    3: Kotlin
-    4: TypeScript
 
     (0, 'Java')
     (1, 'C')
@@ -335,13 +381,7 @@ print(s)
 
 ## 2D list
 
-
-```python
-print([[0]*2]*2)
-```
-
-    [[0, 0], [0, 0]]
-
+### Creating 2D list
 
 
 ```python
@@ -350,10 +390,74 @@ list_2d = [ [1,2,3],
 			[7,8,9]]
 print(list_2d)
 
-# accessing element in 2D list
+print([[0]*2]*2)
+
+
+```
+
+    [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    [[0, 0], [0, 0]]
+
+
+#### Taking Input
+
+
+```python
+
+R = int(input("Enter the number of rows:"))
+C = int(input("Enter the number of columns:"))
+
+matrix = []
+print("Enter the entries rowwise:")
+
+# For user input
+for i in range(R):		 # A for loop for row entries
+	a = []
+	for j in range(C):	 # A for loop for column entries
+		a.append(int(input()))
+	matrix.append(a)
+```
+
+    Enter the entries rowwise:
+
+
+```
+Enter the number of rows:2
+Enter the number of columns:3
+Enter the entries rowwise:
+1
+2
+3
+4
+5
+6
+
+1 2 3
+4 5 6
+```
+
+
+```python
+# one-liner logic to take input for rows and columns
+R = 2
+C = 2
+mat = [[int(input()) for x in range (C)] for y in range(R)]
+mat
+```
+
+
+
+
+    [[1, 2], [3, 4]]
+
+
+
+### Accessing 2D list
+
+
+```python
 print(list_2d[1])
 print(list_2d[1][0])
-
 ```
 
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
@@ -361,11 +465,13 @@ print(list_2d[1][0])
     4
 
 
+### Iterating 2D list
+
 
 ```python
-for i,row in enumerate(list_2d):
-	for j,col in enumerate(row):
-		print(f"{i},{j}: {col}")
+for i,line in enumerate(list_2d):
+	for j,value in enumerate(line):
+		print(f"{i},{j}: {value}")
 ```
 
     0,0: 1
@@ -378,6 +484,8 @@ for i,row in enumerate(list_2d):
     2,1: 8
     2,2: 9
 
+
+### Operations on 2D list
 
 
 ```python
@@ -921,6 +1029,143 @@ print(lst)
 ```
 
     [9, 3, 5, 2, 7, 8]
+
+
+### EX: 🌟Lo Shu Magic Square
+
+The Lo Shu Magic Square is a grid with 3 rows and 3 columns.The Lo Shu Magic Square has the following properties:
+
+1. The grid contains the numbers 1 through 9 exactly.
+2. The sum of each row, each column, and each diagonal all add up to the same number.
+
+<div align="center">
+<img src="img/phpEUzytT.png" alt="phpEUzytT.png" width="300px">
+</div>
+
+
+```python
+# Array dimensions
+N = 3
+
+# Directions
+HORIZONTAL = "HORIZONTAL"
+VERTICAL = "VERTICAL"
+DIAGONAL = "DIAGONAL"
+
+# use this array to bypass user input when testing
+SQUARE = [[4, 9, 2],
+          [3, 5, 7],
+          [8, 1, 6]]
+
+
+# Horizontal, Vertical and Diagonal summing
+def universal_sum(square, direction):
+    diagonal_1 = 0
+    diagonal_2 = 0
+    row_sum = 0
+    u_sum = []
+    for x in range(N):
+        if direction == DIAGONAL:
+            diagonal_1 += square[x][x]
+            diagonal_2 += square[x][N - (x + 1)]
+        for y in range(N):
+            if direction == HORIZONTAL:
+                row_sum += square[x][y]
+            elif direction == VERTICAL:
+                row_sum += square[y][x]
+        u_sum.append(row_sum)
+        row_sum = 0
+    if direction == DIAGONAL:
+        return [diagonal_1, diagonal_2]
+    return u_sum
+
+
+# check if sums are equal in horizontal, vertical
+# and diagonal arrays
+def check_equal(iterator):
+    return len(set(iterator)) <= 1
+
+
+# method to find duplicates for lo shu condition
+def find_repeat(square):
+    seen = set()
+    for x in range(N):
+        for y in range(N):
+            if square[x][y] in seen:
+                return 0
+            seen.add(square[x][y])
+    return 1
+
+
+# lo shu checks
+def is_lo_shu(square):
+    for row in square:
+        for element in row:
+            if element >= 10:
+                return 0
+
+    if sum(universal_sum(square, HORIZONTAL)) == 45:
+        if sum(universal_sum(square, VERTICAL)) == 45:
+            if sum(universal_sum(square, DIAGONAL)) == 30:
+                if find_repeat(square) == 1:
+                    return 1
+    return 0
+
+
+# get user input and return 2d array
+def getuserinput():
+    square = []
+    i = 1
+    for x in range(N):
+        row_list = []
+        for y in range(N):
+            print("Enter number", i, "[", x, "][", y, "]: ", end="")
+            row_list.append(int(input(), 10))
+            i += 1
+        square.append(row_list)
+    return square
+
+
+def check_square(square):
+    if check_equal(universal_sum(square, HORIZONTAL)) and check_equal(universal_sum(square, VERTICAL)) and check_equal(
+            universal_sum(square, DIAGONAL)):
+        is_magic = 1
+    else:
+        is_magic = 0
+
+    if is_lo_shu(square):
+        is_loshu = 1
+    else:
+        is_loshu = 0
+
+    if is_magic and is_loshu:
+        print("Square is Magic and is Lo Shu\n")
+        return
+    elif is_magic and not is_loshu:
+        print("Square is Magic, but not Lo Shu\n")
+        return
+    elif not is_magic:
+        print("Square is not Magic\n")
+        return
+
+
+def main():
+    # while 1:
+        # square = getuserinput()
+
+        check_square(SQUARE)
+        # repeat = input('Do you wish to enter a new square? (y/n)')
+        # if "n" in repeat:
+        #     break
+    # print("Bye!")
+
+
+main()
+
+```
+
+    Square is Magic and is Lo Shu
+
 
 
 ### ex: 🌟 Breath First Search (CLRS) 🌟
