@@ -1,4 +1,93 @@
-### Chained Comparision
+# Flow Control
+
+- [Flow Control](#flow-control)
+  - [Truthy and Falsy Values](#truthy-and-falsy-values)
+    - [Falsy Values](#falsy-values)
+      - [Sequences and Collections:](#sequences-and-collections)
+      - [Numbers](#numbers)
+      - [Constants](#constants)
+    - [Truthy Values](#truthy-values)
+      - [Truthy values include:](#truthy-values-include)
+  - [Comparison](#comparison)
+    - [Chained Comparison](#chained-comparison)
+    - [! -> not](#---not)
+- [FOR](#for)
+    - [Continue](#continue)
+    - [break](#break)
+- [WHILE](#while)
+    - [Guessing Game](#guessing-game)
+    - [Hi Lo Game](#hi-lo-game)
+
+
+```python
+"""
+cd .\Py\02flow_controll\
+jupyter nbconvert --to markdown py_controlflow.ipynb --output README.md
+"""
+```
+
+## Truthy and Falsy Values
+
+
+
+> - Values that evaluate to False are considered Falsy.
+> - Values that evaluate to True are considered Truthy.
+
+### Falsy Values
+
+
+#### Sequences and Collections:
+
+
+
+- Empty lists []
+- Empty tuples ()
+- Empty dictionaries {}
+- Empty sets set()
+= Empty strings ""
+- Empty ranges range(0)
+
+
+
+#### Numbers
+
+
+
+- Zero of any numeric type.
+- Integer: 0
+- Float: 0.0
+- Complex: 0j
+
+
+
+#### Constants
+
+
+
+- None
+- False
+
+
+
+### Truthy Values
+
+
+
+> By default, an object is considered true.
+
+
+
+#### Truthy values include:
+
+
+
+- Non-empty sequences or collections (lists, tuples, strings, dictionaries, sets).
+- Numeric values that are not zero.
+- True
+
+## Comparison
+
+### Chained Comparison
 
 
 ```python
@@ -11,7 +100,7 @@ else:
 ```
 
     Enjoy your free time
-    
+
 
 ### ! -> not
 
@@ -27,43 +116,7 @@ else:
 ```
 
     Go swimming
-    
 
-## Truthy and Falsy Values
-> - Values that evaluate to False are considered Falsy.
-> - Values that evaluate to True are considered Truthy.
-
-## Falsy Values
-### Sequences and Collections:
-
-- Empty lists []
-- Empty tuples ()
-- Empty dictionaries {}
-- Empty sets set()
-= Empty strings ""
-- Empty ranges range(0)
-
-### Numbers
-
-- Zero of any numeric type.
-- Integer: 0
-- Float: 0.0
-- Complex: 0j
-
-### Constants
-
-- None
-- False
-
-## Truthy Values
-
-> By default, an object is considered true.
-
-### Truthy values include:
-
-- Non-empty sequences or collections (lists, tuples, strings, dictionaries, sets).
-- Numeric values that are not zero.
-- True
 
 
 ```python
@@ -75,7 +128,7 @@ else:
 ```
 
     Are you the man with no name?
-    
+
 
 # FOR
 
@@ -93,7 +146,7 @@ values
 ```
 
     ,;: ,;
-    
+
 
 
 
@@ -117,7 +170,7 @@ for item in shopping_list:
     Buying List: pasta
     Buying List: eggs
     Buying List: bread
-    
+
 
 ### break
 
@@ -139,9 +192,17 @@ else:
 ```
 
     Item found at postiton 3
-    
+
 
 # WHILE
+
+
+```python
+while 1:
+	stop = input("Press 'q' to quit: ")
+	if stop == 'q':
+		break
+```
 
 
 ```python
@@ -154,11 +215,8 @@ while chosen not in available:
         break
 
 if not chosen:
-    print(f"You have choosen {chosen}") 
+    print(f"You have choosen {chosen}")
 ```
-
-    Game Over
-    
 
 ### Guessing Game
 
@@ -190,13 +248,13 @@ while guess != answer:
     Please guess higher
     Please guess higher
     Well done, you guessed it
-    
+
 
 ### Hi Lo Game
 
 
 ```python
-low =1 
+low =1
 high =1000
 
 print(f"Please think of a number between {low} and {high}")
