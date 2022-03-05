@@ -32,6 +32,7 @@
     - [VSCode Snippets](#vscode-snippets)
   - [Vim](#vim)
     - [Linux(ubuntu)](#linuxubuntu)
+    - [Intellij](#intellij)
   - [Unicodes](#unicodes)
       - [LINKS](#links-1)
       - [Examples](#examples)
@@ -544,6 +545,14 @@ vim .vimrc
 inoremap jj <Esc>
 syntax on
 set number
+```
+
+### Intellij
+
+Keymap:
+
+```bash
+imap jj <Esc>
 ```
 
 ## Unicodes
