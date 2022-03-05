@@ -11,11 +11,12 @@ public class Array {
 
         // double[] values = new double[10];The length need not be a constant.
         // double[] moreValues = { 32, 54, 67.5, 29, 35 };
-        // String[] friends = { "Emily", "Bob", "Cindy" };
+//        String[] friends = {"Emily", "Bob", "Cindy", null};
+
         int[] arr = takeInput();
         display(arr);
-       int deleted= removeEl(arr, 3);
-       System.out.println(deleted);
+        int deleted = removeEl(arr, 2);
+        System.out.println(deleted);
     }
 
     public static int[] takeInput() {
@@ -44,13 +45,13 @@ public class Array {
 
     public static int removeEl(int[] arr, int pos) {
         // unordered removal:
-        int deleted =arr[pos];
+        int deleted = arr[pos];
         //1. swap last el with pos
         arr[pos] = arr[arr.length - 1];
         //2. decrement size
         cs--;
         for (int i = 0; i < cs; i++) {
-            System.out.print(arr[i]+", ");
+            System.out.print(arr[i] + ", ");
         }
         //order removal:
 //        for (int i = pos + 1; i < arr.length; i++)
