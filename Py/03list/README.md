@@ -2,6 +2,9 @@
 
 - [LIST](#list)
   - [🌟Creating List🌟](#creating-list)
+  - [🚀List Input](#list-input)
+    - [Multiline Input](#multiline-input)
+    - [Single Line Input](#single-line-input)
   - [Indexing/Slicing of List works same as String](#indexingslicing-of-list-works-same-as-string)
   - [🌟Unpacking Operator🌟](#unpacking-operator)
   - [🌟Iteration🌟](#iteration)
@@ -18,6 +21,8 @@
   - [2D list](#2d-list)
     - [Creating 2D list](#creating-2d-list)
       - [Taking Input](#taking-input)
+      - [Multiline Input](#multiline-input-1)
+      - [Single Line Input](#single-line-input-1)
     - [Accessing 2D list](#accessing-2d-list)
     - [Iterating 2D list](#iterating-2d-list)
     - [Operations on 2D list](#operations-on-2d-list)
@@ -40,6 +45,7 @@
     - [ex4 - Rotation of a List](#ex4---rotation-of-a-list)
     - [EX: 🌟Lo Shu Magic Square](#ex-lo-shu-magic-square)
     - [ex: 🌟 Breath First Search (CLRS) 🌟](#ex--breath-first-search-clrs-)
+
 
 ```python
 """
@@ -77,6 +83,75 @@ print(ref)
     [[None, None], [None, None]]
     [1, 2, 3, 4]
     [1, 2, 3, 4, 6]
+
+
+## 🚀List Input
+
+### Multiline Input
+
+
+```python
+# creating an empty list
+lst = []
+
+# number of elements as input
+n = int(input("Enter number of elements : "))
+
+# iterating till the range
+for i in range(0, n):
+    ele = int(input(f"element - {i+1} : "))
+
+    lst.append(ele)  # adding the element
+
+print(lst)
+
+```
+
+    [1, 2, 3]
+
+
+```bash
+>> Enter number of elements : 3
+>> element - 1 : 1
+>> element - 2 : 2
+>> element - 3 : 3
+>> [1, 2, 3]
+```
+
+### Single Line Input
+
+
+```python
+lists = input("Enter Space separated list : ")
+# converting the input string to list
+lists = lists.split()
+lists = [int(i) for i in lists]
+lists
+```
+
+
+
+
+    [1, 2, 4, 5]
+
+
+
+```py
+>> Enter Space Separated Numbers : 1 2 3
+>> [1, 2, 3]
+```
+
+
+```python
+lists = [int(i) for i in input("Enter Space separated list : ").split()]
+lists
+```
+
+
+
+
+    [1, 2, 4, 55]
+
 
 
 ## Indexing/Slicing of List works same as String
@@ -399,26 +474,51 @@ print([[0]*2]*2)
     [[0, 0], [0, 0]]
 
 
+
+```python
+GRID_SIZE =3
+GRID = [[0 for x in range(GRID_SIZE)] for y in range(GRID_SIZE)]
+GRID
+```
+
+
+
+
+    [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+
+
 #### Taking Input
+
+#### Multiline Input
 
 
 ```python
 
-R = int(input("Enter the number of rows:"))
-C = int(input("Enter the number of columns:"))
+LINE = int(input("Enter the number of rows:"))
+EL = int(input("Enter the number of columns:"))
 
 matrix = []
 print("Enter the entries rowwise:")
 
 # For user input
-for i in range(R):		 # A for loop for row entries
+for i in range(LINE):		 # A for loop for row entries
 	a = []
-	for j in range(C):	 # A for loop for column entries
+	for j in range(EL):	 # A for loop for column entries
 		a.append(int(input()))
 	matrix.append(a)
+
+matrix
 ```
 
     Enter the entries rowwise:
+
+
+
+
+
+    [[1, 1, 1], [1, 1, 1], [1, 1, 1]]
+
 
 
 ```
@@ -439,18 +539,44 @@ Enter the entries rowwise:
 
 ```python
 # one-liner logic to take input for rows and columns
-R = 2
-C = 2
-mat = [[int(input()) for x in range (C)] for y in range(R)]
+LINE = 2
+EL = 3
+mat = [[int(input()) for x in range (EL)] for line in range(LINE)]
 mat
 ```
 
 
 
 
-    [[1, 2], [3, 4]]
+    [[1, 1, 1], [1, 1, 1]]
 
 
+
+#### Single Line Input
+
+Prerequisite: [Single Line Input](#single-line-input)
+
+
+```python
+GRID_SIZE = 3
+GRID = [[int(x) for x in input().split()] for line in range(GRID_SIZE)]
+# for each line , take space separated input and store it in a list
+GRID
+```
+
+
+
+
+    [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+
+
+
+```bash
+>> 1 2 3
+>> 4 5 6
+>> 7 8 9
+>> [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+```
 
 ### Accessing 2D list
 
