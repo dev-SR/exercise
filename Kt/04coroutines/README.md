@@ -19,12 +19,15 @@
       - [Components of a Flow](#components-of-a-flow)
       - [Creating a flow](#creating-a-flow)
         - [`flow{..emit(value)..}`: Generate flow by emitting each value](#flowemitvalue-generate-flow-by-emitting-each-value)
-        - [`flowOf(vararg el: T)`:](#flowofvararg-el-t)
+        - [`flowOf(vararg el: T)`](#flowofvararg-el-t)
         - [`.asFlow()`](#asflow)
       - [Collecting values From a Flow](#collecting-values-from-a-flow)
     - [Flow Properties](#flow-properties)
       - [cancellation](#cancellation)
     - [Flow operators](#flow-operators)
+    - [Buffering](#buffering)
+    - [Composing flows](#composing-flows)
+    - [Exception handling](#exception-handling-1)
 
 ## Create Project with Kotlin Coroutines
 
@@ -311,8 +314,8 @@ fun main() {
 - Just like `launch`, except it **returns a result**
 - In the form of a `Deferred`
   - `Deferred` - a future promise of a returned value
-- When we need the value, we call `await()` (blocking call)
-  - If the value is available, it will return immediately
+- When we need the value, we call `await()` (blocking call)
+  - If the value is available, it will return immediately
   - If the value is not available, it will pause the thread until it is
 
 ```kotlin
@@ -523,13 +526,12 @@ So, A flow is a stream of values that are asynchronously computed
 Parts:
 
 - `flow { … }` - **builder**
-- `emit(value)`	- **transmit** a value
+- `emit(value)` - **transmit** a value
 - `collect { … }` - **receive** the values
 
 #### Creating a flow
 
 ##### `flow{..emit(value)..}`: Generate flow by emitting each value
-
 
 To create a Flow, you need to use a `flow builder`. You’ll start by using the most basic builder – `flow { ... }`.
 
@@ -549,10 +551,9 @@ We used a for loop to go through the list of values and **emit** each value afte
 
 There are other Flow builders that you can use for an easy Flow declaration.
 
-##### `flowOf(vararg el: T)`:
+##### `flowOf(vararg el: T)`
 
 A flow can be generated from a number of parameters of any type
-
 
 ```.kotlin
 suspend fun  getValues() = flowOf(1, 2, 3)
@@ -688,4 +689,95 @@ val size = 10
         .collect {
             println(it)
         }
+```
+
+### Buffering
+
+In case processing a flow takes a long time, a buffer is useful to accumulate flow values that can be processed later.
+
+<div align="center">
+<img src="img/flow6.jpg" alt="flow5.jpg" width="700px">
+</div>
+<div align="center">
+<img src="img/flow7.jpg" alt="flow5.jpg" width="700px">
+</div>
+
+### Composing flows
+
+`zip`: Matches corresponding values of two flows
+
+```kotlin
+val english = flowOf("One", "Two", "Three")
+val french = flowOf("Un", "Deux", "Trois")
+english.zip(french) {a, b -> "'$a' in French is '$b'"}
+   .collect { println(it) }
+```
+
+```
+'One' in French is 'Un'
+'Two' in French is 'Deux'
+'Three' in French is 'Trois'
+```
+
+`combine`: Combine the latest value of one flow with the latest value of the other
+
+```kotlin
+val numbers = (1..5).asFlow()
+.onEach { delay(300) }
+val values = flowOf("One", "Two", "Three", "Four", "Five")
+.onEach { delay(400)}
+numbers.combine(values) {a, b -> "$a -> $b"}
+   .collect { println(it) }
+```
+
+```
+1 -> One
+2 -> One
+2 -> Two
+3 -> Two
+3 -> Three
+4 -> Three
+5 -> Three
+5 -> Four
+5 -> Five
+```
+
+### Exception handling
+
+`try/catch`: Surround collect call with try/catch
+
+
+```kotlin
+try {
+(1..3).asFlow()
+    .onEach { check(it != 2) }
+    .collect { println(it) }
+}catch (e: Exception) {
+     println("Caught exception $e")
+}
+```
+
+`.catch()`: An exception can be caught by the operator .catch
+
+```kotlin
+(1..3).asFlow()
+   .onEach { check(it != 2) }
+   .catch { e -> println("Caught exception $e") }
+   .collect { println(it) }
+```
+Catches any exception that occurs above the catch operator;	not below
+
+`onCompletion()`: The equivalent of a finally block
+
+```kotlin
+(1..3).asFlow()
+    .onEach { check(it != 2) }
+    .onCompletion { cause ->
+        if(cause != null)
+        println("Flow completed with $cause")
+        else
+        println("Flow completed successfully")
+    }
+    .catch { e -> println("Caught exception $e") }
+    .collect { println(it) }
 ```
