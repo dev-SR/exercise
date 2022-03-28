@@ -14,6 +14,17 @@
   - [withContext](#withcontext)
   - [Jobs](#jobs)
   - [Exception handling](#exception-handling)
+  - [🚀Kotlin Flow🚀](#kotlin-flow)
+    - [Intro](#intro)
+      - [Components of a Flow](#components-of-a-flow)
+      - [Creating a flow](#creating-a-flow)
+        - [`flow{..emit(value)..}`: Generate flow by emitting each value](#flowemitvalue-generate-flow-by-emitting-each-value)
+        - [`flowOf(vararg el: T)`:](#flowofvararg-el-t)
+        - [`.asFlow()`](#asflow)
+      - [Collecting values From a Flow](#collecting-values-from-a-flow)
+    - [Flow Properties](#flow-properties)
+      - [cancellation](#cancellation)
+    - [Flow operators](#flow-operators)
 
 ## Create Project with Kotlin Coroutines
 
@@ -452,4 +463,229 @@ fun main() {
         }
     }
 }
+```
+
+## 🚀Kotlin Flow🚀
+
+### Intro
+
+Kotlin `Flow` is a new stream processing API that is an implementation of the Reactive Stream specification, an initiative whose goal is to provide a standard for **asynchronous stream processing**. Kotlin Flow is built on top of Kotlin Coroutines.
+
+Returning values using `suspending` functions is very much different from the `Flow` API, with a few examples!
+
+```kotlin
+suspend fun getValues(): List<Int> {
+    delay(1000)
+    return listOf(1, 2, 3)
+}
+
+fun processValues() {
+    runBlocking {
+        println("Processing.....")
+        val values = getValues()
+        for (value in values) {
+            println(value)
+        }
+    }
+    println("Done!")
+}
+
+fun main() {
+    processValues()
+}
+```
+
+We’ll get this output after a delay of one second:
+
+<div align="center">
+<img src="img/flow1.gif" alt="flow1.gif" width="700px">
+</div>
+
+When you call `getValues()`, it `returns` a List with three values. We then use those values in `processValues()`. Within a for loop, you iterate over the List and print out the values.
+
+A visual representation of the function is the following:
+
+<div align="center">
+<img src="img/flow2.jpg" alt="flow2.jpg" width="700px">
+</div>
+
+With `Flow` we can handle a stream of data that **emits** values **sequentially**. And Kotlin Flow is an implementation of **cold streams** - start pushing values only when you start collecting!
+, powered by Kotlin Coroutines!
+
+<div align="center">
+<img src="img/flow3.jpg" alt="flow3.jpg" width="600px">
+</div>
+
+#### Components of a Flow
+
+So, A flow is a stream of values that are asynchronously computed
+
+Parts:
+
+- `flow { … }` - **builder**
+- `emit(value)`	- **transmit** a value
+- `collect { … }` - **receive** the values
+
+#### Creating a flow
+
+##### `flow{..emit(value)..}`: Generate flow by emitting each value
+
+
+To create a Flow, you need to use a `flow builder`. You’ll start by using the most basic builder – `flow { ... }`.
+
+```kotlin
+import kotlinx.coroutines.flow.flow
+
+suspend fun getValues() = flow {
+    val values = listOf(1, 2, 3)
+    for (value in values) {
+        delay(1000)
+        emit(value)
+    }
+}
+```
+
+We used a for loop to go through the list of values and **emit** each value after a small delay. The Flow uses `emit()` send values to **consumers**.
+
+There are other Flow builders that you can use for an easy Flow declaration.
+
+##### `flowOf(vararg el: T)`:
+
+A flow can be generated from a number of parameters of any type
+
+
+```.kotlin
+suspend fun  getValues() = flowOf(1, 2, 3)
+```
+
+##### `.asFlow()`
+
+We can convert various collections and sequences to a Flow:
+
+```.kotlin
+suspend fun  getValues() = listOf(1, 2, 3).asFlow()
+```
+
+#### Collecting values From a Flow
+
+`collect()` collects values from a Flow and executes an action with each item. In this case, you're printing an item to the console.
+
+```kotlin
+fun main() = runBlocking {
+    println("Processing.....")
+    getValues().collect { println(it) }
+    println("Done!")
+}
+```
+
+<div align="center">
+<img src="img/flow4.gif" alt="flow4.gif" width="700px">
+</div>
+
+### Flow Properties
+
+- Flows are `cold`- The code does not run until the collect function is called
+- A flow cannot be cancelled by itself
+- It will be cancelled when the encompassing coroutine is cancelled
+- Flow is transparent for cancellation
+
+#### cancellation
+
+```kotlin
+fun sendNumbers(): Flow<Int> = flow {
+    val list = listOf(-1, 2, 3)
+    list.forEach {
+        delay(398)
+        emit(it)
+    }
+}
+
+runBlocking {
+    val numbersFlow = sendNumbers()
+    println("Flow hasn't started yet")
+    println("Starting flow now:")
+    withTimeoutOrNull(998) {
+        numbersFlow.collect { println(it) }
+    }
+}
+```
+
+### Flow operators
+
+- `Flow operators`: Take an input flow, transform it and return an output flow
+- `Terminal flow operators`: Convert the flow into a collection : `collect`, `toList`, `toSet`, `reduce` etc
+- Operators are `cold`
+- The `returning` flow is `synchronous`
+
+<div align="center">
+<img src="img/flow5.jpg" alt="flow5.jpg" width="700px">
+</div>
+
+`map`: Map a flow to another flow
+
+```kotlin
+    (1..10).asFlow()
+        .map {
+            delay(500)
+            "mapping $it"
+        }
+        .collect {
+            println(it)
+        }
+```
+
+`filter`: Filter flow values
+
+```kotlin
+    (1..10).asFlow()
+        .filter {
+            it % 2 == 0
+        }
+        .collect {
+            println(it)
+        }
+```
+
+`transform`: General transformation operator;Can emit any value at any point
+
+```kotlin
+(1..10).asFlow()
+        .transform {
+            emit("Emitting string value $it")
+            emit(it)
+        }
+        .collect {
+            println(it)
+        }
+```
+
+`take`: Use only a number of values, disregard the rest
+
+```kotlin
+(1..10).asFlow()
+   .take(2)
+   .collect {
+       println(it)
+   }
+```
+
+`reduce`: Reduce a flow to a single value
+
+```kotlin
+val size = 10
+    val factorial = (1..size).asFlow()
+        .reduce { accumulator, value ->
+            accumulator * value
+        }
+    println("Factorial of $size is $factorial")
+```
+
+`flowOn`: Change the thread that a flow is executed on
+
+```kotlin
+(1..10).asFlow()
+        .flowOn(Dispatchers.IO)
+        .collect {
+            println(it)
+        }
 ```

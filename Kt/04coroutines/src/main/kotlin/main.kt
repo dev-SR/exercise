@@ -1,27 +1,40 @@
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import java.lang.IndexOutOfBoundsException
 
-fun main() {
-    runBlocking {
-        val myHandler = CoroutineExceptionHandler {coroutineContext, throwable ->
-            println("Exception handled: ${throwable.localizedMessage}")
-        }
-
-        val job = GlobalScope.launch(myHandler) {
-            println("Throwing exception from job")
-            throw IndexOutOfBoundsException("exception in coroutine")
-        }
-        job.join()
-
-        val deferred = GlobalScope.async {
-            println("Throwing exception from async")
-            throw ArithmeticException("exception from async")
-        }
-
-        try {
-            deferred.await()
-        } catch (e: java.lang.ArithmeticException) {
-            println("Caught ArithmeticException ${e.localizedMessage}")
-        }
+suspend fun getValues() = flow {
+    val values = listOf(1, 2, 3)
+    for (value in values) {
+        delay(1000)
+        emit(value)
     }
+
 }
+//suspend fun  getValues() = flowOf(1, 2, 3)
+//suspend fun  getValues() = listOf(1, 2, 3).asFlow()
+
+//suspend fun getValues(): List<Int> {
+//    delay(1000)
+//    return listOf(1, 2, 3)
+//}
+//fun processValues() {
+//    runBlocking {
+//        println("Processing.....")
+//        val values = getValues()
+//        for (value in values) {
+//            println(value)
+//        }
+//    }
+//    println("Done!")
+//}
+
+fun main() = runBlocking {
+    (1..10).asFlow()
+        .flowOn(Dispatchers.IO)
+        .collect {
+            println(it)
+        }
+
+
+}
+
