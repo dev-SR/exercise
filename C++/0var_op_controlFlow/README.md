@@ -1,33 +1,35 @@
 # Basic
 
 - [Basic](#basic)
-	- [Variables, Datatypes & Storage](#variables-datatypes--storage)
-		- [`sizeof()`](#sizeof)
-		- [Data-Type Modifiers](#data-type-modifiers)
-		- [Storage of Characters and Booleans](#storage-of-characters-and-booleans)
-	- [Operators and Expressions](#operators-and-expressions)
-		- [Bitwise Operators](#bitwise-operators)
-	- [Flow Control - Branching](#flow-control---branching)
-		- [Ternary Operator](#ternary-operator)
-		- [`switch`](#switch)
-	- [Flow Control - Loops](#flow-control---loops)
-		- [for loop](#for-loop)
-		- [break](#break)
-		- [continue](#continue)
-	- [Function](#function)
-		- [Forward Declaration](#forward-declaration)
-		- [Default Parameters](#default-parameters)
-		- [ex1 - Binomial Coefficient](#ex1---binomial-coefficient)
+  - [Variables, Datatypes & Storage](#variables-datatypes--storage)
+    - [`sizeof()`](#sizeof)
+    - [Data-Type Modifiers](#data-type-modifiers)
+    - [Storage of Characters and Booleans](#storage-of-characters-and-booleans)
+  - [Operators and Expressions](#operators-and-expressions)
+    - [Bitwise Operators](#bitwise-operators)
+  - [Flow Control - Branching](#flow-control---branching)
+    - [Ternary Operator](#ternary-operator)
+    - [`switch`](#switch)
+  - [Flow Control - Loops](#flow-control---loops)
+    - [for loop](#for-loop)
+    - [break](#break)
+    - [continue](#continue)
+  - [Function](#function)
+    - [Forward Declaration](#forward-declaration)
+    - [Default Parameters](#default-parameters)
+    - [ex1 - Binomial Coefficient](#ex1---binomial-coefficient)
 
 ## Variables, Datatypes & Storage
 
 ### `sizeof()`
 
 ```cpp
-int n;
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+    int n;
     cout << sizeof(n) << endl;   // 4bytes = 32bits
     cout << sizeof(int) << endl; // 4bytes = 32bits
-
     cout << "Character: " << sizeof(char) << endl;          // 1byte = 8bit
     cout << "Bool: " << sizeof(bool) << endl;               // 1byte = 8bit
     cout << "Int: " << sizeof(int) << endl;                 // 4byte = 32bit
@@ -37,6 +39,7 @@ int n;
     cout << "Double: " << sizeof(double) << endl;           // 8byte = 64bit
     cout << "Long double: " << sizeof(long double) << endl; // 16byte = 128bit
     cout << "Pointer: " << sizeof(void *) << endl;          // 8byte = 64bit
+}
 ```
 
 ### Data-Type Modifiers
