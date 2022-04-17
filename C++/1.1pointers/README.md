@@ -12,6 +12,7 @@
     - [Pass By Reference - Reference Variables](#pass-by-reference---reference-variables)
 
 ## Pointer
+
 ### Address Of Operator(`&`)
 
 To get the address of a variable, use the `&` operator.
@@ -100,7 +101,7 @@ int main() {
     int x = 10;
     int &y = x;
     y++;
-	x++;
+    x++;
     cout << x << " " << &x << endl; // 12 0x7ffc8b9d8b50
     cout << y << " " << &y << endl; // 12 0x7ffc8b9d8b50
 }
