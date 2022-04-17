@@ -1,4 +1,16 @@
-# Install MinGW Compiler
+# C++
+
+- [C++](#c)
+  - [Setup](#setup)
+    - [Install MinGW Compiler](#install-mingw-compiler)
+    - [Precompile headers](#precompile-headers)
+  - [Compile and Run](#compile-and-run)
+    - [cli](#cli)
+    - [VScode](#vscode)
+
+## Setup
+
+### Install MinGW Compiler
 
 MinGW is a native Windows port of the GNU Compiler Collection (GCC). Install the
 latest MinGW compiler, after downloading from
@@ -10,7 +22,7 @@ latest MinGW compiler, after downloading from
 Your path should preferably be `C:\MinGW`. Finally, add the bin directory,
 **`C:\MinGW\bin`** to the System **`PATH`**.
 
-# Precompile headers
+### Precompile headers
 
 Now we can speed up compilation time by precompiling all the header files, i.e.
 by precompiling the **`bits/stdc++.h`** header file. This can speed up
@@ -22,7 +34,17 @@ pressing Shift to open a Powershell/cmd window there. Run the command
 flags you used in your build system. Check to make sure that the
 **`stdc++.h.gch`** file was created in the directory.
 
-# Create a build system
+## Compile and Run
+
+
+### cli
+
+```cpp
+g++ main.cpp; .\a
+g++ main.cpp -o main; .\main
+```
+
+### VScode
 
 [Docs](https://www.geeksforgeeks.org/compiling-with-g-plus-plus/)
 
