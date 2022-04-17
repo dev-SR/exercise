@@ -8,7 +8,7 @@
     - [UseCases:](#usecases)
       - [Partial Array Processing](#partial-array-processing)
       - [Modify Received Array](#modify-received-array)
-        - [ex:](#ex)
+        - [ex: find all occurrences](#ex-find-all-occurrences)
 
 ## Creating Array
 
@@ -159,14 +159,14 @@ void modifyReceivedArr(int a[], int n) {
 }
 
 int main() {
-    int a[5] = {1, 2, 3, 4, 5};
-    int n = sizeof(a) / sizeof(a[0]);
+    int ar[5];
+    int n = sizeof(ar) / sizeof(int);
     modifyReceivedArr(ar, n);
     printArray(ar, n); // 5 4 3 2 1
 }
 ```
 
-##### ex:
+##### ex: find all occurrences
 
 ```c
 #include <stdio.h>
@@ -213,3 +213,7 @@ int main() {
 }
 ```
 
+```bash
+This, is a. sample-string
+   ^   ^    ^      ^
+```
