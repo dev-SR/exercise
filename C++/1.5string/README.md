@@ -1,5 +1,10 @@
 # String in C
 
+- [String in C](#string-in-c)
+  - [Strings Initialization](#strings-initialization)
+  - [Input](#input)
+  - [String Traversal](#string-traversal)
+
 ## Strings Initialization
 
 ```cpp
