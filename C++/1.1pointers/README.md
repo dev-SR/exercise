@@ -6,11 +6,12 @@
     - [Pointer Variables](#pointer-variables)
     - [🚨Dereference Operator(`*`)](#dereference-operator)
     - [NULL ptr](#null-ptr)
-    - [🚀Pass By References - Using Pointers | Modify the passed parameters in a function](#pass-by-references---using-pointers--modify-the-passed-parameters-in-a-function)
-  - [👉Reference operator(`&`)](#reference-operator)
+    - [🌟Pointer Applications🌟](#pointer-applications)
+      - [🚀Pass By References - Using Pointers | Modify the passed parameters in a function](#pass-by-references---using-pointers--modify-the-passed-parameters-in-a-function)
+  - [👉Reference(`&`) in  C++](#reference-in--c)
     - [Differences between 👉pointers and 👉references in C++](#differences-between-pointers-and-references-in-c)
       - [When to use What](#when-to-use-what)
-    - [🌟Application🌟](#application)
+    - [🌟Reference Applications🌟](#reference-applications)
       - [🚀🚀Pass By Reference - Reference Variables | Modify the passed parameters in a function](#pass-by-reference---reference-variables--modify-the-passed-parameters-in-a-function)
       - [🚀🚀Avoiding a copy of large structures](#avoiding-a-copy-of-large-structures)
       - [🚀In For Each Loops to modify all objects](#in-for-each-loops-to-modify-all-objects)
@@ -68,7 +69,9 @@ int *q = NULL;
 ```
 
 
-### 🚀Pass By References - Using Pointers | Modify the passed parameters in a function
+### 🌟Pointer Applications🌟
+
+#### 🚀Pass By References - Using Pointers | Modify the passed parameters in a function
 
 ```cpp
 void watchVideo(int views) {
@@ -97,7 +100,7 @@ int main() {
 }
 ```
 
-## 👉Reference operator(`&`)
+## 👉Reference(`&`) in  C++
 
 A reference is an `alias` for an already existing variable. Once a reference is initialized to a variable, it cannot be changed to refer to another variable. Hence, a reference is similar to a `const pointer`.
 
@@ -155,7 +158,7 @@ The performances are exactly the same, as **references are implemented internall
 - References are usually preferred over pointers whenever we don’t need “reseating”.
 - Overall, Use references when you can, and pointers when you have to. But if we want to write C code that compiles with both C and a C++ compiler, you’ll have to restrict yourself to using pointers
 
-### 🌟Application🌟
+### 🌟Reference Applications🌟
 
 #### 🚀🚀Pass By Reference - Reference Variables | Modify the passed parameters in a function
 
