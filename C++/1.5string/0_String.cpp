@@ -8,8 +8,8 @@ using namespace std;
 #define CYN "\e[0;96m"
 #define reset "\e[0m"
 
-//https://www.geeksforgeeks.org/c-string-class-and-its-applications/
-//https://www.geeksforgeeks.org/c-string-class-applications-set-2/
+// https://www.geeksforgeeks.org/c-string-class-and-its-applications/
+// https://www.geeksforgeeks.org/c-string-class-applications-set-2/
 
 // !Capacity:
 // size             Return length of string
@@ -55,37 +55,38 @@ using namespace std;
 
 int main() {
 
-    //!String Init-----------------------------------------------
+    //! String Init-----------------------------------------------
     string s0;
-    string s1("hello");
-
+    s0 = "late init";
+    string s1("hello"); // or string s1{"hello"};
     string s2 = "Hello World";
     // initialization by another string
-    string s3(s2);
+    string s3(s2); // or {s2}
 
-    string s4 = s3;
-
-    char a[] = {'a', 'b', 'c', '\0'};
-    string s5(a);
+    // char array to string
+    char a[] = "abc";
+    string s4 = a;
 
     // initialization by character with number of occurrence
-    string s6(5, '#');
+    string s5(5, '#'); // ######
+    string s8(4, 65);  // AAAA
+
     // initialization by part of another string
-    // @params [Str,start_index,no_of_chars_from_Str]
-    string s7(s2, 6, 6); // from 6th index (second parameter)
-                         // 6 characters of s2 (third parameter)
+    // [Str,start_index,no_of_chars_from_Str]
+    string s6(s2, 6, 6); // World
 
     // initialization by part of another string : iterator version
-    string s8(s2.begin(), s2.begin() + 5);
-    //Reverse Using  reverse iterators
-    string rev = string(s2.rbegin(), s2.rend());
+    string s7(s2.begin(), s2.begin() + 5); // Hello
+    // Reverse Using  reverse iterators
+    string rev = string(s2.rbegin(), s2.rend()); // dlroW olleH
 
-    //assign a new value to the string, replacing its current contents.
-    //assign(str, pos, len);
-    string r;
-    string base = "c-string";
-    r.assign(base);
-    // r.assign(base,0,4);
+    // assign a new value to the string, replacing its current contents.
+    // assign(str, pos, len);
+    string r = "old";
+    string b = "new-string";
+    r.assign(b, 0, 4); // new-
+
+    string s9 = s0 + s1 + s2 + s3 + s4;
 
     cout << setfill('*') << setw(20) << "*";
     cout << "initialization";
@@ -98,9 +99,10 @@ int main() {
     cout << s5 << endl;
     cout << s6 << endl;
     cout << s7 << endl;
-    cout << s8 << endl;
     cout << rev << endl;
     cout << r << '\n';
+    cout << s8 << endl;
+    cout << s9 << endl;
 
     cout << "check is string is empty" << endl;
     if (s0.empty()) {
@@ -108,17 +110,17 @@ int main() {
     }
     cout << endl;
 
-    //!Find SubString-----------------------------------------------
+    //! Find SubString-----------------------------------------------
     cout << setfill('*') << setw(20) << "*";
     cout << "Find Substring";
     cout << setfill('*') << setw(20) << "*" << endl;
-    //size_t find (const string& str, size_t pos = 0);
-    //size_t find(const char *s, size_t pos = 0);
+    // size_t find (const string& str, size_t pos = 0);
+    // size_t find(const char *s, size_t pos = 0);
     string s = "I want to have apple juice";
     int idx = s.find("apple");
     cout << idx << endl;
-    //pos : default =0  or ,
-    //The initial position from where the string search is to begin.
+    // pos : default =0  or ,
+    // The initial position from where the string search is to begin.
     int beginFrom16 = s.find("apple", 16);
     cout << beginFrom16 << endl;
 
@@ -164,7 +166,7 @@ int main() {
     }
     cout << endl;
 
-    //!Append-----------------------------------------------
+    //! Append-----------------------------------------------
     cout << setfill('*') << setw(20) << "*";
     cout << "Appending";
     cout << setfill('*') << setw(20) << "*" << endl;
@@ -181,7 +183,7 @@ int main() {
     cout << s0 << endl;
     cout << endl;
 
-    //!pop_back and clear---------------------------------------------------------
+    //! pop_back and clear---------------------------------------------------------
     cout << setfill('*') << setw(20) << "*";
     cout << "pop_back and clear";
     cout << setfill('*') << setw(20) << "*" << endl;
@@ -190,12 +192,12 @@ int main() {
     s0.pop_back();
     cout << s0 << endl;
     cout << s0.length() << endl;
-    //clear all
+    // clear all
     s0.clear();
     cout << s0.length() << endl;
     cout << endl;
 
-    //!Remove substring-------------------------------------------------
+    //! Remove substring-------------------------------------------------
     cout << setfill('*') << setw(20) << "*";
     cout << "Removing a word from String";
     cout << setfill('*') << setw(20) << "*" << endl;
@@ -211,7 +213,7 @@ int main() {
          << endl;
     ;
 
-    //!Replace and Insert new substring-----------------------------------
+    //! Replace and Insert new substring-----------------------------------
     cout << setfill('*') << setw(20) << "*";
     cout << "Replace and Insert new";
     cout << setfill('*') << setw(20) << "*" << endl;
@@ -223,7 +225,7 @@ int main() {
 
     cout << "Replacing all occurrence:" << endl;
     string st = "first is the first word we like first";
-    cout << st << endl; //37
+    cout << st << endl; // 37
     string f("first");
     string repWith("second");
     int at = st.find(f);
@@ -240,7 +242,7 @@ int main() {
     cout << s << endl;
     cout << endl;
 
-    //!Extract Substring-----------------------------------------------
+    //! Extract Substring-----------------------------------------------
     cout << setfill('*') << setw(20) << "*";
     cout << "Extract Substring";
     cout << setfill('*') << setw(20) << "*" << endl;
@@ -251,7 +253,7 @@ int main() {
     cout << s.substr(7) << endl;
     cout << endl;
 
-    //!Access Individual Charecters-----------------------------------------------
+    //! Access Individual Charecters-----------------------------------------------
     cout << setfill('*') << setw(20) << "*";
     cout << "Access Charaters of a String";
     cout << setfill('*') << setw(20) << "*" << endl;
@@ -262,7 +264,7 @@ int main() {
     cout << "back(): " << s1.back() << endl;
     cout << endl;
 
-    //!Iterate over all the character in the string;-------------------------------
+    //! Iterate over all the character in the string;-------------------------------
     cout << setfill('*') << setw(20) << "*";
     cout << "Iterators";
     cout << setfill('*') << setw(20) << "*" << endl;
@@ -271,13 +273,13 @@ int main() {
         cout << s1[i] << " ";
     }
     cout << endl;
-    //using iterators
+    // using iterators
     cout << "Iteration 2" << endl;
     for (auto it = s1.begin(); it != s1.end(); it++) {
         cout << (*it) << " ";
     }
     cout << endl;
-    //using  For Each
+    // using  For Each
     cout << "Iteration 3" << endl;
     cout << "1. Range For Loop:  for(char c:s) " << endl;
     for (char c : s1) {
@@ -315,12 +317,12 @@ int main() {
     }
     /**
      * See reference in c++: https://www.geeksforgeeks.org/references-in-c/ , how its used In For Each Loops to modify all objects
-    */
+     */
 
     cout << endl
          << endl;
 
-    //!Compare two string;---------------------------------------------
+    //! Compare two string;---------------------------------------------
     cout << setfill('*') << setw(20) << "*";
     cout << "Comparing string";
     cout << setfill('*') << setw(20) << "*" << endl;
@@ -328,13 +330,13 @@ int main() {
     s1 = "Mango";
     cout << s1.compare(s0) << endl;
     cout << s0.compare(s1) << endl;
-    //Comparing using Overloaded operators;
+    // Comparing using Overloaded operators;
     if (s1 > s0) {
         cout << "Mango is lexically greater then Apple" << endl;
     }
     cout << endl;
 
-    //!Array Of String + Sorting :---------------------------------------------------------------
+    //! Array Of String + Sorting :---------------------------------------------------------------
     cout << setfill('*') << setw(20) << "*";
     cout << "Array Of String + Sorting";
     cout << setfill('*') << setw(20) << "*" << endl;
@@ -346,7 +348,7 @@ int main() {
     cout << endl
          << endl;
 
-    //!Applications :---------------------------------------------------------------
+    //! Applications :---------------------------------------------------------------
     cout << setfill('*') << setw(20) << "*";
     cout << "Applications";
     cout << setfill('*') << setw(20) << "*" << endl;
@@ -379,7 +381,7 @@ int main() {
     // loop till all space are replaced
     while ((n = urlex.find(" ", n)) != string::npos) {
         urlex.replace(n, 1, replaceby);
-        n += replaceby.length(); //go to next space
+        n += replaceby.length(); // go to next space
     }
     cout << urlex << endl;
     cout << endl;
@@ -406,7 +408,7 @@ int main() {
     cout << "Original: " << msg << endl;
     cout << RED << "Encrypted: " << en << reset << endl;
 
-    //decrypt:
+    // decrypt:
     string de;
 
     for (char c : en) {
