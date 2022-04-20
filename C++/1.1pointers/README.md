@@ -4,17 +4,17 @@
   - [Pointer](#pointer)
     - [Address Of Operator(`&`)](#address-of-operator)
     - [Pointer Variables](#pointer-variables)
-    - [Dereference Operator(`*`)](#dereference-operator)
+    - [🚨Dereference Operator(`*`)](#dereference-operator)
     - [NULL ptr](#null-ptr)
-    - [Pass By References - Using Pointers | Modify the passed parameters in a function](#pass-by-references---using-pointers--modify-the-passed-parameters-in-a-function)
-  - [Reference operator(`&`)](#reference-operator)
-    - [Differences between pointers and references in C++](#differences-between-pointers-and-references-in-c)
-      - [When to use What:](#when-to-use-what)
-    - [Application](#application)
-      - [Pass By Reference - Reference Variables | Modify the passed parameters in a function](#pass-by-reference---reference-variables--modify-the-passed-parameters-in-a-function)
-      - [Avoiding a copy of large structures](#avoiding-a-copy-of-large-structures)
-      - [In For Each Loops to modify all objects](#in-for-each-loops-to-modify-all-objects)
-      - [For Each Loop to avoid the copy of objects](#for-each-loop-to-avoid-the-copy-of-objects)
+    - [🚀Pass By References - Using Pointers | Modify the passed parameters in a function](#pass-by-references---using-pointers--modify-the-passed-parameters-in-a-function)
+  - [👉Reference operator(`&`)](#reference-operator)
+    - [Differences between 👉pointers and 👉references in C++](#differences-between-pointers-and-references-in-c)
+      - [When to use What](#when-to-use-what)
+    - [🌟Application🌟](#application)
+      - [🚀🚀Pass By Reference - Reference Variables | Modify the passed parameters in a function](#pass-by-reference---reference-variables--modify-the-passed-parameters-in-a-function)
+      - [🚀🚀Avoiding a copy of large structures](#avoiding-a-copy-of-large-structures)
+      - [🚀In For Each Loops to modify all objects](#in-for-each-loops-to-modify-all-objects)
+      - [🚀For Each Loop to avoid the copy of objects](#for-each-loop-to-avoid-the-copy-of-objects)
 
 ## Pointer
 
@@ -44,7 +44,7 @@ A pointer variable is a variable that stores the address of another variable. To
  <img src="img/ptr.jpg" alt="ptr.jpg" width="400px">
 </div>
 
-### Dereference Operator(`*`)
+### 🚨Dereference Operator(`*`)
 
 An interesting property of pointers is that they can be **used to access the variable they point to directly**. This is done by preceding the pointer name with the dereference operator (`*`). The operator itself can be read as `"value pointed to by"`
 
@@ -68,7 +68,7 @@ int *q = NULL;
 ```
 
 
-### Pass By References - Using Pointers | Modify the passed parameters in a function
+### 🚀Pass By References - Using Pointers | Modify the passed parameters in a function
 
 ```cpp
 void watchVideo(int views) {
@@ -97,7 +97,7 @@ int main() {
 }
 ```
 
-## Reference operator(`&`)
+## 👉Reference operator(`&`)
 
 A reference is an `alias` for an already existing variable. Once a reference is initialized to a variable, it cannot be changed to refer to another variable. Hence, a reference is similar to a `const pointer`.
 
@@ -118,7 +118,7 @@ int main() {
 <img src="img/ref.jpg" alt="ref.jpg" width="400px">
 </div>
 
-### Differences between pointers and references in C++
+### Differences between 👉pointers and 👉references in C++
 
 C and C++ support pointers which are different from most of the other programming languages. Other languages including C++, Java, Python, Ruby, Perl and PHP support references.
 
@@ -140,8 +140,7 @@ Major dif:
   1. **Safer**: Since references must be initialized, wild references like wild pointers are unlikely to exist. It is still possible to have references that don’t refer to a valid location (See questions 5 and 6 in the below exercise)
   2. **Easier to use**: References don’t need a dereferencing operator(`*`) to access the value. They can be used like normal variables. `‘&’` operator is needed only at the time of declaration. Also, members of an object reference can be accessed with dot operator (‘.’), unlike pointers where arrow operator (->) is needed to access members.
 
-
-#### When to use What:
+#### When to use What
 
 The performances are exactly the same, as **references are implemented internally as pointers**. But still we can keep some points in mind to decide when to use what :
 
@@ -152,9 +151,9 @@ The performances are exactly the same, as **references are implemented internall
   - Use pointers if pointer arithmetic or passing NULL-pointer is needed. For example for arrays (Note that array access is implemented using pointer arithmetic).
   - To implement data structures like linked list, tree, etc and their algorithms because to point different cell, we have to use the concept of pointers
 
-### Application
+### 🌟Application🌟
 
-#### Pass By Reference - Reference Variables | Modify the passed parameters in a function
+#### 🚀🚀Pass By Reference - Reference Variables | Modify the passed parameters in a function
 
 **Modify the passed parameters in a function**: If a function receives a reference to a variable, it can modify the value of the variable. For example, the following program variables are swapped using references.
 
@@ -186,7 +185,7 @@ int main() {
 }
 ```
 
-#### Avoiding a copy of large structures
+#### 🚀🚀Avoiding a copy of large structures
 
 Imagine a function that has to receive a large object. If we pass it without reference, a new copy of it is created which causes wastage of CPU time and memory. We can use references to avoid this.
 
@@ -209,7 +208,7 @@ void print(const Student &s)
 }
 ```
 
-#### In For Each Loops to modify all objects
+#### 🚀In For Each Loops to modify all objects
 
 We can use references in for each loops to modify all elements.
 
@@ -257,7 +256,7 @@ int main() {
 }
 ```
 
-#### For Each Loop to avoid the copy of objects
+#### 🚀For Each Loop to avoid the copy of objects
 
 We can use references in each loop to avoid a copy of individual objects when objects are large.
 
