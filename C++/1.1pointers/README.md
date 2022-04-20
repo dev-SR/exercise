@@ -126,6 +126,7 @@ Both references and pointers can be used to change local variables of one functi
 
 - [https://www.educative.io/edpresso/differences-between-pointers-and-references-in-cpp](https://www.educative.io/edpresso/differences-between-pointers-and-references-in-cpp)
 - [https://www.geeksforgeeks.org/pointers-vs-references-cpp/](https://www.geeksforgeeks.org/pointers-vs-references-cpp/)
+- [https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/](https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/)
 - [https://techdifferences.com/difference-between-pointer-and-reference-2.html](https://techdifferences.com/difference-between-pointer-and-reference-2.html)
 
 
@@ -138,7 +139,7 @@ Major dif:
 - References **cannot have a null value** assigned but pointer can.
 - References are safer and easier to use:
   1. **Safer**: Since references must be initialized, wild references like wild pointers are unlikely to exist. It is still possible to have references that don’t refer to a valid location (See questions 5 and 6 in the below exercise)
-  2. **Easier to use**: References don’t need a dereferencing operator(`*`) to access the value. They can be used like normal variables. `‘&’` operator is needed only at the time of declaration. Also, members of an object reference can be accessed with dot operator (‘.’), unlike pointers where arrow operator (->) is needed to access members.
+  2. **Easier to use**: A pointer needs to be dereferenced with `*` to access the memory location it points to, whereas a reference can be used directly. A pointer to a class/struct uses `‘->’` (arrow operator) to access its members whereas a reference uses a `‘.’` (dot operator)
 
 #### When to use What
 
@@ -150,6 +151,9 @@ The performances are exactly the same, as **references are implemented internall
 - Use `pointers`:
   - Use pointers if pointer arithmetic or passing NULL-pointer is needed. For example for arrays (Note that array access is implemented using pointer arithmetic).
   - To implement data structures like linked list, tree, etc and their algorithms because to point different cell, we have to use the concept of pointers
+
+- References are usually preferred over pointers whenever we don’t need “reseating”.
+- Overall, Use references when you can, and pointers when you have to. But if we want to write C code that compiles with both C and a C++ compiler, you’ll have to restrict yourself to using pointers
 
 ### 🌟Application🌟
 
