@@ -9,7 +9,7 @@ using namespace std;
 #define reset "\e[0m"
 
 int *getArray(int n);
-void display(int &p, int n) {
+void display(int *p, int n) {
     for (int i = 0; i < n; i++) {
         cout << p[i] << " ";
     }
@@ -35,10 +35,10 @@ int main() {
     // deallocate memory
     delete[] p;
 
-    // Example: DMA and returing pointer from functions:
+    // Example: DMA and returning pointer from functions:
     cout << BLU << "Random:" << reset << endl;
-    int *ptr = getArray(10);
-    display(ptr, 10);
+    int *ptr = getArray(n);
+    display(ptr, n);
     delete[] ptr;
     return 0;
 }
