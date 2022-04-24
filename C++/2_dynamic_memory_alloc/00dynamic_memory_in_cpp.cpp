@@ -9,7 +9,7 @@ using namespace std;
 #define reset "\e[0m"
 
 int *getArray(int n);
-void display(int *p, int n) {
+void display(int &p, int n) {
     for (int i = 0; i < n; i++) {
         cout << p[i] << " ";
     }
@@ -18,24 +18,25 @@ void display(int *p, int n) {
 
 int main() {
     int n;
+    cout << "Enter the size of array: ";
     cin >> n;
 
-    //allocate memory
+    // allocate memory
     // int *p = new int[n];
     // or,
     int *p{new int[n]};
 
     for (int i = 0; i < n; i++) {
-        cout << "el:";
+        cout << "el[" << i << "] :";
         cin >> p[i];
     }
     display(p, n);
 
-    //deallocate memory
+    // deallocate memory
     delete[] p;
 
-    //Example: DMA and returing pointer from functions:
-    cout << BLU << "EX:" << reset << endl;
+    // Example: DMA and returing pointer from functions:
+    cout << BLU << "Random:" << reset << endl;
     int *ptr = getArray(10);
     display(ptr, 10);
     delete[] ptr;
@@ -45,13 +46,10 @@ int main() {
 int *getArray(int n) {
     int *p = new int[n];
 
-    srand(time(NULL)); //time_t t = time(NULL);
+    // Use current time as seed for random generator
+    srand(time(0)); // or time(NULL);
     /**
-    The srand(x) function sets the seed of the random number generator algorithm used by the function rand( ).  A seed value of 1 is the default setting yielding the same sequence of values as if srand(x) were not used.  Any other value for the seed produces a different sequence.
-    
-    X://? srand(time(NULL));
-    makes use of the computer's internal clock to control the choice of the seed.  Since time is continually changing, the seed is forever changing.  
-     * https://mathbits.com/MathBits/CompSci/LibraryFunc/rand.htm
+        Note: Without first calling srand(), program will create the same sequence of numbers each time it runs.
     */
     for (int i = 0; i < n; i++) {
         p[i] = rand() % 100;
