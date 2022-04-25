@@ -102,6 +102,25 @@ Example:
 ### ex1: manual Input
 
 ```cpp
+// allocate memory dynamically for 1d array
+int *allocateMemory(int n) {
+    int *arr = new int[n];
+    return arr;
+}
+// take input
+int *takeInput(int *arr, int n) {
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    return arr;
+}
+
+// delete dynamically allocated 1d array
+void delete1d(int *arr) {
+    delete[] arr;
+    cout << "Deleted !!!\n";
+}
+
 void display(int *p, int n) {
     for (int i = 0; i < n; i++) {
         cout << p[i] << " ";
@@ -113,59 +132,33 @@ int main() {
     int n;
     cout << "Enter the size of array: ";
     cin >> n;
-
-    // allocate memory
-    // int *p = new int[n];
-    // or,
-    int *p{new int[n]};
-
-    for (int i = 0; i < n; i++) {
-        cout << "el[" << i << "] :";
-        cin >> p[i];
-    }
+    int *p = allocateMemory(n);
+    p = takeInput(p, n);
     display(p, n);
+    delete1d(p);
 }
+
 ```
 
 ### ex2: Random Number Generation
 
 ```cpp
-
-```cpp
-int *getArray(int n);
-void display(int *p, int n) {
-    for (int i = 0; i < n; i++) {
-        cout << p[i] << " ";
-    }
-    cout << endl;
-}
-
-int main() {
-    // Example: DMA and returning pointer from functions:
-	int n;
-	cin>>n;
-    int *p = getArray(n);
-    display(p, n);
-    delete[] p;
-    return 0;
-}
-
-int *getArray(int n) {
-    int *p = new int[n];
+// generate random array dynamically
+int *generateRandomArray(int n) {
     // Use current time as seed for random generator
     srand(time(0)); // or time(NULL);
     /**
         Note: Without first calling srand(), program will create the same sequence of numbers each time it runs.
     */
+    int *arr = new int[n];
     for (int i = 0; i < n; i++) {
-        p[i] = rand() % 100;
+        arr[i] = rand() % 100;
     }
-    return p;
+    return arr;
 }
 ```
 
 - [https://www.geeksforgeeks.org/rand-and-srand-in-ccpp/](https://www.geeksforgeeks.org/rand-and-srand-in-ccpp/)
-
 
 ## Two-Dimensional Array
 

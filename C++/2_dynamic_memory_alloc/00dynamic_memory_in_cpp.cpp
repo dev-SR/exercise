@@ -8,7 +8,39 @@ using namespace std;
 #define CYN "\e[0;96m"
 #define reset "\e[0m"
 
-int *getArray(int n);
+// allocate memory dynamically for 1d array
+int *allocateMemory(int n) {
+    int *arr = new int[n];
+    return arr;
+}
+// take input
+int *takeInput(int *arr, int n) {
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    return arr;
+}
+
+// delete dynamically allocated 1d array
+void delete1d(int *arr) {
+    delete[] arr;
+    cout << "Deleted !!!\n";
+}
+
+// generate random array dynamically
+int *generateRandomArray(int n) {
+    // Use current time as seed for random generator
+    srand(time(0)); // or time(NULL);
+    /**
+        Note: Without first calling srand(), program will create the same sequence of numbers each time it runs.
+    */
+    int *arr = new int[n];
+    for (int i = 0; i < n; i++) {
+        arr[i] = rand() % 100;
+    }
+    return arr;
+}
+
 void display(int *p, int n) {
     for (int i = 0; i < n; i++) {
         cout << p[i] << " ";
@@ -20,39 +52,13 @@ int main() {
     int n;
     cout << "Enter the size of array: ";
     cin >> n;
-
-    // allocate memory
-    // int *p = new int[n];
-    // or,
-    int *p{new int[n]};
-
-    for (int i = 0; i < n; i++) {
-        cout << "el[" << i << "] :";
-        cin >> p[i];
-    }
+    int *p = allocateMemory(n);
+    p = takeInput(p, n);
     display(p, n);
-
-    // deallocate memory
-    delete[] p;
-
-    // Example: DMA and returning pointer from functions:
-    cout << BLU << "Random:" << reset << endl;
-    int *ptr = getArray(n);
-    display(ptr, n);
-    delete[] ptr;
-    return 0;
-}
-
-int *getArray(int n) {
-    int *p = new int[n];
-
-    // Use current time as seed for random generator
-    srand(time(0)); // or time(NULL);
-    /**
-        Note: Without first calling srand(), program will create the same sequence of numbers each time it runs.
-    */
-    for (int i = 0; i < n; i++) {
-        p[i] = rand() % 100;
-    }
-    return p;
+    delete1d(p);
+    //
+    cout << "Generating random array of size " << n << endl;
+    p = generateRandomArray(n);
+    display(p, n);
+    delete1d(p);
 }
