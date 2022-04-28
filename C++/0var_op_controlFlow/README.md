@@ -12,9 +12,14 @@
     - [🆕if statement with initializer(C++17 syntax)](#if-statement-with-initializerc17-syntax)
     - [`switch`](#switch)
   - [Flow Control - Loops](#flow-control---loops)
+    - [while  loop](#while--loop)
     - [for loop](#for-loop)
     - [break](#break)
     - [continue](#continue)
+    - [ex](#ex)
+      - [print sum of 1 to N](#print-sum-of-1-to-n)
+      - [special sum](#special-sum)
+      - [fibonacci](#fibonacci)
   - [Function](#function)
     - [Forward Declaration](#forward-declaration)
     - [Default Parameters](#default-parameters)
@@ -96,6 +101,13 @@ int main() {
 
 ## Flow Control - Branching
 
+```cpp
+    if (0)
+        cout << "false";
+    if (!0)
+        cout << "true"; // true
+```
+
 ### Ternary Operator
 
 ```cpp
@@ -129,17 +141,39 @@ int main() {
     char op;
     cin >> a >> op >> b;
     switch (op) {
-		case '+':cout << a + b << endl;break;
-		case '-':cout << a - b << endl;break;
-		case '*':cout << a * b << endl;break;
-		case '/':cout << a / b << endl;break;
-		default:cout << "Invalid operator" << endl;
+  case '+':cout << a + b << endl;break;
+  case '-':cout << a - b << endl;break;
+  case '*':cout << a * b << endl;break;
+  case '/':cout << a / b << endl;break;
+  default:cout << "Invalid operator" << endl;
     }
 }
 ```
 
 ## Flow Control - Loops
 
+### while  loop
+
+```cpp
+    int T;
+    cin >> T; // 3
+    while (T--) {
+        cout << T; // 2 1 0
+    }
+```
+
+Print Range:
+
+```cpp
+int start, end;
+cin>>start>>end;// 3 7
+while(start <= end)
+ {
+  cout<<start<<"\n";
+  start++;
+ }
+ // 3 4 5 6 7
+```
 
 ### for loop
 
@@ -156,12 +190,12 @@ int main() {
 }
 
 /**
- * 			12345  % 10 = 5
- * (N/10)	1234   % 10 =+4
- * (N/10)	123    % 10 =+3
- * (N/10)	12     % 10 =+2
- * (N/10)	1      % 10 =+1
- * (N/10)	0
+ *    12345  % 10 = 5
+ * (N/10) 1234   % 10 =+4
+ * (N/10) 123    % 10 =+3
+ * (N/10) 12     % 10 =+2
+ * (N/10) 1      % 10 =+1
+ * (N/10) 0
  */
 ```
 
@@ -218,6 +252,140 @@ running & burning :9
 Well Done
 running & burning :11
 ....
+```
+
+### ex
+
+#### print sum of 1 to N
+
+input:
+
+```cpp
+3
+5
+7
+```
+
+output:
+
+```cpp
+15
+28
+```
+
+Explanation:
+
+- `1+2+3+4+5 = 15`
+- `1+2+3+4+5+6+7 = 28`
+
+solution:
+
+```cpp
+void solve() {
+    int n;
+    cin >> n;
+    int sum = 0;
+    int i = 1;
+    while (i <= n) {
+        sum += i;
+        i++;
+    }
+    cout << "Sum from 1 to " << n << " = " << sum << "\n";
+}
+int main() {
+    int T;
+    cin >> T;
+    while (T--) {
+        solve();
+    }
+}
+```
+
+#### special sum
+
+Then read `N` numbers `a`, `b`, `c`, ..... and compute the sum of: `(a, b*b, c*c*c, ….....)`, that is the k-th number is repeated k times
+
+Input:
+
+```bash
+2
+3 5 7 2
+4 1 2 3 4
+```
+
+Output:
+
+```bash
+62
+288
+```
+
+Explanation:
+
+- `(5 + 7*7 +2*2*2) = 62`
+- `(1+2*2+3*3*3+4*4*4*4) = 288`
+
+Solution:
+
+```cpp
+void solve() {
+    int N;
+    cin >> N;
+    int sum = 0;
+    for (int i = 1; i <= N; i++) {
+        int n;
+        cin >> n;
+        int mul = 1;
+        for (int j = 0; j < i; j++) {
+            mul = n * mul;
+        }
+        sum = sum + mul;
+    }
+    cout << sum << endl;
+}
+int main() {
+    int T;
+    cin >> T;
+    while (T--) {
+        solve();
+    }
+    return 0;
+}
+```
+
+Solve 2:
+
+```cpp
+void solve() {
+    int N;
+    cin >> N;
+    int sum = 0;
+    int i = 1;
+    while (i <= N) {
+        int n;
+        cin >> n;
+        int mul = 1;
+        int j = i;
+        while (j > 0) {
+            mul = n * mul;
+            j--;
+        }
+        sum = sum + mul;
+        i++;
+    }
+    cout << sum << endl;
+}
+```
+
+#### fibonacci
+
+```cpp
+    int n = 10;
+    for (int a = 0, b = 1, c = -1, i = 0; i < n;
+         ++i, c = a + b, a = b, b = c)
+        cout << a << " ";
+
+    // 0 1 1 2 3 5 8 13 21 34
 ```
 
 ## Function
