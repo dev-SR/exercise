@@ -13,10 +13,19 @@
 ## Creating Array
 
 ```cpp
+int a =100
+int a{100} //single integer of value 100
+
+//array of 100 integers
 int a[100];
-int a[100] = {0};
-int a[100] = {1,2,3};
+int a[100] = {5}; //C style; first number is 5, rest are 0
+int a[100] = {1,2,3}; // 1 2 3 0 0 0 0 0 0 0.....
+
+//auto size
 int a[] = {1,2,3};
+int a[]{1, 2, 3};
+
+//array of strings
 string fruits[4] = {"Apple", "Banana", "Orange"};
 ```
 
