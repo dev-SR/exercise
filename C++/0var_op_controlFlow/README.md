@@ -9,6 +9,7 @@
     - [Bitwise Operators](#bitwise-operators)
   - [Flow Control - Branching](#flow-control---branching)
     - [Ternary Operator](#ternary-operator)
+    - [🆕if statement with initializer(C++17 syntax)](#if-statement-with-initializerc17-syntax)
     - [`switch`](#switch)
   - [Flow Control - Loops](#flow-control---loops)
     - [for loop](#for-loop)
@@ -103,6 +104,21 @@ int main() {
 
     string weather = a > 20 ? "Sunny" : "Rainy";
     cout << weather << endl;
+```
+
+### 🆕if statement with initializer(C++17 syntax)
+
+- it change from
+  - `if (condition)` to
+  - `if (initialize ; condition)`
+- helps limiting scope inside if-else scope
+
+```cpp
+if (int i = 10; i % 2 == 0) {
+        cout << "even" << endl;
+    } else if (i % 2 == 1) {
+        cout << "odd" << endl;
+    }
 ```
 
 ### `switch`
