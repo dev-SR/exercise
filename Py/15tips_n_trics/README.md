@@ -1,15 +1,23 @@
 # Play with Pythons
 
 - [Play with Pythons](#play-with-pythons)
-  - [Passing variables number of arguments to functions](#passing-variables-number-of-arguments-to-functions)
+  - [🚀Unpacking Argument Lists](#unpacking-argument-lists)
   - [Callback: functions with parameters, class methods as callback](#callback-functions-with-parameters-class-methods-as-callback)
 
 
 ```python
-# jupyter nbconvert --to markdown tt.ipynb --output README.md
+"""
+cd .\Py\15tips_n_trics\
+jupyter nbconvert --to markdown tt.ipynb --output README.md
+"""
+
 ```
 
-## Passing variables number of arguments to functions
+## 🚀Unpacking Argument Lists
+
+The reverse situation occurs when the arguments are already in a `list` or `tuple` but need to be unpacked for a function call requiring separate positional arguments. For instance, the built-in `range()` function expects separate start and stop arguments. If they are not available separately, write the function call with the `*-operator` to unpack the arguments out of a list or tuple:
+
+
 
 
 ```python
@@ -18,12 +26,34 @@ def multipleParam(*param):
 
 
 multipleParam(1, 2)
-multipleParam(1, 2, 3)
+args= [1, 2, 3]
+multipleParam(*args)
 
 ```
 
     (1, 2)
     (1, 2, 3)
+
+
+In the same fashion, `dictionaries` can deliver keyword arguments with the `**-operator`:
+
+
+
+
+```python
+def info(name, country='Bangladesh', country_code='BD'):
+	print(name, country, country_code)
+
+info_dic = {
+	'name': 'Soikat',
+	'country': 'Germany',
+	'country_code': 'DE'
+}
+
+info(**info_dic)
+```
+
+    Soikat Germany DE
 
 
 ## Callback: functions with parameters, class methods as callback

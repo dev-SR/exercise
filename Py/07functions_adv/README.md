@@ -1,3 +1,5 @@
+# Python Functions
+
 - [Python Functions](#python-functions)
   - [Intro](#intro)
     - [Doc String](#doc-string)
@@ -6,6 +8,7 @@
   - [Argument](#argument)
     - [Arbitrary arguments](#arbitrary-arguments)
     - [Keyword arguments (`**kwargs`)](#keyword-arguments-kwargs)
+    - [🚀Unpacking Argument Lists](#unpacking-argument-lists)
   - [Scope and Life Time of Variables](#scope-and-life-time-of-variables)
   - [Lambda](#lambda)
   - [In-built Functions](#in-built-functions)
@@ -18,7 +21,16 @@
     - [`filter()`](#filter)
     - [`reduce()`](#reduce)
 
-# Python Functions
+
+```python
+"""
+cd .\Py\07functions_adv\
+jupyter nbconvert --to markdown py_function.ipynb --output README.md
+"""
+
+```
+
+## Intro
 
 Syntax:
 ```py
@@ -39,8 +51,6 @@ Syntax:
 4. Doc string describe what the function does. This is optional
 
 5. "return" statement to return a value from the function. This is optional
-
-## Intro
 
 
 ```python
@@ -243,6 +253,45 @@ combined('a','b',22,1,2,3,x=10,y=20)
     a b 22
     (1, 2, 3)
     {'x': 10, 'y': 20}
+
+
+### 🚀Unpacking Argument Lists
+
+The reverse situation occurs when the arguments are already in a `list` or `tuple` but need to be unpacked for a function call requiring separate positional arguments. For instance, the built-in `range()` function expects separate start and stop arguments. If they are not available separately, write the function call with the `*-operator` to unpack the arguments out of a list or tuple:
+
+
+
+
+```python
+print(list(range(3, 6)))             # normal call with separate arguments)
+args = [3, 6]
+print(list(range(*args)))           # call with arguments unpacked from a list
+
+```
+
+    [3, 4, 5]
+    [3, 4, 5]
+
+
+In the same fashion, `dictionaries` can deliver keyword arguments with the `**-operator`:
+
+
+
+
+```python
+def info(name, country='Bangladesh', country_code='BD'):
+	print(name, country, country_code)
+
+info_dic = {
+	'name': 'Soikat',
+	'country': 'Germany',
+	'country_code': 'DE'
+}
+
+info(**info_dic)
+```
+
+    Soikat Germany DE
 
 
 ## Scope and Life Time of Variables
