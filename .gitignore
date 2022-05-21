@@ -124,3 +124,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# nb-mypy
+.mypy_cache
