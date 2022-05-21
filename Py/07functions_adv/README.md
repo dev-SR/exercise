@@ -1,5 +1,6 @@
 # Python Functions
 
+
 - [Python Functions](#python-functions)
   - [Intro](#intro)
     - [Doc String](#doc-string)
@@ -10,6 +11,7 @@
     - [Keyword arguments (`**kwargs`)](#keyword-arguments-kwargs)
     - [🚀Unpacking Argument Lists](#unpacking-argument-lists)
   - [Scope and Life Time of Variables](#scope-and-life-time-of-variables)
+    - [🍉Modifying Global Variable From Inside the Function](#modifying-global-variable-from-inside-the-function)
   - [Lambda](#lambda)
   - [In-built Functions](#in-built-functions)
     - [math](#math)
@@ -21,11 +23,11 @@
     - [`filter()`](#filter)
     - [`reduce()`](#reduce)
 
-
 ```python
 """
 cd .\Py\07functions_adv\
 jupyter nbconvert --to markdown py_function.ipynb --output README.md
+cd ../..
 """
 
 ```
@@ -296,6 +298,8 @@ info(**info_dic)
 
 ## Scope and Life Time of Variables
 
+
+
 - Scope of a variable is the portion of a program where the variable is recognized
 - variables defined inside a function is not visible from outside. Hence, they have a local scope.
 - Lifetime of a variable is the period throughout which the variable exits in the memory.
@@ -312,9 +316,9 @@ def test_life_time():
     This function test the life time of a variables
     """
     local_var = "This is local variable"
-    print(local_var)  # print local variable local_var
+    print(f"inside fn: {local_var}")  # print local variable local_var
 
-    print(global_var)  # print global variable global_var
+    print(f"inside fn: {global_var}")  # print global variable global_var
 
 
 #calling function
@@ -323,13 +327,13 @@ test_life_time()
 #print global variable global_var
 print(global_var)
 
-#print local variable local_var
+#print local variable of the function
 print(local_var)
 
 ```
 
-    This is local variable
-    This is global variable
+    inside fn: This is local variable
+    inside fn: This is global variable
     This is global variable
 
 
@@ -338,14 +342,60 @@ print(local_var)
 
     NameError                                 Traceback (most recent call last)
 
-    <ipython-input-8-88f8916cf7d7> in <module>
+    ~\AppData\Local\Temp/ipykernel_17224/1423070490.py in <module>
          19
-         20 #print local variable local_var
+         20 #print local variable of the function
     ---> 21 print(local_var)
 
 
     NameError: name 'local_var' is not defined
 
+
+### 🍉Modifying Global Variable From Inside the Function
+
+
+```python
+c = 1  # global variable
+
+
+def add():
+    c = c + 2  # increment c by 2
+    print(c)
+
+
+add()
+
+```
+
+When we run the above program, the output shows an error:
+```
+UnboundLocalError: local variable 'c' referenced before assignment
+```
+This is because we can only access the global variable but cannot modify it from inside the function.
+
+The solution for this is to use the `global` keyword.
+
+
+```python
+c = 0  # global variable
+
+
+def add():
+    global c
+    c = c + 2  # increment by 2
+    print("Inside add():", c)
+
+
+add()
+print("In main:", c)
+
+```
+
+    Inside add(): 2
+    In main: 2
+
+
+- [https://www.programiz.com/python-programming/global-keyword](https://www.programiz.com/python-programming/global-keyword)
 
 ## Lambda
 
