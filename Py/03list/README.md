@@ -32,8 +32,7 @@
   - [🌟Filter Function🌟](#filter-function)
   - [List Comprehension🌟🌟🌟](#list-comprehension)
     - [We can also add an if condition](#we-can-also-add-an-if-condition)
-    - [Using with String](#using-with-string)
-    - [Making Nested List Comprehension](#making-nested-list-comprehension)
+    - [Nested List Comprehension](#nested-list-comprehension)
     - [Replacing Map and Filter function with list comprehension](#replacing-map-and-filter-function-with-list-comprehension)
     - [Difference between Generator Expressions and List Comprehensions](#difference-between-generator-expressions-and-list-comprehensions)
   - [Zip Function](#zip-function)
@@ -45,6 +44,7 @@
     - [ex4 - Rotation of a List](#ex4---rotation-of-a-list)
     - [EX: 🌟Lo Shu Magic Square](#ex-lo-shu-magic-square)
     - [ex: 🌟 Breath First Search (CLRS) 🌟](#ex--breath-first-search-clrs-)
+
 
 ```python
 """
@@ -762,23 +762,35 @@ print(letters) # ['h','u','m','a','n']
 
 
 ```python
-l = [1,2,3,4,5,6]
-# creating a new list of squares of each element
-new_l = []
-for el in l:
-    new_l.append(el**2)
+l = [1,2,3,4,5]
+```
 
-print(new_l)
 
-# With List Comprehension:
+```python
+# l = [x for x in [1,2,3]]  # [x loop(x,l)] -> SELECT x FROM l
+l = [x for x in l]
+l
+```
 
-new_l = [el**2 for el in new_l] # [(What to Store ) for each element of list]
-print(new_l)
+
+
+
+    [1, 2, 3]
+
+
+
+
+```python
+l = [(x + 100) for x in l]  # [x_ loop(x,l)] ; x_ = modified x
+l
 
 ```
 
-    [1, 4, 9, 16, 25, 36]
-    [1, 16, 81, 256, 625, 1296]
+
+
+
+    [102, 103, 104, 105, 106]
+
 
 
 ### We can also add an if condition
@@ -787,15 +799,10 @@ print(new_l)
 ```python
 l =[1,2,3,4,5,6,7,8]
 # filtering even elements
-filtered = [i for i in l if i % 2==0]
+filtered = [i for i in l if i % 2==0] # [x loop(x,l) condition(x)] -> SELECT x FROM l WHERE condition
 print(filtered)
-# for i in l:
-# 	if(i%2==0):
-# 		print(i)
 
-# (If you're familiar with SQL, you might think of this as being like a "WHERE" clause)
-
-filtered = [i**2 for i in l if i % 2 == 0]
+filtered = [i**2 for i in l if i % 2 == 0] # [x_ loop(x,l) condition(x)]
 print(filtered)
 # new_l=[]
 # for i in l:
@@ -812,66 +819,36 @@ print(filtered)
 # 		new_l.append(i**2)
 # 	else:
 # 		new_l.append(i**3)
-
-print()
-# removing empty string from the list
-l =["","A","","B","","C"]
-removed = [i for i in l if i]
-print(removed)
-
 ```
 
     [2, 4, 6, 8]
     [4, 16, 36, 64]
     [1, 4, 27, 16, 125, 36, 343, 64]
 
+
+
+```python
+# removing empty string from the list
+l = ["", "A", "", "B", "", "C"]
+removed = [i for i in l if i]
+print(removed)
+```
+
     ['A', 'B', 'C']
 
 
-### Using with String
+### Nested List Comprehension
 
 
 ```python
+selected = [4, 16, 36, 64]
+l = [1,2,3,4,5,6,7,8]
 
-list_string = ['maNgo', 'BanAna', 'PytHoN iS Love', 'Cat iS not doG']
-
-# make the list of string to list of list of words
-list_of_list = [sentence.split() for sentence in list_string]
-print(list_of_list)
-
-words = sum(list_of_list, [])  # make the list of list to a single list
-print(words)  # print the list of word
-
-# modify the case
-correct_case = [str.upper(word[0])+str.lower(word[1:]) for word in words if len(word) > 1]
-
-# print the list of word with desired case
-print(correct_case)
+found = [f for f in l if f**2 in selected]
+print(found)
 ```
 
-    [['maNgo'], ['BanAna'], ['PytHoN', 'iS', 'Love'], ['Cat', 'iS', 'not', 'doG']]
-    ['maNgo', 'BanAna', 'PytHoN', 'iS', 'Love', 'Cat', 'iS', 'not', 'doG']
-    ['Mango', 'Banana', 'Python', 'Is', 'Love', 'Cat', 'Is', 'Not', 'Dog']
-
-
-### Making Nested List Comprehension
-
-However, you can also use nested List comprehension. That means, you can use a list comprehension inside another list comprehension. For example, the previous example code can be written shorter using nested Python list Comprehension. Like this,
-
-
-```python
-
-list_string = ['maNgo', 'BanAna', 'PytHoN iS Love', 'Cat iS not doG']
-
-correct_case = [str.upper(word[0])+str.lower(word[1:])
-                for word in sum([sentence.split() for sentence in list_string], [])
-                if len(word) > 1]
-
-# print the list of word with desired case
-print(correct_case)
-```
-
-    ['Mango', 'Banana', 'Python', 'Is', 'Love', 'Cat', 'Is', 'Not', 'Dog']
+    [2, 4, 6, 8]
 
 
 ### Replacing Map and Filter function with list comprehension
