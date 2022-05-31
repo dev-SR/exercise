@@ -1,8 +1,11 @@
 # Play with Pythons
 
 - [Play with Pythons](#play-with-pythons)
-  - [🚀Unpacking Argument Lists](#unpacking-argument-lists)
-  - [Callback: functions with parameters, class methods as callback](#callback-functions-with-parameters-class-methods-as-callback)
+  - [Functions](#functions)
+    - [🚀Unpacking Argument Lists](#unpacking-argument-lists)
+    - [Callback: functions with parameters, class methods as callback](#callback-functions-with-parameters-class-methods-as-callback)
+  - [DSA](#dsa)
+    - [Merging Dictionaries](#merging-dictionaries)
 
 
 ```python
@@ -13,7 +16,9 @@ jupyter nbconvert --to markdown tt.ipynb --output README.md
 
 ```
 
-## 🚀Unpacking Argument Lists
+## Functions
+
+### 🚀Unpacking Argument Lists
 
 The reverse situation occurs when the arguments are already in a `list` or `tuple` but need to be unpacked for a function call requiring separate positional arguments. For instance, the built-in `range()` function expects separate start and stop arguments. If they are not available separately, write the function call with the `*-operator` to unpack the arguments out of a list or tuple:
 
@@ -56,7 +61,7 @@ info(**info_dic)
     Soikat Germany DE
 
 
-## Callback: functions with parameters, class methods as callback
+### Callback: functions with parameters, class methods as callback
 
 
 ```python
@@ -100,4 +105,63 @@ callbackWithParam(t.test, [1, 2])
     CallMe(1, 2, 3)
     1 2
     test(1, 2)
+
+
+
+```python
+def withParam(cb, param):
+    return cb(*param)
+
+def fun(a,b):
+	print(a+b)
+
+
+print(withParam(fun, [1, 2]))
+
+```
+
+    3
+    None
+
+
+
+```python
+from time import sleep
+from rich.console import Console
+console = Console()
+
+def withLoaderWithParam(cb, param, message="", spinner='aesthetic'):
+    done = False
+    returns = None
+    with console.status(f"[bold yellow] {message}...", spinner=spinner) as s:
+        while not done:
+            returns = cb(*param)
+            done = True
+    return returns
+
+
+withLoaderWithParam(sleep, [5], message="Sleeping for 5 seconds", spinner='dots')
+
+```
+
+## DSA
+
+### Merging Dictionaries
+
+
+```python
+def merge_dicts(*dict_args):
+    result = {}
+    for dictionary in dict_args:
+        result.update(dictionary)
+    return result
+
+merge_dicts({1:2}, {3:4})
+```
+
+
+
+
+    {1: 2, 3: 4}
+
 
