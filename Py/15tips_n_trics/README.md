@@ -6,7 +6,7 @@
     - [Callback: functions with parameters, class methods as callback](#callback-functions-with-parameters-class-methods-as-callback)
   - [DSA](#dsa)
     - [Merging Dictionaries](#merging-dictionaries)
-
+    - [Exclude Dictionary Keys](#exclude-dictionary-keys)
 
 ```python
 """
@@ -163,5 +163,24 @@ merge_dicts({1:2}, {3:4})
 
 
     {1: 2, 3: 4}
+
+
+
+### Exclude Dictionary Keys
+
+
+```python
+def exclude_dict_keys(d, keys):
+    return {k: v for k, v in d.items() if k not in keys}
+
+
+exclude_dict_keys({1: 2, 3: 4}, [1])
+
+```
+
+
+
+
+    {3: 4}
 
 
