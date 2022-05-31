@@ -7,13 +7,14 @@
 ## Different ways of importing modules
 
 ```python
-#
+# import <module>
 import math
-#
+# import <module> as <alias>
 import math as m
 m.factorial(5)
-#
-from math import factorial
+# syntax for importing specific functions from a module
+# from <module> import <function>, <variable>, <class>
+from math import factorial, pi
 factorial(5)
 #
 from math import *
