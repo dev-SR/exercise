@@ -1,28 +1,40 @@
+# OOP
+
 - [OOP](#oop)
   - [OOP concept](#oop-concept)
-  - [OOP in Python](#oop-in-python)
-    - [Instance Attribute and Class Attributes](#instance-attribute-and-class-attributes)
-      - [Class Attributes](#class-attributes)
-      - [Instance Variables](#instance-variables)
-    - [EX- 1](#ex--1)
-    - [Private members](#private-members)
-      - [Name Mangling to access private members](#name-mangling-to-access-private-members)
-    - [Magic Methods](#magic-methods)
+  - [Basics](#basics)
+  - [Instance Attribute and Class Attributes](#instance-attribute-and-class-attributes)
+      - [EX- 1](#ex--1)
+  - [Private members](#private-members)
+    - [Name Mangling to access private members](#name-mangling-to-access-private-members)
+  - [Getters and Setters](#getters-and-setters)
+    - [Using normal function](#using-normal-function)
+    - [Using `@property` decorators](#using-property-decorators)
+  - [Magic Methods](#magic-methods)
     - [Comparing Objects](#comparing-objects)
-    - [Custom containers](#custom-containers)
-    - [Class method and Static method](#class-method-and-static-method)
-      - [Static Method](#static-method)
-      - [Class Method](#class-method)
-        - [When do you use the class method?](#when-do-you-use-the-class-method)
-          - [1. Factory methods](#1-factory-methods)
-          - [2. Correct instance creation in inheritance](#2-correct-instance-creation-in-inheritance)
+  - [Class method and Static method](#class-method-and-static-method)
+    - [Class Method](#class-method)
+      - [When do you use the class method?](#when-do-you-use-the-class-method)
+        - [🏭🏭 1. Factory methods](#-1-factory-methods)
+        - [2. Correct instance creation in inheritance](#2-correct-instance-creation-in-inheritance)
+    - [Static Method](#static-method)
+    - [@classmethod vs @staticmethod](#classmethod-vs-staticmethod)
   - [Inheritance](#inheritance)
+    - [Intro](#intro)
     - [Method Overriding with super()](#method-overriding-with-super)
     - [Multiple Inheritance](#multiple-inheritance)
   - [Abstract Base Classes](#abstract-base-classes)
   - [Polymorphism](#polymorphism)
 
-# OOP
+
+```python
+"""
+cd .\Py\09OOP\
+jupyter nbconvert --to markdown 00py_oop.ipynb --output README.md
+
+"""
+
+```
 
 ## OOP concept
 
@@ -47,7 +59,7 @@
 - The word polymorphism means having many forms
 - We can define polymorphism as the ability of a message to be displayed in more than one form
 
-## OOP in Python
+## Basics
 
 **Defining the constructor of a Class**
 
@@ -69,9 +81,11 @@ def intro(self):
 
 In object-oriented programming, variables at the class level are referred to as class variables, whereas variables at the object level are called instance variables.
 
-### Instance Attribute and Class Attributes
 
-#### Class Attributes
+
+## Instance Attribute and Class Attributes
+
+**Class Attributes**
 
 - defined within the _class construction_
 - shared by all instances of the class
@@ -80,7 +94,7 @@ In object-oriented programming, variables at the class level are referred to as 
 
 They therefore will generally have the same value for every instance unless you are using the class variable to initialize a variable.
 
-#### Instance Variables
+**Instance Variables**
 
 Instance variables are owned by instances of the class. This means that for each object or instance of a class, the instance variables are different.
 
@@ -95,9 +109,9 @@ class Test:
 	class_var= 0
 
 	def __init__(self,v):
-	 # instance variables - only availabe to instance
+	 # instance variables - only available to instance
 		self.instance_var = v
-		# local variable - only availabe to method
+		# local variable - only available to current method
 		local_var = 0
 
 t1= Test(10)
@@ -161,7 +175,7 @@ print(getattr(t1, 'class_var'))
     0
 
 
-### EX- 1
+#### EX- 1
 
 
 ```python
@@ -177,7 +191,7 @@ class Human:
         self.name = name
         self.age = age
         self.is_alive = is_alive
-        #
+        # accessing class variable
         self.id = Human.id_seq
         Human.id_seq += 1
         Human.population += 1
@@ -286,7 +300,41 @@ Human.population
 
 
 
-### Private members
+## Private members
+
+
+```python
+class Test:
+	def __init__(self):
+		self.__private = 0
+		self._not_so_private = 0
+
+
+t = Test()
+
+print(t._not_so_private)  # 0
+print(t.__private)  # AttributeError: 'Test' object has no attribute '__private'
+
+```
+
+    0
+
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    Input In [50], in <cell line: 10>()
+          7 t = Test()
+          9 print(t._not_so_private)  # 0
+    ---> 10 print(t.__private)
+
+
+    AttributeError: 'Test' object has no attribute '__private'
+
+
+Why do we need private members?
 
 
 ```python
@@ -324,7 +372,7 @@ The `private` members of a class are only accessible within the class. In Python
 ```python
 class FrqCounter():
     def __init__(self):
-        # private member
+        # private member using `__` prefix ; !!not `_`
         self.__d = {}
 
     def add(self,v):
@@ -342,28 +390,12 @@ fcnt = FrqCounter()
 fcnt.add("python")
 fcnt.add("Python")
 fcnt.add("C++")
-fcnt.d["python"] = 10 # AttributeError
-print(fcnt.d) # AttributeError
-print(fcnt.__d) # AttributeError
+# fcnt.d["python"] = 10 # AttributeError: 'FrqCounter' object has no attribute 'd'
+# print(fcnt.d) # AttributeError: 'FrqCounter' object has no attribute 'd'
+# print(fcnt.__d) # AttributeError: 'FrqCounter' object has no attribute '__d'
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    AttributeError                            Traceback (most recent call last)
-
-    <ipython-input-47-1eebd60a5344> in <module>
-          3 fcnt.add("Python")
-          4 fcnt.add("C++")
-    ----> 5 fcnt.d["python"] = 10 # AttributeError
-          6 print(fcnt.d) # AttributeError
-          7 print(fcnt.__d) # AttributeError
-
-
-    AttributeError: 'FrqCounter' object has no attribute 'd'
-
-
-#### Name Mangling to access private members
+### Name Mangling to access private members
 
 Python performs name mangling on private attributes. Every member with a double underscore will be changed to `object._class__variable`.
 
@@ -383,11 +415,119 @@ print(fcnt._FrqCounter__d)
     {'_FrqCounter__d': {'python': 2, 'c++': 1}}
 
 
-### Magic Methods
+## Getters and Setters
+
+Private variables in python are not actually hidden fields like in other object oriented languages. Getters and Setters in python are often used when:
+
+- We use getters & setters to add validation logic around getting and setting a value.
+- To avoid direct access of a class field i.e. private variables cannot be accessed directly or modified by external user.
+
+### Using normal function
+
+
+```python
+class Test:
+	def __init__(self):
+		self.__private = 0
+
+	# getter method
+	def get_private(self):
+		return self.__private
+
+	# setter method
+	def set_private(self, x):
+		self.__private = x
+
+
+t = Test()
+
+# setting the age using setter
+t.set_private(21)
+
+# retrieving age using getter
+print(t.get_private())
+
+# print(t.__private)  # AttributeError: 'Test' object has no attribute '__private'
+
+```
+
+    21
+
+
+### Using `@property` decorators
+
+
+
+```python
+class Test:
+	def __init__(self):
+		pass
+
+	@property
+	def read_only(self):
+		return "Jhon"
+
+t = Test()
+print(t.read_only)
+t.read_only  = "Sara" # AttributeError: can't set attribute
+```
+
+    Jhon
+
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    Input In [53], in <cell line: 11>()
+          9 t = Test()
+         10 print(t.read_only)
+    ---> 11 t.read_only  = "Sara"
+
+
+    AttributeError: can't set attribute
+
+
+
+```python
+class Item:
+	def __init__(self,name):
+		self.__name = name
+
+	# getter method
+	@property
+	def name(self):
+		return self.__name
+
+	# setter method
+	@name.setter
+	def name(self, value):
+		if len(value) > 10:
+			raise Exception("Name is too long")
+		else:
+			self.__name = value
+
+
+i = Item("Phone")
+print(i.name)
+i.name = "Tablet"
+print(i.name)
+
+# i.name = "Tablet is too long" # Exception: Name is too long
+
+```
+
+    Phone
+    Tablet
+
+
+## Magic Methods
+
 
 - they are called automatically when some particular event occur
 
-- e.g. `__repr__`(toString) , `__init__`,, `__str__`
+- e.g. `__repr__` , `__init__`,, `__str__`
 
 
 ```python
@@ -512,68 +652,148 @@ print(p1+p2)
     Point(2 , 4)
 
 
-### Custom containers
+## Class method and Static method
+
+
+
+### Class Method
+
+Class methods are methods that are called on the class itself, not on a specific object instance. Therefore, it belongs to a class level, and all class instances share a class method.
+
+- **A class method is bound to the class and not the object of the class**. It can access only class variables.
+- It can modify the class state by changing the value of a class variable that would apply across all the class objects.
+
+The difference between a static method and a class method is:
+
+- Static method knows nothing about the class and just deals with the parameters
+- Class method works with the class since its parameter is always the class itself.
+
+The class method can be called both by the class and its object.
+
+
 
 
 ```python
-class FreqCount():
+class C(object):
+    @classmethod
+    def fun(cls,args):
+    #    ....
 
-    def __init__(self):
-        self.d={}
 
-    def add(self,v):
-        self.d[v.lower()] = self.d.get(v.lower(),0) + 1
-
-    def __getitem__(self,v):
-        return self.d.get(v.lower(),0)
-
-    def __setitem__(self,v,count):
-        self.d[v.lower()] = count
-
-    def __len__(self):
-        return len(self.d)
-
-    def __iter__(self):
-        return iter(self.d)
-
-    def __str__(self):
-        return f"FC ({self.d})"
+# fun: function that needs to be converted into a class method
+# returns: a class method for function.
 
 ```
+
+#### When do you use the class method?
+
+##### 🏭🏭 1. Factory methods
+
+Helper methods for initialization of objects from different data sources.
 
 
 ```python
+import csv
 
-fc = FreqCount()
-fc.add("python")
-fc.add("Python")
-fc.add("python")
-# print(fc.d) instead use __getitem__
-print(fc["python"])
-# using __setitem__ instead of fc.d["c++"]
-fc["c++"] = 10
-# __len__
-print(len(fc))
-# __str__
-print(fc)
-print()
-# __iter__
-for i in fc:
-    print(i,"->",fc[i])
+class Item:
+	pay_rate = 0.8
+	all = []
+
+	def __init__(self,name,price,quantity=0):
+		# Run validation on the arguments
+		assert price > 0, f"Price {price} must be greater than 0"
+		assert quantity >= 0, f"Quantity {quantity} must be greater than or equal to 0"
+
+		self.name = name
+		self.price = price
+		self.quantity = quantity
+
+		Item.all.append(self)
+
+	@classmethod
+	def instantiate_from_csv(cls):
+		with open("items.csv") as f:
+			reader = csv.DictReader(f)
+			items = list(reader)
+			# print(items)
+			for item in items:
+				# Item(item["name"], float(item["price"]), int(item["quantity"]))
+				# or
+				cls(item["name"], float(item["price"]), int(item["quantity"]))
+
+
+	def __repr__(self):
+		return f"Item({self.name},{self.price},{self.quantity})"
+
+# item1  = Item("Phone",10,1)
+# item2  = Item("Laptop",20,2)
+# item3 = Item("Mouse",20,2)
+# item4 = Item("Keyboard",20,2)
+
+Item.instantiate_from_csv()
+print(Item.all)
+```
+
+    [Item(Phone,100.0,1), Item(Laptop,1000.0,3), Item(Cable,10.0,5), Item(Mouse,50.0,5), Item(Keyboard,75.0,5)]
+
+
+##### 2. Correct instance creation in inheritance
+
+Whenever you derive a class from implementing a factory method as a class method, it ensures correct instance creation of the derived class.
+
+You can create a static method for the above example but the object it creates, will always be hard coded as Base class.
+
+But, when you use a class method, it creates the correct instance of the derived class.
+
+
+```python
+from datetime import date
+
+# random Person
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    @staticmethod
+    def fromFathersAge(name, fatherAge, fatherPersonAgeDiff):
+        return Person(name, date.today().year - fatherAge + fatherPersonAgeDiff)
+
+    @classmethod
+    def fromBirthYear(cls, name, birthYear):
+        return cls(name, date.today().year - birthYear)
+
+    def display(self):
+        print(self.name + "'s age is: " + str(self.age))
+
+# Inheritance
+class Man(Person):
+    sex = 'Male'
+
+
+man = Man.fromBirthYear('John', 1985) # using classmethod
+print(isinstance(man, Man))
+
+man1 = Man.fromFathersAge('John', 1965, 20) # using staticmethod
+print(isinstance(man1, Man))
 
 ```
 
-    3
-    2
-    FC ({'python': 3, 'c++': 10})
-
-    python -> 3
-    c++ -> 10
+    True
+    False
 
 
-### Class method and Static method
+Here, using a `static` method to create a class instance wants us to hardcode the instance type during creation.
 
-#### Static Method
+This clearly causes a problem when inheriting `Person` to `Man`.
+
+`fromFathersAge` method **doesn't return** a `Man` object but its base class `Person`'s object.
+
+This violates the OOP paradigm. Using a class method as `fromBirthYear` can ensure the OOP-ness of the code since it takes the first parameter as the class itself and calls its factory method.
+
+### Static Method
+
+
 
 A static method does not receive an implicit first argument (`self`).
 
@@ -637,131 +857,21 @@ Student.isTeen(s1,22)
 
 
 
-#### Class Method
-
-Class methods are methods that are called on the class itself, not on a specific object instance. Therefore, it belongs to a class level, and all class instances share a class method.
-
-- **A class method is bound to the class and not the object of the class**. It can access only class variables.
-- It can modify the class state by changing the value of a class variable that would apply across all the class objects.
-
-The difference between a static method and a class method is:
-
-- Static method knows nothing about the class and just deals with the parameters
-- Class method works with the class since its parameter is always the class itself.
-
-The class method can be called both by the class and its object.
-
-```python
-class C(object):
-    @classmethod
-    def fun(cls, arg1, arg2, ...):
-       ....
-# fun: function that needs to be converted into a class method
-# returns: a class method for function.
-```
-
-
-##### When do you use the class method?
-
-###### 1. Factory methods
-
-Class methods are used when we are dealing with factory methods. **Factory methods are those methods that return a class object for different use cases**. Thus, factory methods create concrete implementations of a common interface.
-
-It is similar to function overloading in C++. Since, Python doesn't have anything as such, class methods and static methods are used.
+### @classmethod vs @staticmethod
 
 
 
-```python
-from datetime import date
+| `@classmethod`                                                                    | `@staticmethod`                                                               |
+| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| It can access **class attributes**, but not the **instance attributes**.          | It cannot access either **class attributes** or **instance attributes**.      |
+| It can be called using the `ClassName.MethodName()` or object.MethodName()        | It can be called using the `ClassName.MethodName()` or `object.MethodName().` |
+| It can be used to **declare a factory method that returns objects of the class**. | It cannot return an object of the class.                                      |
 
-
-class Student:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    @classmethod
-    def calculate_age(cls, name, birth_year):
-        # calculate age an set it as a age
-        # return new object
-        return cls(name, date.today().year - birth_year)
-
-    def show(self):
-        print(self.name + "'s age is: " + str(self.age))
-
-
-jessa = Student('Jessa', 20)
-jessa.show()
-
-# create new object using the factory method
-joy = Student.calculate_age("Joy", 1995)
-joy.show()
-
-```
-
-    Jessa's age is: 20
-    Joy's age is: 26
-
-
-The constructor takes normal parameters `name` and `age`. While, `fromBirthYear` takes `class`, `name` and `birthYear`, calculates the current age by subtracting it with the current year and returns the class instance.
-
-The `fromBirthYear` method takes `Person` class (not `Person` object) as the first parameter `cls` and **returns** the constructor by calling `cls(name, date.today().year - birthYear)`, which is equivalent to `Person(name, date.today().year - birthYear)`
-
-###### 2. Correct instance creation in inheritance
-
-Whenever you derive a class from implementing a factory method as a class method, it ensures correct instance creation of the derived class.
-
-You can create a static method for the above example but the object it creates, will always be hard coded as Base class.
-
-But, when you use a class method, it creates the correct instance of the derived class.
-
-
-```python
-from datetime import date
-
-# random Person
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    @staticmethod
-    def fromFathersAge(name, fatherAge, fatherPersonAgeDiff):
-        return Person(name, date.today().year - fatherAge + fatherPersonAgeDiff)
-
-    @classmethod
-    def fromBirthYear(cls, name, birthYear):
-        return cls(name, date.today().year - birthYear)
-
-    def display(self):
-        print(self.name + "'s age is: " + str(self.age))
-
-# Inheritance
-class Man(Person):
-    sex = 'Male'
-
-
-man = Man.fromBirthYear('John', 1985) # using classmethod
-print(isinstance(man, Man))
-
-man1 = Man.fromFathersAge('John', 1965, 20) # using staticmethod
-print(isinstance(man1, Man))
-
-```
-
-    True
-    False
-
-
-Here, using a `static` method to create a class instance wants us to hardcode the instance type during creation.
-
-This clearly causes a problem when inheriting `Person` to `Man`.
-
-`fromFathersAge` method **doesn't return** a `Man` object but its base class `Person`'s object.
-
-This violates the OOP paradigm. Using a class method as `fromBirthYear` can ensure the OOP-ness of the code since it takes the first parameter as the class itself and calls its factory method.
 
 ## Inheritance
+
+
+### Intro
 
 -  a process where one class acquire all the methods and properties of another class
 
@@ -770,8 +880,10 @@ This violates the OOP paradigm. Using a class method as `fromBirthYear` can ensu
 
 Syntax :
 
+
+
 ```python
-class ChildClassName(ParentClassName)
+# class ChildClassName(ParentClassName):
 ```
 
 
@@ -874,27 +986,28 @@ In Python, `super()` has two major use cases:
 
 
 ```python
-class Animal():
-    def __init__(self):
-        print("Animal constructor")
-        self.age = 1
+class Person:
+	def __init__(self,name,age):
+		self.name = name
+		self.age = age
+
+	def intro(self):
+		print(f"Hi, my name is {self.name} and I am {self.age} years old")
 
 
-class Mammal(Animal):
-    def __init__(self):
-        print("Mammal constructor")
-        self.weight = 2
-        super().__init__()
+class Student(Person):
+	def __init__(self,name,age,cgpa):
+		super().__init__(name,age)
+		self.cgpa = cgpa
 
-m = Mammal()
-print(m.age)
-print(m.weight)
+	def result(self):
+		print(f"Hi, my name is {self.name} and I am {self.age} years old and my cgpa is {self.cgpa}")
+
+s = Student("soikat",22,4.0)
+s.result()
 ```
 
-    Mammal constructor
-    Animal constructor
-    1
-    2
+    Hi, my name is soikat and I am 22 years old and my cgpa is 4.0
 
 
 ### Multiple Inheritance
@@ -934,12 +1047,9 @@ m.greet()
 
 ## Abstract Base Classes
 
+
+
 > lets build a class:
-
-
-```python
-
-```
 
 
 ```python
@@ -973,7 +1083,8 @@ class NetworkStream(Stream):
 
 **Whats wrong with below code:::**
 
-```py
+
+```python
 stream = Stream()
 print(stream.opened)
 stream.open()
@@ -981,7 +1092,6 @@ print(stream.opened)
 ```
 
 We should not allow `Stream()` class to be instantiated as above beacuse `Stream()` is abstruct idea... we don't know what type of stream we are talking about?? is it  `FileStream` or `NetworkStream`
-
 
 
 ```python
