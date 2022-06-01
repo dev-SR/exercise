@@ -8,17 +8,11 @@
       - [For Windows Terminal](#for-windows-terminal)
   - [Markdown Guide](#markdown-guide)
     - [Cheatsheets](#cheatsheets)
-    - [Links](#links)
-      - [**Anchor to a heading in github flavored markdown**](#anchor-to-a-heading-in-github-flavored-markdown)
-        - [Chapter 1](#chapter-1)
-        - [Chapter 2](#chapter-2)
-    - [Images](#images)
-      - [Aligning images](#aligning-images)
-        - [`left` alignment](#left-alignment)
-        - [`right` alignment](#right-alignment)
-        - [`center` alignment example](#center-alignment-example)
+    - [Aligning images](#aligning-images)
+      - [`left` alignment](#left-alignment)
+      - [`right` alignment](#right-alignment)
+      - [`center` alignment example](#center-alignment-example)
     - [Mathematical Formula in markdown](#mathematical-formula-in-markdown)
-    - [Code and Syntax Highlighting](#code-and-syntax-highlighting)
   - [GIT and GITHUB 🚀🚀](#git-and-github-)
     - [Gist](#gist)
     - [Clear Git Cache](#clear-git-cache)
@@ -26,6 +20,17 @@
     - [Git Alias 🚀🚀](#git-alias-)
     - [Commands for Github Repo](#commands-for-github-repo)
     - [Change the URI (URL) for a remote Git repository](#change-the-uri-url-for-a-remote-git-repository)
+    - [☁️🩹Merging Remote Changes](#️merging-remote-changes)
+      - [With Clean Working Directory; no local changes](#with-clean-working-directory-no-local-changes)
+        - [op1: `fetch+merge`](#op1-fetchmerge)
+        - [op2: `pull[fetch+merge]`](#op2-pullfetchmerge)
+      - [🚀Conflicts With Local Changes (Uncommitted)](#conflicts-with-local-changes-uncommitted)
+        - [🚀🚀`commit` local changes first and then pull](#commit-local-changes-first-and-then-pull)
+        - [🚀🚀`stash`: save local changes without committing](#stash-save-local-changes-without-committing)
+      - [🚀Conflicts With Local Changes (Committed)](#conflicts-with-local-changes-committed)
+    - [`push` error: remote contains work that you do not have locally](#push-error-remote-contains-work-that-you-do-not-have-locally)
+      - [Op1: pull and resolve](#op1-pull-and-resolve)
+      - [Op2: force push](#op2-force-push)
     - [error while pushing: RPC failed](#error-while-pushing-rpc-failed)
   - [Creating Snippets 🚀🚀](#creating-snippets-)
     - [Live Templates in JetBrains IDE's](#live-templates-in-jetbrains-ides)
@@ -34,7 +39,7 @@
     - [Linux(ubuntu)](#linuxubuntu)
     - [Intellij](#intellij)
   - [Unicodes](#unicodes)
-      - [LINKS](#links-1)
+      - [LINKS](#links)
       - [Examples](#examples)
 
 ## Vs Code Setting
@@ -133,104 +138,9 @@ Set-PoshPrompt -Theme pure
 
 > [Cheatsheet-1](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
 
-<div id="links"/>
+### Aligning images
 
-### Links
-
-```
-[I'm an inline-style link](https://www.google.com)
-
-[I'm a relative reference to a repository file](C++/0string)
-
-```
-
-[I'm an inline-style link](https://www.google.com)
-
-[I'm a relative reference to a repository file](C++/0string)
-
-#### **Anchor to a heading in github flavored markdown**
-
-Github automatically parses anchor tags out of your headers. So you can do the
-following:
-
-```
-[Go to foo](#foo)
-```
-
-[Go to foo](#foo)
-
-```
-### Foo
-```
-
-> #### Foo
-
-In the above case, the Foo header has generated an anchor tag with the name foo.
-
-> **Note:**
-
-- just **_one #_** for all **heading** sizes
-- **no space** between # and anchor name
-- anchor tag names must be **_lowercase_**, and **_delimited by dashes_** if
-   multi-word.
-
-```
-[click on this link](#my-multi-word-header)
-
-### My Multi Word Header
-```
-
-> #### HACK: Referencing Empty Div
-
-- [Chapter 1](#Chapter1)
-- [Chapter 2](#Chapter2)
-
-```md
--  [Chapter 1](#Chapter1)
--  [Chapter 2](#Chapter2)
-
-<div id="Chapter1"/>
-### Chapter 1
-
-Some text here.
-Some text here. Some text here.
-
-<span id="Chapter2"/>
-### Chapter 2
-
-Some text here.
-Some text here. Some text here.
-```
-
-<div id="Chapter1"/>
-
-##### Chapter 1
-
-Some text here.
-Some text here. Some text here.
-
-<span id="Chapter2"/>
-
-##### Chapter 2
-
-Some text here.
-Some text here. Some text here.
-
-<div id="images"/>
-
-### Images
-
-```git
-![Tux, the Linux mascot](/assets/images/tux.png)
-![Tux, the Linux mascot](https://...)
-
-```
-
-![Tux, the Linux mascot](https://upload.wikimedia.org/wikipedia/commons/3/35/Tux.svg)
-
-#### Aligning images
-
-##### `left` alignment
+#### `left` alignment
 
 <img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100">
 
@@ -242,7 +152,7 @@ This is the code you need to align images to the left:
 
 ---
 
-##### `right` alignment
+#### `right` alignment
 
 <img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100">
 
@@ -254,7 +164,7 @@ This is the code you need to align images to the right:
 
 ---
 
-##### `center` alignment example
+#### `center` alignment example
 
 <p align="center">
   <img width="460" height="300" src="http://www.fillmurray.com/460/300">
@@ -273,73 +183,6 @@ This is the code you need to align images to the right:
 [https://latex.codecogs.com/](https://latex.codecogs.com/)\
 [https://www.codecogs.com](https://www.codecogs.com/latex/eqneditor.php)\
 [http://www.sciweavers.org/](http://www.sciweavers.org/free-online-latex-equation-editor)
-
-<div id="highlighting"/>
-
-### Code and Syntax Highlighting
-
-```
-Inline `code` has `back-ticks around` it.
-```
-
-Inline `code` has `back-ticks around` it.
-
-Blocks of code are either fenced by lines with three back-ticks ```\` , or are
-indented with four spaces. I recommend only using the fenced code blocks --
-they're easier and only they support syntax highlighting.
-
-Basic Example:
-
-````
-```javascript
-var s = "JavaScript syntax highlighting";
-alert(s);
-
-
-```python
-s = "Python syntax highlighting"
-print s
-
-
-```No language indicated, so no syntax highlighting.
-But let's throw in a <b>tag</b>.
-
-````
-
-```javascript
-var s = 'JavaScript syntax highlighting';
-alert(s);
-```
-
-```python
-s = "Python syntax highlighting"
-print s
-```
-
-```
-No language indicated, so no syntax highlighting.
-But let's throw in a <b>tag</b>.
-```
-
-Highlight Bash/shell code :
-
-```properties
-Shell:      console, shell
-Bash:       bash, sh, zsh
-PowerShell: powershell, ps
-DOS:        dos, bat, cmd
-```
-
-or,
-
-````
-```properties
- npm run build
-````
-
-```properties
- npm run build
-```
 
 ## GIT and GITHUB 🚀🚀
 
@@ -439,6 +282,110 @@ git remote -v
 # origin  https://github.com/user/repo2.git (fetch)
 # origin  https://github.com/user/repo2.git (push)
 
+```
+
+### ☁️🩹Merging Remote Changes
+
+#### With Clean Working Directory; no local changes
+
+##### op1: `fetch+merge`
+
+List All Branches:
+
+- To see local branches, run this command: `git branch`
+- To see remote branches, run this command: `git branch -r`
+- To see all local and remote branches, run this command: `git branch -a`
+
+1. Fetch remote changes:
+
+```bash
+git fetch
+# git fetch origin # we don't need to specify origin here as we used `-u` flag with git push
+```
+
+2. Merge remote changes:
+
+```bash
+git merge origin/main
+```
+
+##### op2: `pull[fetch+merge]`
+
+```bash
+git pull
+# git pull origin
+```
+
+#### 🚀Conflicts With Local Changes (Uncommitted)
+
+```txt
+error: Your local changes to the following files would be overwritten by merge:
+        README.md
+Please commit your changes or stash them before you merge.
+Aborting
+Updating eeac98a..55e0242
+```
+
+In this case, we need to commit our local changes first and then pull. Or we can stash them.
+
+##### 🚀🚀`commit` local changes first and then pull
+
+```bash
+git add -A
+git commit -m "commit local changes before pull"
+git pull
+```
+
+##### 🚀🚀`stash`: save local changes without committing
+
+```bash
+git stash
+# name the stash
+git stash save stashing
+git stash save "stashing local changes"
+git pull
+```
+
+```bash
+>> git stash list
+stash@{0}: On main: stashing
+stash@{1}: On main: stashing local changes
+```
+
+2. Apply to changes back to the code:
+
+```bash
+git stash pop
+git stash apply 0
+```
+
+#### 🚀Conflicts With Local Changes (Committed)
+
+1. Pull remote changes:
+
+```bash
+git pull
+```
+
+2. Resolve conflicts using VSCode
+
+3. Commit changes
+
+### `push` error: remote contains work that you do not have locally
+
+Remote repo has changes that we do not have locally.
+
+#### Op1: pull and resolve
+
+1. Pull remote changes:`git pull`
+2. Resolve conflicts using VSCode
+3. Commit changes
+4. then push: `git push`
+
+#### Op2: force push
+
+```bash
+git push --force
 ```
 
 ### error while pushing: RPC failed
