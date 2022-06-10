@@ -17,6 +17,7 @@
 			- [Creating and Activating a virtualenv](#creating-and-activating-a-virtualenv)
 			- [Installing from a copied a `pipfile`](#installing-from-a-copied-a-pipfile)
 			- [UnInstalling packages](#uninstalling-packages)
+			- [Remove virtualenv](#remove-virtualenv)
 		- [Create Anaconda Environment](#create-anaconda-environment)
 	- [Using Pip to install packages to Anaconda Environment](#using-pip-to-install-packages-to-anaconda-environment)
 	- [Convert `ipynb` files into html, markdown, pdf and other format files](#convert-ipynb-files-into-html-markdown-pdf-and-other-format-files)
@@ -180,6 +181,12 @@ pipenv install
 
 ```python
 pipenv uninstall flask
+```
+
+#### Remove virtualenv
+
+```bash
+pipenv --rm
 ```
 
 ### Create Anaconda Environment
