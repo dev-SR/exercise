@@ -1,2 +1,2 @@
-from utils.mod import siblings
-siblings()
+from pkg1.mod1 import fn1
+fn1()

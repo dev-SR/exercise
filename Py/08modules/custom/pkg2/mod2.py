@@ -1,2 +1,2 @@
-def fn2():
-    print("pkg1.mod1.fn2()")
+def fromSibling():
+    print("pkg2.mod2.fromSibling()")
