@@ -1,32 +1,40 @@
 # DateTime
 
-[https://realpython.com/python-datetime/](https://realpython.com/python-datetime/)
-
+- [DateTime](#datetime)
+  - [Creating Python datetime Instances](#creating-python-datetime-instances)
+  - [Using Strings to Create Python datetime Instances](#using-strings-to-create-python-datetime-instances)
+  - [DEADLINE](#deadline)
 
 ```python
-import datetime
+"""
+cd .\Py\08modules\built_in\datetime\
+jupyter nbconvert --to markdown datetime.ipynb --output README.md
+
+ """
+from datetime import datetime,date
+
 ```
 
 
 ```python
-datetime.datetime.now()
+datetime.now()
 ```
 
 
 
 
-    datetime.datetime(2021, 10, 16, 23, 58, 39, 133743)
+    datetime.datetime(2022, 6, 19, 23, 13, 26, 727317)
 
 
 
 
 ```python
-date_object = datetime.date.today()
+date_object = date.today()
 print(date_object)
 ```
 
-    2021-10-16
-    
+    2022-06-19
+
 
 ## Creating Python datetime Instances
 
@@ -84,13 +92,37 @@ date.fromisoformat("2020-01-31")
 
 
 ```python
-from datetime import datetime
+print(datetime.now())
+print(datetime.now().strftime('%H:%M:%S'))
+print(datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+print(datetime.strptime(
+    "2022-06-08 16:02:13.885533+06:00".split(".")[0], '%Y-%m-%d %H:%M:%S'))
+print(datetime.fromisoformat(
+    "2022-06-08 16:02:13.885533+06:00").strftime('%Y-%m-%d %H:%M:%S'))
 
-DEADLINE = datetime(year=2021, month=12, day=12, hour=8)
+```
+
+    2022-06-19 23:14:20.711485
+    23:14:20
+    2022-06-19 23:14:20
+    2022-06-08 16:02:13
+    2022-06-08 16:02:13
+
+
+## DEADLINE
+
+
+```python
+from datetime import datetime
+print(datetime.now())
+DEADLINE = datetime(year=2022, month=12, day=12, hour=8)
+print(DEADLINE)
 countdown = DEADLINE - datetime.now()
 print(f"Countdown to DEADLINE: {countdown}")
 
 ```
 
-    Countdown to DEADLINE: 56 days, 7:56:10.039381
-    
+    2022-06-19 23:15:19.630033
+    2022-12-12 08:00:00
+    Countdown to DEADLINE: 175 days, 8:44:40.368963
+
