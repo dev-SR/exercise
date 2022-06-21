@@ -10,7 +10,8 @@
       - [🚀Pass By References - Using Pointers | Modify the passed parameters in a function](#pass-by-references---using-pointers--modify-the-passed-parameters-in-a-function)
   - [👉Reference(`&`) in  C++](#reference-in--c)
     - [Differences between 👉pointers and 👉references in C++](#differences-between-pointers-and-references-in-c)
-      - [When to use What](#when-to-use-what)
+      - [Pass by Reference and Pass By Pointer - When to use What](#pass-by-reference-and-pass-by-pointer---when-to-use-what)
+    - [Arrays are 🧠🧠Passed as References🧠🧠 by Default](#arrays-are-passed-as-references-by-default)
     - [🌟Reference Applications🌟](#reference-applications)
       - [🚀🚀Pass By Reference - Reference Variables | Modify the passed parameters in a function](#pass-by-reference---reference-variables--modify-the-passed-parameters-in-a-function)
       - [🚀🚀Avoiding a copy of large structures](#avoiding-a-copy-of-large-structures)
@@ -144,7 +145,32 @@ Major dif:
   1. **Safer**: Since references must be initialized, wild references like wild pointers are unlikely to exist. It is still possible to have references that don’t refer to a valid location (See questions 5 and 6 in the below exercise)
   2. **Easier to use**: A pointer needs to be dereferenced with `*` to access the memory location it points to, whereas a reference can be used directly. A pointer to a class/struct uses `‘->’` (arrow operator) to access its members whereas a reference uses a `‘.’` (dot operator)
 
-#### When to use What
+#### Pass by Reference and Pass By Pointer - When to use What
+
+```cpp
+void swapPassByRefsWithoutPointer(int &n1, int &n2) {
+    int temp;
+    temp = n1;
+    n1 = n2;
+    n2 = temp;
+}
+void swapPassByRefsWithPointer(int *n1, int *n2) {
+    int temp;
+    temp = *n1;
+    *n1 = *n2;
+    *n2 = temp;
+}
+int main() {
+    int a = 1, b = 2;
+    swapPassByRefsWithoutPointer(a, b);
+    cout << a << " " << b << endl; // 2 1
+    swapPassByRefsWithPointer(&a, &b);
+    cout << a << " " << b << endl; // 1 2
+    return 0;
+}
+```
+
+
 
 The performances are exactly the same, as **references are implemented internally as pointers**. But still we can keep some points in mind to decide when to use what :
 
@@ -157,6 +183,10 @@ The performances are exactly the same, as **references are implemented internall
 
 - References are usually preferred over pointers whenever we don’t need “reseating”.
 - Overall, Use references when you can, and pointers when you have to. But if we want to write C code that compiles with both C and a C++ compiler, you’ll have to restrict yourself to using pointers
+
+### Arrays are 🧠🧠Passed as References🧠🧠 by Default
+
+- [https://github.com/dev-SR/exercise/tree/main/C%2B%2B/1.2array#-arrays-are-passed-by-references-only-but-others-are-by-value](https://github.com/dev-SR/exercise/tree/main/C%2B%2B/1.2array#-arrays-are-passed-by-references-only-but-others-are-by-value)
 
 ### 🌟Reference Applications🌟
 
