@@ -5,10 +5,14 @@
   - [Working with Array](#working-with-array)
   - [Array and Pointer](#array-and-pointer)
   - [Passing Array To a Function](#passing-array-to-a-function)
-    - [UseCases:](#usecases)
+    - [🎗️🎗️🎗️ C/CPP ✂️modifies✂️ Original array | Pass By Reference/Address](#️️️-ccpp-️modifies️-original-array--pass-by-referenceaddress)
+      - [🧠🧠 Arrays are passed by References only; 🧠🧠But Others are by Value🧠🧠](#-arrays-are-passed-by-references-only-but-others-are-by-value)
+    - [🌟🌟🌟Returning (Local) Array From the Function in C/C++ | `int* fn(){} ~ int *p = fn()`](#returning-local-array-from-the-function-in-cc--int-fn--int-p--fn)
+    - [Enabling Pass by Value in C/CPP](#enabling-pass-by-value-in-ccpp)
+    - [Example](#example)
       - [Partial Array Processing](#partial-array-processing)
-      - [Modify Received Array](#modify-received-array)
-        - [ex: find all occurrences](#ex-find-all-occurrences)
+      - [sorting](#sorting)
+      - [Find all occurrences](#find-all-occurrences)
 
 ## Creating Array
 
@@ -85,6 +89,12 @@ using `p` as a pointer to the first element of the array `a`:
 
 ## Passing Array To a Function
 
+- [https://www.codingninjas.com/blog/2021/08/31/passing-arrays-to-functions-in-c-c/](https://www.codingninjas.com/blog/2021/08/31/passing-arrays-to-functions-in-c-c/)
+- [https://www.scaler.com/topics/passing-array-to-function-in-c-cpp/](https://www.scaler.com/topics/passing-array-to-function-in-c-cpp/)
+- [https://www.geeksforgeeks.org/return-local-array-c-function/](https://www.geeksforgeeks.org/return-local-array-c-function/)
+
+**A whole array cannot be passed as an argument to a function in C++**. You can, however, pass a `pointer` to an array without an index by specifying the **array’s name**.
+
 ```kotlin
 int fun(int a[]) {
     cout << sizeof(a) << endl;  // 8 -> 'a' is effectively a pointer
@@ -108,19 +118,31 @@ int main() {
 }
 ```
 
-Note that `a[]` for fun() is just a `pointer` even if square brackets are used as the name of an array acts as a special kind of variable -- a `pointer` -- which stores the starting address of the array.
+> Note that `a[]` for fun() is just a `pointer` even if square brackets are used as the name of an array acts as a special kind of variable -- a `pointer` -- which stores the starting address of the array.
 
-- Because an array is not a single item, the **array contents are not passed "by value"** as we are used to with normal variables.
-- When an array is sent into a function, **only its starting address is really sent**. This means the f**unction will always have access to the actual array sent in**
-- Returning an array from a function works similarly, but we need pointers to use them well
+**Points to remember:**
+
+- Passing arrays to functions in C/C++ are **passed by reference**. Even though we do not create a reference variable, **the compiler passes the pointer to the array**, _making the original array available** for the called function’s use_. **Thus, if the function modifies the array, it will be reflected back to the original array.**
+- The equivalence between arrays and pointers to an array is valid only and only for the function arguments.
+- There is usually **no need to pass an array explicitly by reference** because arrays are always passed by reference.
 
 So, We can use **any of the below** code to declare the function which is intended to receive an array as an argument.
 
 ```cpp
-return_type function(type arrayname[])
-return_type function(type arrayname[SIZE])
-return_type function(type *arrayname)
+void fn(type *arrayname)
+void fn(type arrayname[SIZE])
+void fn(type arrayname[])
 ```
+
+If an argument is a multidimensional array, its size must be specified. However, the size of the first dimension is optional.
+
+```cpp
+void fn(int arr[SIZE_X][SIZE_Y])
+void fn(int arr[][SIZE_Y])
+```
+
+In C, when we pass an array to a function say fun(), it is **always treated as** a `pointer` by fun().
+Therefore in C, **we must pass the size of the array as a parameter**. **Size may not be needed only in the case of** `‘\0’` terminated `character arrays`, size can be determined by checking the end of string character.
 
 ```cpp
 void printArray(int a[], int size) { //or int *a
@@ -137,7 +159,250 @@ int main() {
 }
 ```
 
-### UseCases:
+### 🎗️🎗️🎗️ C/CPP ✂️modifies✂️ Original array | Pass By Reference/Address
+
+- [https://www.educative.io/answers/pass-by-value-vs-pass-by-reference](https://www.educative.io/answers/pass-by-value-vs-pass-by-reference)
+
+```cpp
+void fn(formal_parameters){
+
+}
+
+arguments = x,y;
+fn(arguments/actual_parameters);
+```
+
+1. `Call By Reference`: It copies the address of an `argument` into the formal `parameter` of that function. In this method, the address is used to access the actual `argument` used in the function call. **It means that changes made in the `parameter` will alter the passing `argument`.**
+
+2. `Call By Value`: It copies the value of an `argument` into the formal `parameter` of that function. **Hence, changes made to the `parameter` of the main function do not affect the original values that are passed as `arguments`.**
+
+<div align="center">
+<img src="img/pv.jpg" alt="pv.jpg" width="600px">
+</div>
+
+Passing arrays to functions in C/C++ are **passed by reference**. Even though we do not create a reference variable, **the compiler passes the pointer to the array**, _making the original array available** for the called function’s use_. **Thus, if the function modifies the array, it will be reflected back to the original array.** Functions have access to the actual array sent in and can modify it
+
+```cpp
+void modifyReceivedArr(int a[], int n) {
+    for (int i = 0; i < n; i++)
+        a[i] = n - i;
+}
+
+int main() {
+    int ar[5];
+    int n = sizeof(ar) / sizeof(int);
+    modifyReceivedArr(ar, n);
+    printArray(ar, n); // 5 4 3 2 1
+}
+```
+
+#### 🧠🧠 Arrays are passed by References only; 🧠🧠But Others are by Value🧠🧠
+
+**There is usually no need to pass an `array` explicitly by reference because arrays are always passed by reference.**
+
+**But other types of variables are by default passed by value**. With pass by value, local parameters become copies of the original arguments that are passed in. Therefore, changes made in the function to the passed arguments do not affect the originals.
+
+When needed we have to **explicitly use pass by References** to allow a function to access one of its parameters directly without creating a copy. We may be passing a complex data structure as a parameter, or we could be looking to optimize the function’s performance on a very large number of function calls using such techniques.**Pass by pointer works even more similarly to pass by reference and even achieves the same result:**
+
+- [dev-SR/differences-between-pointers-and-references-in-cpp](https://github.com/dev-SR/exercise/tree/main/C%2B%2B/1.1pointers#differences-between-pointers-and-references-in-c)
+- [https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/](https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/)
+
+```cpp
+// By Default arrays are always passed by reference.
+void swapArr(int a[]) {
+    int temp = a[0];
+    a[0] = a[1];
+    a[1] = temp;
+}
+/*
+So, There is usually no need to pass an array `explicitly` by reference because arrays are always passed by reference. [CPP syntax]
+ */
+void swapArrRefs(int (&a)[2]) {
+    int temp = a[0];
+    a[0] = a[1];
+    a[1] = temp;
+}
+
+// But other variables are passed by Value
+void swapOtherVarsCallByValue(int a, int b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+// to modify the original values, we need to pass by address/reference
+void swapOtherVarsCallByRefs_Pointer(int *a, int *b) {
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+// CPP syntax
+/*
+Pass by reference is used to allow a function to modify a variable without having to create a copy of it.
+ */
+void swapOtherVarsCallByRefs_CPP_Refs(int &a, int &b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+int main() {
+    int arr[2] = {1, 2};
+    swapArr(arr);
+    printArray(arr, 2); // 2 1
+    swapArrRefs(arr);
+    printArray(arr, 2); // 1 2
+
+    int a = 1, b = 2;
+    swapOtherVarsCallByValue(a, b);
+    cout << a << " " << b << endl; // 1,2
+    swapOtherVarsCallByRefs_Pointer(&a, &b);
+    cout << a << " " << b << endl; // 2,1
+    swapOtherVarsCallByRefs_CPP_Refs(a, b);
+    cout << a << " " << b << endl; // 1,2
+
+    return 0;
+}
+```
+
+
+### 🌟🌟🌟Returning (Local) Array From the Function in C/C++ | `int* fn(){} ~ int *p = fn()`
+
+We know that a function can not return more than one variable in C/C++. In some problems, we may need to return multiple values from a function, in such cases, an array could be returned from the function. **To return an array from a function we have to return the `pointer` of a data type of the array**.
+
+Consider the below C++ program. Is it right way of returning array from a function?
+
+```cpp
+int *fun() {
+    int arr[100];
+    arr[0] = 10;
+    arr[1] = 20;
+    return arr;
+}
+
+int main() {
+    int *ptr = fun();
+    printf("%d %d", ptr[0], ptr[1]);
+    return 0;
+}
+```
+
+Warning:
+
+```bash
+In function 'int* fun()':
+6:8: warning: address of local variable 'arr' returned [-Wreturn-local-addr]
+    int arr[100];
+        ^
+```
+
+The problem is, we return address of a local variable which is not advised as local variables may not exist in memory after function call is over.
+**So in simple words, Functions can’t return arrays in C. However, in order to return the array in C by a function, one of the below alternatives can be used.**
+
+Following are some correct ways of returning array:
+
+- Using Dynamically Allocated Array
+- Using static array
+- Using struct
+
+1. DMA
+
+
+```cpp
+int *fun() {
+    // int *arr = new int[10];
+    int *arr = (int *)malloc(10 * sizeof(int)); // in c
+    for (int i = 0; i < 10; i++) {
+        arr[i] = i;
+    }
+    return arr;
+}
+
+int main() {
+    int *p = fun();
+    printArray(p, 10);
+    free(p);
+    return 0;
+}
+```
+
+2. static array
+
+```cpp
+int *fun() {
+    static int arr[10];
+    for (int i = 0; i < 10; i++) {
+        arr[i] = i;
+    }
+    return arr;
+}
+
+int main() {
+    int *p = fun();
+    printArray(p, 10);
+    return 0;
+}
+```
+
+3. struct
+
+```cpp
+struct arrWrap {
+    int arr[100];
+};
+struct arrWrap fun() {
+    struct arrWrap x;
+    for (int i = 0; i < 10; i++) {
+        x.arr[i] = i;
+    }
+    return x;
+}
+
+int main() {
+    struct arrWrap x = fun();
+    printArray(x.arr, 10);
+    return 0;
+}
+```
+
+### Enabling Pass by Value in C/CPP
+
+In order to pass an array as call by value we have to wrap the array inside a structure and have to assign the values to that array using an object of that structure. This will help us create a new copy of the array that we are passing as an argument to a function.
+
+Lets understand this with a simple example.
+
+- Create a structure which will act as an wrapper and will declare an array inside it.
+- Assign the values to the array declared inside a structure using the object of a structure.
+- Pass the address of the object to the function call so as to pass the complete array to a function.
+
+
+```cpp
+struct Wrapper {
+    int arr[N];
+};
+
+// Array is passed by value wrapped in tmp
+void compute(struct Wrapper tmp) {
+    int *ptr = tmp.arr;
+    int i;
+    for (i = 0; i < N; ++i)
+        ptr[i] = 100;
+    printf("Values after modification \n");
+    printArray(ptr, N); // 100 100 100 100 100
+}
+
+int main() {
+    int i;
+    struct Wrapper obj;
+    for (i = 0; i < N; i++)
+        obj.arr[i] = 10;
+    compute(obj);
+    printf("Values after calling function \n");
+    printArray(obj.arr, N); // 10 10 10 10 10
+    return 0;
+}
+```
+
+### Example
 
 #### Partial Array Processing
 
@@ -157,25 +422,35 @@ int main() {
 }
 ```
 
-#### Modify Received Array
+#### sorting
 
-Functions have access to the actual array sent in and can modify it
 
 ```cpp
-void modifyReceivedArr(int a[], int n) {
-    for (int i = 0; i < n; i++)
-        a[i] = n - i;
+void sort(int a[]) {
+    int i, j, tmp;
+    for (i = 0; i < 10; i++) {
+        for (j = i + 1; j < 10; j++) {
+            if (a[j] < a[i]) {
+                tmp = a[i];
+                a[i] = a[j];
+                a[j] = tmp;
+            }
+        }
+    }
 }
 
-int main() {
-    int ar[5];
-    int n = sizeof(ar) / sizeof(int);
-    modifyReceivedArr(ar, n);
-    printArray(ar, n); // 5 4 3 2 1
+void main() {
+    int i;
+    int arr[10] = {4, 3, 7, 12, 34, 76, 100, 76, 56, 1};
+    sort(arr); // calling function and storing returned array
+    printf("Sorted elements are \n");
+    printArray(arr, 10); // 1 3 4 7 12 34 56 76 76 100
 }
 ```
 
-##### ex: find all occurrences
+
+
+#### Find all occurrences
 
 ```c
 #include <stdio.h>
