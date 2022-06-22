@@ -1,5 +1,6 @@
 # LIST
 
+
 - [LIST](#list)
   - [🚀🚀Creating List](#creating-list)
   - [🚀🚀Indexing/Slicing of List works same as String](#indexingslicing-of-list-works-same-as-string)
@@ -38,9 +39,10 @@
     - [Replacing Map and Filter function with list comprehension](#replacing-map-and-filter-function-with-list-comprehension)
     - [Zip Function](#zip-function)
   - [🚀🚀Utils](#utils)
-    - [find elements in one list that are not in the other](#find-elements-in-one-list-that-are-not-in-the-other)
-      - [check if a list contains any item from another list python](#check-if-a-list-contains-any-item-from-another-list-python)
-      - [check if an item is a subset of another list](#check-if-an-item-is-a-subset-of-another-list)
+    - [find elements in one list that are `not in` the other : `subtraction`](#find-elements-in-one-list-that-are-not-in-the-other--subtraction)
+    - [find elements in one list that are `in` the other : `intersection`](#find-elements-in-one-list-that-are-in-the-other--intersection)
+    - [check if a list contains any item from another list python](#check-if-a-list-contains-any-item-from-another-list-python)
+    - [check if an item is a subset of another list](#check-if-an-item-is-a-subset-of-another-list)
   - [Examples](#examples)
     - [ex1](#ex1)
     - [Ex2](#ex2)
@@ -981,7 +983,7 @@ print(list(zip("abc",l1,l2)))
 
 ## 🚀🚀Utils
 
-### find elements in one list that are not in the other
+### find elements in one list that are `not in` the other : `subtraction`
 
 - [https://stackoverflow.com/questions/41125909/python-find-elements-in-one-list-that-are-not-in-the-other](https://stackoverflow.com/questions/41125909/python-find-elements-in-one-list-that-are-not-in-the-other)
 
@@ -1062,7 +1064,7 @@ elements_not_in_checking_list
 
 
 
-Shortcut: using `set`
+🧠🧠🧠Shortcut: using `set`🧠🧠🧠
 
 
 ```python
@@ -1090,7 +1092,7 @@ list(set(base_list) - set(checking_list))
 
 
 
-Shortcut: using `dict`
+Shortcut: using `np.setdiff1d
 
 
 ```python
@@ -1106,12 +1108,56 @@ main_list
 
 
 
-#### check if a list contains any item from another list python
+### find elements in one list that are `in` the other : `intersection`
+
+
+```python
+base_list = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+checking_list = [1, 3, 10, 12, 5]
+
+```
+
+
+```python
+checking_set = set(checking_list)  # this reduces the lookup time from O(n) to O(1)
+[item for item in base_list if item in checking_set]
+```
+
+
+
+
+    [1, 3, 5]
+
+
+
+
+```python
+list(set(base_list) & set(checking_list))
+
+```
+
+
+
+
+    [1, 3, 5]
+
+
+
+### check if a list contains any item from another list python
+
+
+
+```python
+base_list = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+checking_list = [1, 3, 10, 12, 5]
+
+```
 
 
 ```python
 check = any(item in base_list for item in checking_list)
 print(check)
+
 ```
 
     True
@@ -1120,11 +1166,12 @@ print(check)
 
 ```python
 check = all(item in base_list for item in checking_list)
-print(check)
+print(check) #checking_list = [1, 3, 10, 12, 5]
+
 
 ```
 
-    True
+    False
 
 
 
@@ -1139,7 +1186,7 @@ print(output)
     True
 
 
-#### check if an item is a subset of another list
+### check if an item is a subset of another list
 
 
 ```python
@@ -1167,11 +1214,6 @@ else:
     [2, 4, 6, 8, 10, 1, 3, 5, 7, 9, 4, 8, 12, 16, 20]
 
 
-
-
-```python
-
-```
 
 ## Examples
 
