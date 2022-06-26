@@ -253,3 +253,42 @@ def fn1():
 from pkg1 import fn1
 fn1()
 ```
+
+output:
+
+```bash
+pkg1.mod1.fn1()
+pk1.child_pkg.child_mod.fromChild()
+sibling_pkg.sibling_mod.fromSibling()
+sibling_pkg.sibling_child_pkg.sibling_child_mod.fromChildOfSibling()
+```
+
+Additional: Importing everything in `main.py`
+
+
+```python
+from pkg1 import fromChild, fromSibling, fromChildOfSibling
+def fn1():
+    print("main()")
+    fromChild()
+    fromSibling()
+    fromChildOfSibling()
+fn1()
+```
+
+now: `pk1.__init__.py`
+
+```python
+from .child_pkg import *
+from sibling_pkg import *
+from sibling_pkg.sibling_child_pkg import *
+```
+
+output:
+
+```python
+main()
+pk1.child_pkg.child_mod.fromChild()
+sibling_pkg.sibling_mod.fromSibling()
+sibling_pkg.sibling_child_pkg.sibling_child_mod.fromChildOfSibling()
+```
