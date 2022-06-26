@@ -1,6 +1,6 @@
-from sibling_pkg.sibling_mod import fromSibling
-from .child_pkg.child_mod import fromChild
-from sibling_pkg.sibling_child_pkg.sibling_child_mod import fromChildOfSibling
+from .child_pkg import fromChild
+from sibling_pkg import fromSibling
+from sibling_pkg.sibling_child_pkg import fromChildOfSibling
 
 
 def fn1():

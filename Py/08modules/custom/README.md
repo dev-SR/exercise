@@ -6,6 +6,7 @@
     - [Importing a custom module](#importing-a-custom-module)
   - [V2:  `__init__.py`](#v2--__init__py)
   - [V3: 🌟🌟importing from child/sibling/sibling's child 📁packages📁](#v3-importing-from-childsiblingsiblings-child-packages)
+    - [using `__init__.py`](#using-__init__py)
 
 **A python 📁 `package` 📁 is a collection of modules**. Modules that are related to each other are mainly put in the same package. When a module from an external package is required in a program, that package can be imported and its modules can be put to use.
 
@@ -154,14 +155,14 @@ def fromChild():
 	print("pk1.child_pkg.child_mod.fromChild()")
 ```
 
-`sibling_pkg.sibling_mod.py`
+`pk2.sibling_pkg.sibling_mod.py`
 
 ```python
 def fromSibling():
     print("sibling_pkg.sibling_mod.fromSibling()")
 ```
 
-`sibling_pkg.sibling_child_pkg.sibling_child_mod.py`
+`pk2.sibling_pkg.sibling_child_pkg.sibling_child_mod.py`
 
 ```python
 def fromChildOfSibling():
@@ -204,3 +205,51 @@ sibling_pkg.sibling_child_pkg.sibling_child_mod.fromChildOfSibling()
 ```
 
 Must run the `main.py` to work properly.
+
+### using `__init__.py`
+
+`pk1.child_pkg.__init__.py`
+
+```python
+from .child_mod import *
+```
+
+`pk1.__init__.py`
+
+```python
+from .mod1 import *
+```
+
+`pk2.sibling_pkg.__init__.py`
+
+```python
+from .sibling_mod import *
+from .sibling_child_pkg.sibling_child_mod import *
+```
+
+`pk2.sibling_pkg.sibling_child_pkg.__init__.py`
+
+```python
+from .sibling_child_mod import *
+```
+`pk1.mod1.py`
+
+```python
+from .child_pkg import fromChild
+from sibling_pkg import fromSibling
+from sibling_pkg.sibling_child_pkg import fromChildOfSibling
+
+def fn1():
+    print("pkg1.mod1.fn1()")
+    fromChild()
+    fromSibling()
+    fromChildOfSibling()
+
+```
+
+`main.py`
+
+```python
+from pkg1 import fn1
+fn1()
+```
