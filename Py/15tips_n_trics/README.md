@@ -7,15 +7,17 @@
   - [DSA](#dsa)
     - [Merging Dictionaries](#merging-dictionaries)
     - [Exclude Dictionary Keys](#exclude-dictionary-keys)
-    - [find elements in one list that are `not in` the other : `subtraction`](#find-elements-in-one-list-that-are-not-in-the-other--subtraction)
-    - [find elements in one list that are `in` the other : `intersection`](#find-elements-in-one-list-that-are-in-the-other--intersection)
-    - [check if a list contains any item from another list python](#check-if-a-list-contains-any-item-from-another-list-python)
-    - [check if an item is a subset of another list](#check-if-an-item-is-a-subset-of-another-list)
-    - [List of Dictionaries](#list-of-dictionaries)
+    - [🌟🌟Among Two List🌟🌟](#among-two-list)
+      - [find elements in one list that are `not in` the other : `subtraction`](#find-elements-in-one-list-that-are-not-in-the-other--subtraction)
+      - [find elements in one list that are `in` the other : `intersection`](#find-elements-in-one-list-that-are-in-the-other--intersection)
+      - [check if a list contains any item from another list python](#check-if-a-list-contains-any-item-from-another-list-python)
+      - [check if an item is a subset of another list](#check-if-an-item-is-a-subset-of-another-list)
+    - [🔥🔥List of Dictionaries🔥🔥](#list-of-dictionaries)
       - [find the index of a value in a list of dictionaries](#find-the-index-of-a-value-in-a-list-of-dictionaries)
-      - [list of dictionaries search](#list-of-dictionaries-search)
+      - [Search in list of dictionaries](#search-in-list-of-dictionaries)
         - [Check if element/dictionary already exists within list of dictionaries?](#check-if-elementdictionary-already-exists-within-list-of-dictionaries)
       - [add key for each dictionary in a list of dictionaries](#add-key-for-each-dictionary-in-a-list-of-dictionaries)
+      - [Unique dictionaries in a list of dictionaries](#unique-dictionaries-in-a-list-of-dictionaries)
 
 ```python
 """
@@ -200,7 +202,9 @@ exclude_dict_keys({1: 2, 3: 4}, [1])
 
 
 
-### find elements in one list that are `not in` the other : `subtraction`
+### 🌟🌟Among Two List🌟🌟
+
+#### find elements in one list that are `not in` the other : `subtraction`
 
 - [https://stackoverflow.com/questions/41125909/python-find-elements-in-one-list-that-are-not-in-the-other](https://stackoverflow.com/questions/41125909/python-find-elements-in-one-list-that-are-not-in-the-other)
 
@@ -304,7 +308,7 @@ main_list
     array([0, 2, 4, 6, 7, 8])
 
 
-### find elements in one list that are `in` the other : `intersection`
+#### find elements in one list that are `in` the other : `intersection`
 
 
 ```python
@@ -333,8 +337,7 @@ list(set(base_list) & set(checking_list))
     [1, 3, 5]
 
 
-### check if a list contains any item from another list python
-
+#### check if a list contains any item from another list python
 
 
 ```python
@@ -376,7 +379,7 @@ print(output)
     True
 
 
-### check if an item is a subset of another list
+#### check if an item is a subset of another list
 
 
 ```python
@@ -402,7 +405,7 @@ else:
     [2, 4, 6, 8, 10, 1, 3, 5, 7, 9, 4, 8, 12, 16, 20]
 
 
-### List of Dictionaries
+### 🔥🔥List of Dictionaries🔥🔥
 
 #### find the index of a value in a list of dictionaries
 
@@ -419,7 +422,7 @@ for i, d in enumerate(L):
     1
 
 
-#### list of dictionaries search
+#### Search in list of dictionaries
 
 
 
@@ -593,5 +596,53 @@ if not found:
 
 
     [{'uuid': 1, 'p': 'a', 'new': 0}, {'uuid': 2, 'p': 'b', 'new': 0}]
+
+
+
+#### Unique dictionaries in a list of dictionaries
+
+
+```python
+L=[
+    {'id':1,'name':'john', 'age':34},
+	{'id':1,'name':'john', 'age':34},
+	{'id':2,'name':'hanna', 'age':30},
+	{'id':2,'name':'hanna', 'age':50},
+	{'id':3,'name':'hanna', 'age':50}
+
+]
+```
+
+
+```python
+import pandas as pd
+```
+
+
+```python
+a = pd.DataFrame(L).drop_duplicates(subset=['id']).to_dict('records')
+a
+```
+
+
+
+
+    [{'id': 1, 'name': 'john', 'age': 34},
+     {'id': 2, 'name': 'hanna', 'age': 30},
+     {'id': 3, 'name': 'hanna', 'age': 50}]
+
+
+
+
+```python
+list({ item['id'] : item for item in L}.values())
+```
+
+
+
+
+    [{'id': 1, 'name': 'john', 'age': 34},
+     {'id': 2, 'name': 'hanna', 'age': 50},
+     {'id': 3, 'name': 'hanna', 'age': 50}]
 
 
