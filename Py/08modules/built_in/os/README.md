@@ -9,6 +9,7 @@
     - [`os.scandir()`](#osscandir)
     - [`os.walk()`](#oswalk)
   - [Remove](#remove)
+    - [Get Stats: `os.stat() & os.scandir().stat()`](#get-stats-osstat--osscandirstat)
 
 
 ```python
@@ -283,3 +284,105 @@ for r, d, f in os.walk(test_path):
 # os.removedirs()
 # os.rename()
 ```
+
+### Get Stats: `os.stat() & os.scandir().stat()`
+
+
+```python
+os.stat("py_os.ipynb")
+
+```
+
+
+
+
+    os.stat_result(st_mode=33206, st_ino=3659174697397727, st_dev=2828569586, st_nlink=1, st_uid=0, st_gid=0, st_size=12729, st_atime=1656249417, st_mtime=1653930990, st_ctime=1624143014)
+
+
+
+- `st_atime(self)` time of most recent access,
+- `st_mtime(self)` time of most recent content modification
+- `st_ctime(self)` time of creation
+
+
+
+```python
+os.stat("py_os.ipynb").st_size
+
+```
+
+
+
+
+    12729
+
+
+
+
+```python
+file_size_in_bytes = os.stat("py_os.ipynb").st_size
+
+if file_size_in_bytes > 1000:
+	print(f"{round(file_size_in_bytes/1000)}kb")
+
+```
+
+    13kb
+
+
+
+```python
+# sort files by creation time
+files = [x for x in os.listdir() if x.endswith(".txt")]
+files.sort(key=lambda x: os.stat(x).st_ctime)
+print(files)
+```
+
+    ['test_1.txt', 'test_2.txt']
+
+
+
+```python
+# sort files by creation time
+files = [x for x in os.listdir() if x.endswith(".txt")]
+print([ os.stat(x).st_mtime for x in files ])
+files.sort(key=lambda x: os.stat(x).st_mtime)
+print(files)
+```
+
+    [1656250060.3008769, 1656250152.18407]
+    ['test_1.txt', 'test_2.txt']
+
+
+
+```python
+sorted(os.scandir(), key=lambda t: t.stat().st_ctime, reverse=True)
+```
+
+
+
+
+    [<DirEntry 'test_2.txt'>,
+     <DirEntry 'test_1.txt'>,
+     <DirEntry 'img'>,
+     <DirEntry 'test'>,
+     <DirEntry 'py_os.ipynb'>,
+     <DirEntry 'README.md'>,
+     <DirEntry 'newly_created'>]
+
+
+
+
+```python
+[ (x.name,x.stat().st_ctime) for x in os.scandir() if x.is_file()]
+```
+
+
+
+
+    [('py_os.ipynb', 1624143014.365672),
+     ('README.md', 1624143014.3646705),
+     ('test_1.txt', 1656249866.3820255),
+     ('test_2.txt', 1656249878.7464452)]
+
+
