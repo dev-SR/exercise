@@ -1,11 +1,11 @@
 {
 	"compilerOptions": {
-		"target": "ES2015",
+		"target": "ES2020",
 		"module": "commonjs",
 		"outDir": "build",
 		// "strict": true,
 		"resolveJsonModule": true
 	},
-	"include": ["TS-JS/src/**/*"],
+	"include": ["TS-JS/TS/**/*"],
 	"exclude": ["node_modules"]
 }
