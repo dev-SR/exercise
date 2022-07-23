@@ -166,3 +166,26 @@ class Bird extends Animal {
 		console.log(`${this.name} flew ${distanceInMeters}m.`); ///ok
 	}
 }
+
+// type Dictionary = {
+// 	[key: string]: boolean;
+// };
+
+type P = {
+	email: string;
+	displayName: string;
+};
+type PersonDictionary = {
+	[username: string]: P | undefined;
+};
+
+const prs: PersonDictionary = {
+	jhonwick: {
+		displayName: 'Jhon Wick',
+		email: 'jhonw@gmail.com'
+	}
+};
+prs['jhon'] = {
+	displayName: 'Jhon Wick',
+	em: 'jhonw@gmail.com' //ERROR
+};

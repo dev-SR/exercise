@@ -100,3 +100,63 @@ function contact(person: Person) {
 }
 
 // Express Base
+
+const personJSON = {
+	name: 'jhon',
+	email: 'jhon@gmail.com'
+};
+type PersonResponse = typeof personJSON;
+function processRes(person: PersonResponse) {
+	console.log(`Name: ${person.name}, Email: ${person.email}`);
+}
+
+type LongTypeDef = {
+	transactionId: string;
+	personal: {
+		email: string;
+		phone: string;
+		previousAliases: {
+			name: string;
+			email: string;
+		}[];
+		gender: string;
+	};
+	payment: {
+		creditCardToken: string;
+	};
+};
+
+type PaymentReq = LongTypeDef['payment'];
+type PreviousAliases = LongTypeDef['personal']['previousAliases'][0];
+
+type Personal = {
+	name: string;
+	age: number;
+	location: string;
+};
+const person: Personal = {
+	name: 'Jhon',
+	age: 35,
+	location: 'Dhaka,BD'
+};
+
+function logGet(obj: Personal, key: keyof Personal) {
+	const val = obj[key];
+	console.log(`Getting: ${key} ${val}`);
+	return val;
+}
+
+const age = logGet(person, 'age');
+logGet(person, 'email'); //ER: type '"email"' is not assignable to parameter of type 'keyof Personal
+
+function logGet<Obj, Key extends keyof Obj>(obj: Obj, key: Key) {
+	const value = obj[key];
+	console.log('Getting:', key, value);
+	return value;
+}
+const age = logGet(john, 'age'); // 35
+function logSet<Obj, Key extends keyof Obj>(obj: Obj, key: Key, value: Obj[Key]) {
+	console.log('Setting:', key, value);
+	obj[key] = value;
+}
+logSet(john, 'age', 36);

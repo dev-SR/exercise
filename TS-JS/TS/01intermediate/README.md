@@ -1,7 +1,7 @@
 # TypeScript Intermediate
 
 - [TypeScript Intermediate](#typescript-intermediate)
-  - [More Types](#more-types)
+  - [More On Types](#more-on-types)
     - [Union Types](#union-types)
     - [Literal Types](#literal-types)
     - [Type Narrowing](#type-narrowing)
@@ -14,7 +14,7 @@
     - [Interface Declaration Merging](#interface-declaration-merging)
     - [type vs interface](#type-vs-interface)
 
-## More Types
+## More On Types
 
 ### Union Types
 

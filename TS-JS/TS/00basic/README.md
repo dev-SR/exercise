@@ -7,6 +7,7 @@
     - [Arrays and Tuples](#arrays-and-tuples)
     - [Objects Types and Type Aliases](#objects-types-and-type-aliases)
     - [Functions Types](#functions-types)
+    - [Index Signatures](#index-signatures)
     - [Structural Typing](#structural-typing)
     - [🚀Special Types:  `any` and `unknown`](#special-types--any-and-unknown)
     - [🚀Js to TS](#js-to-ts)
@@ -15,7 +16,6 @@
   - [Classes In TypeScript](#classes-in-typescript)
     - [private and protected](#private-and-protected)
     - [`implements`](#implements)
-  - [Generics](#generics)
 
 ## Types
 
@@ -116,6 +116,34 @@ adder = function (a: number, b: number): number {
  return a + b;
 };
 adder = (a, b) => a + b;
+```
+
+### Index Signatures
+
+```typescript
+type Person = {
+ email: string;
+ displayName: string;
+};
+
+// type Dictionary = {
+//  [key: string]: boolean;
+// };
+
+type PersonDictionary = {
+ [username: string]: Person|undefined;
+};
+
+const prs: PersonDictionary = {
+ jhonwick: {
+  displayName: 'Jhon Wick',
+  email: 'jhonw@gmail.com'
+ }
+};
+prs['jhon'] = {
+ displayName: 'Jhon Wick',
+ em: 'jhonw@gmail.com'//ERROR
+};
 ```
 
 ### Structural Typing
@@ -320,24 +348,4 @@ class Dog implements Animals {
   return 'woof';
  }
 }
-```
-
-## Generics
-
-```typescript
-/** A FIFO (First In First Out) collection */
-class Queue<T> {
- data = [];
- push(item: T) {
-  this.data.push(item);
- }
- pop(): T {
-  return this.data.shift();
- }
-}
-const queue = new Queue<number>();
-queue.push(123);
-queue.push(456);
-console.log(queue.pop().toPrecision(1));
-console.log(queue.pop().toPrecision(1));
 ```
