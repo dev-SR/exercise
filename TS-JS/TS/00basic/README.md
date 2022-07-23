@@ -14,6 +14,7 @@
     - [Type Declarations](#type-declarations)
   - [Classes In TypeScript](#classes-in-typescript)
     - [private and protected](#private-and-protected)
+    - [`implements`](#implements)
   - [Generics](#generics)
 
 ## Types
@@ -292,6 +293,33 @@ class Bird extends Animal {
 let cat = new Animal('Cat');
 cat.move(10);
 cat.name = 'Dog'; //Property 'name' is private and only accessible within class 'Animal'
+```
+
+### `implements`
+
+```typescript
+type Animals = {
+ name: string;
+ voice(): string;
+};
+
+function logs(animal: Animals) {
+ console.log(`Animal ${animal.name}: ${animal.voice()}`);
+}
+
+class Cat implements Animals {
+ constructor(public name: string) {}
+ voice(): string {
+  return 'meow';
+ }
+}
+
+class Dog implements Animals {
+ constructor(public name: string) {}
+ voice(): string {
+  return 'woof';
+ }
+}
 ```
 
 ## Generics

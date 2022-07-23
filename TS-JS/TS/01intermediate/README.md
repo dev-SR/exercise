@@ -1,18 +1,18 @@
 # TypeScript Intermediate
 
 - [TypeScript Intermediate](#typescript-intermediate)
-	- [More Types](#more-types)
-		- [Union Types](#union-types)
-		- [Literal Types](#literal-types)
-		- [Type Narrowing](#type-narrowing)
-		- [Discriminated Unions](#discriminated-unions)
-		- [Intersection Types](#intersection-types)
-	- [Optional modifier](#optional-modifier)
-		- [`null` and `undefined` with optional modifiers](#null-and-undefined-with-optional-modifiers)
-	- [Null Assertion](#null-assertion)
-	- [Interface](#interface)
-		- [Interface Declaration Merging](#interface-declaration-merging)
-		- [type vs interface](#type-vs-interface)
+  - [More Types](#more-types)
+    - [Union Types](#union-types)
+    - [Literal Types](#literal-types)
+    - [Type Narrowing](#type-narrowing)
+    - [Discriminated Unions](#discriminated-unions)
+    - [Intersection Types](#intersection-types)
+  - [Optional modifier](#optional-modifier)
+    - [`null` and `undefined` with optional modifiers](#null-and-undefined-with-optional-modifiers)
+  - [Null Assertion](#null-assertion)
+  - [Interface](#interface)
+    - [Interface Declaration Merging](#interface-declaration-merging)
+    - [type vs interface](#type-vs-interface)
 
 ## More Types
 
@@ -169,12 +169,12 @@ const jhon: Person = {
 ### `null` and `undefined` with optional modifiers
 
 ```typescript
-class Points {
+class Point {
  x?: number;
  y?: number;
 }
 
-const point = new Points();
+const point = new Point();
 console.log(point.x); //undefined
 
 point.x = 0;//ok
@@ -183,23 +183,23 @@ point.x = null; //Error in 'strict' mode;Type 'null' is not assignable to type '
 ```
 
 ```typescript
-class Points {
+class Point {
  x?: number | null;
  y?: number;
 }
 
-const point = new Points();
+const point = new Point();
 point.x = null; //ok
 ```
 
 ## Null Assertion
 
 ```typescript
-type Points = {
+type Point = {
  x: number,
  y: number
 };
-let point: Points;
+let point: Point;
 function init() {
  point = {x:1,y:2}
 }
@@ -211,8 +211,8 @@ console.log(point!.x, point!.y);//Fix
 or
 
 ```typescript
-let point: Points;
-function init(): Points {
+let point: Point;
+function init(): Point {
  return { x: 1, y: 2 };
 }
 point = init();
