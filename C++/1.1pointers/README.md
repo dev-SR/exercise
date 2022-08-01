@@ -10,12 +10,12 @@
       - [🚀Pass By References - Using Pointers | Modify the passed parameters in a function](#pass-by-references---using-pointers--modify-the-passed-parameters-in-a-function)
   - [👉Reference(`&`) in  C++](#reference-in--c)
     - [Differences between 👉pointers and 👉references in C++](#differences-between-pointers-and-references-in-c)
-      - [Pass by Reference and Pass By Pointer - When to use What](#pass-by-reference-and-pass-by-pointer---when-to-use-what)
+      - [✅✅Pass by Reference: Using `pointer`|`reference`  - When to use What](#pass-by-reference-using-pointerreference----when-to-use-what)
     - [Arrays are 🧠🧠Passed as References🧠🧠 by Default](#arrays-are-passed-as-references-by-default)
     - [🌟Reference Applications🌟](#reference-applications)
-      - [🚀🚀Pass By Reference - Reference Variables | Modify the passed parameters in a function](#pass-by-reference---reference-variables--modify-the-passed-parameters-in-a-function)
+      - [🚀🚀Pass By Reference| 👉👉 Modifying `formal` parameter reflects in `actual` parameter](#pass-by-reference--modifying-formal-parameter-reflects-in-actual-parameter)
       - [🚀🚀Avoiding a copy of large structures](#avoiding-a-copy-of-large-structures)
-      - [🚀In For Each Loops to modify all objects](#in-for-each-loops-to-modify-all-objects)
+      - [🚀🚀In For Each Loops to modify all objects](#in-for-each-loops-to-modify-all-objects)
       - [🚀For Each Loop to avoid the copy of objects](#for-each-loop-to-avoid-the-copy-of-objects)
 
 ## Pointer
@@ -25,7 +25,7 @@
 To get the address of a variable, use the `&` operator.
 
 ```cpp
- int a = 10;
+    int a = 10;
     cout << &a << endl; // 0x59ca3ffd2c
 ```
 
@@ -126,18 +126,12 @@ int main() {
 
 C and C++ support pointers which are different from most of the other programming languages. Other languages including C++, Java, Python, Ruby, Perl and PHP support references.
 
-Both references and pointers can be used to change local variables of one function inside another function. Both of them can also be used to save copying of big objects when passed as arguments to functions or returned from functions, to get efficiency gain. Despite the above similarities, there are the following differences between references and pointers.
-
-- [https://www.educative.io/edpresso/differences-between-pointers-and-references-in-cpp](https://www.educative.io/edpresso/differences-between-pointers-and-references-in-cpp)
-- [https://www.geeksforgeeks.org/pointers-vs-references-cpp/](https://www.geeksforgeeks.org/pointers-vs-references-cpp/)
-- [https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/](https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/)
-- [https://techdifferences.com/difference-between-pointer-and-reference-2.html](https://techdifferences.com/difference-between-pointer-and-reference-2.html)
-
+Both `references` and `pointers` can be used **to change local variables of one function inside another function**. Both of them can also be used to save copying of big objects when passed as arguments to functions or returned from functions, to get efficiency gain. Despite the above similarities, there are the following differences between references and pointers.
 
 Major dif:
 
 - The reference is an **alias for a variable**  whereas pointers are used to **store address of variable**.
-- Reference variable cannot be updated.Reference variable is an internal pointer.
+- Reference variable **cannot be updated**.
 - A reference **must be initialized on declaration** while it is not necessary in case of pointer.
   - Due to the above limitations, references in C++ cannot be used for implementing data structures like Linked List, Tree, etc. In Java, references don’t have the above restrictions and can be used to implement all data structures. References being more powerful in Java is the main reason Java doesn’t need pointers.
 - References **cannot have a null value** assigned but pointer can.
@@ -145,10 +139,15 @@ Major dif:
   1. **Safer**: Since references must be initialized, wild references like wild pointers are unlikely to exist. It is still possible to have references that don’t refer to a valid location (See questions 5 and 6 in the below exercise)
   2. **Easier to use**: A pointer needs to be dereferenced with `*` to access the memory location it points to, whereas a reference can be used directly. A pointer to a class/struct uses `‘->’` (arrow operator) to access its members whereas a reference uses a `‘.’` (dot operator)
 
-#### Pass by Reference and Pass By Pointer - When to use What
+- [https://www.educative.io/edpresso/differences-between-pointers-and-references-in-cpp](https://www.educative.io/edpresso/differences-between-pointers-and-references-in-cpp)
+- [https://www.geeksforgeeks.org/pointers-vs-references-cpp/](https://www.geeksforgeeks.org/pointers-vs-references-cpp/)
+- [https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/](https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/)
+- [https://techdifferences.com/difference-between-pointer-and-reference-2.html](https://techdifferences.com/difference-between-pointer-and-reference-2.html)
+
+#### ✅✅Pass by Reference: Using `pointer`|`reference`  - When to use What
 
 ```cpp
-void swapPassByRefsWithoutPointer(int &n1, int &n2) {
+void swapPassByRefsWithRefOp(int &n1, int &n2) {
     int temp;
     temp = n1;
     n1 = n2;
@@ -162,7 +161,7 @@ void swapPassByRefsWithPointer(int *n1, int *n2) {
 }
 int main() {
     int a = 1, b = 2;
-    swapPassByRefsWithoutPointer(a, b);
+    swapPassByRefsWithRefOp(a, b);
     cout << a << " " << b << endl; // 2 1
     swapPassByRefsWithPointer(&a, &b);
     cout << a << " " << b << endl; // 1 2
@@ -170,18 +169,17 @@ int main() {
 }
 ```
 
-
-
 The performances are exactly the same, as **references are implemented internally as pointers**. But still we can keep some points in mind to decide when to use what :
 
 - Use `references`
-  - In function parameters and return types.
-  - there are few places like the copy constructor argument where pointer cannot be used. Reference must be used to pass the argument in the copy constructor. Similarly, references must be used for overloading some operators like ++.
+  - In function **parameters** and **return types**.
+  - there are few places like the **copy constructor** argument where pointer cannot be used. Reference must be used to pass the argument in the copy constructor.
+  - Similarly, references must be used for **overloading** some operators like ++.
 - Use `pointers`:
-  - Use pointers if pointer arithmetic or passing NULL-pointer is needed. For example for arrays (Note that array access is implemented using pointer arithmetic).
-  - To implement data structures like linked list, tree, etc and their algorithms because to point different cell, we have to use the concept of pointers
+  - Use pointers if pointer **arithmetic** or passing `NULL-pointer` is needed. For example for arrays (Note that array access is implemented using pointer arithmetic).
+  - To implement **data structures** like linked list, tree, etc and their algorithms because to point different cell, we have to use the concept of pointers
 
-- References are usually preferred over pointers whenever we don’t need “reseating”.
+- **References are usually preferred over pointers whenever we don’t need “reseating”.**
 - Overall, Use references when you can, and pointers when you have to. But if we want to write C code that compiles with both C and a C++ compiler, you’ll have to restrict yourself to using pointers
 
 ### Arrays are 🧠🧠Passed as References🧠🧠 by Default
@@ -190,9 +188,11 @@ The performances are exactly the same, as **references are implemented internall
 
 ### 🌟Reference Applications🌟
 
-#### 🚀🚀Pass By Reference - Reference Variables | Modify the passed parameters in a function
+#### 🚀🚀Pass By Reference| 👉👉 Modifying `formal` parameter reflects in `actual` parameter
 
-**Modify the passed parameters in a function**: If a function receives a reference to a variable, it can modify the value of the variable. For example, the following program variables are swapped using references.
+- [https://www.geeksforgeeks.org/parameter-passing-techniques-in-c-cpp/](https://www.geeksforgeeks.org/parameter-passing-techniques-in-c-cpp/)
+
+This technique uses in/out-mode semantics. **Changes made to formal parameter do get transmitted back to the caller through parameter passing**. **Any changes to the formal parameter are reflected in the actual parameter in the calling environment as formal parameter receives a reference (or pointer) to the actual data**. This method is also called as call by reference. This method is efficient in both time and space.
 
 ```cpp
 // pass by value
@@ -210,7 +210,7 @@ int main() {
 vs
 
 ```cpp
-// pass by reference
+// pass by reference - using reference operator `&`
 void applyTax(int &income) {
     float tax = 0.1;
     income = income - (income * tax);
@@ -218,6 +218,25 @@ void applyTax(int &income) {
 int main() {
     int income = 100;
     applyTax(income);
+    cout << "Income after tax: " << income << endl; // 90
+}
+```
+
+<div align="center">
+    <img src="img/pbr.jpg" alt="pbr.jpg" width="400px">
+</div>
+
+same with pointers:
+
+```cpp
+// pass by reference - using pointers
+void applyTax(int *income) {
+    float tax = 0.1;
+    *income = *income - (*income * tax);
+}
+int main() {
+    int income = 100;
+    applyTax(&income);
     cout << "Income after tax: " << income << endl; // 90
 }
 ```
@@ -245,7 +264,7 @@ void print(const Student &s)
 }
 ```
 
-#### 🚀In For Each Loops to modify all objects
+#### 🚀🚀In For Each Loops to modify all objects
 
 We can use references in for each loops to modify all elements.
 
@@ -261,14 +280,13 @@ int main() {
     for (int x : v) {
         x = x + 5;
     }
-    printArr(v);
+    printArr(v); // 10 20 30 40
     // We can modify elements if we
     // use reference
     for (int &x : v) {
         x = x + 5;
     }
-    printArr(v);
-    return 0;
+    printArr(v); // 15 25 35 45
 }
 ```
 
