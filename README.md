@@ -13,6 +13,8 @@
       - [`right` alignment](#right-alignment)
       - [`center` alignment example](#center-alignment-example)
     - [Mathematical Formula in markdown](#mathematical-formula-in-markdown)
+      - [Writing inline expressions with `$`:](#writing-inline-expressions-with-)
+      - [Writing expressions as blocks - with `$$` | `'''math`:](#writing-expressions-as-blocks---with---math)
   - [GIT and GITHUB 🚀🚀](#git-and-github-)
     - [Gist](#gist)
     - [Clear Git Cache](#clear-git-cache)
@@ -180,9 +182,35 @@ This is the code you need to align images to the right:
 
 ### Mathematical Formula in markdown
 
-[https://latex.codecogs.com/](https://latex.codecogs.com/)\
-[https://www.codecogs.com](https://www.codecogs.com/latex/eqneditor.php)\
-[http://www.sciweavers.org/](http://www.sciweavers.org/free-online-latex-equation-editor)
+- [Writing mathematical expressions](https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions)
+
+#### Writing inline expressions with `$`:
+
+```bash
+This sentence uses `$` delimiters to show math inline:  $\sqrt{3x-1}+(1+x)^2$
+```
+
+This sentence uses `$` delimiters to show math inline:  $\sqrt{3x-1}+(1+x)^2$
+
+#### Writing expressions as blocks - with `$$` | `'''math`:
+
+To add a math expression as a block, start a new line and delimit the expression with two dollar symbols `$$`.
+
+```bash
+$$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
+```
+
+$$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
+
+Alternatively, you can use the `'''math` code block syntax to display a math expression as a block. With this syntax, you don't need to use $$ delimiters.
+
+```bash
+```math\sqrt{3}```
+```
+
+```math
+\sqrt{3}
+```
 
 ## GIT and GITHUB 🚀🚀
 
