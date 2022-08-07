@@ -3,6 +3,7 @@
 - [Array](#array)
   - [Creating Array](#creating-array)
   - [Working with Array](#working-with-array)
+    - [Ex: Frequency of elements in an array](#ex-frequency-of-elements-in-an-array)
   - [Array and Pointer](#array-and-pointer)
   - [Passing Array To a Function](#passing-array-to-a-function)
     - [🎗️🎗️🎗️ C/CPP ✂️modifies✂️ Original array | Pass By Reference/Address](#️️️-ccpp-️modifies️-original-array--pass-by-referenceaddress)
@@ -17,19 +18,22 @@
 ## Creating Array
 
 ```cpp
-int a =100
-int a{100} //single integer of value 100
+#define LEN 5
 
-//array of 100 integers
-int a[100];
-int a[100] = {5}; //C style; first number is 5, rest are 0
-int a[100] = {1,2,3}; // 1 2 3 0 0 0 0 0 0 0.....
+int a = 5;
+int a{5}; //same as int a = 5;
 
-//auto size
-int a[] = {1,2,3};
-int a[]{1, 2, 3};
+//array of 5 integers
+int a[LEN];
+int a[] = {1, 2, 3, 4, 5}; //1, 2, 3, 4, 5
+int a[LEN] = {1, 2, 3};    //1, 2, 3, 0, 0
+int a[LEN] = {0};          //0, 0, 0, 0, 0
 
-//array of strings
+/* Array initialization with designators (sparse array) */
+int w[LEN] = {[1] = 1, [3] = 1};                // 0, 1, 0, 1, 0
+int q[LEN] = {[1] = 3, [LEN - 1] = 5};          // 0, 3, 0, 0, 5
+int t[LEN] = {[0] = 5, 4, [LEN - 3] = 3, 2, 1}; // 5, 4, 3, 2, 1
+//array of strings [CPP]
 string fruits[4] = {"Apple", "Banana", "Orange"};
 ```
 
@@ -59,6 +63,23 @@ int main() {
 }
 ```
 
+### Ex: Frequency of elements in an array
+
+```c
+    int total_marks[] = {86, 78, 94, 88, 86, 65, 64, 62, 72, 61, 72, 66, 65, 67, 88, 84, 64, 85, 86, 68, 90, 65};
+    int n = sizeof(total_marks) / sizeof(total_marks[0]);
+    int marks_count[100] = {0};
+    for (int i = 0; i < n; i++) {
+        marks_count[total_marks[i]]++;
+        // or
+        // mark = total_marks[i];
+        // marks_count[mark]++;
+    }
+    for (int i = 0; i < 100; i++) {
+        printf("Marks: %d Count:%d\n", i, marks_count[i]);
+    }
+```
+
 ## Array and Pointer
 
  The `name` of the array is a `constant pointer` to the `first` element.
@@ -86,6 +107,76 @@ using `p` as a pointer to the first element of the array `a`:
     cout << sizeof(p) << endl; // 8 ; size of int pointer
     cout << sizeof(a) << endl; // 40 ; size of int array
 ```
+
+
+```c
+#include <stdio.h>
+#define GRN "\e[0;92m"
+#define NC "\e[0m"
+int main() {
+    printf("=== Pointers and Arrays ===\n");
+
+    int x[] = {9, 8, 7, 6, 5};
+    int n = sizeof(x) / sizeof(x[0]);
+
+    /* Let's recall:
+     *  - an array is an ordered collection of items of the same type
+     *  - a pointer holds the address of other data
+     *
+     * Can we access the elements of an array through pointers? Yes!
+     * */
+    printf(GRN "Array address, &x[0]==x ??\n" NC);
+    printf("&x[0]: %llX\n", &x[0]);
+    printf("x:     %llX\n", x);
+
+    printf(GRN "Access an element of x through the pointer:\n" NC);
+    int *p = &x[2];
+    printf("x[2]: %d, *p: %d\n", x[2], *p);
+    *p = 0;
+    printf("x[2]: %d, *p: %d\n", x[2], *p);
+
+    // int *alias = x;
+    // int *alias = &x[0];
+
+    p = x;
+
+    printf(GRN "Display x through the pointer:\n" NC);
+    for (int i = 0; i < n; i++) {
+        printf("x[%d]: %d, p[%d]: %d\n", i, x[i], i, p[i]);
+    }
+
+    printf(GRN "Set x to 0, 1, 2, 3, 4 through the pointer:\n" NC);
+    for (int i = 0; i < n; i++) {
+        p[i] = i;
+        printf("x[%d]: %d, p[%d]: %d\n", i, x[i], i, p[i]);
+    }
+    return 0;
+}
+```
+
+```bash
+=== Pointers and Arrays ===
+Array address, &x[0]==x ?? :
+&x[0]: 4012E00061FEF8
+x:     4012E00061FEF8
+Access an element of x through the pointer:
+x[2]: 7, *p: 7
+x[2]: 0, *p: 0
+Display x through the pointer:
+x[0]: 9, p[0]: 9
+x[1]: 8, p[1]: 8
+x[2]: 0, p[2]: 0
+x[3]: 6, p[3]: 6
+x[4]: 5, p[4]: 5
+Set x to 0, 1, 2, 3, 4 through the pointer:
+x[0]: 0, p[0]: 0
+x[1]: 1, p[1]: 1
+x[2]: 2, p[2]: 2
+x[3]: 3, p[3]: 3
+x[4]: 4, p[4]: 4
+```
+
+
 
 ## Passing Array To a Function
 

@@ -8,63 +8,23 @@
 #define CYN "\e[0;96m"
 #define NC "\e[0m"
 int main() {
-    // char name[] = {"Jhon"}; // (invalid in c )
+    char a[] = "hello";
+    a[0] = 'x'; // ok
+    // a = "another"; // error: assignment to expression with array type
+    printf("%s\n", a); // xello
 
-    // char name2[] = "Jhon";                     // <-- string literal
-    // char name3[] = {'J', 'h', 'o', 'n', '\0'}; // <-- char array ; explicit null
-    // printf("%s", name);
+    const char s[] = "hello";
+    // s[0] = 'x'; // error: assignment of read-only location 's[0]'
+    // s = "another"; // error: assignment to expression with array type
+    printf("%s\n", s);
 
-    // printf("%s", name2);
-    // printf("%s", name3);
+    char *ss = "hello";
+    // ss[0] = 'x'; runtime error
+    ss = "another";     // OK
+    printf("%s\n", ss); // another
 
-    char a[] = "hello"; // array version
-    // char *p = "hello";  // pointer version
-
-    // a = "new"; // invalid
-    // p = "new"; // valid
-    // with c
-    // gets(a);
-    // scanf("%s", a);
-    // strcpy(a, "new");
-    // a[0] = 'n';
-    // a[1] = 'e';
-    // a[2] = 'w';
-    // a[3] = '\0';
-    // // with c++
-    // // cin >> a;
-    // scanf("%s", p);not allowed
-    // printf("%s\n", a);         // hello
-    // printf("%s\n", p);         // hello
-    // printf("%d\n", sizeof(a)); // 6bytes for array
-    // printf("%d\n", sizeof(p)); // 4/8bytes for pointer + 6bytes for array
-    // printf("%p\n", a);         // F804DFF6EA
-    // printf("%p\n", &a);        // F804DFF6EA
-    // printf("%p\n", p);         // F693395050
-    // printf("%p\n", &p);        // F804DFF6E0
-    // but if create dynamically allocate the string, we can change the element;
-    // char *p = (char *)malloc(sizeof(char) * 6);
-    // *(p) = 'h';
-    // *(p + 1) = 'e';
-    // *(p + 2) = 'l';
-    // *(p + 3) = 'l';
-    // *(p + 4) = 'o';
-    // *(p + 5) = '\0';
-
-    // *(p) = 'H'; // right, because the content hello3 points to lies on stack like other variables
-
-    // int n, i;
-    // char *ptr;
-    // scanf("%d", &n);
-    // ptr = (char *)malloc(n * sizeof(char));
-    // for (i = 0; i < n; i++) {
-    //     printf("Enter ptr[%d]: ", i);
-    //     scanf(" %c", ptr + i);
-    // }
-    char *options[] = {"MEDIUM", "HARD", "EASY", "TOUGH"};
-    options[3] = "VERY HARD"; // ok
-
-    for (int i = 0; i < 5; i++) {
-        printf("%s\n", options[i]);
-    }
-    return 0;
+    const char *sss = "hello";
+    // sss[0] = 'x'; //compile time error :  error: assignment of read-only location '*sss'
+    sss = "another";
+    printf("%s\n", sss);
 }

@@ -10,11 +10,11 @@
 
 /*
  ? String Searching and Tokenization
- * 
+ *
  !  - strchr: Locate first occurrence of character in string
  !  - strstr: Locate substring
  !  - strtok: Split string into tokens
- * 
+ *
 
  *  - Task 1: strchr
  *    Find all the occurrences of a character(`s`) in a string and print:
@@ -24,7 +24,7 @@
  *    Find the first occurrence of a string in another string(`sample`) and print:
  ?    "This is a sample string"
  !               ------
- * 
+ *
  *  - Task 3: strtok
  *    Store string tokens in a matrix and print:
  *    str: "This, is a. sample-string" , delim:" ,.-"
@@ -44,12 +44,12 @@ int find_all_occurrences(char str[], char c, int indexes[]) {
         if (pstr) {
             int offset = pstr++ - str;
             // pstr++;
-            /* 
+            /*
             char *a = "Hello";
             char *f = strchr(a, 'o');
             printf("%p\n", f);   //00405068
             printf("%p\n", a);   //00405064
-            printf("%d", f - a); //4 = offset=(found_address - base_address ) 
+            printf("%d", f - a); //4 = offset=(found_address - base_address )
             */
             indexes[found++] = offset;
         }
@@ -59,7 +59,7 @@ int find_all_occurrences(char str[], char c, int indexes[]) {
 
 void print_occurrences(char str[], int occurrences_indexes[], int found) {
     char pattern[strlen(str) + 1];
-    //memset() is used to fill a block of memory with a particular value.
+    // memset() is used to fill a block of memory with a particular value.
     memset(pattern, ' ', sizeof(pattern));
     for (int i = 0; i < found; i++) {
         pattern[occurrences_indexes[i]] = '^';

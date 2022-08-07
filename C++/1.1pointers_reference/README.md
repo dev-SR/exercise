@@ -1,11 +1,10 @@
 # Pointer & Reference
 
 - [Pointer & Reference](#pointer--reference)
-  - [Pointer](#pointer)
+  - [🚀Pointer](#pointer)
     - [Address Of Operator(`&`)](#address-of-operator)
     - [Pointer Variables](#pointer-variables)
     - [🚨Dereference Operator(`*`)](#dereference-operator)
-    - [NULL ptr](#null-ptr)
     - [🌟Pointer Applications🌟](#pointer-applications)
       - [🚀Pass By References - Using Pointers | Modify the passed parameters in a function](#pass-by-references---using-pointers--modify-the-passed-parameters-in-a-function)
   - [👉Reference(`&`) in  C++](#reference-in--c)
@@ -18,7 +17,7 @@
       - [🚀🚀In For Each Loops to modify all objects](#in-for-each-loops-to-modify-all-objects)
       - [🚀For Each Loop to avoid the copy of objects](#for-each-loop-to-avoid-the-copy-of-objects)
 
-## Pointer
+## 🚀Pointer
 
 ### Address Of Operator(`&`)
 
@@ -60,13 +59,52 @@ An interesting property of pointers is that they can be **used to access the var
  cout << *p << endl; // 10
 ```
 
-### NULL ptr
-
-Sometimes, it is useful to make our pointer variables point to nothing. This is done by assigning the `NULL` pointer .
-
 ```cpp
-int *p = 0;
-int *q = NULL;
+#include <stdio.h>
+#define RED "\e[0;91m"
+#define GRN "\e[0;92m"
+#define NC "\e[0m"
+int main() {
+    // Declare and Access
+    int a = 12;
+    int *ptr = &a;
+    printf(RED "ptr:" NC " %p  %x  %X", ptr, ptr, ptr);
+
+    // !Indirection to GET the values
+    int n1 = *ptr;
+    int n2 = *ptr + 8;
+    printf(RED "\na:" NC " %d", *ptr);
+    printf(RED "\nn1:" NC " %d", n1);
+    printf(RED "\nn2:" NC " %d", n2);
+
+    // !Indirection to SET value
+    *ptr = 99;
+    printf(RED "\nnew a:" NC " %d", *ptr);
+
+    // !Indirection and void Pointers
+    void *vPtr = &a;
+    // int n3 = *vPtr; // warning: dereferencing 'void *' pointer
+    // must cast a void pointer before indirection
+    int n3 = *((int *)vPtr);
+    printf(RED "\nn3:" NC " %d", n3);
+
+    //! Testing for a Null pointer
+    printf(GRN "\ntesting for a Null pointer....\n" NC);
+    int *p = NULL;
+    // execute if pointer isn't NULL
+    if (p)
+        printf("1 | pointer value: %d\n", *p);
+
+    // execute if pointer is NULL
+    int someValue = 123;
+    if (!p) {
+        p = &someValue;
+    }
+    // execute if pointer isn't NULL
+    if (p)
+        printf("2 | pointer value: %d\n", *p);
+    return 0;
+}
 ```
 
 

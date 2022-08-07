@@ -7,16 +7,16 @@
     - [Problems](#problems)
       - [Problems 1 : Shortest Path](#problems-1--shortest-path)
   - [C-Style Strings / Char[]](#c-style-strings--char)
-    - [Initializing a C-Style String](#initializing-a-c-style-string)
+    - [Initializing and Accessing a C-Style String](#initializing-and-accessing-a-c-style-string)
     - [user input](#user-input)
       - [cin](#cin)
       - [cin.getline(arr,len)](#cingetlinearrlen)
       - [cin.getline(arr,len,delim)](#cingetlinearrlendelim)
       - [clearing input buffer🚀🚀](#clearing-input-buffer)
-    - [CString Library Functions](#cstring-library-functions)
-    - [🌟🌟`char s[]` vs `char *s`](#char-s-vs-char-s)
+    - [🌟🌟`char s[]` vs `char *s`(Constant String)🌟🌟](#char-s-vs-char-sconstant-string)
     - [`std::string` vs `char[]`](#stdstring-vs-char)
-    - [🚀🚀Array of String : 2D Array of Characters/Array of Pointers to Strings](#array-of-string--2d-array-of-charactersarray-of-pointers-to-strings)
+    - [🚀Array of String : 2D Array of Characters/Array of Pointers to Strings](#array-of-string--2d-array-of-charactersarray-of-pointers-to-strings)
+    - [CString Library Functions](#cstring-library-functions)
 
 ## Character Data Type
 
@@ -193,20 +193,26 @@ char names[10];
 cout << names << endl; //garbage
 ```
 
-### Initializing a C-Style String
+### Initializing and Accessing a C-Style String
 
 ```cpp
-char name[]{"Jhon"}; //(invalid in c)      // <-- string literal
-char name2[] = "Jhon";                     // <-- string literal
-char name3[] = {'J', 'h', 'o', 'n', '\0'}; // <-- char array ; explicit null
-                                           // termination is required
+    char name[]{"Jhon"};                       //<-- string literal (invalid in c)
+    char name2[] = "Jhon";                     // <-- string literal
+    char name3[] = {'J', 'h', 'o', 'n', '\0'}; // <-- char array ; explicit null termination is required
+    char name4[] = {'J', 'h', '\n', 'o', 'n', '\0'};
 
-// uses loop to print whole array
-cout << name << endl;
-cout << strlen(name) << endl; // 4
-// in c
-printf("%s\n", name2);
-printf("%s\n", name3);
+    // uses loop to print whole array
+    cout << name << endl;         // Jhon
+    cout << name4 << endl;        // Jh'\n'on
+    cout << strlen(name) << endl; // 4
+    // in c
+    printf("%s\n", name2); // Jhon
+    printf("%s\n", name3); // Jhon
+    printf("%s\n", name4); // Jh'\n'on
+
+    //Accessing character in a String
+    name2[0] = 'X';
+    printf("%s\n", name2); // Xhon
 ```
 
 ### user input
@@ -285,44 +291,8 @@ cout << fullName << endl;   // >> soikat rahman
 - [https://www.geeksforgeeks.org/clearing-the-input-buffer-in-cc/](https://www.geeksforgeeks.org/clearing-the-input-buffer-in-cc/)
 - [https://stackoverflow.com/questions/257091/how-do-i-flush-the-cin-buffer](https://stackoverflow.com/questions/257091/how-do-i-flush-the-cin-buffer)
 
-### CString Library Functions
+### 🌟🌟`char s[]` vs `char *s`(Constant String)🌟🌟
 
-[https://www.cplusplus.com/reference/cstring/](https://www.cplusplus.com/reference/cstring/)
-
-```cpp
-char name[100];
-// name = "Jhon"; // error: char[100] is not assignable
-//Copying:
-strcpy(name, "Jhon");
-cout << name << endl; // Jhon
-//Concatenating:
-strcat(name, " Smith");
-cout << name << endl; // Jhon Smith
-```
-
-finding substring:
-
-```cpp
-char sentence[100] = "I love reading books on science";
-char word[100];
-cin >> word; // books
-
-/*
-    cout << strstr(sentence, word); // books on science
-
-    strstr() returns a `pointer` to the first occurrence of the substring in the string.
-    That's why it print `books on science`
-*/
-
-char *output = strstr(sentence, word);
-if (output != NULL) {
-    cout << word << " is found" << endl;
-} else {
-    cout << "Not found" << endl;
-}
-```
-
-### 🌟🌟`char s[]` vs `char *s`
 
 - [https://www.geeksforgeeks.org/whats-difference-between-char-s-and-char-s-in-c/](https://www.geeksforgeeks.org/whats-difference-between-char-s-and-char-s-in-c/)
 - [https://overiq.com/c-programming-101/character-array-and-character-pointer-in-c/](https://overiq.com/c-programming-101/character-array-and-character-pointer-in-c/)
@@ -352,6 +322,30 @@ Assignment in details
 <img src="img/char_1.jpg" alt="char_1.jpg" width="800px">
 </div>
 
+> **This means `char *s`  is same as `const char s[]` where individual characters of string can't be changed but new assignment is allowed**
+
+```c
+    char a[] = "hello";
+    a[0] = 'x'; // ok
+    a = "another"; // error: assignment to expression with array type
+    printf("%s\n", a); // xello
+
+    const char s[] = "hello";
+    s[0] = 'x'; // error: assignment of read-only location 's[0]'
+    s = "another"; // error: assignment to expression with array type
+    printf("%s\n", s);
+
+    char *ss = "hello";
+    ss[0] = 'x'; runtime error
+    ss = "another";     // OK
+    printf("%s\n", ss); // another
+
+    const char *sss = "hello";
+    sss[0] = 'x'; //compile time error :  error: assignment of read-only location '*sss'
+    sss = "another";
+    printf("%s\n", sss);
+```
+
 ### `std::string` vs `char[]`
 
 - `char[]` can convert to `std::string` implicitly,
@@ -365,7 +359,7 @@ auto hello1 = str_hello.c_string();
 char *hello2 = str_hello.data();
 ```
 
-### 🚀🚀Array of String : 2D Array of Characters/Array of Pointers to Strings
+### 🚀Array of String : 2D Char Array/Array of Pointers to Strings
 
 ```cpp
 char options[][10] = {"MEDIUM", "HARD", "EASY", "TOUGH"};
@@ -405,9 +399,13 @@ Array of Pointers to Strings in C:
 
 ```
 
-<div align="center">
-<img src="img/aps.jpg" alt="aps.jpg" width="500px">
-</div>
+ Array of Strings:
+
+<div align="center"><img src="img/arr_of_string.jpg" alt="Arr of string" ></div>
+
+ Array of Pointers:
+
+<div align="center"><img src="img/arr_of_pointers.jpg" alt="Arr of string" ></div>
 
 - [https://overiq.com/c-programming-101/array-of-pointers-to-strings-in-c/](https://overiq.com/c-programming-101/array-of-pointers-to-strings-in-c/)
 
@@ -439,3 +437,119 @@ In Java:
 ```java
 String[] ops = {"MEDIUM", "HARD", "EASY"};
 ```
+
+### CString Library Functions
+
+[https://www.cplusplus.com/reference/cstring/](https://www.cplusplus.com/reference/cstring/)
+
+```cpp
+char name[100];
+// name = "Jhon"; // error: char[100] is not assignable
+//Copying:
+strcpy(name, "Jhon");
+cout << name << endl; // Jhon
+//Concatenating:
+strcat(name, " Smith");
+cout << name << endl; // Jhon Smith
+```
+
+finding substring:
+
+```cpp
+char sentence[100] = "I love reading books on science";
+char word[100];
+cin >> word; // books
+
+/*
+    cout << strstr(sentence, word); // books on science
+
+    strstr() returns a `pointer` to the first occurrence of the substring in the string.
+    That's why it print `books on science`
+*/
+
+char *output = strstr(sentence, word);
+if (output != NULL) {
+    cout << word << " is found" << endl;
+} else {
+    cout << "Not found" << endl;
+}
+```
+
+```c
+int main() {
+    printf(GRN "String concatenation:\n\n" NC);
+    char s1[] = "Hello";
+    char s2[] = "World";
+    strcat(s1, s2);
+    printf("Output string after concatenation: %s\n", s1);
+    printf(GRN "\nString Length:\n\n" NC);
+    char s[] = "I love programming in C!";
+    printf("%s\n", s);
+    int i = 0;
+    while (s[i] != '\0') {
+        i++;
+    }
+    // for (i = 0; s[i] != '\0'; i++) { // }
+
+    printf("String length (from scratch): %d\n", i);
+    printf("Sizeof string: %d\n", sizeof(s));
+    printf("String length (built in): %d\n", strlen(s));
+
+    printf(GRN "\nString Copy: strcpy, strncpy\n" NC);
+    char another_string[] = "Programming is funny";
+    printf(YEL "strcpy......................\n" NC);
+    printf("1. Before copy: \"%s\"\n", s);
+    //char *strcpy( char *dest, const char *src )
+    strcpy(s, another_string);
+    printf("2. After copy: \"%s\"\n\n", s);
+
+    printf(YEL "strncpy.....................\n" NC);
+    printf("3. Before copy: \"%s\"\n", s);
+    /* char *strncpy( char *dest, const char *src, size_t n )
+		n: The first n character copied from src to dest.
+	*/
+    printf("4. After copy: \"%s\"\n\n", strncpy(s, "Hello World", 3));
+    // The null char is missing!
+    printf("5. Before copy: \"%s\"\n", s);
+    printf("6. After copy: \"%s\"\n\n", strncpy(s, "Hello World", sizeof(s)));
+    printf("7. Before copy: \"%s\"\n", s);
+    char another_long_string[] = "This is a dummy very very long string...";
+    strncpy(s, another_long_string, sizeof(s));
+    s[sizeof(s) - 1] = '\0';
+    printf("8. After copy: \"%s\"\n\n", s);
+
+    printf(GRN "\nString Compare: strcmp, strncmp\n\n" NC);
+    char str_1[] = "abc";
+    char str_2[] = "abcaaaaa";
+
+    printf("strcmp %s, %s: %d\n", str_1, str_2, strcmp(str_1, str_2));
+    printf("strncmp %s, %s: %d\n", str_1, str_2, strncmp(str_1, str_2, 3));
+    return 0;
+}
+/*
+I love programming in C!
+String length (from scratch): 24
+Sizeof string: 25
+String length (built in): 24
+String Copy: strcpy, strncpy
+strcpy......................
+1. Before copy: "I love programming in C!"
+2. After copy: "Programming is funny"
+
+strncpy.....................
+3. Before copy: "Programming is funny"
+4. After copy: "Helgramming is funny"
+
+5. Before copy: "Helgramming is funny"
+6. After copy: "Hello World"
+
+7. Before copy: "Hello World"
+8. After copy: "This is a dummy very ver"
+
+strcmp abc, abcaaaaa: -1
+strncmp abc, abcaaaaa: 0
+
+ */
+```
+
+
