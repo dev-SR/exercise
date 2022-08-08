@@ -32,10 +32,15 @@
       - [String[] in Cpp](#string-in-cpp)
       - [Input: 2D Char Array | C](#input-2d-char-array--c)
       - [Input: Array of Pointers to Strings | C](#input-array-of-pointers-to-strings--c)
-    - [🌟CString Library Functions](#cstring-library-functions)
     - [🖐️CString Example](#️cstring-example)
       - [lowercase to uppercase](#lowercase-to-uppercase)
+      - [binary to decimal](#binary-to-decimal)
       - [String Len](#string-len)
+      - [String Concatenation](#string-concatenation)
+      - [String Comparison](#string-comparison)
+      - [Palindrome](#palindrome)
+      - [Problem 1](#problem-1)
+    - [🌟CString Library Functions](#cstring-library-functions)
 
 ## Character Data Type
 
@@ -52,7 +57,8 @@ int main() {
     cout << ch + 1 << endl;//66
     ch = ch + 1;
     cout << ch << endl;//B
-
+    char lowerCase = 'c';
+    cout<< 'A' + (lowerCase - 'a') << endl; //C ; 65 + (99 - 97) => 65 + 2 = 67 => C
     cout << "Letters" << endl;
     for (int i = 0; i < 128; i++) {
         cout << i << " - " << (char)i << endl;
@@ -917,123 +923,7 @@ jhon kurry
 
 
 
-### 🌟CString Library Functions
 
-
-[☝️ Top ☝️](#up)
-
-
-[https://www.cplusplus.com/reference/cstring/](https://www.cplusplus.com/reference/cstring/)
-
-```cpp
-char name[100];
-// name = "Jhon"; // error: char[100] is not assignable
-//Copying:
-strcpy(name, "Jhon");
-cout << name << endl; // Jhon
-//Concatenating:
-strcat(name, " Smith");
-cout << name << endl; // Jhon Smith
-```
-
-finding substring:
-
-```cpp
-char sentence[100] = "I love reading books on science";
-char word[100];
-cin >> word; // books
-
-/*
-    cout << strstr(sentence, word); // books on science
-
-    strstr() returns a `pointer` to the first occurrence of the substring in the string.
-    That's why it print `books on science`
-*/
-
-char *output = strstr(sentence, word);
-if (output != NULL) {
-    cout << word << " is found" << endl;
-} else {
-    cout << "Not found" << endl;
-}
-```
-
-```c
-int main() {
-    printf(GRN "String concatenation:\n\n" NC);
-    char s1[] = "Hello";
-    char s2[] = "World";
-    strcat(s1, s2);
-    printf("Output string after concatenation: %s\n", s1);
-    printf(GRN "\nString Length:\n\n" NC);
-    char s[] = "I love programming in C!";
-    printf("%s\n", s);
-    int i = 0;
-    while (s[i] != '\0') {
-        i++;
-    }
-    // for (i = 0; s[i] != '\0'; i++) { // }
-
-    printf("String length (from scratch): %d\n", i);
-    printf("Sizeof string: %d\n", sizeof(s));
-    printf("String length (built in): %d\n", strlen(s));
-
-    printf(GRN "\nString Copy: strcpy, strncpy\n" NC);
-    char another_string[] = "Programming is funny";
-    printf(YEL "strcpy......................\n" NC);
-    printf("1. Before copy: \"%s\"\n", s);
-    //char *strcpy( char *dest, const char *src )
-    strcpy(s, another_string);
-    printf("2. After copy: \"%s\"\n\n", s);
-
-    printf(YEL "strncpy.....................\n" NC);
-    printf("3. Before copy: \"%s\"\n", s);
-    /* char *strncpy( char *dest, const char *src, size_t n )
-  n: The first n character copied from src to dest.
- */
-    printf("4. After copy: \"%s\"\n\n", strncpy(s, "Hello World", 3));
-    // The null char is missing!
-    printf("5. Before copy: \"%s\"\n", s);
-    printf("6. After copy: \"%s\"\n\n", strncpy(s, "Hello World", sizeof(s)));
-    printf("7. Before copy: \"%s\"\n", s);
-    char another_long_string[] = "This is a dummy very very long string...";
-    strncpy(s, another_long_string, sizeof(s));
-    s[sizeof(s) - 1] = '\0';
-    printf("8. After copy: \"%s\"\n\n", s);
-
-    printf(GRN "\nString Compare: strcmp, strncmp\n\n" NC);
-    char str_1[] = "abc";
-    char str_2[] = "abcaaaaa";
-
-    printf("strcmp %s, %s: %d\n", str_1, str_2, strcmp(str_1, str_2));
-    printf("strncmp %s, %s: %d\n", str_1, str_2, strncmp(str_1, str_2, 3));
-    return 0;
-}
-/*
-I love programming in C!
-String length (from scratch): 24
-Sizeof string: 25
-String length (built in): 24
-String Copy: strcpy, strncpy
-strcpy......................
-1. Before copy: "I love programming in C!"
-2. After copy: "Programming is funny"
-
-strncpy.....................
-3. Before copy: "Programming is funny"
-4. After copy: "Helgramming is funny"
-
-5. Before copy: "Helgramming is funny"
-6. After copy: "Hello World"
-
-7. Before copy: "Hello World"
-8. After copy: "This is a dummy very ver"
-
-strcmp abc, abcaaaaa: -1
-strncmp abc, abcaaaaa: 0
-
- */
-```
 
 ### 🖐️CString Example
 
@@ -1056,6 +946,37 @@ int main() {
     return 0;
 }
 ```
+
+#### binary to decimal
+
+`10110 = 1.2^4 + 0.2^3 + 1.2^2 + 1.2^1 + 0.2^0 = 16+0+4+2+0 =22`
+
+```c
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char binary[] = "10110";
+    int decimal = 0, i, power, len;
+    len = strlen(binary);
+    power = len - 1;
+    decimal = 0;
+
+    for (i = 0; i < len; i++) {
+        int b = binary[i] - '0';
+        //'0'(48) - '0'(48) = 0
+        // '1'(49) - '0'(48) = 1
+        // decimal = decimal + (b * pow(2, power));
+        decimal += b * pow(2, power);
+        power--;
+    }
+    printf("%d", decimal);
+
+    return 0;
+}
+```
+
 
 #### String Len
 
@@ -1098,3 +1019,196 @@ Enter More String:
 >> len: 1
 >> len: 1
 ```
+
+#### String Concatenation
+
+```c
+int main() {
+    char s1[] = "Bangla", s2[] = "desh", s[12];
+    int i, j, len1 = 6, len2 = 4;
+    // copy from a
+    for (i = 0, j = 0; i < len1; i++, j++) {
+        s[i] = s1[i];
+    }
+    // copy from b
+    for (i = 0; i < len2; i++, j++) {
+        s[j] = s2[i];
+    }
+    s[j] = '\0'; // append terminator at the end
+    printf("%s\n", s);// output: Bangladesh
+}
+
+```
+
+#### String Comparison
+
+```c
+#include <string.h>
+int string_compare(char a[], char b[]) {
+    for (int i = 0; a[i] != '\0' && b[i] != '\0'; i++) {
+        if (a[i] > b[i])
+            return 1;
+        if (a[i] < b[i])
+            return -1;
+    }
+
+    //  aa == aa
+    if (strlen(a) == strlen(b))
+        return 0;
+    if (strlen(a) > strlen(b))
+        return 1;
+    if (strlen(a) < strlen(b))
+        return -1;
+}
+
+int main() {
+    // How String Comparision Works!!!
+    printf("%d\n", strcmp("aab", "aaa")); // 1 a>b
+    printf("%d\n", strcmp("aaa", "aab")); //-1 a<b
+    printf("%d\n", strcmp("ba", "ca"));   //-1
+    printf("%d\n", strcmp("aa", "aa"));   // 0
+    printf("%d\n", strcmp("aaa", "aa"));  // 1
+    printf("\n");
+    // using custom comparison:
+    printf("%d\n", string_compare("aab", "aaa")); // 1
+    printf("%d\n", string_compare("aaa", "aab")); //-1
+    printf("%d\n", string_compare("ba", "ca"));   //-1
+    printf("%d\n", string_compare("aa", "aa"));   // 0
+    printf("%d\n", string_compare("aaa", "aa"));  // 1
+    printf("%d\n", string_compare("aa", "aaa"));  // -1
+}
+```
+
+
+#### Palindrome
+
+```c
+#include <stdio.h>
+#include <string.h>
+int main() {
+    char word[80], reverse_word[80];
+    int i, j, len;
+    scanf("%s", word);
+    len = strlen(word);
+
+    for (i = 0, j = len - 1; i < len; i++, j--) {
+        reverse_word[i] = word[j];
+    }
+
+    reverse_word[len] = '\0';
+    printf("%s\n", reverse_word);
+
+    if (0 == strcmp(word, reverse_word)) {
+        printf("%s is a palindrome word", word);
+        //madam is a palindrome word
+    } else {
+        printf("%s is a not palindrome word", word);
+    }
+
+    return 0;
+}
+```
+
+#### Problem 1
+
+```bash
+Problem Statement:
+Given a Line, print that line word by word punctuation removed and each word capitalized.
+
+In: This is a test number 9.9
+
+OUT:
+This
+Is
+A
+Test
+Number
+99
+
+```
+
+```c
+#include <stdio.h>
+#include <string.h>
+int main() {
+
+    char s[1000], ch;
+    int i, len, is_word_started = 1;
+    gets(s);
+    len = strlen(s);
+
+    for (int i = 0; i < len; i++) {
+        if (s[i] >= 'a' && s[i] <= 'z') {
+            // first char of the word
+            if (is_word_started) {
+                is_word_started = 0; // so that next char is not mark as starting char
+                ch = 'A' + (s[i] - 'a');
+                printf("%c", ch);
+            }
+            // else print as it its
+            else {
+                printf("%c", s[i]);
+            }
+
+        } else if ((s[i] >= 'A' && s[i] <= 'Z') || (s[i] >= '0' && s[i] <= '9')) {
+            if (is_word_started) {
+                is_word_started = 1; // so that next char is not mark as starting char
+                                     // no need to do anything
+            }
+            printf("%c", s[i]);
+        }
+        // WhiteSpace is found
+        else {
+            if (!is_word_started) {
+                // Mark current character as the starting point of new word
+                is_word_started = 1;
+                printf("\n");
+            }
+        }
+    }
+
+    return 0;
+}
+```
+
+
+### 🌟CString Library Functions
+
+[☝️ Top ☝️](#up)
+
+
+[https://www.cplusplus.com/reference/cstring/](https://www.cplusplus.com/reference/cstring/)
+
+```cpp
+char name[100];
+// name = "Jhon"; // error: char[100] is not assignable
+//Copying:
+strcpy(name, "Jhon");
+cout << name << endl; // Jhon
+//Concatenating:
+strcat(name, " Smith");
+cout << name << endl; // Jhon Smith
+```
+
+finding substring:
+
+```cpp
+char sentence[100] = "I love reading books on science";
+char word[100];
+cin >> word; // books
+
+/*
+    cout << strstr(sentence, word); // books on science
+
+    strstr() returns a `pointer` to the first occurrence of the substring in the string.
+    That's why it print `books on science`
+*/
+
+char *output = strstr(sentence, word);
+if (output != NULL) {
+    cout << word << " is found" << endl;
+} else {
+    cout << "Not found" << endl;
+}
+```
+
