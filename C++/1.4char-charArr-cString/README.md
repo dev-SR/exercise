@@ -442,17 +442,30 @@ cout << names << endl; //garbage
 - [https://overiq.com/c-programming-101/character-array-and-character-pointer-in-c/](https://overiq.com/c-programming-101/character-array-and-character-pointer-in-c/)
 - [https://kelvinson.github.io/algos/2019/06/chars-arrays-string/](https://kelvinson.github.io/algos/2019/06/chars-arrays-string/)
 
+In c string is a **fixed size array of characters**. and the **array name** represent the **address of the first character**. Therefore, we can assign the address of the string to a pointer directly.The type of both the variables is a pointer to char or (char*), so you can pass either of them to a function whose formal argument accepts an array of characters or a character pointer.
+
+
 ```cpp
     char arr[] = "hello"; // array version
-    char *ptr = "hello";  // pointer version
+    char *ptr = "hello";  // assigning the address of the string to a pointer directly
 
     printf("%s\n", arr); // hello
     printf("%s\n", ptr); // hello
+
+    // thing to note
+    char c = 'a';
+    char *p = &c;
+    printf("%c\n", *p); // a
+    // But
+    char *cc = 'A'; // warning: initialization of 'char *' from 'int' makes pointer from integer without a cast
+    printf("%c\n", *cc);
+    return 0;
+
 ```
 
-The similarity is:
 
-The type of both the variables is a pointer to char or (char*), so you can pass either of them to a function whose formal argument accepts an array of characters or a character pointer.
+
+But `char s[]` and  `char *s` is not the same thing.
 
 Here are the differences:
 

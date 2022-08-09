@@ -20,17 +20,17 @@
 
 Format specifiers define the type of data to be printed on standard output. You need to use format specifiers whether you're printing formatted output with `printf()` or  accepting input with `scanf()`.
 
-| Format Specifier | Used For                       |
-| ---------------- | ------------------------------ |
-| `%c`             | Character                      |
-| `%s`             | String                         |
-| `%d`             | Signed integer                 |
-| `%f`             | Float values                   |
-| `%lf`            | Double                         |
-| `%Lf`            | Long double                    |
-| `%lli or %lld`   | Long long                      |
-| `%p`             | Pointer                        |
-| `%x or %X`       | Hexadecimal (used for address) |
+| Format Specifier | Used For       |
+| ---------------- | -------------- |
+| `%c`             | Character      |
+| `%s`             | String         |
+| `%d`             | Signed integer |
+| `%f`             | Float values   |
+| `%lf`            | Double         |
+| `%Lf`            | Long double    |
+| `%lli or %lld`   | Long long      |
+| `%p`             | Pointer        |
+| `%x` ,`%X`       | hexadecimal    |
 
 There are different other basic format specifiers where we add symbols before the format specifiers. Such symbols are as follows:
 

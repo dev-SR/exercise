@@ -2,9 +2,10 @@
 
 - [Pointer & Reference](#pointer--reference)
   - [🚀Pointer](#pointer)
-    - [Address Of Operator(`&`)](#address-of-operator)
-    - [Pointer Variables](#pointer-variables)
-    - [🚨Dereference Operator(`*`)](#dereference-operator)
+    - [Address Operator(`&`)](#address-operator)
+    - [Assigning Address to a Pointer Variables | `type *name = address`](#assigning-address-to-a-pointer-variables--type-name--address)
+    - [🚨Dereference Operator(`*`) | `*p => contents of the pointer`](#dereference-operator--p--contents-of-the-pointer)
+    - [Null Pointer](#null-pointer)
     - [🌟Pointer Applications🌟](#pointer-applications)
       - [🚀Pass By References - Using Pointers | Modify the passed parameters in a function](#pass-by-references---using-pointers--modify-the-passed-parameters-in-a-function)
   - [👉Reference(`&`) in  C++](#reference-in--c)
@@ -19,7 +20,7 @@
 
 ## 🚀Pointer
 
-### Address Of Operator(`&`)
+### Address Operator(`&`)
 
 To get the address of a variable, use the `&` operator.
 
@@ -28,7 +29,42 @@ To get the address of a variable, use the `&` operator.
     cout << &a << endl; // 0x59ca3ffd2c
 ```
 
-### Pointer Variables
+```c
+int main() {
+    int ar[] = {1, 2, 3, 4, 5};
+    for (int i = 0; i < 5; i++) {
+        printf("address of a[%d]: %p\n", i, &ar[i]);//use %p format specifier to print the address/pointer.
+    }
+    return 0;
+}
+/*
+
+address of a[0]: 000000B44D3FFA50
+address of a[1]: 000000B44D3FFA54
+address of a[2]: 000000B44D3FFA58
+address of a[3]: 000000B44D3FFA5C
+address of a[4]: 000000B44D3FFA60
+
+*/
+```
+
+Correct format specifier to print pointer or address?
+
+```c
+    int a = 12;
+    int *ptr = &a;
+
+    printf("%x\n", ptr); // 38fffd28
+    printf("%X\n", ptr); // 38FFFD28
+    printf("%p\n", ptr); // 0000002038FFFD28
+```
+
+The simplest answer, assuming you don't mind the vagaries and variations in format between different platforms, is the standard `%p` notation.
+
+- [https://stackoverflow.com/questions/9053658/correct-format-specifier-to-print-pointer-or-address](https://stackoverflow.com/questions/9053658/correct-format-specifier-to-print-pointer-or-address)
+
+
+### Assigning Address to a Pointer Variables | `type *name = address`
 
 A pointer variable is a variable that stores the address of another variable. To declare a pointer variable, use the `*` operator.
 
@@ -45,9 +81,9 @@ A pointer variable is a variable that stores the address of another variable. To
  <img src="img/ptr.jpg" alt="ptr.jpg" width="400px">
 </div>
 
-### 🚨Dereference Operator(`*`)
+### 🚨Dereference Operator(`*`) | `*p => contents of the pointer`
 
-An interesting property of pointers is that they can be **used to access the variable they point to directly**. This is done by preceding the pointer name with the dereference operator (`*`). The operator itself can be read as `"value pointed to by"`
+An interesting property of pointers is that they can be **used to access the variable they point to directly**. This is done by preceding the pointer name with the dereference operator (`*`). The operator itself can be read as `"value pointed to by"`. This means **we can read `(*)p` as the `"contents of the pointer"`.**
 
 - `&value => address`
 - `*address => value`
@@ -59,7 +95,31 @@ An interesting property of pointers is that they can be **used to access the var
  cout << *p << endl; // 10
 ```
 
+Once pointer is assigned to a variable, the initial content of pointer will be the content of that variable. Then we can `change` the content of that variable either by assigning new value through the `pointer` or `the variable` itself.
+
 ```cpp
+int main() {
+    int a = 10;
+    int *p;
+    p = &a;
+    printf("Initial Content: %d\n", a);                 // 10
+    printf("Initial Content of the pointer: %d\n", *p); // 10
+
+    // changing the content thorough the variable itself:
+    a = 20;
+    printf("Content now: %d\n", a);                   // 20
+    printf("Content of the pointer, now : %d\n", *p); // 20
+
+    // changing the content thorough the pointer:
+    *p = 30;
+    printf("Content now: %d\n", a);                   // 30
+    printf("Content of the pointer, now : %d\n", *p); // 30
+}
+```
+
+Here `*p = 30`  changes the content of the variable `a` to `30`, as pointer `p` is pointing to `a`.
+
+```c
 #include <stdio.h>
 #define RED "\e[0;91m"
 #define GRN "\e[0;92m"
@@ -68,45 +128,80 @@ int main() {
     // Declare and Access
     int a = 12;
     int *ptr = &a;
-    printf(RED "ptr:" NC " %p  %x  %X", ptr, ptr, ptr);
+    printf("ptr: %p  %x  %X", ptr, ptr, ptr);
 
-    // !Indirection to GET the values
+    // !GET content of pointer
     int n1 = *ptr;
-    int n2 = *ptr + 8;
-    printf(RED "\na:" NC " %d", *ptr);
-    printf(RED "\nn1:" NC " %d", n1);
-    printf(RED "\nn2:" NC " %d", n2);
+    printf("\nContent: %d", a);    // 12
+    printf("\nContent: %d", *ptr); // 12
+    printf("\nContent: %d", n1);   // 12
 
-    // !Indirection to SET value
+    // !SET new value using pointer
     *ptr = 99;
-    printf(RED "\nnew a:" NC " %d", *ptr);
+    printf("\nNew Content: %d", a);    // 99
+    printf("\nNew Content: %d", *ptr); // 99
 
-    // !Indirection and void Pointers
+    // !void Pointers
     void *vPtr = &a;
     // int n3 = *vPtr; // warning: dereferencing 'void *' pointer
     // must cast a void pointer before indirection
-    int n3 = *((int *)vPtr);
-    printf(RED "\nn3:" NC " %d", n3);
+    int n3 = *((int *)vPtr);          // converting to an integer
+    printf(RED "\nn3:" NC " %d", n3); // 99
+}
+```
 
-    //! Testing for a Null pointer
-    printf(GRN "\ntesting for a Null pointer....\n" NC);
+### Null Pointer
+
+A null pointer has a reserved value that is called a null pointer constant for indicating that **the pointer does not point to any valid object or function**. You can use null pointers in the following cases:
+
+- Initialize pointers.
+- To check for a null pointer before accessing any pointer variable
+- Represent conditions such as the end of a list of unknown length.
+- Indicate errors in returning a pointer from a function.
+
+```c
+int main() {
+    int x = 1;
     int *p = NULL;
-    // execute if pointer isn't NULL
-    if (p)
-        printf("1 | pointer value: %d\n", *p);
-
-    // execute if pointer is NULL
-    int someValue = 123;
-    if (!p) {
-        p = &someValue;
-    }
-    // execute if pointer isn't NULL
-    if (p)
-        printf("2 | pointer value: %d\n", *p);
+    printf("content of x: %d", x);
+    printf("content of *p: %d", *p);
     return 0;
 }
 ```
 
+If we run the above program, the program will crash as the pointer `p` is  not pointing to any valid object or function.
+
+The following code will also crash:
+
+```c
+int main() {
+    int *p = NULL;
+    *p = 100;
+    return 0;
+}
+```
+
+Because we are trying to assign a pointer that is pointing nowhere.
+
+Below is an example for checking for a null pointer before accessing any pointer variable:
+
+```c
+int main() {
+    int x = 1;
+    int *p = NULL;
+    if (p) {
+        *p = 100;
+        printf("content of *p: %d", *p);
+    }
+    p = &x;
+    if (p) {
+        *p = 10;
+        printf("content of *p: %d", *p); // content of *p: 10
+    }
+}
+```
+
+Here, 2nd if block is executed because at this moment `p` is pointing to `x`.
 
 ### 🌟Pointer Applications🌟
 
