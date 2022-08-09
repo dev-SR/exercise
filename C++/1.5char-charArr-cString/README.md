@@ -11,7 +11,7 @@
       - [Problems 2 : Shortest Path](#problems-2--shortest-path)
   - [🌨️C-Style Strings / Char[]🌨️](#️c-style-strings--char️)
     - [Initializing and Accessing a C-Style String](#initializing-and-accessing-a-c-style-string)
-    - [🌟🌟🌟`char s[]/string[]`(Mutable) vs `char *s`(Immutable)](#char-sstringmutable-vs-char-simmutable)
+    - [🌟🌟🌟`char s[]`(Mutable) vs `char *s`(Immutable)](#char-smutable-vs-char-simmutable)
     - [`std::string` vs `char[]`](#stdstring-vs-char)
     - [👉Input - Cpp](#input---cpp)
       - [cin](#cin)
@@ -37,6 +37,7 @@
       - [lowercase to uppercase](#lowercase-to-uppercase)
       - [binary to decimal](#binary-to-decimal)
       - [String Len](#string-len)
+      - [String Copy](#string-copy)
       - [String Concatenation](#string-concatenation)
       - [String Comparison](#string-comparison)
       - [Palindrome](#palindrome)
@@ -143,7 +144,6 @@ cout << ch << endl;//A
 ```
 
 ### Problems
-
 
 #### Problems 1 : Robot’s Grid Traversal
 
@@ -252,8 +252,6 @@ q
 Final postion of the robot is: 2,1
 ```
 
-
-
 ```c
 #include <stdio.h>
 int main() {
@@ -329,7 +327,6 @@ int main() {
     return 0;
 }
 ```
-
 
 #### Problems 2 : Shortest Path
 
@@ -434,7 +431,7 @@ cout << names << endl; //garbage
     printf("%s\n", name2); // Xhon
 ```
 
-### 🌟🌟🌟`char s[]/string[]`(Mutable) vs `char *s`(Immutable)
+### 🌟🌟🌟`char s[]`(Mutable) vs `char *s`(Immutable)
 
 [☝️ Top ☝️](#up)
 
@@ -443,7 +440,6 @@ cout << names << endl; //garbage
 - [https://kelvinson.github.io/algos/2019/06/chars-arrays-string/](https://kelvinson.github.io/algos/2019/06/chars-arrays-string/)
 
 In c string is a **fixed size array of characters**. and the **array name** represent the **address of the first character**. Therefore, we can assign the address of the string to a pointer directly.The type of both the variables is a pointer to char or (char*), so you can pass either of them to a function whose formal argument accepts an array of characters or a character pointer.
-
 
 ```cpp
     char arr[] = "hello"; // array version
@@ -495,8 +491,7 @@ See the mutability and immutability of `char s[]` and `char *s`
     ss[0] = 'x'; //runtime error
     ss = "another";     // OK
     printf("%s\n", ss); // another
-
-    /* here "hello" is `Immutable` which simply means unmodifiable or unchangeable. Once String object is created its data or state can't be changed but a new String object is created. */
+    //here "hello" is `Immutable`
 
     const char *sss = "hello";
     sss[0] = 'x'; //compile time error :  error: assignment of read-only location '*sss'
@@ -504,9 +499,10 @@ See the mutability and immutability of `char s[]` and `char *s`
     printf("%s\n", sss);
 ```
 
--  `char *s` is `immutable`
+<details>
+  <summary><b>"char *s" is 🚀immutable🚀</b></summary>
 
-We can say `char *s` is `immutable`. Immutable simply means **unmodifiable or unchangeable**. Once String Literal is created its data or state can't be changed but a new String Literal can be assigned to it.
+We can say `char *s` is `immutable`. Immutable simply means **unmodifiable**. Once String is created its data can't be changed but a new String can be assigned as `ss` is just a pointer
 
 ```c
     char *s = "Hello";
@@ -516,7 +512,10 @@ We can say `char *s` is `immutable`. Immutable simply means **unmodifiable or un
 
 ```
 
--  `char s[]` is `mutable`
+</details>
+
+<details>
+    <summary><b>"char s[]" is 🚀mutable🚀</b></summary>
 
 ```c
     char ch[20] = "Hello";
@@ -536,8 +535,11 @@ Although `char s[]` is `mutable` , we can't perform operation like assignment or
     printf("%s\n", ch); // Hello World
 ```
 
+See when `strcpy` is need here [String Copy](#string-copy)
+</details>
 
-- CPP `string` is 🚀 `mutable` 🚀
+<details>
+<summary><b>CPP string is 🚀 mutable🚀</b></summary>
 
 ```cpp
 int main() {
@@ -553,8 +555,12 @@ int main() {
 
 - [stackoverflow | Are C++ strings mutable UNLIKE Java strings?](https://stackoverflow.com/questions/28442719/are-c-strings-mutable-unlike-java-strings#:~:text=You%20can%20modify%20the%20string,into%20a%20mutable%20char%20array.)
 
-- Java `String` is `immutable`
 
+</details>
+
+
+<details>
+<summary><b>Java String is 🚀immutable🚀</b></summary>
 ```java
    String s="Hello";
    //   s[0] = 'X'; // error: array required, but String found
@@ -566,10 +572,14 @@ int main() {
 //   therefore we have to change it completely
     String s = "Hello";
     s = s.concat (" World");
-    System.out.println (s);	//Hello World
+    System.out.println (s); //Hello World
 ```
+</details>
 
-- Python `String` is `immutable`
+
+<details>
+<summary><b>Python String is 🚀immutable🚀</summary>
+
 
 ```python
 s = "Hello"
@@ -579,6 +589,7 @@ print(s) # Hello
 s= s + " World"
 print(s) # Hello World
 ```
+</details>
 
 
 ### `std::string` vs `char[]`
@@ -878,7 +889,6 @@ hello world
 
 [☝️ Top ☝️](#up)
 
-
 - [https://www.geeksforgeeks.org/clearing-the-input-buffer-in-cc/](https://www.geeksforgeeks.org/clearing-the-input-buffer-in-cc/)
 - [https://stackoverflow.com/questions/257091/how-do-i-flush-the-cin-buffer](https://stackoverflow.com/questions/257091/how-do-i-flush-the-cin-buffer)
 
@@ -1132,7 +1142,6 @@ int main() {
 }
 ```
 
-
 ```word
 Enter 3 Comments:
 comment[0]: this was a good movie
@@ -1142,7 +1151,6 @@ this was a good movie
 this was a bad movie
 I haven't watched the movie
 ```
-
 
 #### Input: Array of Pointers to Strings | C
 
@@ -1189,7 +1197,6 @@ int main() {
 }
 ```
 
-
 ```bash
 Enter FullNames of Your 3 Friends:
 F[0]: jhon snow
@@ -1199,10 +1206,6 @@ jhon snow
 jhon bestow
 jhon kurry
 ```
-
-
-
-
 
 ### 🖐️CString Example
 
@@ -1256,9 +1259,7 @@ int main() {
 }
 ```
 
-
 #### String Len
-
 
 ```c
 int string_len(char str[]) {
@@ -1285,9 +1286,8 @@ int main() {
 
 - `scanf()` returns number of element taken as input;
   - i.e : `scanf("%d %d",&n1,&n2)` returns `2`
--  `while (1 == scanf("%s", str))` takes one word at a time
--  press ^Z,^D to stop
-
+- `while (1 == scanf("%s", str))` takes one word at a time
+- press ^Z,^D to stop
 
 ```word
 Enter More String:
@@ -1298,6 +1298,68 @@ Enter More String:
 >> len: 1
 >> len: 1
 ```
+
+#### String Copy
+
+```c
+void str_cpy(char a[], char b[]) {
+    int i;
+    for (i = 0; b[i] != '\0'; i++) //  or  for(i=0;s1[i];i++)
+    {
+        a[i] = b[i];
+    }
+    a[i] = '\0';
+}
+int main() {
+    char a[20] = "Hello";
+    char b[20];
+    str_cpy(a, "New");
+    printf("%s\n", a); // New
+    str_cpy(b, "New");
+    printf("%s\n", b); // New
+    return 0;
+}
+
+```
+
+String Copy UseCase:`char s[]` vs `char *s` with `struct`
+
+```c
+typedef struct {
+    int id;
+    char name[20];
+} Student;
+// VS
+typedef struct {
+    int id;
+    char *name;
+} Student2;
+
+int main() {
+    char a[20] = "Hello";
+    char b[20];
+    str_cpy(a, "New");
+    printf("%s\n", a); // New
+    str_cpy(b, "New");
+    printf("%s\n", b); // New
+
+    // with char name[]
+    Student s;
+    s.id = 191;
+    // s.name = "New"; // error: assignment to expression with array type
+    str_cpy(s.name, "New");
+    printf("%s\n", s.name); // new
+
+    // with char *name
+    Student2 s2;
+    s2.id = 191;
+    s2.name = "New";
+    printf("%s\n", s2.name); // new
+    return 0;
+}
+```
+
+See Why in [`char s[]`(Mutable) vs `char *s`(Immutable)](#char-smutable-vs-char-simmutable)
 
 #### String Concatenation
 
@@ -1357,7 +1419,6 @@ int main() {
     printf("%d\n", string_compare("aa", "aaa"));  // -1
 }
 ```
-
 
 #### Palindrome
 
@@ -1450,11 +1511,9 @@ int main() {
 }
 ```
 
-
 ### 🌟CString Library Functions
 
 [☝️ Top ☝️](#up)
-
 
 [https://www.cplusplus.com/reference/cstring/](https://www.cplusplus.com/reference/cstring/)
 
@@ -1490,4 +1549,3 @@ if (output != NULL) {
     cout << "Not found" << endl;
 }
 ```
-
