@@ -11,7 +11,7 @@
       - [Problems 2 : Shortest Path](#problems-2--shortest-path)
   - [🌨️C-Style Strings / Char[]🌨️](#️c-style-strings--char️)
     - [Initializing and Accessing a C-Style String](#initializing-and-accessing-a-c-style-string)
-    - [🌟🌟`char s[]` vs `char *s`(Constant String)🌟🌟](#char-s-vs-char-sconstant-string)
+    - [🌟🌟🌟`char s[]/string[]`(Mutable) vs `char *s`(Immutable)](#char-sstringmutable-vs-char-simmutable)
     - [`std::string` vs `char[]`](#stdstring-vs-char)
     - [👉Input - Cpp](#input---cpp)
       - [cin](#cin)
@@ -434,7 +434,7 @@ cout << names << endl; //garbage
     printf("%s\n", name2); // Xhon
 ```
 
-### 🌟🌟`char s[]` vs `char *s`(Constant String)🌟🌟
+### 🌟🌟🌟`char s[]/string[]`(Mutable) vs `char *s`(Immutable)
 
 [☝️ Top ☝️](#up)
 
@@ -463,8 +463,6 @@ In c string is a **fixed size array of characters**. and the **array name** repr
 
 ```
 
-
-
 But `char s[]` and  `char *s` is not the same thing.
 
 Here are the differences:
@@ -479,12 +477,13 @@ Assignment in details
 <img src="img/char_1.jpg" alt="char_1.jpg" width="800px">
 </div>
 
-> **This means `char *s`  is same as `const char s[]` where individual characters of string can't be changed but new assignment is allowed**
+See the mutability and immutability of `char s[]` and `char *s`
 
 ```c
     char a[] = "hello";
     a[0] = 'x'; // ok
     a = "another"; // error: assignment to expression with array type
+    // this limitation can be overcome `strcpy()`; see below
     printf("%s\n", a); // xello
 
     const char s[] = "hello";
@@ -493,15 +492,94 @@ Assignment in details
     printf("%s\n", s);
 
     char *ss = "hello";
-    ss[0] = 'x'; runtime error
+    ss[0] = 'x'; //runtime error
     ss = "another";     // OK
     printf("%s\n", ss); // another
+
+    /* here "hello" is `Immutable` which simply means unmodifiable or unchangeable. Once String object is created its data or state can't be changed but a new String object is created. */
 
     const char *sss = "hello";
     sss[0] = 'x'; //compile time error :  error: assignment of read-only location '*sss'
     sss = "another";
     printf("%s\n", sss);
 ```
+
+-  `char *s` is `immutable`
+
+We can say `char *s` is `immutable`. Immutable simply means **unmodifiable or unchangeable**. Once String Literal is created its data or state can't be changed but a new String Literal can be assigned to it.
+
+```c
+    char *s = "Hello";
+    // s[0] = 'X'; // undefined behavior
+    s = "another";
+    printf("%s", s);
+
+```
+
+-  `char s[]` is `mutable`
+
+```c
+    char ch[20] = "Hello";
+    ch[0] = 'X';
+    printf("%s\n", ch); // Xello
+```
+
+Although `char s[]` is `mutable` , we can't perform operation like assignment or concatenation of a new string to it.This limitation can be overcome by function like `strcpy()` ,`strcat()` :
+
+```c
+    char ch[20] = "Hello";
+    ch[0] = 'X';
+    printf("%s\n", ch); // Xello
+    strcat(ch, " World");
+    printf("%s\n", ch); // Xello World
+    strcpy(ch, "Hello World");
+    printf("%s\n", ch); // Hello World
+```
+
+
+- CPP `string` is 🚀 `mutable` 🚀
+
+```cpp
+int main() {
+    string s = "Hello";
+    cout << s << endl;
+    s[0] = 'X';
+    cout << s << endl;// Xello
+    s.append(" World");
+    cout << s << endl;// Xello World
+    return 0;
+}
+```
+
+- [stackoverflow | Are C++ strings mutable UNLIKE Java strings?](https://stackoverflow.com/questions/28442719/are-c-strings-mutable-unlike-java-strings#:~:text=You%20can%20modify%20the%20string,into%20a%20mutable%20char%20array.)
+
+- Java `String` is `immutable`
+
+```java
+   String s="Hello";
+   //   s[0] = 'X'; // error: array required, but String found
+   s.concat(" World");
+   System.out.println(s);//will print `Hello` because strings are immutable objects
+```
+
+```java
+//   therefore we have to change it completely
+    String s = "Hello";
+    s = s.concat (" World");
+    System.out.println (s);	//Hello World
+```
+
+- Python `String` is `immutable`
+
+```python
+s = "Hello"
+# s[0] = 'X' #TypeError: 'str' object does not support item assignment
+s + " World"
+print(s) # Hello
+s= s + " World"
+print(s) # Hello World
+```
+
 
 ### `std::string` vs `char[]`
 

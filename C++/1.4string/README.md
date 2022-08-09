@@ -4,6 +4,7 @@
   - [Strings Initialization](#strings-initialization)
   - [Input](#input)
   - [String Traversal](#string-traversal)
+  - [Cpp String is `Mutable`](#cpp-string-is-mutable)
 
 ## Strings Initialization
 
@@ -140,3 +141,16 @@ paragraph
         cout << c << " "; // H E L L O
     }
 ```
+
+## Cpp String is `Mutable`
+
+```cpp
+    string s = "Hello";
+    cout << s << endl;
+    s[0] = 'X';
+    cout << s << endl;// Xello
+    s.append(" World");
+    cout << s << endl;// Xello World
+    return 0;
+```
+
