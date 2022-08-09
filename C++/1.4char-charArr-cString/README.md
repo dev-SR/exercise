@@ -7,7 +7,8 @@
     - [Reading a Char using `cin.get()`](#reading-a-char-using-cinget)
     - [Ctype headers](#ctype-headers)
     - [Problems](#problems)
-      - [Problems 1 : Shortest Path](#problems-1--shortest-path)
+      - [Problems 1 : Robot’s Grid Traversal](#problems-1--robots-grid-traversal)
+      - [Problems 2 : Shortest Path](#problems-2--shortest-path)
   - [🌨️C-Style Strings / Char[]🌨️](#️c-style-strings--char️)
     - [Initializing and Accessing a C-Style String](#initializing-and-accessing-a-c-style-string)
     - [🌟🌟`char s[]` vs `char *s`(Constant String)🌟🌟](#char-s-vs-char-sconstant-string)
@@ -143,7 +144,194 @@ cout << ch << endl;//A
 
 ### Problems
 
-#### Problems 1 : Shortest Path
+
+#### Problems 1 : Robot’s Grid Traversal
+
+```bash
+Given, a N*N Grid
+0,0----------(0,N)
+| ---------------- |
+| ---------------- |
+| ---------------- |
+| ---------------- |
+(N,0)---------(N,N)
+
+
+A robot starting from (x,y) position, after moving U|D|R|L reaches (x',y') position
+Take input initial(x,y) position and directions that the robot will move,
+then print the final position (x',y')
+
+# direction is in term of 2d array index arr[x][y] ; move down means x++
+
+Example:
+Move the robot in U|D|R|L direction (q to stop):
+D
+moved 🡣
+R
+moved 🡢
+D
+moved 🡣
+R
+moved 🡢
+q
+Final postion of the robot is: 4,4
+```
+
+```cpp
+#include <stdio.h>
+/*
+
+ */
+int main() {
+    int x, y;
+    char c;
+    printf("Enter the initial position: ");
+    scanf("%d %d", &x, &y);
+
+    printf("Move the robot in U|D|R|L direction (q to stop):\n");
+    while (1) {
+        scanf("%c", &c);
+        if (c == 'q')
+            break;
+        else if (c == 'U') {
+            x--; // direction in term of 2d array index arr[x][y]
+            printf("moved 🡡\n");
+        }
+
+        else if (c == 'D') {
+            x++;
+            printf("moved 🡣\n");
+
+        } else if (c == 'R') {
+            y++;
+            printf("moved 🡢\n");
+
+        } else if (c == 'L') {
+            y--;
+            printf("moved 🡠\n");
+        }
+    }
+    printf("Final postion of the robot is: %d,%d", x, y);
+
+    return 0;
+}
+
+```
+
+**Grid with Obstacles:** Now consider if some obstacles are added to the grids; robot will not move through the obstacles and the robot will stay on the same cell after moving through an obstacle.
+
+Sample:
+
+```bash
+Enter the initial position: 0 0
+Please enter number of blocked cells:2
+0 1
+2 0
+1 0 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+0 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+Move the robot in U|D|R|L direction (q to stop):
+R
+Obstacle ahead 🚩
+D
+moved 🡣
+D
+Obstacle ahead 🚩
+R
+moved 🡢
+D
+moved 🡣
+q
+Final postion of the robot is: 2,1
+```
+
+
+
+```c
+#include <stdio.h>
+int main() {
+    int x, y;
+    char c;
+    printf("Enter the initial position: ");
+    scanf("%d %d", &x, &y);
+
+    int grid[10][10];
+
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            grid[i][j] = 1;
+        }
+    }
+
+    int n;
+    printf("Please enter number of blocked cells:");
+    scanf("%d", &n);
+    int x_block, y_block;
+    for (int i = 0; i < n; i++) {
+        scanf("%d %d", &x_block, &y_block);
+        grid[x_block][y_block] = 0;
+    }
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            printf("%d ", grid[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("Move the robot in U|D|R|L direction (q to stop):\n");
+    while (1) {
+        scanf("%c", &c);
+        if (c == 'q')
+            break;
+        else if (c == 'U') {
+            if (grid[x - 1][y]) {
+                x--;
+                printf("moved 🡡\n");
+            } else {
+                printf("Obstacle ahead 🚩\n");
+            }
+        }
+
+        else if (c == 'D') {
+            if (grid[x + 1][y]) {
+                x++;
+                printf("moved 🡣\n");
+            } else {
+                printf("Obstacle ahead 🚩\n");
+            }
+
+        } else if (c == 'R') {
+            if (grid[x][y + 1]) {
+                y++;
+                printf("moved 🡢\n");
+            } else {
+                printf("Obstacle ahead 🚩\n");
+            }
+
+        } else if (c == 'L') {
+            if (grid[x][y - 1]) {
+                y--;
+                printf("moved 🡠\n");
+            } else {
+                printf("Obstacle ahead 🚩\n");
+            }
+        }
+    }
+    printf("Final postion of the robot is: %d,%d", x, y);
+
+    return 0;
+}
+```
+
+
+#### Problems 2 : Shortest Path
 
 Suppose you want to go to a location, located at `(X,Y)` starting from origin `(0,0)`. Your friend tells
 you a long way by telling the steps you should walk in each direction (N,W,E or S). Find the shortest path.
