@@ -154,3 +154,4 @@ paragraph
     return 0;
 ```
 
+- See more here: [char s[] vs char *s](https://github.com/dev-SR/exercise/tree/main/C%2B%2B/1.5char-charArr-cString#char-smutable-vs-char-simmutable)
