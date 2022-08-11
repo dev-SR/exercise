@@ -18,7 +18,7 @@
       - [cin.getline(arr,len)](#cingetlinearrlen)
       - [cin.getline(arr,len,delim)](#cingetlinearrlendelim)
     - [👉Input - C](#input---c)
-      - [Single Word](#single-word)
+      - [Single Word | Taking Input as `char array` vs `char pointer`](#single-word--taking-input-as-char-array-vs-char-pointer)
       - [Single Line](#single-line)
         - [`gets`](#gets)
         - [`fgets`](#fgets)
@@ -435,6 +435,7 @@ cout << names << endl; //garbage
 
 [☝️ Top ☝️](#up)
 
+- [https://stackoverflow.com/questions/10186765/what-is-the-difference-between-char-array-and-char-pointer-in-c](https://stackoverflow.com/questions/10186765/what-is-the-difference-between-char-array-and-char-pointer-in-c)
 - [https://www.geeksforgeeks.org/whats-difference-between-char-s-and-char-s-in-c/](https://www.geeksforgeeks.org/whats-difference-between-char-s-and-char-s-in-c/)
 - [https://overiq.com/c-programming-101/character-array-and-character-pointer-in-c/](https://overiq.com/c-programming-101/character-array-and-character-pointer-in-c/)
 - [https://kelvinson.github.io/algos/2019/06/chars-arrays-string/](https://kelvinson.github.io/algos/2019/06/chars-arrays-string/)
@@ -459,7 +460,7 @@ In c string is a **fixed size array of characters**. and the **array name** repr
 
 ```
 
-But `char s[]` and  `char *s` is not the same thing.
+But char array`char s[]` and  char pointer `char *s` are not the same thing.
 
 Here are the differences:
 
@@ -498,6 +499,8 @@ See the mutability and immutability of `char s[]` and `char *s`
     sss = "another";
     printf("%s\n", sss);
 ```
+
+See the difference in **taking input** for `char s[]` and `char *s` here: [Taking Input as `char array` vs `char pointer`](#single-word--taking-input-as-char-array-vs-char-pointer)
 
 <details>
   <summary><b>"char *s" is 🚀immutable🚀</b></summary>
@@ -667,7 +670,7 @@ Happy coding
 
 - [https://iq.opengenus.org/how-to-take-string-input-in-c/](https://iq.opengenus.org/how-to-take-string-input-in-c/)
 
-#### Single Word
+#### Single Word | Taking Input as `char array` vs `char pointer`
 
 The input function scanf can be used with `%s` format specification to read in a string of characters.
 
@@ -708,6 +711,7 @@ int main() {
 }
 ```
 
+- [https://stackoverflow.com/questions/10186765/what-is-the-difference-between-char-array-and-char-pointer-in-c](https://stackoverflow.com/questions/10186765/what-is-the-difference-between-char-array-and-char-pointer-in-c)
 - [https://stackoverflow.com/questions/14707427/taking-string-input-in-char-pointer](https://stackoverflow.com/questions/14707427/taking-string-input-in-char-pointer)
 
 The problem with the scanf function is that it terminates its input on the first white space it finds. A white space includes blanks,tabs,carraige returns,form feeds and new lines.
@@ -1011,8 +1015,13 @@ cout << fullName << endl;   // >> soikat rahman
 
 #### Using 2D Char Array | Array of Pointers to Strings
 
+- [https://www.scaler.com/topics/c/string-pointer-in-c/](https://www.scaler.com/topics/c/string-pointer-in-c/)
+- [https://overiq.com/c-programming-101/array-of-pointers-to-strings-in-c/](https://overiq.com/c-programming-101/array-of-pointers-to-strings-in-c/)
+
+We can use a two-dimensional array to store multiple strings, as shown below. Here, the compiler adds a null character at the end of every string if not mentioned explicitly. **The strings can have variable sizes, as shown, but the size of the largest string must be less than (or equal to inclusive of null character) the column size of the 2-D array.**
+
 ```cpp
-char options[][10] = {"MEDIUM", "HARD", "EASY", "TOUGH"};
+char options[4][10] = {"MEDIUM", "HARD", "EASY", "TOUGH"};
 // options[3] = "VERY HARD";   // invalid
 //
 char choose[10];
@@ -1040,7 +1049,12 @@ Array of Strings:
 
 <div align="center"><img src="img/arr_of_string.jpg" alt="Arr of string" ></div>
 
-We can also user Array of Pointers to Strings:
+
+For 2-D arrays, both the dimensions of the array need to be defined at the time of variable declaration, and our strings don't have to be of the same length. From the figure, we can see each string in the array has addresses that are not utilized .
+
+**To solve the problem of memory wastage, we can use pointers of size four that can be used to store strings of variable size. In this case, each string takes the memory equal to the string length (inclusive of null character), preventing memory wastage like in the case of a 2-D array. Here, str[i] represents the base address of the ith string.**
+
+We can also use Array of Pointers to Strings:
 
 ```cpp
     char *options[] = {"MEDIUM", "HARD", "EASY", "TOUGH"};
@@ -1057,11 +1071,10 @@ We can also user Array of Pointers to Strings:
 
 ```
 
- Array of Pointers:
+In this case, we are using a pointer variable `options` of size four, because of which **we are only allocating space equal to the length of the individual string**, this can be visualized from the pictorial representation :
 
 <div align="center"><img src="img/arr_of_pointers.jpg" alt="Arr of string" ></div>
 
-- [https://overiq.com/c-programming-101/array-of-pointers-to-strings-in-c/](https://overiq.com/c-programming-101/array-of-pointers-to-strings-in-c/)
 
 #### String[] in Cpp
 
