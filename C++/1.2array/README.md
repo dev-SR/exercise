@@ -5,9 +5,10 @@
   - [Working with Array](#working-with-array)
     - [Ex: Frequency of elements in an array](#ex-frequency-of-elements-in-an-array)
   - [Array and Pointer](#array-and-pointer)
-  - [Passing Array To a Function](#passing-array-to-a-function)
+  - [Passing Array To a Function | (default)Pass By Reference/Address](#passing-array-to-a-function--defaultpass-by-referenceaddress)
     - [🎗️🎗️🎗️ C/CPP ✂️modifies✂️ Original array | Pass By Reference/Address](#️️️-ccpp-️modifies️-original-array--pass-by-referenceaddress)
-      - [🧠🧠 Arrays are passed by References only; 🧠🧠But Others are by Value🧠🧠](#-arrays-are-passed-by-references-only-but-others-are-by-value)
+      - [compared with other languages](#compared-with-other-languages)
+      - [🧠🧠 Arrays are passed by References only; 🧠🧠But Other datatype are by Value🧠🧠](#-arrays-are-passed-by-references-only-but-other-datatype-are-by-value)
     - [🌟🌟🌟Returning (Local) Array From the Function in C/C++ | `int* fn(){} ~ int *p = fn()`](#returning-local-array-from-the-function-in-cc--int-fn--int-p--fn)
     - [Enabling Pass by Value in C/CPP](#enabling-pass-by-value-in-ccpp)
     - [Example](#example)
@@ -178,15 +179,13 @@ x[4]: 4, p[4]: 4
 
 
 
-## Passing Array To a Function
+## Passing Array To a Function | (default)Pass By Reference/Address
 
 - [https://www.codingninjas.com/blog/2021/08/31/passing-arrays-to-functions-in-c-c/](https://www.codingninjas.com/blog/2021/08/31/passing-arrays-to-functions-in-c-c/)
 - [https://www.scaler.com/topics/passing-array-to-function-in-c-cpp/](https://www.scaler.com/topics/passing-array-to-function-in-c-cpp/)
 - [https://www.geeksforgeeks.org/return-local-array-c-function/](https://www.geeksforgeeks.org/return-local-array-c-function/)
 
-**A whole array cannot be passed as an argument to a function in C++**. You can, however, pass a `pointer` to an array without an index by specifying the **array’s name**.
-
-```kotlin
+```cpp
 int fun(int a[]) {
     cout << sizeof(a) << endl;  // 8 -> 'a' is effectively a pointer
     cout << *a << endl;         // 1
@@ -260,7 +259,7 @@ void fn(formal_parameters){
 }
 
 arguments = x,y;
-fn(arguments/actual_parameters);
+fn(arguments|actual_parameters);
 ```
 
 1. `Call By Reference`: It copies the address of an `argument` into the formal `parameter` of that function. In this method, the address is used to access the actual `argument` used in the function call. **It means that changes made in the `parameter` will alter the passing `argument`.**
@@ -287,7 +286,59 @@ int main() {
 }
 ```
 
-#### 🧠🧠 Arrays are passed by References only; 🧠🧠But Others are by Value🧠🧠
+Advantages of Passing Arrays to Functions:
+
+- Passing similar elements as an array takes less time than passing each element to a function as we are only passing the base address of the array to the function and other elements can be accessed easily as an array is a contiguous memory block of the same data types.
+- As we pass reference of base address of the array this means compiler doesn’t create a copy of the array to process inside function which is faster and less memory-intensive compared to passing arguments by value.
+- Because arrays are passed by reference to functions this prevents stack memory overflow in the case of recursive functions.
+
+
+#### compared with other languages
+
+- Python
+
+```python
+def incrementArrayEls(arr):
+    for i in range(len(arr)):
+        arr[i] += 1
+    return arr
+
+
+def main():
+    arr = [1, 2, 3, 4, 5]
+    print("main(): arr =", arr) #main(): arr = [1, 2, 3, 4, 5]
+    arr2 = incrementArrayEls(arr)
+    print("main(): arr =", arr) #main(): arr = [2, 3, 4, 5, 6]
+    print("returned: =", arr) #returned: = [2, 3, 4, 5, 6]
+```
+
+- Java
+
+```java
+class HelloWorld {
+    public static void main(String[] args) {
+        int arr[] = {1,2,3,4,5};
+        for (int i:arr){
+            System.out.print(i);
+        }
+        //12345
+        System.out.println();
+        incrementArr(arr);
+        for (int i:arr){
+            System.out.print(i);
+        }
+        //23456
+
+    }
+    public static void incrementArr(int arr[]){
+        for(int i=0;i<5;i++){
+            arr[i] = arr[i] + 1;
+        }
+    }
+}
+```
+
+#### 🧠🧠 Arrays are passed by References only; 🧠🧠But Other datatype are by Value🧠🧠
 
 **There is usually no need to pass an `array` explicitly by reference because arrays are always passed by reference.**
 
@@ -338,23 +389,23 @@ void swapOtherVarsCallByRefs_CPP_Refs(int &a, int &b) {
 
 int main() {
     int arr[2] = {1, 2};
+    // with array passed by reference (default)
     swapArr(arr);
     printArray(arr, 2); // 2 1
     swapArrRefs(arr);
     printArray(arr, 2); // 1 2
 
+    // with other variables passed by value (default)
     int a = 1, b = 2;
     swapOtherVarsCallByValue(a, b);
     cout << a << " " << b << endl; // 1,2
+    //....
     swapOtherVarsCallByRefs_Pointer(&a, &b);
     cout << a << " " << b << endl; // 2,1
     swapOtherVarsCallByRefs_CPP_Refs(a, b);
     cout << a << " " << b << endl; // 1,2
-
-    return 0;
 }
 ```
-
 
 ### 🌟🌟🌟Returning (Local) Array From the Function in C/C++ | `int* fn(){} ~ int *p = fn()`
 
