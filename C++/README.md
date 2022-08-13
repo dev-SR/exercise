@@ -22,6 +22,8 @@ latest MinGW compiler, after downloading from
 Your path should preferably be `C:\MinGW`. Finally, add the bin directory,
 **`C:\MinGW\bin`** to the System **`PATH`**.
 
+- [https://www.scaler.com/topics/c/c-compiler-for-windows/](https://www.scaler.com/topics/c/c-compiler-for-windows/)
+
 ### Precompile headers
 
 Now we can speed up compilation time by precompiling all the header files, i.e.
