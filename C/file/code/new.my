@@ -1,0 +1,8 @@
+This file is created by my program!; Additionally this a formatted string 
+Feeling Great
+Additionally; `fprintf()` takes formatted string:Formatted string with format specifier `%d` -> 0
+Formatted string with format specifier `%d` -> 1
+Formatted string with format specifier `%d` -> 2
+Formatted string with format specifier `%d` -> 3
+Formatted string with format specifier `%d` -> 4
+Again opening the file but for appending this line

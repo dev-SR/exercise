@@ -2,12 +2,17 @@
 
 - [File in C](#file-in-c)
   - [File Introduction](#file-introduction)
-    - [Check if a file exists](#check-if-a-file-exists)
-    - [Writing to a file](#writing-to-a-file)
-    - [Reading: Taking Input From a File](#reading-taking-input-from-a-file)
-    - [`fseek()`: Moving to a specific location in a file](#fseek-moving-to-a-specific-location-in-a-file)
-  - [Formatted IO: `printf()`, `scanf()`, `fprintf()`, `fscanf()`](#formatted-io-printf-scanf-fprintf-fscanf)
-  - [Record IO: `fread()`, `fwrite()`](#record-io-fread-fwrite)
+  - [Check if a file exists](#check-if-a-file-exists)
+  - [Writing to a file](#writing-to-a-file)
+  - [Reading: Taking Input From a File](#reading-taking-input-from-a-file)
+    - [word by word](#word-by-word)
+    - [line by line: `fscanf(fp, "%[^\n] ", &var)` | `gets(var,n,fp)`](#line-by-line-fscanffp-n--var--getsvarnfp)
+      - [Reading formatted data: `fscanf(fp, format, ...)` | `fgets() + sscanf()`](#reading-formatted-data-fscanffp-format---fgets--sscanf)
+  - [`fseek()`: Moving to a specific location in a file](#fseek-moving-to-a-specific-location-in-a-file)
+  - [Serialization | Deserialization with `fread()`, `fwrite()`](#serialization--deserialization-with-fread-fwrite)
+  - [Example](#example)
+    - [Copy file](#copy-file)
+    - [File size](#file-size)
 
 ## File Introduction
 
@@ -24,7 +29,7 @@ Following are the most important file management functions available in C:
 <tbody>
 <!-- row 1 -->
   <tr>
-    <td rowspan="2">String IO</td>
+    <td rowspan="2">Unformatted String IO</td>
     <td><code>char *fgets(buffer,n,fp)</code></td>
     <td>
         <ul>
@@ -62,8 +67,8 @@ Following are the most important file management functions available in C:
   </tr>
  <!-- row 2 -->
 <tr>
-    <td rowspan="2">Formatter IO</td>
-    <td><code>int  fprintf(fp, formatted_str,...vars)</code></td>
+    <td rowspan="2">🚀Formatted String IO</td>
+    <td><code>int fprintf(fp, formatted_str,...vars)</code></td>
     <td>
         <ul>
             <li> It prints a <code>string</code> to the file pointed to by file pointer (<code>fp</code>). The string can optionally include <code>format specifiers</code> and a list of variables <code>(...vars)</code>.</li>
@@ -102,8 +107,8 @@ Following are the most important file management functions available in C:
   </tr>
 <!-- row 3 -->
   <tr>
-    <td rowspan="2">Character IO</td>
-    <td><code>fputc(char, file_pointer)</code></td>
+    <td rowspan="2">🚀Character IO</td>
+    <td><code><b>int</b> fputc(char, file_pointer)</code></td>
     <td>
         <ul>
             <li>It writes a character to the file pointed to by file_pointer.</li>
@@ -111,7 +116,7 @@ Following are the most important file management functions available in C:
     </td>
   </tr>
   <tr>
-    <td><code>fgetc(file_pointer)</code></td>
+    <td><code><b>int</b> fgetc(file_pointer)</code></td>
     <td>
         <ul>
             <li>
@@ -122,7 +127,7 @@ Following are the most important file management functions available in C:
   </tr>
 <!-- row 4 -->
   <tr>
-    <td rowspan="2">Record IO</td>
+    <td rowspan="2">🚀Serialization</td>
     <td><code>size_t fwrite(ptr,size,nitems,fp);</code></td>
     <td>
         <ul>
@@ -185,7 +190,7 @@ Following are the most important file management functions available in C:
 
 - [https://www.guru99.com/c-file-input-output.html](https://www.guru99.com/c-file-input-output.html)
 
-### Check if a file exists
+## Check if a file exists
 
 ```c
 #include <stdio.h>
@@ -202,34 +207,35 @@ int main() {
 }
 ```
 
-### Writing to a file
+## Writing to a file
 
 Things needed to write to a file:
 
 - file handler/pointer declaration: `FILE *fp;`
 - `FILE *fopen(char *fileName,char *mode)` to open a file in (`"w"`) writing mode
-- `fprintf()` to write to the file
+- `fprintf()`,`fputs()` etc. to write to the file
 - `fclose()` to close the file
 
 ```c
 int main() {
- // declare file pointer/handler
+    // declare file pointer/handler
     FILE *fp;
 
- // open a existing/new file and assign it's address to the file handler
+    // open a existing/new file and assign it's address to the file handler
     // char fileName[] = "new.my";
     // fp = fopen(fileName, "w");
-  fp = fopen("new.my", "w");
+    fp = fopen("new.my", "w");
 
- // write to the file with
-  // fprintf(file_pointer,format_string,...(n input for n format specifier specified in the format string))
-    fprintf(fp, "This file is created by my program!\n");
-    fprintf(fp, "Feeling Great");
+    // write to the file with
+    // fprintf(file_pointer,format_string,...(n input for n format specifier specified in the format string))
+    fprintf(fp, "This file is created by my program!; Additionally this a formatted string \n");
+    fprintf(fp, "Feeling Great\n");
+    fprintf(fp, "Additionally; `fprintf()` takes formatted string:");
     for (int i = 0; i < 5; i++) {
-        fprintf(fp, "This is line %d\n", i);
+        fprintf(fp, "Formatted string with format specifier `%%d` -> %d\n", i);
     }
 
- // close the file with
+    // close the file with
     fclose(fp);
 
     // opening again but for appending
@@ -238,59 +244,239 @@ int main() {
 
     return 0;
 }
--
 ```
 
 Output in the file:
 
 ```text
-This file is created by my program!
-Feeling Great!!
+This file is created by my program!; Additionally this a formatted string
+Feeling Great
+Additionally; `fprintf()` takes formatted string:formatted string with format specifier `%d` -> 0
+Formatted string with format specifier `%d` -> 1
+Formatted string with format specifier `%d` -> 2
+Formatted string with format specifier `%d` -> 3
+Formatted string with format specifier `%d` -> 4
 Again opening the file but for appending this line
 ```
 
-### Reading: Taking Input From a File
+## Reading: Taking Input From a File
+
+### word by word
 
 Create a file with two int
 
-`in.my`
+`in1.txt`
 
 ```text
-1
-2
+Jhon Snow
+Bob
+Rock
 ```
 
-Below is the program to read this two int, print sum of them in a output file:
+Below is the program to read the file, and it will be read word by word just like `scanf()` itself.
 
 ```c
 int main() {
-    FILE *fp_in, *fp_out;
-    int n1, n2, sum;
+    FILE *fp;
 
-    fp_in = fopen("in.my", "r");
-    fp_out = fopen("out.my", "w");
+    fp = fopen("in1.txt", "r");
 
-    fscanf(fp_in, "%d", &n1);
-    fscanf(fp_in, "%d", &n2);
+    char names[10][10];
+    int i = 0;
+    // first two word
+    fscanf(fp, "%s", names[i]);
+    printf("> %s\n", names[i]);
+    i++;
+    fscanf(fp, "%s", names[i]);
+    printf("> %s\n", names[i]);
+    // rest
+    while (fscanf(fp, "%s", names[i]) != EOF) {
+        printf("> %s\n", names[i]);
+        i++;
+    }
 
-    sum = n1 + n2;
-    printf("%d + %d = %d", n1, n2, sum);
-    fprintf(fp_out, "%d\n", sum);
-
-    fclose(fp_in);
-    fclose(fp_out);
+    fclose(fp);
 
     return 0;
 }
 ```
 
-👉👉At this moment if we had two integer as line :
-
-```text
-1 2
+```bash
+> Jhon
+> Snow
+> Bob
+> Rock
 ```
 
-One options would be to read them as line with `fgets()` and then from that line read two int with `sscanf()`. `sscanf()` function allows us to read formatted data from a string rather than standard input or keyboard.
+Therefore we can see that `Jhon Snow` is not as a whole line, but as two words.
+
+### line by line: `fscanf(fp, "%[^\n] ", &var)` | `gets(var,n,fp)`
+
+Just like reading line by line with `scanf()` , `gets()` we can also use those techniques to read the file line by line.
+
+`in2.txt`
+
+```text
+Jhon Snow
+Bob
+Rock
+```
+
+`fscanf(fp, "%[^\n] ", &var)`:
+
+```cpp
+#include <stdio.h>
+int main() {
+    FILE *fp;
+    fp = fopen("in2.txt", "r");
+
+    char names[10][100];
+    int i = 0;
+    while (fscanf(fp, "%[^\n] ", names[i]) != EOF) {
+        printf("> %s\n", names[i]);
+        i++;
+    }
+    fclose(fp);
+    return 0;
+}
+```
+
+`gets(var,n,fp)`:
+
+```c
+#include <stdio.h>
+int main() {
+    FILE *fp;
+
+    fp = fopen("in2.txt", "r");
+
+    char names[10][100];
+    int i = 0;
+    while (fgets(names[i], 100, fp)) {
+        printf("> %s", names[i]);
+        i++;
+    }
+
+    fclose(fp);
+
+    return 0;
+}
+```
+
+Now the output will be, text read line by line :
+
+```c
+> Jhon Snow
+> Bob
+> Rock
+```
+
+#### Reading formatted data: `fscanf(fp, format, ...)` | `fgets() + sscanf()`
+
+Now that we have read the file line by line, How can we read line with formatted data?? For Example:
+
+`in2.txt`
+
+```text
+Jhon 1
+Bob 2
+Rock 3
+```
+
+```c
+int main() {
+    FILE *fp;
+
+    fp = fopen("in4.txt", "r");
+
+    char name[30];
+    int age;
+
+    while (fscanf(fp, "%s %d", name, &age) != EOF) {
+        printf("Name: %s ID: %d\n", name, age);
+    }
+
+    fclose(fp);
+    return 0;
+}
+```
+
+One options would be, first, to read them as line with `fgets()` and then from that line read two int with `sscanf()`. In other words, Each line read from the file can be processed using the command sscanf (string scanf). sscanf is the same as scanf except it works on a string, rather than the input stream. The format for sscanf is: `sscanf(buffer, format_string, arg1, arg2, ... argN);`
+
+```c
+int main() {
+    FILE *fp;
+
+    fp = fopen("in3.txt", "r");
+
+    char lines[10][100];
+    int i = 0;
+    char name[30];
+    int age;
+    // 1. Read Lines
+    while (fgets(lines[i], 100, fp)) {
+        printf("> %s", lines[i]);
+        // 2. Now reads the formatted input from that line
+        sscanf(lines[i], "%s %d", name, &age);
+        printf("Name: %s ID: %d\n", name, age);
+        i++;
+    }
+
+    fclose(fp);
+
+    return 0;
+}
+
+```
+
+Output:
+
+```bash
+> Jhon 19
+Name: Jhon ID: 19
+> Bob 20
+Name: Bob ID: 20
+> Rock 30Name: Rock ID: 30
+```
+
+Example of sscanf:
+
+```c
+int main() {
+    const char *line = "Add  id:324  name:\"john\" name2:\"doe\" num1:2009 num2:5 num3:20";
+    char op[32], name[32], name2[32];
+    int id, num1, num2, num3;
+    int count =
+        sscanf(line,
+               "%s "
+               "id:%d "
+               "name:\"%[^\"]\" " /* use "name:%s" if you want the quotes */
+               "name2:\"%[^\"]\" "
+               "num1:%d "
+               "num2:%d "
+               "num3:%d ", /* typo? */
+               op, &id, name, name2, &num1, &num2, &num3);
+    if (count == 7)
+        printf("%s %d %s %s %d %d %d\n", op, id, name, name2, num1, num2, num3);
+        // Add 324 john doe 2009 5 20
+    else
+        printf("error scanning line\n");
+    return 0;
+}
+```
+
+## `fseek()`: Moving to a specific location in a file
+
+`in4.txt`
+
+```text
+Name Age
+Jhon 19
+Bob 20
+Rock 30
+```
+
+How would i skip the first line in the file?
 
 ```c
 #include <stdio.h>
@@ -302,31 +488,201 @@ One options would be to read them as line with `fgets()` and then from that line
 #define CYN "\e[0;96m"
 #define NC "\e[0m"
 int main() {
+    FILE *fp;
+
+    fp = fopen("in4.txt", "r");
+
+    char lines[10][100];
+    int i = 0;
+    char name[30];
+    int age;
+    // skip first line:
+    fseek(fp, 8 + 2, SEEK_SET); // len("Name Age\n") = 8, SEEK_SET=0=> start from begin
+    // reads from second line
+    // 1. Read Lines
+    while (fgets(lines[i], 100, fp)) {
+        printf("> %s", lines[i]);
+        // 2. Now reads the formatted input from that line
+        sscanf(lines[i], "%s %d", name, &age);
+        printf("Name: %s ID: %d\n", name, age);
+        i++;
+    }
+
+    fclose(fp);
+
+    return 0;
+}
+```
+
+```bash
+> Jhon 19
+Name: Jhon ID: 19
+> Bob 20
+Name: Bob ID: 20
+> Rock 30Name: Rock ID: 30
+```
+
+## Serialization | Deserialization with `fread()`, `fwrite()`
+
+- [https://overiq.com/c-programming-101/fwrite-function-in-c/](https://overiq.com/c-programming-101/fwrite-function-in-c/)
+- [https://overiq.com/c-programming-101/fread-function-in-c/](https://overiq.com/c-programming-101/fread-function-in-c/)
+- [https://www.geeksforgeeks.org/readwrite-structure-file-c/](https://www.geeksforgeeks.org/readwrite-structure-file-c/)
+
+For writing in file, it is easy to write `string` or `int` to file using `fprintf` and `putc`, but you might have faced difficulty when writing contents of `struct`. `fwrite` and `fread` make task easier when you want to write and read blocks of data.
+
+To better understand fwrite() function consider the following examples:
+
+Example 1: Writing a variable
+
+```c
+float *f = 100.13;
+fwrite(&p, sizeof(f), 1, fp);
+```
+
+This writes the value of variable f to the file.
+
+Example 2: Writing an array
+
+```c
+int arr[3] = {101, 203, 303};
+fwrite(arr, sizeof(arr), 1, fp);
+```
+
+This writes the entire array into the file.
+
+Example 3: Writing some elements of array
+
+```c
+int arr[3] = {101, 203, 303};
+fwrite(arr, sizeof(int), 2, fp);
+```
+
+This writes only the first two elements of the array into the file.
+
+Example 4: Writing structure
+
+```c
+typedef struct {
+    char name[10];
+    int roll;
+    float marks;
+} Student;
+
+Student s1 = {"Jhon", 12, 88.123};
+fwrite(&s1, sizeof(s1), 1, fp);
+```
+
+This writes contents of variable `s1` into the file.
+
+Example 5: Writing array of structure
+
+
+```c
+Student students[3] = {
+        {"Tina", 12, 88.123},
+        {"Jack", 34, 71.182},
+        {"May", 12, 93.713}};
+fwrite(students, sizeof(students), 1, fp);
+```
+
+This writes the whole array students into the file.
+
+Let's say we don't' want to write all elements of the array into the file, instead, we want is to write only 0th and 1st element of the array into the file.
+
+```c
+fwrite(students, sizeof(struct student), 2, fp);
+```
+
+```c
+typedef struct Student {
+    char name[50];
+    int age;
+} Student;
+
+int main() {
+    int n, i, chars;
+    FILE *fp;
+
+    fp = fopen("student.txt", "wb");
+
+    printf("Enter the number of student: ");
+    scanf("%d", &n);
+
+    Student s;
+    for (i = 0; i < n; i++) {
+        printf("\nEnter details of student %d \n", i + 1);
+
+        while ((getchar()) != '\n')
+            ; //
+        printf("Name: ");
+        gets(s.name);
+
+        printf("Age: ");
+        scanf("%d", &s.age);
+
+        chars = fwrite(&s, sizeof(s), 1, fp);
+        printf("Number of items written to the file: %d\n", chars);
+    }
+    fclose(fp);
+
+    FILE *fp_read;
+    fp_read = fopen("student.txt", "rb");
+
+    printf(" \nTesting fread() function:\n");
+    while (fread(&s, sizeof(s), 1, fp_read) == 1) {
+        printf("Name: %s \n", s.name);
+        printf("Age: %d \n", s.age);
+    }
+    fclose(fp_read);
+
+    return 0;
+}
+```
+
+```texts
+Enter the number of student: 2
+
+Enter details of student 1
+>>Name: jhon
+>>Age: 20
+Number of items written to the file: 1
+
+Enter details of student 2
+>>Name: rock
+>>Age: 33
+Number of items written to the file: 1
+
+Testing fread() function:
+Name: jhon
+Age: 20
+Name: rock
+Age: 33
+```
+
+## Example
+
+### Copy file
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+int main() {
     FILE *fp_in, *fp_out;
-    int n1, n2, sum;
+    char *input_file = "main.jpg";
+    char *output_file = "copied.jpg";
+    // char ch;
+    int ch; // `fgetc` returns int!! -> see the difference with `char ch`;
 
-    fp_in = fopen("in.my", "r");
-    fp_out = fopen("out.my", "w");
+    fp_in = fopen(input_file, "rb");
+    if (!fp_in) {
+        perror("Error ");
+        return EXIT_FAILURE;
+    }
 
-    // fscanf(fp_in, "%d", &n1);
-    // fscanf(fp_in, "%d", &n2);
-    // or
-    // fscanf(fp_in, "%d %d", &n1, &n2);
+    fp_out = fopen(output_file, "wb");
 
-    // or
-    // read as a line with fgets
-    char line[80];
-    //!! Remember? `char *s;` don't work with scanf()
-
-    fgets(line, 80, fp_in);
-   // and then read two int from that line with sscanf()
-    sscanf(line, "%s %d", &n1, &n2);
-
-    printf("Line: %s\n", line); // Line: 1 2
-
-    sum = n1 + n2;
-    printf("%d + %d = %d", n1, n2, sum);
-    fprintf(fp_out, "%d\n", sum);
+    while ((ch = fgetc(fp_in)) != EOF)
+        fputc(ch, fp_out);
 
     fclose(fp_in);
     fclose(fp_out);
@@ -335,46 +691,20 @@ int main() {
 }
 ```
 
-```text
-soikat 191
-jhon 192
-```
+### File size
 
 ```c
+#include <stdio.h>
 int main() {
     FILE *fp;
-    char name[30];
-    int id;
+    char *input_file = "main.jpg";
+    fp = fopen(input_file, "rb");
 
-    fp = fopen("in1.my", "r");
-    char line[80];
+    fseek(fp, 0, SEEK_END);  // move to the file end
+    double size = ftell(fp); // ftell() returns the current file position of the specified stream with respect to the starting of the file.
 
-    while (fgets(line, 80, fp) != NULL) {
-        // printf("%s", line);
-        sscanf(line, "%s %d", name, &id);
-        printf("Name: %s ID: %d\n", name, id);
-    }
-
-    fclose(fp);
+    printf("File Size: %.2f bytes\n", size);
+    printf("File Size: %.2f Kb\n", size / 1024);
     return 0;
 }
 ```
-
-Output:
-
-```text
-Name: soikat ID: 191
-Name: jhon ID: 192
-```
-
-### `fseek()`: Moving to a specific location in a file
-
-## Formatted IO: `printf()`, `scanf()`, `fprintf()`, `fscanf()`
-
-- [https://linuxhint.com/fprintf-fscanf-in-c/](https://linuxhint.com/fprintf-fscanf-in-c/)
-
-## Record IO: `fread()`, `fwrite()`
-
-- [https://overiq.com/c-programming-101/fwrite-function-in-c/](https://overiq.com/c-programming-101/fwrite-function-in-c/)
-- [https://overiq.com/c-programming-101/fread-function-in-c/](https://overiq.com/c-programming-101/fread-function-in-c/)
-- [https://www.geeksforgeeks.org/readwrite-structure-file-c/](https://www.geeksforgeeks.org/readwrite-structure-file-c/)
