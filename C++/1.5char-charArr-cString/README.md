@@ -21,8 +21,7 @@
       - [Single Word | Taking Input as `char array` vs `char pointer`](#single-word--taking-input-as-char-array-vs-char-pointer)
       - [Single Line](#single-line)
         - [`gets`](#gets)
-        - [`fgets`](#fgets)
-        - [`scanf("%[^\n]",s);`](#scanfns)
+        - [🚀`scanf(" %[^\n]",s);` (recommended over `gets()`)](#scanf-ns-recommended-over-gets)
       - [Multiple Lines](#multiple-lines)
       - [`getchar`](#getchar)
     - [👉clearing input buffer🚀](#clearing-input-buffer)
@@ -749,62 +748,40 @@ int main() {
 > Note : `gets()` has been **removed** from `c11`. So it might give you a warning when implemented.
 > We see here that it doesn’t bother about the size of the array. So, there is a chance of `Buffer Overflow`.
 
-##### `fgets`
+##### 🚀`scanf(" %[^\n]",s);` (recommended over `gets()`)
 
-To overcome the above limitation, we can use `fgets` as :
+**`gets()` works fine for just one user input use cases but not recommended for continuos input string!**.
 
-- Syntax : `char *fgets(char *str, int size, FILE *stream)`
-- Example : `fgets(str, 20, stdin)`; as here, 20 is MAX_LIMIT according to declaration.
+The `gets()` function reads a line from the standard input stream `stdin` and stores it in `buffer`. The line consists of all characters up to but **not including** the first `new-line character (\n)` or `EOF`. The gets() function then replaces the new-line character, if read, with a `null character (\0)` before returning the line.
+
+But the leftover character `\n` creates all sort of problem for the next continuous input. So, we use `scanf(" %[^\n]",s);` instead of `gets()`
 
 ```c
 #include <stdio.h>
-#define MAX_LIMIT 20
 int main() {
-    char fullName[MAX_LIMIT];
-    char country[MAX_LIMIT];
-
-    printf("Enter FullName:");
-    fgets(fullName, MAX_LIMIT, stdin);
-    printf("%s", fullName);
-    printf("Enter Country Name:");
-    fgets(country, MAX_LIMIT, stdin);
-    printf("%s", country);
-
-    return 0;
-}
-
-```
-
-```c
-Enter FullName:soikat rahman
-soikat rahman
-Enter Country Name:BD
-BD
-```
-
-##### `scanf("%[^\n]",s);`
-
-```c
-int main() {
-    char fullName[20];
-    char country[20];
-    printf("Enter your fullname:");
-    scanf("%[^\n]", fullName);
-    printf("%s\n", fullName);
-    printf("Enter your country name:");
-    scanf("%s", country);
-    printf("%s", country);
+    int i, t;
+    char s[1000];
+    scanf("%d", &t);
+    while (t--) {
+        scanf(" %[^\n]", s);
+        printf("> %s\n", s);
+    }
 }
 ```
-
-Here, `[]`is the `scanset` character. `^\n` tells to take input until `newline` doesn’t get encountered. Here we used `^`(XOR -Operator ) which gives true until both characters are different. Once the character is equal to New-line (`‘\n’`),  `^` (XOR Operator ) gives false to read the string. So we use `“%[^\n]s”` instead of `“%s”`.
 
 ```bash
-Enter your fullname:soikat rahman
-soikat rahman
-Enter your country name:BD
-BD
+3
+line 1
+> line 1
+line 2
+> line 2
+line 3
+> line 3
 ```
+
+- `[]`is the `scanset` character. `^\n` tells to take input until `newline` doesn’t get encountered.
+- To incorporate the new line character `(\n)` left out by previous input , we added a **space** before the format string: `" %[^\n]"`
+- No need to clear the buffer with `scanf(" %[^\n]", s);`
 
 #### Multiple Lines
 
