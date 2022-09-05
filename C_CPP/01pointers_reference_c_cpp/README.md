@@ -10,10 +10,11 @@
   - [✅✅Pass by Reference: Using `pointer`|`reference`](#pass-by-reference-using-pointerreference)
     - [Differences between 👉pointers and 👉references in C++](#differences-between-pointers-and-references-in-c)
     - [When to use What](#when-to-use-what)
+  - [🌼 `const` Pointers|References](#-const-pointersreferences)
   - [Arrays are 🧠🧠Passed as References🧠🧠 by Default](#arrays-are-passed-as-references-by-default)
   - [More Pointer|Reference Applications](#more-pointerreference-applications)
+    - [🚀🚀Reference: Modify array in a range based for loop](#reference-modify-array-in-a-range-based-for-loop)
     - [🚀🚀Avoiding a copy of large structures](#avoiding-a-copy-of-large-structures)
-    - [🚀🚀In For Each Loops to modify all objects](#in-for-each-loops-to-modify-all-objects)
     - [🚀For Each Loop to avoid the copy of objects](#for-each-loop-to-avoid-the-copy-of-objects)
 
 ## 🚀Pointer
@@ -224,7 +225,6 @@ int main() {
 <img src="img/ref.jpg" alt="ref.jpg" width="400px">
 </div>
 
-
 ## ✅✅Pass by Reference: Using `pointer`|`reference`
 
 This technique uses in/out-mode semantics. **Changes made to formal parameter do get transmitted back to the caller through parameter passing**. **Any changes to the formal parameter are reflected in the actual parameter in the calling environment as formal parameter receives a reference (or pointer) to the actual data**. This method is also called as call by reference. This method is efficient in both time and space.
@@ -273,18 +273,41 @@ int main() {
 
 ### Differences between 👉pointers and 👉references in C++
 
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int a = 10;
+    int &r = a;
+    int *p = &a;
+
+    cout << "value = " << a << endl;     // 10
+    cout << "pointer = " << *p << endl;  // 10
+    cout << "reference = " << r << endl; // 10
+    return 0;
+}
+```
+
 C and C++ support pointers which are different from most of the other programming languages. Other languages including C++, Java, Python, Ruby, Perl and PHP support references.
 
 Both `references` and `pointers` can be used **to change local variables of one function inside another function**. Both of them can also be used to save copying of big objects when passed as arguments to functions or returned from functions, to get efficiency gain. Despite the above similarities, there are the following differences between references and pointers.
 
 Major dif:
 
-- The reference is an **alias for a variable**  whereas pointers are used to **store address of variable**.
-- Reference variable **cannot be updated**.
-- A reference **must be initialized on declaration** while it is not necessary in case of pointer.
-  - Due to the above limitations, references in C++ cannot be used for implementing data structures like Linked List, Tree, etc. In Java, references don’t have the above restrictions and can be used to implement all data structures. References being more powerful in Java is the main reason Java doesn’t need pointers.
-- References **cannot have a null value** assigned but pointer can.
-- References are safer and easier to use:
+
+| References                                      | Pointers                                                                    |
+| ----------------------------------------------- | --------------------------------------------------------------------------- |
+| The reference is an **alias for a variable**    | pointers are used to **store address of variable**.                         |
+| Don't use dereferencing for reading and writing | Must go through dereference operator to read/write through pointed to value |
+| Can't be changed to reference something else    | Can be changed to point somewhere else                                      |
+| Must be initialized at declaration              | Can be declared un-initialized (will contain garbage addresses)             |
+
+**References behave like `constant pointers`,** but they have a much friendlier syntax as they dont require the `*` operator to read and write referenced values.
+
+References are safer and easier to use:
+
   1. **Safer**: Since references must be initialized, wild references like wild pointers are unlikely to exist. It is still possible to have references that don’t refer to a valid location (See questions 5 and 6 in the below exercise)
   2. **Easier to use**: A pointer needs to be dereferenced with `*` to access the memory location it points to, whereas a reference can be used directly. A pointer to a class/struct uses `‘->’` (arrow operator) to access its members whereas a reference uses a `‘.’` (dot operator)
 
@@ -308,6 +331,47 @@ The performances are exactly the same, as **references are implemented internall
 - **References are usually preferred over pointers whenever we don’t need “reseating”.**
 - Overall, Use references when you can, and pointers when you have to. But if we want to write C code that compiles with both C and a C++ compiler, you’ll have to restrict yourself to using pointers
 
+## 🌼 `const` Pointers|References
+
+```cpp
+    // Non-const reference
+    int a = 10;
+    int &r = a;
+    cout << "a = " << a << endl;     // 10
+    cout << "ref_a = " << r << endl; // 10
+    // can modify original value through reference
+    r++;
+    cout << "a = " << a << endl;     // 11
+    cout << "ref_a = " << r << endl; // 11
+```
+
+const reference prevent us from modifying the original value through reference.
+
+```cpp
+    // const reference
+    int a = 10;
+    const int &r = a;
+    cout << "a = " << a << endl;     // 10
+    cout << "ref_a = " << r << endl; // 10
+    // can't modify original value through reference
+    r++; // error: increment of read-only reference 'r'
+```
+
+Can achieve the same thing as `const ref` with pointer: `const pointer`. Remember that a reference by default is just like a `const pointer`.
+
+```cpp
+int main() {
+    // const pointer
+    int a = 10;
+    const int *p = &a;
+    cout << "a = " << a << endl;   // 10
+    cout << "p = " << p << endl;   // 0x7ffeeb0b9b50
+    cout << "*p = " << *p << endl; // 10
+    // can't modify original value through pointer
+    *p = 20;                       // error: assignment of read-only variable 'a'
+
+}
+```
 
 ## Arrays are 🧠🧠Passed as References🧠🧠 by Default
 
@@ -315,30 +379,7 @@ The performances are exactly the same, as **references are implemented internall
 
 ## More Pointer|Reference Applications
 
-### 🚀🚀Avoiding a copy of large structures
-
-Imagine a function that has to receive a large object. If we pass it without reference, a new copy of it is created which causes wastage of CPU time and memory. We can use references to avoid this.
-
-
-```cpp
-struct Student {
-   string name;
-   string address;
-   int rollNo;
-}
-
-// If we remove `&` in below function, a new
-// copy of the student object is created.
-// We use const to avoid accidental updates
-// in the function as the purpose of the function
-// is to print s only.
-void print(const Student &s)
-{
-    cout << s.name << "  " << s.address << "  " << s.rollNo << '\n';
-}
-```
-
-### 🚀🚀In For Each Loops to modify all objects
+### 🚀🚀Reference: Modify array in a range based for loop
 
 We can use references in for each loops to modify all elements.
 
@@ -384,6 +425,30 @@ int main() {
     return 0;
 }
 ```
+
+### 🚀🚀Avoiding a copy of large structures
+
+Imagine a function that has to receive a large object. If we pass it without reference, a new copy of it is created which causes wastage of CPU time and memory. We can use references to avoid this.
+
+
+```cpp
+struct Student {
+   string name;
+   string address;
+   int rollNo;
+}
+
+// If we remove `&` in below function, a new
+// copy of the student object is created.
+// We use const to avoid accidental updates
+// in the function as the purpose of the function
+// is to print s only.
+void print(const Student &s)
+{
+    cout << s.name << "  " << s.address << "  " << s.rollNo << '\n';
+}
+```
+
 
 ### 🚀For Each Loop to avoid the copy of objects
 
