@@ -22,7 +22,7 @@
       - [fibonacci](#fibonacci)
   - [Function](#function)
     - [Forward Declaration](#forward-declaration)
-    - [Default Parameters](#default-parameters)
+    - [✈️Default Parameters](#️default-parameters)
     - [ex1 - Binomial Coefficient](#ex1---binomial-coefficient)
 
 ## Variables, Datatypes & Storage
@@ -406,7 +406,7 @@ void printNumber(int n) {
 }
 ```
 
-### Default Parameters
+### ✈️Default Parameters
 
 ```cpp
 int defaultParam(int n = 5) {

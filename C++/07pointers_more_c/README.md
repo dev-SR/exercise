@@ -1,8 +1,10 @@
 # More on pointers
 
 - [More on pointers](#more-on-pointers)
-	- [Function Pointers](#function-pointers)
-		- [Callback Function](#callback-function)
+  - [Function Pointers](#function-pointers)
+    - [Callback Function](#callback-function)
+    - [qsort](#qsort)
+    - [bsearch](#bsearch)
 
 ## Function Pointers
 
@@ -83,4 +85,66 @@ int main() {
     get("/home", &myHomeRouteController); // Res: 30
 }
 
+```
+
+### qsort
+
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int compareCB(const void *a, const void *b) {
+    // printf("%d %d\n", *(int *)a, *(int *)b);
+    //(int*): void pinter to int pointer | *(int*) : dereference
+    return (*(int *)a - *(int *)b);
+}
+
+int main() {
+    int i, n = 5;
+    int arr[] = {60, 6, 100, 1, 200};
+
+    qsort(arr, n, sizeof(int), compareCB);
+
+    for (int i = 0; i < n; i++) {
+        printf("%d ", arr[i]);
+    } // 1 6 60 100 200
+    //If (*(int *)b - *(int *)a) ->  200 100 60 6 1
+    return 0;
+}
+
+```
+
+### bsearch
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+int compare(const void *a, const void *b) {
+    return (*(int *)a - *(int *)b);
+}
+
+int main() {
+    int key, *item, n = 5;
+
+    int arr[] = {1, 2, 5, 8, 10};
+    while (1) {
+        printf("Enter the value of the key: ");
+        scanf("%d", &key);
+
+        if (key == 0) {
+            break;
+        }
+
+        item = (int *)bsearch(&key, arr, n, sizeof(int), compare);
+
+        if (item != NULL) {
+            printf("%d Found\n", *item);
+        } else {
+            printf("Item not found in array\n");
+        }
+    }
+
+    return 0;
+}
 ```

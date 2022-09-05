@@ -6,17 +6,15 @@
     - [Assigning Address to a Pointer Variables | `type *name = address`](#assigning-address-to-a-pointer-variables--type-name--address)
     - [🚨Dereference Operator(`*`) | `*p => contents of the pointer`](#dereference-operator--p--contents-of-the-pointer)
     - [Null Pointer](#null-pointer)
-    - [🌟Pointer Applications🌟](#pointer-applications)
-      - [🚀Pass By References - Using Pointers | Modify the passed parameters in a function](#pass-by-references---using-pointers--modify-the-passed-parameters-in-a-function)
   - [👉Reference(`&`) in  C++](#reference-in--c)
+  - [✅✅Pass by Reference: Using `pointer`|`reference`](#pass-by-reference-using-pointerreference)
     - [Differences between 👉pointers and 👉references in C++](#differences-between-pointers-and-references-in-c)
-      - [✅✅Pass by Reference: Using `pointer`|`reference`  - When to use What](#pass-by-reference-using-pointerreference----when-to-use-what)
-    - [Arrays are 🧠🧠Passed as References🧠🧠 by Default](#arrays-are-passed-as-references-by-default)
-    - [🌟Reference Applications🌟](#reference-applications)
-      - [🚀🚀Pass By Reference| 👉👉 Modifying `formal` parameter reflects in `actual` parameter](#pass-by-reference--modifying-formal-parameter-reflects-in-actual-parameter)
-      - [🚀🚀Avoiding a copy of large structures](#avoiding-a-copy-of-large-structures)
-      - [🚀🚀In For Each Loops to modify all objects](#in-for-each-loops-to-modify-all-objects)
-      - [🚀For Each Loop to avoid the copy of objects](#for-each-loop-to-avoid-the-copy-of-objects)
+    - [When to use What](#when-to-use-what)
+  - [Arrays are 🧠🧠Passed as References🧠🧠 by Default](#arrays-are-passed-as-references-by-default)
+  - [More Pointer|Reference Applications](#more-pointerreference-applications)
+    - [🚀🚀Avoiding a copy of large structures](#avoiding-a-copy-of-large-structures)
+    - [🚀🚀In For Each Loops to modify all objects](#in-for-each-loops-to-modify-all-objects)
+    - [🚀For Each Loop to avoid the copy of objects](#for-each-loop-to-avoid-the-copy-of-objects)
 
 ## 🚀Pointer
 
@@ -203,9 +201,33 @@ int main() {
 
 Here, 2nd if block is executed because at this moment `p` is pointing to `x`.
 
-### 🌟Pointer Applications🌟
 
-#### 🚀Pass By References - Using Pointers | Modify the passed parameters in a function
+
+## 👉Reference(`&`) in  C++
+
+A reference is an `alias` for an already existing variable. Once a reference is initialized to a variable, it cannot be changed to refer to another variable. Hence, a reference is similar to a `const pointer`.
+
+- [https://www.geeksforgeeks.org/references-in-c/](https://www.geeksforgeeks.org/references-in-c/)
+
+```cpp
+int main() {
+    int x = 10;
+    int &y = x;
+    y++;
+    x++;
+    cout << x << " " << &x << endl; // 12 0x7ffc8b9d8b50
+    cout << y << " " << &y << endl; // 12 0x7ffc8b9d8b50
+}
+```
+
+<div align="center">
+<img src="img/ref.jpg" alt="ref.jpg" width="400px">
+</div>
+
+
+## ✅✅Pass by Reference: Using `pointer`|`reference`
+
+This technique uses in/out-mode semantics. **Changes made to formal parameter do get transmitted back to the caller through parameter passing**. **Any changes to the formal parameter are reflected in the actual parameter in the calling environment as formal parameter receives a reference (or pointer) to the actual data**. This method is also called as call by reference. This method is efficient in both time and space.
 
 ```cpp
 void watchVideo(int views) {
@@ -230,30 +252,24 @@ void watchVideo(int *viewsPtr) // int *viewsPtr=&views
 int main() {
     int views = 100;
     watchVideo(&views);
-    cout << "views: " << views << endl; // 101
+    cout << "views: " << views << endl; // views: 101
 }
 ```
 
-## 👉Reference(`&`) in  C++
-
-A reference is an `alias` for an already existing variable. Once a reference is initialized to a variable, it cannot be changed to refer to another variable. Hence, a reference is similar to a `const pointer`.
-
-- [https://www.geeksforgeeks.org/references-in-c/](https://www.geeksforgeeks.org/references-in-c/)
+Using `reference`:
 
 ```cpp
+void watchVideo(int &viewsPtr) // int *viewsPtr=&views
+{
+    viewsPtr = viewsPtr + 1;
+}
+
 int main() {
-    int x = 10;
-    int &y = x;
-    y++;
-    x++;
-    cout << x << " " << &x << endl; // 12 0x7ffc8b9d8b50
-    cout << y << " " << &y << endl; // 12 0x7ffc8b9d8b50
+    int views = 100;
+    watchVideo(views);
+    cout << "views: " << views << endl; // views: 101
 }
 ```
-
-<div align="center">
-<img src="img/ref.jpg" alt="ref.jpg" width="400px">
-</div>
 
 ### Differences between 👉pointers and 👉references in C++
 
@@ -277,30 +293,7 @@ Major dif:
 - [https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/](https://www.geeksforgeeks.org/passing-by-pointer-vs-passing-by-reference-in-c/)
 - [https://techdifferences.com/difference-between-pointer-and-reference-2.html](https://techdifferences.com/difference-between-pointer-and-reference-2.html)
 
-#### ✅✅Pass by Reference: Using `pointer`|`reference`  - When to use What
-
-```cpp
-void swapPassByRefsWithRefOp(int &n1, int &n2) {
-    int temp;
-    temp = n1;
-    n1 = n2;
-    n2 = temp;
-}
-void swapPassByRefsWithPointer(int *n1, int *n2) {
-    int temp;
-    temp = *n1;
-    *n1 = *n2;
-    *n2 = temp;
-}
-int main() {
-    int a = 1, b = 2;
-    swapPassByRefsWithRefOp(a, b);
-    cout << a << " " << b << endl; // 2 1
-    swapPassByRefsWithPointer(&a, &b);
-    cout << a << " " << b << endl; // 1 2
-    return 0;
-}
-```
+### When to use What
 
 The performances are exactly the same, as **references are implemented internally as pointers**. But still we can keep some points in mind to decide when to use what :
 
@@ -315,66 +308,14 @@ The performances are exactly the same, as **references are implemented internall
 - **References are usually preferred over pointers whenever we don’t need “reseating”.**
 - Overall, Use references when you can, and pointers when you have to. But if we want to write C code that compiles with both C and a C++ compiler, you’ll have to restrict yourself to using pointers
 
-### Arrays are 🧠🧠Passed as References🧠🧠 by Default
 
-- [https://github.com/dev-SR/exercise/tree/main/C%2B%2B/1.2array#-arrays-are-passed-by-references-only-but-others-are-by-value](https://github.com/dev-SR/exercise/tree/main/C%2B%2B/1.2array#-arrays-are-passed-by-references-only-but-others-are-by-value)
+## Arrays are 🧠🧠Passed as References🧠🧠 by Default
 
-### 🌟Reference Applications🌟
+- Details in [exercise/C++/02array_c_cpp/](https://github.com/dev-SR/exercise/tree/main/C%2B%2B/02array_c_cpp#-arrays-are-passed-by-references-only-but-other-datatype-are-by-value)
 
-#### 🚀🚀Pass By Reference| 👉👉 Modifying `formal` parameter reflects in `actual` parameter
+## More Pointer|Reference Applications
 
-- [https://www.geeksforgeeks.org/parameter-passing-techniques-in-c-cpp/](https://www.geeksforgeeks.org/parameter-passing-techniques-in-c-cpp/)
-
-This technique uses in/out-mode semantics. **Changes made to formal parameter do get transmitted back to the caller through parameter passing**. **Any changes to the formal parameter are reflected in the actual parameter in the calling environment as formal parameter receives a reference (or pointer) to the actual data**. This method is also called as call by reference. This method is efficient in both time and space.
-
-```cpp
-// pass by value
-void applyTax(int income) {
-    float tax = 0.1;
-    income = income - (income * tax);
-}
-int main() {
-    int income = 100;
-    applyTax(income);
-    cout << "Income after tax: " << income << endl; // 100
-}
-```
-
-vs
-
-```cpp
-// pass by reference - using reference operator `&`
-void applyTax(int &income) {
-    float tax = 0.1;
-    income = income - (income * tax);
-}
-int main() {
-    int income = 100;
-    applyTax(income);
-    cout << "Income after tax: " << income << endl; // 90
-}
-```
-
-<div align="center">
-    <img src="img/pbr.jpg" alt="pbr.jpg" width="400px">
-</div>
-
-same with pointers:
-
-```cpp
-// pass by reference - using pointers
-void applyTax(int *income) {
-    float tax = 0.1;
-    *income = *income - (*income * tax);
-}
-int main() {
-    int income = 100;
-    applyTax(&income);
-    cout << "Income after tax: " << income << endl; // 90
-}
-```
-
-#### 🚀🚀Avoiding a copy of large structures
+### 🚀🚀Avoiding a copy of large structures
 
 Imagine a function that has to receive a large object. If we pass it without reference, a new copy of it is created which causes wastage of CPU time and memory. We can use references to avoid this.
 
@@ -397,7 +338,7 @@ void print(const Student &s)
 }
 ```
 
-#### 🚀🚀In For Each Loops to modify all objects
+### 🚀🚀In For Each Loops to modify all objects
 
 We can use references in for each loops to modify all elements.
 
@@ -444,7 +385,7 @@ int main() {
 }
 ```
 
-#### 🚀For Each Loop to avoid the copy of objects
+### 🚀For Each Loop to avoid the copy of objects
 
 We can use references in each loop to avoid a copy of individual objects when objects are large.
 
