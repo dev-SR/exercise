@@ -1,28 +1,65 @@
-# Modular Programming
+# Modular in C
 
-- [Modular Programming](#modular-programming)
-	- [Native Modular Build](#native-modular-build)
-		- [Multiple Definition Guard](#multiple-definition-guard)
-		- [Build and Run](#build-and-run)
-	- [Build Using GNU MAKE](#build-using-gnu-make)
-		- [A Simple Example](#a-simple-example)
-			- [Makefile ex1](#makefile-ex1)
-			- [Makefile 2](#makefile-2)
-			- [Makefile 3](#makefile-3)
-			- [Makefile 4](#makefile-4)
-			- [Makefile 5](#makefile-5)
+- [Modular in C](#modular-in-c)
+  - [Creating header files](#creating-header-files)
+    - [Multiple Definition Guard](#multiple-definition-guard)
+    - [Build and Run](#build-and-run)
+  - [Build Using GNU MAKE](#build-using-gnu-make)
+    - [A Simple Example](#a-simple-example)
+      - [Makefile ex1](#makefile-ex1)
+      - [Makefile 2](#makefile-2)
+      - [Makefile 3](#makefile-3)
+      - [Makefile 4](#makefile-4)
+      - [Makefile 5](#makefile-5)
 
-## Native Modular Build
+## Creating header files
 
-<div align="center"><img src="./../../img/cmod-1.jpg" alt="DMA" width="700px"></div>
+<div align="center"><img src="img/cmod-1.jpg" alt="DMA" width="700px"></div>
 
-<div align="center"><img src="./../../img/cmod-2.jpg" alt="DMA" width="700px"></div>
+<div align="center"><img src="img/cmod-2.jpg" alt="DMA" width="700px"></div>
+
+Create a header file `my_header.h` in the directory `lib`
+
+```plaintext
+root:
+ |
+ |__lib:
+ |    \__my_header.h
+ |
+ |__main.c
+ |
+```
+
+`lib/my_header.h`
+
+```c
+int add(int a, int b) {
+    return a + b;
+}
+int multiply(int a, int b) {
+    return a * b;
+}
+```
+
+`main.c`
+
+```c
+#include "lib/my_header.h"
+#include <stdio.h>
+int main() {
+    int a = 10, b = 5;
+    printf("%d + %d = %d\n", a, b, add(a, b));
+    printf("%d x %d = %d\n", a, b, multiply(a, b));
+
+    return 0;
+}
+```
 
 ### Multiple Definition Guard
 
-<div align="center"><img src="./../../img/cmod-3.jpg" alt="DMA" width="700px"></div>
+<div align="center"><img src="img/cmod-3.jpg" alt="DMA" width="700px"></div>
 
-<div align="center"><img src="./../../img/cmod-4.jpg" alt="DMA" width="700px"></div>
+<div align="center"><img src="img/cmod-4.jpg" alt="DMA" width="700px"></div>
 
 ### Build and Run
 
@@ -53,7 +90,7 @@ Let's start off with the following three files, `hellomake.c`, `hellofunc.c`, an
 `hellomake.c`
 
 ```c
-// #include "hellomake.h" without -I . flag 
+// #include "hellomake.h" without -I . flag
 #include <hellomake.h>
 
 int main() {
@@ -144,7 +181,7 @@ DEPS = hellomake.h
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-hellomake: hellomake.o hellofunc.o 
+hellomake: hellomake.o hellofunc.o
 	$(CC) -o hellomake hellomake.o hellofunc.o
 ```
 
@@ -158,7 +195,7 @@ As a final simplification, let's use the special macros $@ and $^, which are the
 CC=gcc
 CFLAGS=-I.
 DEPS = hellomake.h
-OBJ = hellomake.o hellofunc.o 
+OBJ = hellomake.o hellofunc.o
 
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
@@ -184,7 +221,7 @@ LIBS=-lm
 \_DEPS = hellomake.h
 DEPS = $(patsubst %,$(IDIR)/%,$(\_DEPS))
 
-\_OBJ = hellomake.o hellofunc.o 
+\_OBJ = hellomake.o hellofunc.o
 OBJ = $(patsubst %,$(ODIR)/%,$(\_OBJ))
 
 
