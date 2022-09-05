@@ -2,8 +2,11 @@
 
 - [Modular in C](#modular-in-c)
   - [Creating header files](#creating-header-files)
-    - [Multiple Definition Guard](#multiple-definition-guard)
+    - [Both functions prototypes and definition in `.h`](#both-functions-prototypes-and-definition-in-h)
+    - [Functions prototypes in  `.h` and  functions definition in `.c`](#functions-prototypes-in--h-and--functions-definition-in-c)
+    - [Include Guard](#include-guard)
     - [Build and Run](#build-and-run)
+  - [Namespaces in Cpp](#namespaces-in-cpp)
   - [Build Using GNU MAKE](#build-using-gnu-make)
     - [A Simple Example](#a-simple-example)
       - [Makefile ex1](#makefile-ex1)
@@ -14,9 +17,7 @@
 
 ## Creating header files
 
-<div align="center"><img src="img/cmod-1.jpg" alt="DMA" width="700px"></div>
-
-<div align="center"><img src="img/cmod-2.jpg" alt="DMA" width="700px"></div>
+### Both functions prototypes and definition in `.h`
 
 Create a header file `my_header.h` in the directory `lib`
 
@@ -55,7 +56,98 @@ int main() {
 }
 ```
 
-### Multiple Definition Guard
+Compile and run
+
+```bash
+gcc main.c -o main; .\main
+```
+
+### Functions prototypes in  `.h` and  functions definition in `.c`
+
+<div align="center"><img src="img/cmod-1.jpg" alt="DMA" width="700px"></div>
+
+<div align="center"><img src="img/cmod-2.jpg" alt="DMA" width="700px"></div>
+
+- [https://flaviocopes.com/c-header-files/](https://flaviocopes.com/c-header-files/)
+
+```plaintext
+root:
+ |
+ |__lib:
+ |    \__my_header.h
+ |    \__my_header.c
+ |
+ |__main.c
+ |
+```
+
+- `my_header.h` contains the prototypes of the functions defined in `my_header.c`
+
+
+`lib/my_header.h`
+
+```c
+int add(int a, int b);
+int multiply(int a, int b);
+```
+
+`lib/my_header.c`
+
+```c
+#include "my_header.h"
+
+int add(int a, int b) {
+    return a + b;
+}
+int multiply(int a, int b) {
+    return a * b;
+}
+```
+
+`main.c`
+
+```c
+#include "lib/my_header.h"
+#include <stdio.h>
+int main() {
+    int a = 10, b = 5;
+    printf("%d + %d = %d\n", a, b, add(a, b));
+    printf("%d x %d = %d\n", a, b, multiply(a, b));
+
+    return 0;
+}
+```
+
+Compile and run
+
+```bash
+gcc main.c -o main; .\main
+```
+
+But this will throw an error
+
+```plaintext
+....undefined reference to `add'
+.... undefined reference to `multiply'
+collect2.exe: error: ld returned 1 exit status
+```
+
+We need to compile `my_header.c` as well
+
+```bash
+gcc main.c lib/my_header.c -o main; .\main
+
+```
+
+output:
+
+```plaintext
+10 + 5 = 15
+10 x 5 = 50
+```
+
+### Include Guard
+
 
 <div align="center"><img src="img/cmod-3.jpg" alt="DMA" width="700px"></div>
 
@@ -63,17 +155,95 @@ int main() {
 
 ### Build and Run
 
-```powershell
-gcc main.c -o main
-# undefined reference to `print_mod1'
-# undefined reference to `print_mod2'
-```
+gcc main.c lib\area.c lib\circumference.c -o main; .\main
 
 ```powershell
 # build
 gcc main.c mod1.c mod2.c led.c -o mainexe
 # run
 .\mainexe
+```
+
+## Namespaces in Cpp
+
+`cpp_header1.cpp`
+
+```cpp
+#ifndef UTILS_GREET
+#define UTILS_GREET
+
+#include <string>
+
+namespace utils1 {
+  void greet(std::string name);
+}
+
+#endif
+```
+
+`cpp_header1.hpp`
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+namespace utils1 {
+  void greet(string name) {
+      cout << "Hello " << name << endl;
+  }
+}
+```
+
+`cpp_header2.cpp`
+
+```cpp
+#ifndef UTILS_GREET2
+#define UTILS_GREET2
+
+#include <string>
+
+namespace utils2 {
+  void greet(std::string name);
+}
+
+#endif
+```
+
+`cpp_header2.hpp`
+
+```cpp
+#include <iostream>
+
+using namespace std;
+
+namespace utils2 {
+  void greet(string name) {
+      cout << "Hello " << name << endl;
+  }
+}
+```
+
+`main.cpp`
+
+```c
+#include "lib/cpp_header1.hpp"
+#include "lib/cpp_header2.hpp"
+#include <bits/stdc++.h>
+using namespace std;
+int main() {
+
+    utils1::greet("John");
+    utils2::greet("John");
+
+    return 0;
+}
+```
+
+```bash
+if ($?) { g++ -std=c++20 m.cpp lib\cpp_header1.cpp lib\cpp_header2.cpp -o m } ; if ($?) { .\m }
+Hello John
+Hello John
 ```
 
 ## Build Using GNU MAKE
