@@ -6,11 +6,13 @@
     - [Ex: Frequency of elements in an array](#ex-frequency-of-elements-in-an-array)
   - [Array and Pointer](#array-and-pointer)
   - [Passing Array To a Function | (default)Pass By Reference/Address](#passing-array-to-a-function--defaultpass-by-referenceaddress)
-    - [🎗️🎗️🎗️ C/CPP ✂️modifies✂️ Original array | Pass By Reference/Address](#️️️-ccpp-️modifies️-original-array--pass-by-referenceaddress)
-      - [compared with other languages](#compared-with-other-languages)
-      - [🧠🧠 Arrays are passed by References only; 🧠🧠But Other datatype are by Value🧠🧠](#-arrays-are-passed-by-references-only-but-other-datatype-are-by-value)
+    - [Determining the length of an array in CPP: `size(arr)`](#determining-the-length-of-an-array-in-cpp-sizearr)
+    - [C/CPP: Arrays are Pass By Reference/Address | ✂️modifies✂️ Original array](#ccpp-arrays-are-pass-by-referenceaddress--️modifies️-original-array)
+      - [Other languages also pass arrays by reference](#other-languages-also-pass-arrays-by-reference)
+      - [🧠🧠 Only Arrays are passed by References; 🧠🧠But Other datatype are by Value🧠🧠](#-only-arrays-are-passed-by-references-but-other-datatype-are-by-value)
+        - [Other languages also pass other variables by value](#other-languages-also-pass-other-variables-by-value)
+    - [CPP: unpacking arrays | Structured binding](#cpp-unpacking-arrays--structured-binding)
     - [🌟🌟🌟Returning (Local) Array From the Function in C/C++ | `int* fn(){} ~ int *p = fn()`](#returning-local-array-from-the-function-in-cc--int-fn--int-p--fn)
-    - [Enabling Pass by Value in C/CPP](#enabling-pass-by-value-in-ccpp)
     - [Example](#example)
       - [Partial Array Processing](#partial-array-processing)
       - [sorting](#sorting)
@@ -63,6 +65,31 @@ int main() {
     return 0;
 }
 ```
+
+```c
+#include <stdio.h>
+
+// take input
+void takeInput(int arr[], int n) {
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+}
+
+void display(int *p, int n) {
+    for (int i = 0; i < n; i++) {
+        printf("%d ", p[i]);
+    }
+}
+
+int main() {
+    int arr[3];
+    int n = 3;
+    takeInput(arr, n);
+    display(arr, n);
+}
+```
+
 
 ### Ex: Frequency of elements in an array
 
@@ -249,7 +276,24 @@ int main() {
 }
 ```
 
-### 🎗️🎗️🎗️ C/CPP ✂️modifies✂️ Original array | Pass By Reference/Address
+### Determining the length of an array in CPP: `size(arr)`
+
+```cpp
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+int main() {
+    int ar[5] = {1, 2, 3, 4, 5};
+    cout << "Size in arr: " << size(ar) << endl;
+    printArray(ar, size(ar));
+    return 0;
+}
+```
+
+
+### C/CPP: Arrays are Pass By Reference/Address | ✂️modifies✂️ Original array
 
 - [https://www.educative.io/answers/pass-by-value-vs-pass-by-reference](https://www.educative.io/answers/pass-by-value-vs-pass-by-reference)
 
@@ -286,14 +330,14 @@ int main() {
 }
 ```
 
-Advantages of Passing Arrays to Functions:
+Advantages of Passing Arrays by Reference to Functions:
 
 - Passing similar elements as an array takes less time than passing each element to a function as we are only passing the base address of the array to the function and other elements can be accessed easily as an array is a contiguous memory block of the same data types.
 - As we pass reference of base address of the array this means compiler doesn’t create a copy of the array to process inside function which is faster and less memory-intensive compared to passing arguments by value.
 - Because arrays are passed by reference to functions this prevents stack memory overflow in the case of recursive functions.
 
 
-#### compared with other languages
+#### Other languages also pass arrays by reference
 
 - Python
 
@@ -309,7 +353,9 @@ def main():
     print("main(): arr =", arr) #main(): arr = [1, 2, 3, 4, 5]
     arr2 = incrementArrayEls(arr)
     print("main(): arr =", arr) #main(): arr = [2, 3, 4, 5, 6]
-    print("returned: =", arr) #returned: = [2, 3, 4, 5, 6]
+    print("returned: =", arr2) #returned: = [2, 3, 4, 5, 6]
+
+main()
 ```
 
 - Java
@@ -338,7 +384,7 @@ class HelloWorld {
 }
 ```
 
-#### 🧠🧠 Arrays are passed by References only; 🧠🧠But Other datatype are by Value🧠🧠
+#### 🧠🧠 Only Arrays are passed by References; 🧠🧠But Other datatype are by Value🧠🧠
 
 **There is usually no need to pass an `array` explicitly by reference because arrays are always passed by reference.**
 
@@ -406,6 +452,50 @@ int main() {
     cout << a << " " << b << endl; // 1,2
 }
 ```
+
+##### Other languages also pass other variables by value
+
+- Python
+
+```python
+# Python passes other variables by value
+def swap(a, b):
+    temp = a
+    a = b
+    b = temp
+# But arrays are passed by reference
+def swapArr(arr):
+    temp = arr[0]
+    arr[0] = arr[1]
+    arr[1] = temp
+
+def main():
+    a,b=1,2
+    swap(a,b)
+    print(a,b) # 1 2
+
+    arr = [1,2]
+    swapArr(arr)
+    print(arr) # [2,1]
+
+main()
+```
+
+### CPP: unpacking arrays | Structured binding
+
+```cpp
+int main() {
+    int arr[3] = {1, 2, 3};
+
+    auto [x, y, z] = arr; // type must be 'auto'
+    cout << x << y << z << endl;
+
+    // auto [a, b] = arr; // Error| number of unpacking element must be equal to number of array element
+    // cout << a << b << endl;
+    return 0;
+}
+```
+
 
 ### 🌟🌟🌟Returning (Local) Array From the Function in C/C++ | `int* fn(){} ~ int *p = fn()`
 
@@ -506,43 +596,7 @@ int main() {
 }
 ```
 
-### Enabling Pass by Value in C/CPP
 
-In order to pass an array as call by value we have to wrap the array inside a structure and have to assign the values to that array using an object of that structure. This will help us create a new copy of the array that we are passing as an argument to a function.
-
-Lets understand this with a simple example.
-
-- Create a structure which will act as an wrapper and will declare an array inside it.
-- Assign the values to the array declared inside a structure using the object of a structure.
-- Pass the address of the object to the function call so as to pass the complete array to a function.
-
-
-```cpp
-struct Wrapper {
-    int arr[N];
-};
-
-// Array is passed by value wrapped in tmp
-void compute(struct Wrapper tmp) {
-    int *ptr = tmp.arr;
-    int i;
-    for (i = 0; i < N; ++i)
-        ptr[i] = 100;
-    printf("Values after modification \n");
-    printArray(ptr, N); // 100 100 100 100 100
-}
-
-int main() {
-    int i;
-    struct Wrapper obj;
-    for (i = 0; i < N; i++)
-        obj.arr[i] = 10;
-    compute(obj);
-    printf("Values after calling function \n");
-    printArray(obj.arr, N); // 10 10 10 10 10
-    return 0;
-}
-```
 
 ### Example
 
