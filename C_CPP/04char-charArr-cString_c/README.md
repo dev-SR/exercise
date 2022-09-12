@@ -1516,6 +1516,9 @@ cout << name << endl; // Jhon
 //Concatenating:
 strcat(name, " Smith");
 cout << name << endl; // Jhon Smith
+// Length:
+int len = strlen(name);
+cout << len << endl; // 9
 ```
 
 finding substring:

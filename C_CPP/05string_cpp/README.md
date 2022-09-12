@@ -4,7 +4,16 @@
   - [Strings Initialization](#strings-initialization)
   - [Input](#input)
   - [String Traversal](#string-traversal)
-  - [Cpp String is `Mutable`](#cpp-string-is-mutable)
+  - [Modifying String](#modifying-string)
+    - [Cpp String is `Mutable`](#cpp-string-is-mutable)
+  - [Searching](#searching)
+  - [Extracting Substrings](#extracting-substrings)
+  - [String<->Number Conversion](#string-number-conversion)
+
+Docs:
+
+  - [https://cplusplus.com/reference/string/string/](https://cplusplus.com/reference/string/string/)
+
 
 ## Strings Initialization
 
@@ -142,7 +151,46 @@ paragraph
     }
 ```
 
-## Cpp String is `Mutable`
+## Modifying String
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    string name = "Jhon";
+    // append
+    name.append("Smith");
+    cout << name << endl; // JhonSmith
+
+    // insert at a particular position
+    name.insert(4, " ");
+    cout << name << endl; // Jhon-Smith
+
+    // erase a particular position
+    int chars_to_erase = 6;
+    name.erase(4, chars_to_erase);
+    cout << name << endl; // Jhon
+
+    // replace a particular position
+    int chars_to_replace = 4;
+    name.replace(0, chars_to_replace, "Robert");
+    cout << name << endl; // Robert
+
+    // clear
+    name.clear();
+    cout << name << endl; // (empty string)
+
+    return 0;
+
+    // clear the string
+    name.clear();
+
+    return 0;
+}
+```
+
+### Cpp String is `Mutable`
 
 ```cpp
     string s = "Hello";
@@ -155,3 +203,99 @@ paragraph
 ```
 
 - See more here: [char s[] vs char *s](https://github.com/dev-SR/exercise/tree/main/C%2B%2B/1.5char-charArr-cString#char-smutable-vs-char-simmutable)
+
+## Searching
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    string name = "Jhon Smith";
+    // find first/last occurrence of a character
+    cout << "Pos. of first occurrence of 'h' is: " << name.find('h') << endl; // 1
+    cout << "Pos. of last occurrence of 'h' is: " << name.rfind('h') << endl; // 9
+
+    // find first/last occurrence of a substring
+    cout << "Pos. of first occurrence of 'Smith' is: " << name.find("Smith") << endl; // 5
+    cout << "Pos. of last occurrence of 'Smith' is: " << name.rfind("Smith") << endl; // 5
+
+    // find returns (size_t)/unsigned long long int
+    size_t t = -1; // we can't store a negative value in size_t/unsigned long long int
+
+    /* if we try to store a negative value in size_t/unsigned long long int, it will be converted to a very large positive value (largest possible value )*/
+
+    cout << t << endl;                                                            // 18446744073709551615
+    cout << "Pos. of first occurrence of 'Bob' is: " << name.find("Bob") << endl; // 18446744073709551615
+    if (name.find("Bob") == -1) {
+        cout << "Not found" << endl;
+    }
+    // instead of -1, we can use string::npos
+    if (name.find("Bob") == string::npos) {
+        cout << "Not found" << endl;
+    }
+
+    return 0;
+}
+```
+
+```cpp
+int main() {
+    string name = "Jhon Smith.";
+    // find first occurrence of any of the characters in the string
+    cout << "Pos. of first occurrence of any of the vowels is: " << name.find_first_of("aeiou") << endl; // 2
+    cout << name.find_last_of(".;,") << endl;                                                            // 10
+    cout << name.find_first_not_of("Jhon") << endl;                                                      // 4
+    cout << name.find_last_of("Smith") << endl;                                                          // 9
+    cout << name.find_last_not_of("Smith.") << endl;                                                     // 4
+}
+```
+
+## Extracting Substrings
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    // substr(pos, len) returns a substring of length len starting at pos
+    string name = "Jhon Snow Smith";
+
+    size_t index = name.rfind(' ');
+
+    // extract first name
+    string first_name = name.substr(0, index);
+    // extract last name
+    string last_name = name.substr(index + 1);
+
+    cout << "(" << first_name << ")" << endl; // (Jhon Snow)
+    cout << "(" << last_name << ")" << endl;  // (Smith)
+
+    return 0;
+}
+```
+
+## String<->Number Conversion
+
+```cpp
+
+#include <iostream>
+using namespace std;
+
+int main() {
+
+    string price = "123.45";
+    double price_d = stod(price);
+    cout << price_d + 1 << endl; // 124.45
+
+    string price2 = "123.x45";
+    double price2_d = stod(price2);
+    cout << price2_d << endl; // 123
+
+    int i = 123;
+    string s = to_string(i);
+    cout << s.insert(0, "N: ") << endl; // N: 123
+
+    return 0;
+}
+```
