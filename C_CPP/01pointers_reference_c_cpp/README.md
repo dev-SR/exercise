@@ -19,6 +19,15 @@
 
 ## 🚀Pointer
 
+- A pointer is a variable that stores the address of another variable.
+
+Use cases:
+
+- Efficiently passing large structures to functions
+- Dynamic memory allocation
+- Enable polymorphism
+
+
 ### Address Operator(`&`)
 
 To get the address of a variable, use the `&` operator.
