@@ -17,6 +17,9 @@
   - [🔥Array of Structures](#array-of-structures)
   - [🔥🔥 Dynamic Memory Allocation of Structure](#-dynamic-memory-allocation-of-structure)
   - [C Structures Limitations](#c-structures-limitations)
+  - [🍎 Struct In CPP](#-struct-in-cpp)
+    - [Basic](#basic)
+    - [Passing Struct to a function in cpp](#passing-struct-to-a-function-in-cpp)
 
 ## Introduction
 
@@ -569,3 +572,72 @@ Grade: F
  - Structures in C does not provide the data hiding property(by which we can make some members private and they cannot be accessed from outside of structure) and every member of the structure can be accessed.
  - We cannot define functions inside the Structures in C, so there is no constructor and as structures do not have their own memory so we cannot ever initialize our data members inside it.
  - If the alignment of the Structure members is not correct then they may cause some loss of memory.
+
+## 🍎 Struct In CPP
+
+### Basic
+
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct Student {
+    int Id;
+    string Name;
+    float GPA = 0.00; // initializing
+};
+
+int main() {
+    Student s = {1, "Jhon Snow"};
+    cout << "ID: " << s.Id << " Name: " << s.Name << " GPA:" << s.GPA << endl;
+    // unpacking
+    auto [id, name, gpa] = s;
+    cout << "ID: " << id << " Name: " << name << " GPA:" << gpa << endl;
+
+    // array of student;
+    Student studentArr[2];
+    studentArr[0] = {1, "A"};
+    studentArr[1] = {2, "B"};
+
+    // ....using vector
+    vector<Student> studentVec;
+    studentVec.push_back({1, "A"});
+    studentVec.push_back({2, "B"});
+
+    for (const auto &student : studentArr) // using reference to avoid copy
+        cout << student.Name << endl;
+
+    for (const auto &student : studentVec)// using reference to avoid copy
+        cout << student.Name << endl;
+}
+```
+
+### Passing Struct to a function in cpp
+
+```cpp
+// Recommended
+void showStudentRef(Student &student) {
+    cout << "[Ref] ID: " << student.Id << " Name: " << student.Name << " GPA:" << student.GPA << endl;
+    // we unpack the student object and access its members
+    auto [id, name, gpa] = student;
+    cout << "[Ref+unpack] ID: " << id << " Name: " << name << " GPA:" << gpa << endl;
+}
+
+void showStudentPointer(Student *student) {
+    cout << "[Pointer] ID: " << student->Id << " Name: " << student->Name << " GPA:" << student->GPA << endl;
+    // we unpack the student object and access its members
+    auto [id, name, gpa] = *student;
+    cout << "[Pointer+unpack] ID: " << id << " Name: " << name << " GPA:" << gpa << endl;
+}
+
+Student getStudent() {
+    return {1, "Jhon Snow"};
+}
+
+int main() {
+    Student s =getStudent();
+    showStudentRef(s);
+    showStudentPointer(&s);
+}
+```
