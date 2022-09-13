@@ -6,17 +6,19 @@
     - [Ex: Frequency of elements in an array](#ex-frequency-of-elements-in-an-array)
   - [Array and Pointer](#array-and-pointer)
   - [Passing Array To a Function | (default)Pass By Reference/Address](#passing-array-to-a-function--defaultpass-by-referenceaddress)
-    - [Determining the length of an array in CPP: `size(arr)`](#determining-the-length-of-an-array-in-cpp-sizearr)
     - [C/CPP: Arrays are Pass By Reference/Address | ✂️modifies✂️ Original array](#ccpp-arrays-are-pass-by-referenceaddress--️modifies️-original-array)
       - [Other languages also pass arrays by reference](#other-languages-also-pass-arrays-by-reference)
       - [🧠🧠 Only Arrays are passed by References; 🧠🧠But Other datatype are by Value🧠🧠](#-only-arrays-are-passed-by-references-but-other-datatype-are-by-value)
         - [Other languages also pass other variables by value](#other-languages-also-pass-other-variables-by-value)
-    - [CPP: unpacking arrays | Structured binding](#cpp-unpacking-arrays--structured-binding)
     - [🌟🌟🌟Returning (Local) Array From the Function in C/C++ | `int* fn(){} ~ int *p = fn()`](#returning-local-array-from-the-function-in-cc--int-fn--int-p--fn)
     - [Example](#example)
       - [Partial Array Processing](#partial-array-processing)
       - [sorting](#sorting)
       - [Find all occurrences](#find-all-occurrences)
+  - [More Array feature in CPP](#more-array-feature-in-cpp)
+    - [Determining the length of an array in CPP: `size(arr)`](#determining-the-length-of-an-array-in-cpp-sizearr)
+  - [for-each loop](#for-each-loop)
+    - [unpacking arrays | Structured binding](#unpacking-arrays--structured-binding)
 
 ## Creating Array
 
@@ -276,21 +278,7 @@ int main() {
 }
 ```
 
-### Determining the length of an array in CPP: `size(arr)`
 
-```cpp
-void printArray(int arr[], int size) {
-    for (int i = 0; i < size; i++)
-        cout << arr[i] << " ";
-    cout << endl;
-}
-int main() {
-    int ar[5] = {1, 2, 3, 4, 5};
-    cout << "Size in arr: " << size(ar) << endl;
-    printArray(ar, size(ar));
-    return 0;
-}
-```
 
 
 ### C/CPP: Arrays are Pass By Reference/Address | ✂️modifies✂️ Original array
@@ -479,21 +467,6 @@ def main():
     print(arr) # [2,1]
 
 main()
-```
-
-### CPP: unpacking arrays | Structured binding
-
-```cpp
-int main() {
-    int arr[3] = {1, 2, 3};
-
-    auto [x, y, z] = arr; // type must be 'auto'
-    cout << x << y << z << endl;
-
-    // auto [a, b] = arr; // Error| number of unpacking element must be equal to number of array element
-    // cout << a << b << endl;
-    return 0;
-}
 ```
 
 
@@ -696,4 +669,56 @@ int main() {
 ```bash
 This, is a. sample-string
    ^   ^    ^      ^
+```
+
+## More Array feature in CPP
+
+### Determining the length of an array in CPP: `size(arr)`
+
+```cpp
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++)
+        cout << arr[i] << " ";
+    cout << endl;
+}
+int main() {
+    int ar[5] = {1, 2, 3, 4, 5};
+    cout << "Size in arr: " << size(ar) << endl;
+    printArray(ar, size(ar));
+    return 0;
+}
+```
+
+## for-each loop
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5};
+
+    for (auto &i : arr) // `&` is required, otherwise `i` makes new copy, not reference
+        if (i % 2 == 0)
+            i = 0;
+
+    for (const auto &i : arr) // reference to avoid copy
+        cout << i << endl;
+    // 1 0 3 0 5
+}
+```
+
+### unpacking arrays | Structured binding
+
+```cpp
+int main() {
+    int arr[3] = {1, 2, 3};
+
+    auto [x, y, z] = arr; // type must be 'auto'
+    cout << x << y << z << endl;
+
+    // auto [a, b] = arr; // Error| number of unpacking element must be equal to number of array element
+    // cout << a << b << endl;
+    return 0;
+}
 ```
