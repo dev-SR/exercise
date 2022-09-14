@@ -258,11 +258,10 @@ int main() {
 using namespace std;
 
 int main() {
-    // substr(pos, len) returns a substring of length len starting at pos
     string name = "Jhon Snow Smith";
-
     size_t index = name.rfind(' ');
 
+    // substr(pos, len) returns a substring of length len starting at pos
     // extract first name
     string first_name = name.substr(0, index);
     // extract last name

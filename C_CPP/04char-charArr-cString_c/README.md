@@ -1503,25 +1503,82 @@ int main() {
 
 ### 🌟CString Library Functions
 
-[☝️ Top ☝️](#up)
 
 [https://www.cplusplus.com/reference/cstring/](https://www.cplusplus.com/reference/cstring/)
 
-```cpp
-char name[100];
-// name = "Jhon"; // error: char[100] is not assignable
-//Copying:
-strcpy(name, "Jhon");
-cout << name << endl; // Jhon
-//Concatenating:
-strcat(name, " Smith");
-cout << name << endl; // Jhon Smith
-// Length:
-int len = strlen(name);
-cout << len << endl; // 9
+#### `strlen`: String Length
+
+```c
+#include <cstring>
+#include <iostream>
+using namespace std;
+
+int main() {
+    const char str[] = "Hello World";
+
+    // arrays decay to pointers when we use char*
+    const char *pStr = "Hello World";
+
+    // strlen ignores null character
+    cout << "strlen(str[]) = " << strlen(str) << endl; // strlen(str[]) = 11
+
+    // Included the null character
+    cout << "sizeof(str[]) = " << sizeof(str) << endl; // sizeof(str[]) = 12
+
+    // strlen still works with decayed arrays
+    cout << "strlen(pStr) = " << strlen(pStr) << endl; // strlen(pStr) = 11
+
+    // prints size of pointer
+    cout << "sizeof(pStr) = " << sizeof(pStr) << endl; // sizeof(pStr) = 4
+}
 ```
 
-finding substring:
+#### `strchr`: Find First Occurrence of Character in String
+
+```cpp
+#include <cstring>
+#include <iostream>
+using namespace std;
+
+int main() {
+    //
+    const char *str = "Hello World";
+    char target = 'l';
+    const char *pFound = str;
+    int count = 0;
+
+    while ((pFound = strchr(pFound, target)) != NULL) {
+        cout << "Found " << target << " at " << (pFound - str) << " (" << pFound << ")" << endl;
+        ++count;
+        ++pFound;
+    }
+    cout << "Found " << count << " " << target << "'s" << endl;
+
+    return 0;
+}
+```
+
+```bash
+Found l at 2 (llo World)
+Found l at 3 (lo World)
+Found l at 9 (ld)
+Found 3 l's
+```
+
+
+```cpp
+    const char *intput = "/home/user/Downloads/hello.cpp";
+    const char *found = strrchr(intput, '/');
+    if (found) {
+        cout << "Found " << found + 1 << " at " << (found - intput) << endl;
+    }
+```
+
+```bash
+Found hello.cpp at 20
+```
+
+#### `strstr`: finding substring
 
 ```cpp
 char sentence[100] = "I love reading books on science";
@@ -1542,3 +1599,20 @@ if (output != NULL) {
     cout << "Not found" << endl;
 }
 ```
+
+#### strcpy,strcat
+
+```cpp
+char name[100];
+// name = "Jhon"; // error: char[100] is not assignable
+//Copying:
+strcpy(name, "Jhon");
+cout << name << endl; // Jhon
+//Concatenating:
+strcat(name, " Smith");
+cout << name << endl; // Jhon Smith
+// Length:
+int len = strlen(name);
+cout << len << endl; // 9
+```
+

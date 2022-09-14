@@ -236,6 +236,52 @@ int main() {
 
 ## ✅✅Pass by Reference: Using `pointer`|`reference`
 
+
+<table>
+<thead>
+  <tr>
+    <th>Ways to Pass</th>
+    <th>Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td><b>Pass by value</b></td>
+    <td>
+        <ul>
+            <li>The syntax feels natural</li>
+            <li><b>OK</b> if the parameters are fundamental types: <code>int</code>, <code>double</code>,..</li>
+            <li><b>Not recommended</b> for relatively large types [user defined]. Makes copies can waste memory if the parameter is of a larger type</li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Pass by reference</b></td>
+    <td>
+        <ul>
+            <li>Doesn't make copies </li>
+            <li>Changes to the parameter are reflected on the actual passed argument</li>
+            <li>Saves memory</li>
+            <li><b>Recommended</b> for passing around large types (mostly user defined) </li>
+        </ul>
+    </td>
+  </tr>
+  <tr>
+    <td><b>Pass by pointer </b></td>
+    <td>
+        <ul>
+            <li>The pointer address itself is passed by value can go through dereferencing the parameter and make the changes reflect on the actual passed argument </li>
+            <li>Avoids copies (a pointer is very cheap to copy) </li>
+            <li>The syntax is very ugly have to use pointer parameters, pass the address on function call, and use the dereference operator to apply modifications to the value at pointed to address. Although the syntax is ugly, this is still used very widely in C++ code out in the wild. So make sure you fell conformable with this way of doing things. </li>
+            <li><b>Recommended</b> for passing around large types (mostly user defined) </li>
+        </ul>
+    </td>
+  </tr>
+</tbody>
+</table>
+
+Pass by Reference: Using `pointer`|`reference`:
+
 This technique uses in/out-mode semantics. **Changes made to formal parameter do get transmitted back to the caller through parameter passing**. **Any changes to the formal parameter are reflected in the actual parameter in the calling environment as formal parameter receives a reference (or pointer) to the actual data**. This method is also called as call by reference. This method is efficient in both time and space.
 
 ```cpp
