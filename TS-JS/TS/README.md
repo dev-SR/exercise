@@ -10,7 +10,8 @@
 npm i -g typescript ts-node
 ```
 
-Run code with `ts-node`
+Run code with `ts-node` or simply use Code Runner extension in VS Code.
+
 
 ```bash
 ts-node script.ts
