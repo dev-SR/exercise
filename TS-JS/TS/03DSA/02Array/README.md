@@ -3,6 +3,7 @@
 - [Array in TypeScript/Javascript](#array-in-typescriptjavascript)
 	- [Creating JavaScript arrays](#creating-javascript-arrays)
 	- [Iterating over JavaScript arrays](#iterating-over-javascript-arrays)
+	- [Spread operator](#spread-operator)
 	- [Array methods](#array-methods)
 		- [`indexOf` and `lastIndexOf`](#indexof-and-lastindexof)
 		- [`find` , `findIndex`](#find--findindex)
@@ -85,6 +86,14 @@ for (let i of ar) {
 ar.forEach((v, i) => {
 	console.log(v);
 });
+```
+
+## Spread operator
+
+```typescript
+let exArr = [1, 2, 3, 4, 5];
+let copyArr = [...exArr, 6, 7, 8, 9, 10];
+console.log(copyArr);
 ```
 
 ## Array methods

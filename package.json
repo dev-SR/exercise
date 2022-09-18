@@ -9,11 +9,12 @@
 		"run:test": "ts-node-dev --respawn TS-JS/src/test.ts"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "Soikat Rahman <hello.dev.sr@gmail.com>",
 	"license": "ISC",
 	"devDependencies": {
 		"@types/node": "^16.4.13",
 		"ts-node-dev": "^1.1.8",
 		"typescript": "^4.3.5"
-	}
+	},
+	"repository": "https://github.com/dev-SR/exercise.git"
 }
