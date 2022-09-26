@@ -12,7 +12,7 @@
     - [🚀Special Types:  `any` and `unknown`](#special-types--any-and-unknown)
     - [🚀Js to TS](#js-to-ts)
     - [🚀Type Assertions](#type-assertions)
-    - [Type Declarations](#type-declarations)
+    - [🔥Type Declarations](#type-declarations)
   - [Classes In TypeScript](#classes-in-typescript)
     - [private and protected](#private-and-protected)
     - [`implements`](#implements)
@@ -249,7 +249,7 @@ const trimmed = (ret as string).trim();
 const trimmed = (<string>ret).trim();```
 ```
 
-### Type Declarations
+### 🔥Type Declarations
 
 ```typescript
 console.log('Logged in user:', process.env.USER);//Error
@@ -261,6 +261,16 @@ Or install type declarations package if available
 
 ```bash
 npm install @types/<package> @types/node --save-dev
+```
+
+if not available, create a custom type declaration file. For example for `merge-class-names` package
+
+First create a file with `.d.ts` extension
+
+```typescript
+declare module 'merge-class-names' {
+ export default function mergeClassNames(...classNames: any[]): string;
+}
 ```
 
 ## Classes In TypeScript
