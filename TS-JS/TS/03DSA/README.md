@@ -1,13 +1,16 @@
 # Data Structure Utils
 
 - [Data Structure Utils](#data-structure-utils)
-  - [Array of Objects](#array-of-objects)
-    - [sort](#sort)
-    - [example 1:](#example-1)
-      - [find and update](#find-and-update)
-      - [get updated nested inner object](#get-updated-nested-inner-object)
-      - [get updated nested inner object with extra property attached](#get-updated-nested-inner-object-with-extra-property-attached)
-      - [get deleted nested inner object from array of objects](#get-deleted-nested-inner-object-from-array-of-objects)
+	- [Array of Objects](#array-of-objects)
+		- [sort](#sort)
+		- [example 1](#example-1)
+			- [modify inner object](#modify-inner-object)
+			- [delete object](#delete-object)
+		- [example 2](#example-2)
+			- [find and update](#find-and-update)
+			- [get updated nested inner object](#get-updated-nested-inner-object)
+			- [get updated nested inner object with extra property attached](#get-updated-nested-inner-object-with-extra-property-attached)
+			- [get deleted nested inner object from array of objects](#get-deleted-nested-inner-object-from-array-of-objects)
 
 ## Array of Objects
 
@@ -27,7 +30,53 @@ employees.sort(function (x, y) {
 console.table(employees);
 ```
 
-### example 1:
+### example 1
+
+
+```typescript
+const items = [
+	{
+		id: 1,
+		checked: false,
+		text: 'Learn React'
+	},
+	{
+		id: 2,
+		checked: false,
+		text: 'Learn TypeScript'
+	}
+];
+```
+
+#### modify inner object
+
+```typescript
+const handleCheck = (id: number) => {
+	const newItems = items.map((item) =>
+		item.id === id
+			? {
+					...item,
+					checked: !item.checked
+				}
+			: item
+	);
+	return newItems;
+};
+```
+
+
+
+#### delete object
+
+
+```typescript
+const deleteObject = (id: number) => {
+	const newItems = items.filter((item) => item.id !== id);
+	return newItems;
+};
+```
+
+### example 2
 
 ```typescript
 // tsconfig.json: 	"resolveJsonModule": true,	"esModuleInterop": true
@@ -82,7 +131,6 @@ console.log(data[index]);
 ```
 
 #### get updated nested inner object
-
 
 ```typescript
 let updated = data.map((item) => {
