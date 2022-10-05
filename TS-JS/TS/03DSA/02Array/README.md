@@ -6,11 +6,13 @@
 	- [Spread operator](#spread-operator)
 	- [Array methods](#array-methods)
 		- [`indexOf` and `lastIndexOf`](#indexof-and-lastindexof)
+			- [find all occurrences of an element in an array](#find-all-occurrences-of-an-element-in-an-array)
 		- [`find` , `findIndex`](#find--findindex)
 		- [🌟`splice`: Delete,Insert,Replace](#splice-deleteinsertreplace)
 			- [Deleting elements: `splice(position, num)`](#deleting-elements-spliceposition-num)
 			- [Inserting elements: `splice(position, 0,el1, el2,...);`](#inserting-elements-spliceposition-0el1-el2)
 			- [Replacing elements: `splice(position, 1/n, el1, el2,...);`](#replacing-elements-spliceposition-1n-el1-el2)
+			- [Custom: swap elements](#custom-swap-elements)
 		- [`slice`:  extract subarray](#slice--extract-subarray)
 		- [🌟🌟`filter`: Removing | filter elements](#filter-removing--filter-elements)
 		- [🌟🌟`map`: Updating | transform array into new array](#map-updating--transform-array-into-new-array)
@@ -109,17 +111,26 @@ console.log(scores.indexOf(50)); // -1
 console.log(scores.indexOf(10, 1)); // 3
 ```
 
- find the indices of all occurrences of an element in an array.
+#### find all occurrences of an element in an array
 
-```javascript
-var scores = [10, 20, 30, 10, 40, 20];
-var indices = [];
-var idx = scores.indexOf(10);
-while (idx != -1) {
-	indices.push(idx);
-	idx = scores.indexOf(10, idx + 1);
+```ts
+function findAllIndex<T>(arr: T[], value: T) {
+	let indexes = [];
+	for (let i = 0; i < arr.length; i++) if (arr[i] === value) indexes.push(i);
+	return indexes;
 }
-console.log(indices); // [ 0, 3 ]
+let arr = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
+console.log(findAllIndex(arr, 1)); // [ 0, 5 ]
+```
+
+```typescript
+function findAllIndexAllAtOnce<T>(arr: T[], values: T[]) {
+	let indexes = [];
+	for (let i = 0; i < arr.length; i++) if (values.includes(arr[i])) indexes.push(i);
+	return indexes;
+}
+let arr = [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
+console.log(findAllIndexAllAtOnce(arr, [1, 2])); // [ 0, 1, 5, 6 ]
 ```
 
 ### `find` , `findIndex`
@@ -196,6 +207,22 @@ let languages = ["C", "C++", "Java", "JavaScript"];
 languages.splice(1, 1, "Python");
 console.log(languages);
 // ["C", "Python", "Java", "JavaScript"]
+```
+
+#### Custom: swap elements
+
+```typescript
+function swapArrayElement<T>(arr_modify_in_place: T[], fromIndex: number, toIndex: number) {
+	var element = arr_modify_in_place[fromIndex];
+	// delete the element from the array
+	arr_modify_in_place.splice(fromIndex, 1);
+	// insert the element at the new position
+	arr_modify_in_place.splice(toIndex, 0, element);
+}
+
+let swapInPlace = ['a', 'b','c'];
+console.log(swapArrayElement(swapInPlace, 0, 1));
+console.log(swapInPlace); //[ 'b', 'a', 'c' ]
 ```
 
 
