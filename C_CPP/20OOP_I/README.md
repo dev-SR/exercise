@@ -1,91 +1,332 @@
 # OOP in C++
 
 - [OOP in C++](#oop-in-c)
-	- [Class intro](#class-intro)
-		- [Access Modifiers](#access-modifiers)
-		- [Getters and Setters](#getters-and-setters)
-	- [Default Methods](#default-methods)
-		- [Constructor](#constructor)
-		- [🌟Copy Constructor](#copy-constructor)
-			- [Default Copy Constructor](#default-copy-constructor)
-			- [🚀When to create user defined Copy Constructor?](#when-to-create-user-defined-copy-constructor)
-		- [🚀Copy Assignment Operator =](#copy-assignment-operator-)
-		- [🌟Destructor - Deleting DMA](#destructor---deleting-dma)
+  - [OOP intro](#oop-intro)
+    - [Defining a Class](#defining-a-class)
+    - [Creating Objects](#creating-objects)
+    - [Access Modifiers](#access-modifiers)
+    - [Compiling and linking multiple cpp files](#compiling-and-linking-multiple-cpp-files)
+      - [Using `makefile`:](#using-makefile)
+    - [Getters and Setters](#getters-and-setters)
+  - [Default Methods](#default-methods)
+    - [Constructor](#constructor)
+    - [🌟Copy Constructor](#copy-constructor)
+      - [Default Copy Constructor](#default-copy-constructor)
+      - [🚀When to create user defined Copy Constructor?](#when-to-create-user-defined-copy-constructor)
+    - [🚀Copy Assignment Operator =](#copy-assignment-operator-)
+    - [🌟Destructor - Deleting DMA](#destructor---deleting-dma)
 
-## Class intro
+## OOP intro
+
+### Defining a Class
+
+Definition in: `Rectangle.h`
 
 ```cpp
-class Product {
-    int id;
-    char name[100];
-    int price;
+#ifndef RECTANGLE_HEADER_H
+#define RECTANGLE_HEADER_H
+
+class Rectangle {
+    int width;
+    int height;
+    void draw();
+    int getArea();
 };
 
+#endif
+```
+
+implementation of methods in `Rectangle.cpp`
+
+```cpp
+#include "Rectangle.h"
+#include <iostream>
+
+using namespace std;
+
+void Rectangle::draw() {
+    cout << "Drawing a rectangle" << endl;
+    cout << "Dimensions:" << width << ", " << height << endl;
+}
+
+int Rectangle::getArea() {
+    return width * height;
+}
+```
+
+### Creating Objects
+
+`main.cpp`
+
+```cpp
+#include <iostream>
+using namespace std;
+#include "Rectangle.h"
+
 int main() {
-    Product camera;
-    cout << sizeof(camera) << endl;
-    cout << camera.price << endl; // ERROR: `selling_price` declared private
+    // creating and initializing object
+    Rectangle rec;
+    rec.width = 10;
+    rec.height = 20;
+
+    cout << rec.getArea();
+
     return 0;
 }
 ```
+
+But above code will not work because in Cpp properties and methods are private by default. So we need to make them public.
+
+```bash
+main.cpp:7:9: error: 'int Rectangle::width' is private within this context
+    7 |     rec.width = 10;
+      |         ^~~~~
+main.cpp:8:9: error: 'int Rectangle::height' is private within this context
+    8 |     rec.height = 20;
+      |         ^~~~~~
+main.cpp:10:24: error: 'int Rectangle::getArea()' is private within this context
+   10 |     cout << rec.getArea();
+      |             ~~~~~~~~~~~^~
+```
+
 
 ### Access Modifiers
 
 A class member can be defined as `public`, `private` or `protected`. By default members would be assumed as `private`.
 
+using `public` access modifier in: `Rectangle.h`
+
 ```cpp
-class Product {
+#ifndef RECTANGLE_HEADER_H
+#define RECTANGLE_HEADER_H
+
+class Rectangle {
 public:
-    int id;
-    char name[100];
-    int price;
+    int width;
+    int height;
+    void draw();
+    int getArea();
 };
 
+#endif
+```
+
+Now we can access the properties and methods of the class.
+
+
+### Compiling and linking multiple cpp files
+
+
+`main.cpp`
+
+```cpp
+#include <iostream>
+using namespace std;
+#include "Rectangle.h"
+
 int main() {
-    Product camera;
-    cout << sizeof(camera) << endl; // 108
-    cout << camera.price << endl; // garbage value
+    // creating and initializing object
+    Rectangle rec;
+    rec.width = 10;
+    rec.height = 20;
+
+    cout << rec.getArea();
+
     return 0;
 }
 ```
+
+Compiling both cpp files and the run the executable.
+
+```bash
+g++ -std=c++20 Rectangle.cpp  main.cpp -o main ; .\main
+```
+
+>> output: 200
+
+We can see that we have to compile these files seperately.
+
+```bash
+g++ -c main.cpp
+g++ -c Rectangle.cpp
+```
+
+Here
+
+`g++ -c main.cpp`: generates `main.o`
+`g++ -c Rectangle.cpp`: generates a `Rectangle.o`
+
+Next, we link the object files together to generate the executable main.
+
+```bash
+g++ -o main main.o Rectangle.o
+.\main
+```
+
+#### Using `makefile`:
+
+- [https://linuxhint.com/run-makefile-windows/](https://linuxhint.com/run-makefile-windows/)
+
+
+So a generic makefile is as shown below:
+
+```bash
+# comment
+
+
+target:  dependency1 dependency2 ... dependencyn
+      <tab> command
+```
+
+in our case:
+
+```bash
+main: main.o Rectangle.o # `main` depends on `main.o` and `Rectangle.o`
+# command to build `main` from `main.o` and `Rectangle.o`
+	g++ -o main main.o Rectangle.o
+
+main.o: main.cpp Rectangle.h # `main.o` depends on `main.cpp` and `Rectangle.h`
+# command to build `main.o` from `main.cpp`
+	g++ -c main.cpp
+
+Rectangle.o: Rectangle.cpp Rectangle.h # `Rectangle.o` depends on `Rectangle.cpp` and `Rectangle.h`
+# command to build `Rectangle.o` from `Rectangle.cpp`
+	g++ -c Rectangle.cpp
+
+```
+
+Now we can run `make` to build the executable.
+
+```bash
+make
+```
+
+Running the executable:
+
+```bash
+./main
+```
+
+More robust makefile:
+
+```bash
+DEPS=Rectangle.h
+OBJ=Rectangle.o main.o
+CC=g++ -Wall
+all: clean main run
+
+%.o: %.cpp $(DEPS)
+	$(CC) -c -o $@ $<
+
+main: $(OBJ)
+	$(CC) -o $@ $(OBJ)
+
+clean:
+	del -f *.o *.exe
+
+run:main
+	./main
+```
+
 
 ### Getters and Setters
 
 ```cpp
-class Product {
+// `Rectangle.h`
+#ifndef RECTANGLE_HEADER_H
+#define RECTANGLE_HEADER_H
+class Rectangle {
 private:
-    int id;
-    char name[100];
-    int mrp; // maximum retail price
-    int selling_price;
+    int width;
+    int height;
 
 public:
-    void setMrp(int mrp) {
-        if (mrp > 0)
-            this->mrp = mrp;
-    }
-    void setSellingPrice(int price) {
-        if (price > mrp)
-            this->selling_price = mrp;
-        else
-            this->selling_price = price;
-    }
-    int getMrp() {
-        return mrp;
-    }
-    int getSellingPrice() {
-        return selling_price;
-    }
+    void draw();
+    int getArea();
+};
+#endif
+```
+
+We we set the properties to private, we can't access them from the main function. So we need to create a getter and setter for each property.
+
+```cpp
+// `Rectangle.h`
+#ifndef RECTANGLE_HEADER_H
+#define RECTANGLE_HEADER_H
+
+class Rectangle {
+private:
+    int width;
+    int height;
+
+public:
+    void draw();
+    int getArea();
+    //  getters and setters
+    int getWidth();
+    void setWidth(int width);
+    int getHeight();
+    void setHeight(int height);
 };
 
+#endif
+```
+
+```cpp
+// `Rectangle.cpp`
+#include "Rectangle.h"
+#include <iostream>
+
+using namespace std;
+
+int Rectangle::getWidth() {
+    return width;
+}
+
+void Rectangle::setWidth(int width) {
+    if (width < 0) {
+        throw invalid_argument("Width cannot be negative");
+    }
+
+    // (*this).width = width;
+    //  or
+    this->width = width;
+    //  or
+    // Rectangle::width = width;
+}
+
+int Rectangle::getHeight() {
+    return height;
+}
+
+void Rectangle::setHeight(int height) {
+    if (height < 0) {
+        throw invalid_argument("Height cannot be negative");
+    }
+    this->height = height;
+}
+
+// ...
+```
+
+`main.cpp`
+
+```cpp
+#include "Rectangle.h"
+#include <iostream>
+using namespace std;
+
 int main() {
-    Product camera;
-    camera.setMrp(1000);
-    camera.setSellingPrice(1200);
-    cout << camera.getSellingPrice() << endl; //1000
+    Rectangle rec;
+    rec.setWidth(10);
+    rec.setHeight(5);
+    cout << rec.getArea() << endl;// 50
+    rec.setHeight(-1); //  throws exception
+
     return 0;
 }
 ```
+
 
 ## Default Methods
 
