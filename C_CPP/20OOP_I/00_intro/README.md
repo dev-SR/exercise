@@ -16,8 +16,6 @@
   - [🌟Destructor - Delete Dynamically Allocated Memory](#destructor---delete-dynamically-allocated-memory)
   - [Pointer to Objects](#pointer-to-objects)
   - [Array of Objects](#array-of-objects)
-  - [Operator Overloading](#operator-overloading)
-    - [`=` Copy Assignment Operator](#-copy-assignment-operator)
 
 ## Defining a Class
 
@@ -722,54 +720,5 @@ int main() {
     for(auto &rec : recArr2) {
         cout << "Area: " << rec.getArea() << endl;
     }
-```
-
-## Operator Overloading
-
-### `=` Copy Assignment Operator
-
-Assignment operator is called when an **already initialized object is assigned a new value from another existing object**.
-
-```cpp
-class Product {
-private:
-    int id;
-    char *name;
-    int mrp; // maximum retail price
-    int selling_price;
-public:
-
-    Product(int id, char *name, int mrp, int selling_price) {
-        this->id = id;
-        this->mrp = mrp;
-        this->selling_price = selling_price;
-        this->name = new char[strlen(name) + 1];
-        strcpy(this->name, name);
-    }
-    void operator=(const Product &X) {
-        id = X.id;
-        mrp = X.mrp;
-        selling_price = X.selling_price;
-        // deep copy
-        name = new char[strlen(X.name) + 1];
-        strcpy(name, X.name);
-    }
-    void setName(char *name) {
-        strcpy(this->name, name);
-    }
-//..
-};
-
-int main() {
-    Product iPhone(1, "iPhone", 100, 200);
-    Product android;
-    android = iPhone;
-    iPhone.showDetails();
-    android.showDetails();
-    android.setName("Android");
-    iPhone.showDetails();
-    android.showDetails();
-    return 0;
-}
 ```
 
