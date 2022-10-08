@@ -1,4 +1,5 @@
-#include "Rectangle.h"
+#include "../include/Rectangle.h"
+#include "../include/TextBox.h"
 #include <iostream>
 using namespace std;
 
@@ -8,9 +9,8 @@ int main() {
     rec.setHeight(5);
     cout << rec.getArea() << endl;
     // rec.setHeight(-1); //  throws exception
-
-    return 0;
-    cout << "Hello World" << endl;
-
+    TextBox text;
+    text.setValue("Hello");
+    cout << text.getValue() << endl;
     return 0;
 }

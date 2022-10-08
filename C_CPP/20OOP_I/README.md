@@ -6,7 +6,7 @@
     - [Creating Objects](#creating-objects)
     - [Access Modifiers](#access-modifiers)
     - [Compiling and linking multiple cpp files](#compiling-and-linking-multiple-cpp-files)
-      - [Using `makefile`:](#using-makefile)
+      - [Using `makefile`](#using-makefile)
     - [Getters and Setters](#getters-and-setters)
   - [Default Methods](#default-methods)
     - [Constructor](#constructor)
@@ -153,8 +153,8 @@ g++ -c Rectangle.cpp
 
 Here
 
-`g++ -c main.cpp`: generates `main.o`
-`g++ -c Rectangle.cpp`: generates a `Rectangle.o`
+- `g++ -c main.cpp`: generates `main.o`
+- `g++ -c Rectangle.cpp`: generates a `Rectangle.o`
 
 Next, we link the object files together to generate the executable main.
 
@@ -163,71 +163,45 @@ g++ -o main main.o Rectangle.o
 .\main
 ```
 
-#### Using `makefile`:
+#### Using `makefile`
 
-- [https://linuxhint.com/run-makefile-windows/](https://linuxhint.com/run-makefile-windows/)
-
-
-So a generic makefile is as shown below:
+Organize project directory like this :
 
 ```bash
-# comment
-
-
-target:  dependency1 dependency2 ... dependencyn
-      <tab> command
+root
+├── include/
+│   └── all .h files here
+│
+├── src/
+│   └── all .c files here
+└── Makefile
 ```
 
-in our case:
+including header files:
 
-```bash
-main: main.o Rectangle.o # `main` depends on `main.o` and `Rectangle.o`
-# command to build `main` from `main.o` and `Rectangle.o`
-	g++ -o main main.o Rectangle.o
+`src/main.cpp`:
 
-main.o: main.cpp Rectangle.h # `main.o` depends on `main.cpp` and `Rectangle.h`
-# command to build `main.o` from `main.cpp`
-	g++ -c main.cpp
+```cpp
+#include "../include/Rectangle.h"
+#include <iostream>
+using namespace std;
 
-Rectangle.o: Rectangle.cpp Rectangle.h # `Rectangle.o` depends on `Rectangle.cpp` and `Rectangle.h`
-# command to build `Rectangle.o` from `Rectangle.cpp`
-	g++ -c Rectangle.cpp
-
+int main() {
+    // ...
+}
 ```
 
-Now we can run `make` to build the executable.
+`src/Rectangle.cpp`:
 
-```bash
-make
+```cpp
+#include "../include/Rectangle.h"
+#include <iostream>
+using namespace std;
+
+//...
 ```
 
-Running the executable:
-
-```bash
-./main
-```
-
-More robust makefile:
-
-```bash
-DEPS=Rectangle.h
-OBJ=Rectangle.o main.o
-CC=g++ -Wall
-all: clean main run
-
-%.o: %.cpp $(DEPS)
-	$(CC) -c -o $@ $<
-
-main: $(OBJ)
-	$(CC) -o $@ $(OBJ)
-
-clean:
-	del -f *.o *.exe
-
-run:main
-	./main
-```
-
+See and use makefile defined in `C_CPP/README.md`
 
 ### Getters and Setters
 

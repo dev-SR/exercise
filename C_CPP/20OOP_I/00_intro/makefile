@@ -1,49 +1,47 @@
-DEPS=Rectangle.h
-OBJ=Rectangle.o main.o
-CC=g++ -Wall
-all: clean main run
+CC = g++
+CFLAGS   = -Wall -std=c++20
 
-%.o: %.cpp $(DEPS)
-	$(CC) -c -o $@ $<
+SRCDIR   = src
+HEADDIR  = include
+OBJDIR   = build
+BINDIR   = bin
+# where the executable will be stored
+EXECUTABLE := $(BINDIR)/main
 
-main: $(OBJ)
-	$(CC) -o $@ $(OBJ)
+# list of all source files
+SOURCES  := $(wildcard $(SRCDIR)/*.cpp)
+# list of all header files
+INCLUDES := $(wildcard $(HEADDIR)/*.h)
+# from the list of all source files, create a list of all object files
+OBJECTS  := $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
+# all: clean $(EXECUTABLE)
+all: $(EXECUTABLE)
+
+# Link: Generate executable file from object file
+$(EXECUTABLE): $(OBJECTS)
+	@echo LINKING..... $(CC) -o $@ $(OBJECTS)
+	@$(CC) -o $@ $(OBJECTS)
+	@echo RUNNING: $(EXECUTABLE)
+	@$(EXECUTABLE)
+
+# Compile: Generate object files from source files
+$(OBJDIR)/%.o : $(SRCDIR)/%.cpp | makedirs
+	@echo COMPILING... $(CC) $(CFLAGS) -c "$<" -o "$@"
+	@$(CC) $(CFLAGS) -c $< -o $@
+# @echo Compiled "$<" successfully!
+
+# `|` is order-only-prerequisites
+# https://www.gnu.org/software/make/manual/html_node/Prerequisite-Types.html
+makedirs:
+# check if the file exists; if not, create it
+# mkdir -p $(OBJDIR) in linux
+	@if not exist "$(OBJDIR)" mkdir $(OBJDIR)
+	@if not exist "$(BINDIR)" mkdir $(BINDIR)
+
+#Delete dependence files, object files, and the EXECUTABLE file
 clean:
-	del -f *.o *.exe
-
-run:main
-	./main
-
-
-
-
-
-# DEPS=Rectangle.h
-# OBJ=Rectangle.o main.o
-# CC=g++
-# CFLAGS=-c -Wall
-
-# %.o: %.cpp $(DEPS)
-# 	$(CC) -c -o $@ $<
-
-# main: $(OBJ)
-# 	$(CC) -o $@ $^
-# clean:
-# 	rm -f *.o main.exe
-
-
-
-# main: main.o Rectangle.o # `main` depends on `main.o` and `Rectangle.o`
-# # command to build `main` from `main.o` and `Rectangle.o`
-# 	g++ -o main main.o Rectangle.o
-
-# main.o: main.cpp Rectangle.h # `main.o` depends on `main.cpp` and `Rectangle.h`
-# # command to build `main.o` from `main.cpp`
-# 	g++ -c main.cpp
-
-# Rectangle.o: Rectangle.cpp Rectangle.h # `Rectangle.o` depends on `Rectangle.cpp` and `Rectangle.h`
-# # command to build `Rectangle.o` from `Rectangle.cpp`
-# 	g++ -c Rectangle.cpp
-
-
+	@echo CLEANING UP
+# check if the directories exist; if so, delete them
+	@if exist "$(OBJDIR)" rmdir /s /q $(OBJDIR)
+	@if exist "$(BINDIR)" rmdir /s /q $(BINDIR)
