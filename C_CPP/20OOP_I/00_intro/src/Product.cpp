@@ -4,15 +4,42 @@
 #include <iostream>
 using namespace std;
 
+// Product::Product(int id, char *name, int mrp, int selling_price) {
+//     cout << "Constructor called" << endl;
+//     this->id = id;
+//     setName(name);
+//     setMrp(mrp);
+//     setSellingPrice(selling_price);
+// }
 Product::Product(int id, char *name, int mrp, int selling_price) {
-    cout << "Constructor called" << endl;
     this->id = id;
-    setName(name);
-    setMrp(mrp);
-    setSellingPrice(selling_price);
+    this->mrp = mrp;
+    this->selling_price = selling_price;
+    this->name = new char[strlen(name) + 1];
+    strcpy(this->name, name);
 }
+Product::Product(const Product &source) {
+    id = source.id;
+    mrp = source.mrp;
+    selling_price = source.selling_price;
+    name = source.name; // shallow copy
+
+    // deep copy
+    name = new char[strlen(source.name) + 1];
+    strcpy(name, source.name);
+}
+
+Product::~Product() {
+    cout << "Destructor called" << endl;
+    delete[] name;
+}
+
 char *Product::getName() {
     return name;
+}
+
+void Product::showDetails() {
+    cout << "Product{id = " << id << ", name = " << name << ", mrp = " << mrp << ", selling_price = " << selling_price << "}" << endl;
 }
 
 void Product::setName(char *name) {

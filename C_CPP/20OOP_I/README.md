@@ -1,23 +1,25 @@
 # OOP in C++
 
 - [OOP in C++](#oop-in-c)
-  - [OOP intro](#oop-intro)
-    - [Defining a Class](#defining-a-class)
-    - [Creating Objects](#creating-objects)
-    - [Access Modifiers](#access-modifiers)
-    - [Compiling and linking multiple cpp files](#compiling-and-linking-multiple-cpp-files)
-      - [Using `makefile`](#using-makefile)
-    - [Getters and Setters](#getters-and-setters)
-    - [Constructor](#constructor)
+  - [Defining a Class](#defining-a-class)
+  - [Creating Objects](#creating-objects)
+  - [Access Modifiers](#access-modifiers)
+  - [Compiling and linking multiple source files](#compiling-and-linking-multiple-source-files)
+    - [Using `makefile`](#using-makefile)
+  - [Getters and Setters](#getters-and-setters)
+  - [Constructor](#constructor)
+    - [Member Initialization List](#member-initialization-list)
+    - [Default Constructor](#default-constructor)
     - [🌟Copy Constructor](#copy-constructor)
       - [Default Copy Constructor](#default-copy-constructor)
       - [🚀When to create user defined Copy Constructor?](#when-to-create-user-defined-copy-constructor)
-    - [🚀Copy Assignment Operator =](#copy-assignment-operator-)
-    - [🌟Destructor - Deleting DMA](#destructor---deleting-dma)
+  - [🌟Destructor - Delete Dynamically Allocated Memory](#destructor---delete-dynamically-allocated-memory)
+  - [Pointer to Objects](#pointer-to-objects)
+  - [Array of Objects](#array-of-objects)
+  - [Operator Overloading](#operator-overloading)
+    - [`=` Copy Assignment Operator](#-copy-assignment-operator)
 
-## OOP intro
-
-### Defining a Class
+## Defining a Class
 
 Definition in: `Rectangle.h`
 
@@ -53,7 +55,7 @@ int Rectangle::getArea() {
 }
 ```
 
-### Creating Objects
+## Creating Objects
 
 `main.cpp`
 
@@ -88,8 +90,7 @@ main.cpp:10:24: error: 'int Rectangle::getArea()' is private within this context
       |             ~~~~~~~~~~~^~
 ```
 
-
-### Access Modifiers
+## Access Modifiers
 
 A class member can be defined as `public`, `private` or `protected`. By default members would be assumed as `private`.
 
@@ -112,8 +113,7 @@ public:
 
 Now we can access the properties and methods of the class.
 
-
-### Compiling and linking multiple cpp files
+## Compiling and linking multiple source files
 
 
 `main.cpp`
@@ -162,7 +162,7 @@ g++ -o main main.o Rectangle.o
 .\main
 ```
 
-#### Using `makefile`
+### Using `makefile`
 
 Organize project directory like this :
 
@@ -202,7 +202,7 @@ using namespace std;
 
 See and use makefile defined in `C_CPP/README.md`
 
-### Getters and Setters
+## Getters and Setters
 
 ```cpp
 // `Rectangle.h`
@@ -300,7 +300,7 @@ int main() {
 }
 ```
 
-### Constructor
+## Constructor
 
 - Constructor Name = Class Name
 - Called Automatically when an object is created.
@@ -409,6 +409,71 @@ int main() {
 }
 ```
 
+### Member Initialization List
+
+```cpp
+// Rectangle::Rectangle(int width, int height) {
+//     this->width = width;
+//     this->height = height;
+// }
+// Member Initializer List
+Rectangle::Rectangle(int width, int height) : width(width), height(height) {}
+```
+
+### Default Constructor
+
+If we have parameterized constructor, we need to define a default constructor. Because we can't create object like
+`Rectangle rect;` without a default constructor. This will throw an error.
+
+```bash
+src/main.cpp:8:15: error: no matching function for call to 'Rectangle::Rectangle()'
+    8 |     Rectangle rect;
+      |               ^~~~
+```
+
+```cpp
+class Rectangle {
+private:
+    int width;
+    int height;
+public:
+    Rectangle();
+    Rectangle(int width, int height);
+};
+
+Rectangle::Rectangle() {}
+Rectangle::Rectangle(int width, int height) : width(width), height(height) {}
+
+int main() {
+    Rectangle rect; // Ok
+    rect.setWidth(10);
+    Rectangle rec{10, 29};
+}
+```
+
+we can also use `= default` to define a default constructor.
+
+```cpp
+class Rectangle {
+private:
+    int width;
+    int height;
+public:
+    Rectangle() = default;
+    Rectangle(int width, int height);
+};
+
+// Rectangle::Rectangle() {} we can remove this
+Rectangle::Rectangle(int width, int height) : width(width), height(height) {}
+
+int main() {
+    Rectangle rect; // Ok
+    rect.setWidth(10);
+    Rectangle rec{10, 29};
+}
+```
+
+
 ### 🌟Copy Constructor
 
 #### Default Copy Constructor
@@ -424,15 +489,14 @@ int main() {
 
 If default copy constructor is working fine, then why do we need to write our own copy constructor?
 
+#### 🚀When to create user defined Copy Constructor?
+
 To understand why, we need to understand the following:
 
 - `shallow copy`
 - `deep copy`
 
-#### 🚀When to create user defined Copy Constructor?
-
-
-The compiler created copy constructor works fine for most cases. We need to define our own copy constructor only if **an object has pointers to dynamically allocated objects**, ie a **deep copy** of object is needed.
+The compiler created copy constructor works fine for most cases. We need to define our own copy constructor only if **an object has pointers to dynamically allocated objects**, in that case a **deep copy** of object is needed.
 
 The following example create dynamic memory for `name` -  a separate memory space is allocated for `name` and the pointer to that memory space is stored in `camera` object. When we copy `camera` to `webcam` object, the compiler creates a **shallow copy** of `camera` object and the pointer to the memory space of `name` is copied to `webcam` object as well. That means `webcam` object has a pointer to the same memory space as `camera` object.
 
@@ -456,16 +520,16 @@ public:
         this->name = new char[strlen(name) + 1];
         strcpy(this->name, name);
     }
-    void setName(char *name) {
-        strcpy(this->name, name);
-    }
 
     //...
 };
 
 int main() {
+
     Product iPhone(1, "iPhone", 100, 200);
     Product android(iPhone);
+    iPhone.showDetails();
+    android.showDetails();
     android.setName("Android");
     iPhone.showDetails();
     android.showDetails();
@@ -481,15 +545,17 @@ Product{id = 1, name = Android, mrp = 100, selling_price = 200}
 Product{id = 1, name = Android, mrp = 100, selling_price = 200}
 ```
 
-To resolve this issue, we need to write our own copy constructor to create a **deep copy**.
+We can see from the output that we set the name of object `android` to `"Android"`, but the name of `iPhone` is also changed to `"Android"`. This is because both `iPhone` and `android` have a pointer to the same memory space.
 
 <div align="center">
 <img src="img/deep.jpg" alt="deep.jpg" width="700px">
 </div>
 
+To resolve this issue, we need to write our own copy constructor to create a **deep copy** by defining how should constructor copy the data using copy constructor:
+
 Syntax for user defined copy constructor:
 
-`ClassName(ClassName &objectName) { }` - here copy constructor must pass it's first parameter as reference.
+`ClassName(ClassName &sourceObject) { }` - here copy constructor must pass it's first parameter as reference.
 
 ```cpp
 class Product {
@@ -500,25 +566,24 @@ private:
     int selling_price;
 
 public:
-    Product(int id, char *name, int mrp, int selling_price) {
-        this->id = id;
-        this->mrp = mrp;
-        this->selling_price = selling_price;
-        this->name = new char[strlen(name) + 1];
-        strcpy(this->name, name);
-    }
-    Product(const Product &p) {
-        id = p.id;
-        mrp = p.mrp;
-        selling_price = p.selling_price;
-        // shallow copy
-        name = p.name;
-    }
-    void setName(char *name) {
-        strcpy(this->name, name);
-    }
- //....
-};
+    // Parameterized Constructor
+    Product(int id, char *name, int mrp, int selling_price);
+    // Copy Constructor
+    Product(const Product &source);
+}
+Product::Product(int id, char *name, int mrp, int selling_price) {
+    this->id = id;
+    this->mrp = mrp;
+    this->selling_price = selling_price;
+    this->name = new char[strlen(name) + 1];
+    strcpy(this->name, name);
+}
+Product::Product(const Product &source) {
+    id = source.id;
+    mrp = source.mrp;
+    selling_price = source.selling_price;
+    name = source.name; // shallow copy
+}
 
 int main() {
     Product iPhone(1, "iPhone", 100, 200);
@@ -544,37 +609,17 @@ Product{id = 1, name = Android, mrp = 100, selling_price = 200}
 Inside copy constructor, we need to allocate separate memory for `name` for the cloned object.
 
 ```cpp
-class Product {
-private:
-    int id;
-    char *name;
-    int mrp;
-    int selling_price;
-public:
+///...
+Product::Product(const Product &source) {
+    id = source.id;
+    mrp = source.mrp;
+    selling_price = source.selling_price;
+    name = source.name; // shallow copy
 
-    Product(int id, char *name, int mrp, int selling_price) {
-        this->id = id;
-        this->mrp = mrp;
-        this->selling_price = selling_price;
-        this->name = new char[strlen(name) + 1];
-        strcpy(this->name, name);
-    }
-    Product(const Product &X) {
-        id = X.id;
-        mrp = X.mrp;
-        selling_price = X.selling_price;
-        // shallow copy
-        //  name = p.name;
-        // deep copy
-        name = new char[strlen(X.name) + 1];
-        strcpy(name, X.name);
-
-    }
-    void setName(char *name) {
-        strcpy(this->name, name);
-    }
-//...
-};
+    // deep copy
+    name = new char[strlen(source.name) + 1];
+    strcpy(name, source.name);
+}
 
 int main() {
     Product iPhone(1, "iPhone", 100, 200);
@@ -594,7 +639,94 @@ Product{id = 1, name = iPhone, mrp = 100, selling_price = 200}
 Product{id = 1, name = Android, mrp = 100, selling_price = 200}
 ```
 
-### 🚀Copy Assignment Operator =
+## 🌟Destructor - Delete Dynamically Allocated Memory
+
+- A destructor deallocates memory occupied by the object when it’s deleted.
+- Compiler provides a default destructor.
+- User defined destructor is needed when **class contains pointers to dynamically allocated.**
+
+```cpp
+class Product {
+private:
+    int id;
+    char *name;
+    int price;
+
+public:
+    Product(int id, char *name, int price) {
+        this->id = id;
+        this->price = price;
+        // dynamically allocate memory for name
+        this->name = new char[strlen(name) + 1];
+        strcpy(this->name, name);
+    }
+    // Destructor to delete dynamically allocated memory
+    ~Product() {
+        cout << "Deleting " << name << endl;
+        if (name != NULL)
+            delete[] name;
+        name = NULL;
+    }
+};
+```
+
+## Pointer to Objects
+
+```cpp
+int main() {
+    Rectangle *rectPtr = new Rectangle(10, 20);
+    cout << rectPtr->getArea() << endl;
+    delete rectPtr;
+    rectPtr = nullptr;
+}
+```
+
+Using smart pointer:
+
+```cpp
+#include <iostream>
+#include <memory>
+using namespace std;
+
+int main() {
+    // smart pointer
+    unique_ptr<Rectangle> rectangle(new Rectangle(10, 20));
+    cout << "Area: " << rectangle->getArea() << endl;
+    // or
+    unique_ptr<Rectangle> rectangle2 = make_unique<Rectangle>(10, 20);
+    cout << "Area: " << rectangle2->getArea() << endl;
+    // or
+    auto rectangle3 = make_unique<Rectangle>(10, 20);
+    cout << "Area: " << rectangle3->getArea() << endl;
+}
+```
+
+## Array of Objects
+
+```cpp
+    Rectangle recArr[] = {
+        Rectangle(10, 20),
+        Rectangle(20, 30),
+        Rectangle(30, 40),
+    };
+    // or using brace initialization
+    Rectangle recArr2[] = {
+        {10, 20},
+        {20, 30},
+        {30, 40},
+    };
+
+    for (auto &rec : recArr) {
+        cout << "Area: " << rec.getArea() << endl;
+    }
+    for(auto &rec : recArr2) {
+        cout << "Area: " << rec.getArea() << endl;
+    }
+```
+
+## Operator Overloading
+
+### `=` Copy Assignment Operator
 
 Assignment operator is called when an **already initialized object is assigned a new value from another existing object**.
 
@@ -641,33 +773,3 @@ int main() {
 }
 ```
 
-### 🌟Destructor - Deleting DMA
-
-- Function that is called Automatically when an object is destroyed ie object goes out of scope or destroyed explicitly by call to delete.
-- Compiler provides a default destructor.
-- User defined destructor is needed when **class contains pointers to dynamically allocated.**
-
-```cpp
-class Product {
-private:
-    int id;
-    char *name;
-    int price;
-
-public:
-    Product(int id, char *name, int price) {
-        this->id = id;
-        this->price = price;
-        // dynamically allocate memory for name
-        this->name = new char[strlen(name) + 1];
-        strcpy(this->name, name);
-    }
-    // Destructor to delete dynamically allocated memory
-    ~Product() {
-        cout << "Deleting " << name << endl;
-        if (name != NULL)
-            delete[] name;
-        name = NULL;
-    }
-};
-```

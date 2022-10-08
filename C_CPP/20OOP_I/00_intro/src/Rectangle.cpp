@@ -4,6 +4,14 @@
 
 using namespace std;
 
+// Rectangle::Rectangle(int width, int height) {
+//     this->width = width;
+//     this->height = height;
+// }
+
+// Member Initializer List
+Rectangle::Rectangle(int width, int height) : width(width), height(height) {}
+
 int Rectangle::getWidth() {
     return width;
 }
