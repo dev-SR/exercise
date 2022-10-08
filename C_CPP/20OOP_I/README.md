@@ -8,7 +8,6 @@
     - [Compiling and linking multiple cpp files](#compiling-and-linking-multiple-cpp-files)
       - [Using `makefile`](#using-makefile)
     - [Getters and Setters](#getters-and-setters)
-  - [Default Methods](#default-methods)
     - [Constructor](#constructor)
     - [🌟Copy Constructor](#copy-constructor)
       - [Default Copy Constructor](#default-copy-constructor)
@@ -301,9 +300,6 @@ int main() {
 }
 ```
 
-
-## Default Methods
-
 ### Constructor
 
 - Constructor Name = Class Name
@@ -311,32 +307,104 @@ int main() {
 - Memory Allocation happens when constructor is called.
 - Constructor is called only once for each object.
 
+`include/Rectangle.h`
+
 ```cpp
+#ifndef MACRO_PRODUCT_H
+#define MACRO_PRODUCT_H
+
 class Product {
+public:
+    // Parameterized Constructor
+    Product(int id, char *name, int mrp, int selling_price);
+    //  Getters and Setters
+    void setMrp(int mrp);
+    void setSellingPrice(int price);
+    int getMrp();
+    int getSellingPrice();
+    char *getName();
+
 private:
     int id;
     char name[100];
     int mrp; // maximum retail price
     int selling_price;
-
-public:
-    //Default Constructor
-    Product() { }
-    //Parameterized Constructor |  Constructor Overloading...
-    Product(int id, char *name, int mrp, int selling_price) {
-        this->id = id;
-        this->mrp = mrp;
-        this->selling_price = selling_price;
-        strcpy(this->name, name); // `this->name = name` not possible because name is a char array.
-    }
-
-    //..
 };
+#endif
+
+```
+
+`src/Product.cpp`
+
+```cpp
+#include "../include/Product.h"
+
+#include <cstring>
+#include <iostream>
+using namespace std;
+
+Product::Product(int id, char *name, int mrp, int selling_price) {
+    cout << "Constructor called" << endl;
+    this->id = id;
+    setName(name);
+    setMrp(mrp);
+    setSellingPrice(selling_price);
+}
+char *Product::getName() {
+    return name;
+}
+
+void Product::setName(char *name) {
+    if (strlen(name) <= 0) {
+        throw invalid_argument("Name cannot be empty");
+    } else if (strlen(name) > 100) {
+        throw invalid_argument("Name cannot be more than 100 characters");
+    } else {
+        strcpy(this->name, name);
+        /*
+        1.`this->name = name` not possible because name is a char array.
+        2. Recommend String class instead of char array:
+                Product(int id, const string &name, int mrp, int selling_price)
+        3. char array is avoidable:
+                >> src/main.cpp:17:18: warning: ISO C++ forbids converting a string constant to 'char*' [-Wwrite-strings]
+
+        */
+    }
+}
+void Product::setMrp(int mrp) {
+    if (mrp > 0)
+        this->mrp = mrp;
+}
+void Product::setSellingPrice(int price) {
+    if (price > mrp)
+        this->selling_price = mrp;
+    else
+        this->selling_price = price;
+}
+int Product::getMrp() {
+    return mrp;
+}
+int Product::getSellingPrice() {
+    return selling_price;
+}
+```
+
+`src/main.cpp`
+
+```cpp
+#include "../include/Product.h"
+#include <iostream>
+using namespace std;
 
 int main() {
-    Product camera(1, "Nikon", 100, 200);
-    // camera.setMrp(1000);
-    // camera.setSellingPrice(1200);
+    Product camera{1, "Nikon", 100, 200};
+    // or, Product camera(1, "Nikon", 100, 200);
+    cout << "Product{ " << camera.getName() << ", " << camera.getMrp() << ", " << camera.getSellingPrice() << " }" << endl;
+    try {
+        Product none{1, "", 100, 200};
+    } catch (const invalid_argument &e) {
+        cout << e.what() << endl;
+    }
     return 0;
 }
 ```
