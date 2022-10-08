@@ -1,15 +1,15 @@
 # C++
 
 - [C++](#c)
-	- [Setup](#setup)
-		- [Install MinGW Compiler](#install-mingw-compiler)
-		- [Precompile headers](#precompile-headers)
-	- [Compile and Run](#compile-and-run)
-		- [cli](#cli)
-		- [Compile and run with `Make` And `Makefile`](#compile-and-run-with-make-and-makefile)
-			- [⚙️Using better file directory structure](#️using-better-file-directory-structure)
-		- [VScode](#vscode)
-			- [🔥 snippets](#-snippets)
+  - [Setup](#setup)
+    - [Install MinGW Compiler](#install-mingw-compiler)
+    - [Precompile headers](#precompile-headers)
+  - [Compile and Run](#compile-and-run)
+    - [cli](#cli)
+    - [Compile and run with `Make` And `Makefile`](#compile-and-run-with-make-and-makefile)
+      - [⚙️Using better file directory structure](#️using-better-file-directory-structure)
+    - [VScode](#vscode)
+      - [🔥 snippets](#-snippets)
 
 ## Setup
 
@@ -303,19 +303,18 @@ using namespace std;
 </tbody>
 </table>
 
-
 ```json
  "define_header": {
   "scope": "c,h,cpp,hpp",
   "prefix": "defc",
   "body": [
-	  "#ifndef MACRO_${1:${TM_FILENAME_BASE/(.*)/${1:/upcase}/}}_H",
-	//   same as filename: ${TM_FILENAME_BASE}
-	  // same as the filename, but in uppercase : ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}
+   "#ifndef MACRO_${1:${TM_FILENAME_BASE/(.*)/${1:/upcase}/}}_H",
+ //   same as filename: ${TM_FILENAME_BASE}
+   // same as the filename, but in uppercase : ${TM_FILENAME_BASE/(.*)/${1:/upcase}/}
    "#define MACRO_${1:${TM_FILENAME_BASE/(.*)/${1:/upcase}/}}_H",
    "class ${2:${TM_FILENAME_BASE}} {",
    "public:",
-   "    ${2:${TM_FILENAME_BASE}}();",
+    "    ${2:${TM_FILENAME_BASE}}() = default;",
    "    ~${2:${TM_FILENAME_BASE}}();",
    "private:",
    "    $3",
