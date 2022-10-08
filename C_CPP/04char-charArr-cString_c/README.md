@@ -406,7 +406,7 @@ char names[10];
 cout << names << endl; //garbage
 ```
 
-### Initializing and Accessing a C-Style String
+### 🔴 Initializing and Accessing a C-Style String
 
 [☝️ Top ☝️](#up)
 
@@ -430,7 +430,7 @@ cout << names << endl; //garbage
     printf("%s\n", name2); // Xhon
 ```
 
-### 🌟🌟🌟`char s[]`(Mutable) vs `char *s`(Immutable)
+### 🔥 `char s[]`(Mutable) vs `char *s`(Immutable)
 
 [☝️ Top ☝️](#up)
 
@@ -594,7 +594,7 @@ print(s) # Hello World
 </details>
 
 
-### `std::string` vs `char[]`
+### 🔥`std::string` vs `char[]`
 
 [☝️ Top ☝️](#up)
 
@@ -608,6 +608,10 @@ string str_hello = hello;           //char[] can implicitly converted to string
 auto hello1 = str_hello.c_string();
 char *hello2 = str_hello.data();
 ```
+
+### 🔴 Working with Functions
+
+-  see `C_CPP/02array_c_cpp/README.md` for more details
 
 ### 👉Input - Cpp
 
@@ -866,7 +870,7 @@ hello world
 hello world
 ```
 
-### 👉clearing input buffer🚀
+### 👉clearing input buffer
 
 [☝️ Top ☝️](#up)
 

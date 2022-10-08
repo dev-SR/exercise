@@ -5,12 +5,14 @@
   - [Working with Array](#working-with-array)
     - [Ex: Frequency of elements in an array](#ex-frequency-of-elements-in-an-array)
   - [Array and Pointer](#array-and-pointer)
-  - [Passing Array To a Function | (default)Pass By Reference/Address](#passing-array-to-a-function--defaultpass-by-referenceaddress)
-    - [C/CPP: Arrays are Pass By Reference/Address | ✂️modifies✂️ Original array](#ccpp-arrays-are-pass-by-referenceaddress--️modifies️-original-array)
-      - [Other languages also pass arrays by reference](#other-languages-also-pass-arrays-by-reference)
-      - [🧠🧠 Only Arrays are passed by References; 🧠🧠But Other datatype are by Value🧠🧠](#-only-arrays-are-passed-by-references-but-other-datatype-are-by-value)
+  - [🔥 Passing Array to Function | `void modifyInPlace(int a[], int n){}`](#-passing-array-to-function--void-modifyinplaceint-a-int-n)
+    - [intro](#intro)
+    - [Arrays are Pass By Reference/Address | ✂️modifies✂️ Original array](#arrays-are-pass-by-referenceaddress--️modifies️-original-array)
+    - [Other languages also pass arrays by reference](#other-languages-also-pass-arrays-by-reference)
+    - [🧠🧠 Only Arrays are passed by References; 🧠🧠But Other datatype are by Value🧠🧠](#-only-arrays-are-passed-by-references-but-other-datatype-are-by-value)
         - [Other languages also pass other variables by value](#other-languages-also-pass-other-variables-by-value)
-    - [🌟🌟🌟Returning (Local) Array From the Function in C/C++ | `int* fn(){} ~ int *p = fn()`](#returning-local-array-from-the-function-in-cc--int-fn--int-p--fn)
+  - [🔥 Returning Array From the Function | `int* fn(){} ~ int *p = fn()`](#-returning-array-from-the-function--int-fn--int-p--fn)
+      - [example with cpp class methods](#example-with-cpp-class-methods)
     - [Example](#example)
       - [Partial Array Processing](#partial-array-processing)
       - [sorting](#sorting)
@@ -207,8 +209,9 @@ x[4]: 4, p[4]: 4
 ```
 
 
+## 🔥 Passing Array to Function | `void modifyInPlace(int a[], int n){}`
 
-## Passing Array To a Function | (default)Pass By Reference/Address
+### intro
 
 - [https://www.codingninjas.com/blog/2021/08/31/passing-arrays-to-functions-in-c-c/](https://www.codingninjas.com/blog/2021/08/31/passing-arrays-to-functions-in-c-c/)
 - [https://www.scaler.com/topics/passing-array-to-function-in-c-cpp/](https://www.scaler.com/topics/passing-array-to-function-in-c-cpp/)
@@ -278,11 +281,9 @@ int main() {
 }
 ```
 
+### Arrays are Pass By Reference/Address | ✂️modifies✂️ Original array
 
-
-
-### C/CPP: Arrays are Pass By Reference/Address | ✂️modifies✂️ Original array
-
+-
 - [https://www.educative.io/answers/pass-by-value-vs-pass-by-reference](https://www.educative.io/answers/pass-by-value-vs-pass-by-reference)
 
 ```cpp
@@ -324,8 +325,7 @@ Advantages of Passing Arrays by Reference to Functions:
 - As we pass reference of base address of the array this means compiler doesn’t create a copy of the array to process inside function which is faster and less memory-intensive compared to passing arguments by value.
 - Because arrays are passed by reference to functions this prevents stack memory overflow in the case of recursive functions.
 
-
-#### Other languages also pass arrays by reference
+### Other languages also pass arrays by reference
 
 - Python
 
@@ -372,7 +372,7 @@ class HelloWorld {
 }
 ```
 
-#### 🧠🧠 Only Arrays are passed by References; 🧠🧠But Other datatype are by Value🧠🧠
+### 🧠🧠 Only Arrays are passed by References; 🧠🧠But Other datatype are by Value🧠🧠
 
 **There is usually no need to pass an `array` explicitly by reference because arrays are always passed by reference.**
 
@@ -470,7 +470,7 @@ main()
 ```
 
 
-### 🌟🌟🌟Returning (Local) Array From the Function in C/C++ | `int* fn(){} ~ int *p = fn()`
+## 🔥 Returning Array From the Function | `int* fn(){} ~ int *p = fn()`
 
 We know that a function can not return more than one variable in C/C++. In some problems, we may need to return multiple values from a function, in such cases, an array could be returned from the function. **To return an array from a function we have to return the `pointer` of a data type of the array**.
 
@@ -569,6 +569,36 @@ int main() {
 }
 ```
 
+#### example with cpp class methods
+
+```cpp
+class Product {
+public:
+    // Parameterized Constructor
+    Product(int id, char *name,);
+    //  Getters and Setters
+    void setName(char *name);
+    char *getName();
+
+private:
+    int id;
+    char name[100];
+};
+
+Product::Product(int id, char *name) {
+    this->id = id;
+    setName(char *name)
+}
+
+// Getters and Setters
+void Product::setName(char *name) {
+    strcpy(this->name, name);
+}
+char *Product::getName() {
+    return name;
+}
+
+```
 
 
 ### Example
