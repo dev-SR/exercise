@@ -7,6 +7,7 @@
   - [Modifiers](#modifiers)
   - [Iterators and traversals](#iterators-and-traversals)
   - [Insertion and Deletion](#insertion-and-deletion)
+  - [vector/array of pairs](#vectorarray-of-pairs)
 
 Methods:
 
@@ -285,4 +286,32 @@ int main() {
     v.clear();
     cout << v.size() << endl;  // 0
     cout << v.empty() << endl; // 1
+```
+
+## vector/array of pairs
+
+```cpp
+	pair<int,int> arr[] = {{1,2},{3,4},{5,6}};
+	cout << arr[0].first << " " << arr[0].second << endl; // 1 2
+	for(auto &p:arr)
+		cout<<p.first<<" "<<p.second<<endl;
+```
+
+```cpp
+#include <iostream>
+#include <utility>
+#include <vector>
+using namespace std;
+
+int main() {
+    vector<pair<int, int>> v = {{1, 2}, {3, 4}, {5, 6}};
+    v.push_back(make_pair(7, 8));
+
+    cout << v[0].first << " " << v[0].second << endl; // 1 2
+
+    for (auto &p : v)
+        cout << p.first << " " << p.second << endl;
+
+    return 0;
+}
 ```
