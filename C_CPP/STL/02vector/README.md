@@ -7,6 +7,13 @@
   - [Modifiers](#modifiers)
   - [Iterators and traversals](#iterators-and-traversals)
   - [Insertion and Deletion](#insertion-and-deletion)
+    - [`push_back()` and `pop_back()`](#push_back-and-pop_back)
+    - [`insert()`](#insert)
+      - [Inserting single element at a particular index](#inserting-single-element-at-a-particular-index)
+      - [Inserting n copies of an element](#inserting-n-copies-of-an-element)
+      - [Extending the vector by inserting elements from another vector](#extending-the-vector-by-inserting-elements-from-another-vector)
+    - [`erase()`](#erase)
+    - [`clear()` and `empty()`](#clear-and-empty)
   - [vector/array of pairs](#vectorarray-of-pairs)
 
 Methods:
@@ -205,8 +212,7 @@ int main() {
 </tbody>
 </table>
 
-
-- `push_back()` and `pop_back()`
+### `push_back()` and `pop_back()`
 
 ```cpp
     vector<int> v{1, 2, 3, 4};
@@ -216,49 +222,59 @@ int main() {
     print(v); // {1, 2, 3, 4}
 ```
 
-- `insert()`
+- `push_front()` and `pop_front()` are not available in vectors. For these operations, we can use `deque` or `list`.
+
+
+### `insert()`
+
+#### Inserting single element at a particular index
+
+- Syntax 1:`insert (position, val)`
+  - `🔴position` – It specifies the iterator which points to the position where the insertion is to be done.
+  - `🔴val` – It specifies the value to be inserted.
 
 ```cpp
-int main() {
     vector<int> v{1, 2, 3, 4, 5};
-    /*
- 🔵Syntax 1:vector_name.insert (position, val)
-    🔴position – It specifies the iterator which points to the position where the insertion is to be done.
-    🔴val – It specifies the value to be inserted.
-    */
-    auto pos = v.begin() + 2;
-    v.insert(pos, 10);
+
+    auto index = v.begin() + 2;
+    v.insert(index, 10);
     print(v); // {1, 2, 10, 3, 4, 5}
 
     /*
- 🔵Syntax 2:vector_name.insert(position, size, val)
-    🔴position – It specifies the iterator which points to the position where the insertion is to be done.
-    🔴size – It specifies the number of times a val is to be inserted at the specified position.
-    🔴val – It specifies the value to be inserted.
+```
+
+#### Inserting n copies of an element
+
+
+-🔵Syntax 2:`insert(position, n, val)`
+  -`🔴position` – It specifies the iterator which points to the position where the insertion is to be done.
+  -`🔴n` – It specifies the number of times a val is to be inserted at the specified position.
+  -`🔴val` – It specifies the value to be inserted.
      */
 
+
+```cpp
     int n_times = 3;
     pos = v.begin() + 2;
     v.insert(pos, n_times, 0);
     print(v); // {1, 2, 0, 0, 0, 10, 3, 4, 5}
+```
 
-    /*
- 🔵Syntax 3:vector_name.insert(position, iterator1, iterator2)
-    🔴position – It specifies the position at which insertion is to be done in the vector.
-    🔴iterator1 – It specifies the starting position from which the elements are to be inserted
-    🔴iterator2 – It specifies the ending position till which elements are to be inserted
-     */
+#### Extending the vector by inserting elements from another vector
 
+- like `.extend()` in python
+- 🔵Syntax 3:`insert(position, iterator1, iterator2)`
+  - `🔴position` – It specifies the position at which insertion is to be done in the vector.
+  - `🔴iterator1` – It specifies the starting position from which the elements are to be inserted
+  - `🔴iterator2` – It specifies the ending position till which elements are to be inserted
+
+```cpp
     vector<int> v2{100, 200, 300};
     v.insert(v.begin(), v2.begin(), v2.end());
     print(v); // {100, 200, 300, 1, 2, 0, 0, 0, 10, 3, 4, 5}
-
-    return 0;
-}
 ```
 
-
-- `erase()`
+### `erase()`
 
 ```cpp
 int main() {
@@ -279,7 +295,7 @@ int main() {
 }
 ```
 
-- `clear()` and `empty()`
+### `clear()` and `empty()`
 
 ```cpp
     vector<int> v{1, 2, 3};
