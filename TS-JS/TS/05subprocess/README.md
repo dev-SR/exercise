@@ -1,8 +1,5 @@
 # Sub Process
 
-- [Sub Process](#sub-process)
-	- [`exec`](#exec)
-
 Node.js allows single-threaded, non-blocking performance but running a single thread in a CPU cannot handle increasing workload hence the child_process module can be used to spawn child processes. The child processes communicate with each other using a built-in messaging system.
 
 The following are the four different ways to create a child process in Node.js:
