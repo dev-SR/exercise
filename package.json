@@ -1,0 +1,14 @@
+{
+  "name": "exercise",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/dev-SR/exercise.git",
+  "author": "Soikat Rahman <hello.dev.sr@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.8.5"
+  }
+}
