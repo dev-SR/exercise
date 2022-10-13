@@ -12,11 +12,14 @@
 			- [Promise API](#promise-api)
 		- [Reading files](#reading-files)
 		- [Writing files](#writing-files)
-		- [Copying files](#copying-files)
 		- [File metadata](#file-metadata)
 	- [Working with directories](#working-with-directories)
 		- [create,remove,rename dir](#createremoverename-dir)
 		- [read dir content: `readdir`](#read-dir-content-readdir)
+		- [Copying files with `fs.copyFile` and `fs.cp()`](#copying-files-with-fscopyfile-and-fscp)
+			- [`fs.copyFile()`](#fscopyfile)
+			- [🔥 `fs.cp()`](#-fscp)
+				- [Copy the entire directory, including subdirectories](#copy-the-entire-directory-including-subdirectories)
 
 Node.js has a module called `PATH` to interact with file and directory paths. Node.js has a module called `FS` to interact with file and directory systems i.e., create, modify and delete while listing files.
 
@@ -129,7 +132,6 @@ console.log(path.extname(pathName)); // .txt
 
 The synchronous API exposes a set of functions that **block execution to perform file system operations**.
 
-
 ```typescript
 import path from 'path';
 import fs from 'fs';
@@ -161,8 +163,8 @@ import fs from 'fs/promises';
 console.log('Reading file...');
 // fs.readFile(filePath, 'utf-8').then((data) => console.log(data));
 async function readFile() {
-	const data = await fs.readFile(filePath, 'utf-8');
-	console.log(data);
+ const data = await fs.readFile(filePath, 'utf-8');
+ console.log(data);
 }
 readFile();
 console.log("I'm not blocked!");
@@ -176,11 +178,10 @@ Hello World
 
 ### Reading files
 
-
 ```typescript
 async function readFile() {
-	const data = await fs.readFile(filePath, 'utf-8');
-	console.log(data);
+ const data = await fs.readFile(filePath, 'utf-8');
+ console.log(data);
 }
 readFile();
 ```
@@ -219,22 +220,6 @@ await fsPromises.truncate('data5.txt', 5);
 // content of data5.txt after: 12345
 ```
 
-### Copying files
-
-The copyFile function can make a copy of a file and give you some control over what happens if the destination file exists already:
-
-
-```typescript
-// example 1: create a copy, overwite the destination file if it exists already
-await fsPromises.copyFile('source.txt', 'dest.txt');
-
-// example 2: create a copy but fail because the destination file exists already
-await fsPromises.copyFile('source.txt', 'dest.txt', fs.constants.COPYFILE_EXCL);
-// Error: EEXIST: file already exists, copyfile 'source.txt' -> 'dest.txt'
-```
-
-Example 1 will overwrite dest.txt if it exists already. In example 2, we pass in the COPYFILE_EXCL flag to override the default behavior and fail if dest.txt exists already.
-
 ### File metadata
 
 So far, we have focused on reading and modifying the contents of a file, but you may also need to read and update a file’s metadata. File metadata includes its size, type, permissions, and other file system properties.
@@ -243,8 +228,8 @@ The `stat` function is used to retrieve file metadata, or “statistics” like 
 
 ```typescript
 async function readFile() {
-	const fileStats = await fs.stat(filePath);
-	console.log(fileStats);
+ const fileStats = await fs.stat(filePath);
+ console.log(fileStats);
 }
 readFile();
 ```
@@ -304,8 +289,8 @@ There are two options to read the contents of a directory. By default, the readd
 ```typescript
 const dirPath = path.join(process.cwd(), 'root');
 async function readFile() {
-	const files = await fs.readdir(dirPath);
-	console.log(files);
+ const files = await fs.readdir(dirPath);
+ console.log(files);
 }
 // [ 'a', 'file.x' ]```
 ```
@@ -313,17 +298,66 @@ async function readFile() {
 Example 2: get files and directories as 'Dirent' directory entry objects
 
 ```typescript
-	const dirents: Dirent[] = await fs.readdir(path.join(process.cwd(), 'root'), {
-		withFileTypes: true
-	});
-	console.log(dirents);
-	dirents.forEach((entry) => {
-		if (entry.isFile()) {
-			console.log(`file name: ${entry.name}`);
-		} else if (entry.isDirectory()) {
-			console.log(`directory name: ${entry.name}`);
-		} else if (entry.isSymbolicLink()) {
-			console.log(`symbolic link name: ${entry.name}`);
-		}
-	});
+ const dirents: Dirent[] = await fs.readdir(path.join(process.cwd(), 'root'), {
+  withFileTypes: true
+ });
+ console.log(dirents);
+ dirents.forEach((entry) => {
+  if (entry.isFile()) {
+   console.log(`file name: ${entry.name}`);
+  } else if (entry.isDirectory()) {
+   console.log(`directory name: ${entry.name}`);
+  } else if (entry.isSymbolicLink()) {
+   console.log(`symbolic link name: ${entry.name}`);
+  }
+ });
 ```
+
+### Copying files with `fs.copyFile` and `fs.cp()`
+
+#### `fs.copyFile()`
+
+The copyFile function can make a copy of a file and give you some control over what happens if the destination file exists already:
+
+```typescript
+// example 1: create a copy, overwite the destination file if it exists already
+await fsPromises.copyFile('source.txt', 'dest.txt');
+
+// example 2: create a copy but fail because the destination file exists already
+await fsPromises.copyFile('source.txt', 'dest.txt', fs.constants.COPYFILE_EXCL);
+// Error: EEXIST: file already exists, copyfile 'source.txt' -> 'dest.txt'
+```
+
+Example 1 will overwrite dest.txt if it exists already. In example 2, we pass in the COPYFILE_EXCL flag to override the default behavior and fail if dest.txt exists already.
+
+#### 🔥 `fs.cp()`
+
+Starting with version 16.7.0, nodejs has a new `fs.cp()` method that **copies the entire directory structure from src to dest asynchronously, including subdirectories and files.**
+
+This method can copy both a particular file and a directory. The `recursive` property in the configuration needs to be set to true when a directory needs to be copied.
+
+To copy files:
+
+```typescript
+fs.cp('./a.txt', './aa/b.txt', (err) => {
+  if (err) {
+    console.error(err);
+  }
+});
+```
+
+##### Copy the entire directory, including subdirectories
+
+```typescript
+// copy entire directory
+const cwd = process.cwd();
+const sourcePath = path.join(cwd, 'root');
+const destinationPath = path.join(cwd, 'copied');
+
+fs.cp(sourcePath, destinationPath, { recursive: true });
+```
+
+As we can see, this method works much better than the previous one:
+
+1. there is no more need to make sure that the dest directory must exist, if the dest directory does not exist, it will be created automatically (no matter how many levels of directories).
+2. you can copy the entire folder, including the subdirectories, without having to do it recursively and separately
