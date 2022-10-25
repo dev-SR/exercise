@@ -6,6 +6,7 @@
     - [snippets](#snippets)
     - [Terminal](#terminal)
       - [For Windows Terminal](#for-windows-terminal)
+        - [Install auto-suggestions](#install-auto-suggestions)
   - [Markdown Guide](#markdown-guide)
     - [Cheatsheets](#cheatsheets)
     - [Aligning images](#aligning-images)
@@ -102,35 +103,64 @@ You can easily define your own snippets without any extension. To create or edit
 
 ![img1](img/posh.png)
 
-[mohyposh](https://github.com/jandedobbeleer/oh-my-posh)\
+[Oh My Posh](https://github.com/jandedobbeleer/oh-my-posh)
+
 PowerShell Installation:
 
-```
+```bash
 Install-Module oh-my-posh -Scope CurrentUser
 ```
 
-Winget Installation:
+To see, List all available themes, run:
 
-```
-winget install JanDeDobbeleer.OhMyPosh
-```
-
-List all themes:
-
-```
+```bash
 Get-PoshThemes
 ```
 
-Set Theme:
+Open PowerShell profile in Notepad with the following command:
 
-Path: `C:\Users\u\Documents\WindowsPowerShell`\
-fileName: `Microsoft.PowerShell_profile.ps1`
-
+```bash
+notepad $PROFILE
 ```
-Set-PoshPrompt -Theme pure
+
+`C:\Users\u\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1` file will open:
+
+To set the theme, add the following line to the file:
+
+```bash
+Set-PoshPrompt -Theme emodipt
+# Set-PoshPrompt -Theme <theme_name>
+```
+
+##### Install auto-suggestions
+
+Run the following command:
+
+```bash
+Install-Module PSReadLine -Force
+```
+
+Now, paste the following code in the PowerShell profile:
+
+```bash
+Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineOption -PredictionViewStyle ListView
+```
+
+Complete PowerShell profile:
+
+```bash
+# Install-Module oh-my-posh -Scope CurrentUser
+Import-Module oh-my-posh
+# Get-PoshThemes
+Set-PoshPrompt -Theme emodipt
+# Install-Module PSReadLine -Force
+Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineOption -PredictionViewStyle ListView
 ```
 
 ## Markdown Guide
+
 
 <div id="cheatsheet"/>
 
