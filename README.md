@@ -134,6 +134,8 @@ Set-PoshPrompt -Theme emodipt
 
 ##### Install auto-suggestions
 
+- [https://github.com/PowerShell/PSReadLine](https://github.com/PowerShell/PSReadLine)
+
 Run the following command:
 
 ```bash
