@@ -1,25 +1,28 @@
 # File Processing
 
 - [File Processing](#file-processing)
-	- [Working Directory:`process.cwd()` vs `__dirname`](#working-directoryprocesscwd-vs-__dirname)
-	- [Path](#path)
-		- [Joining paths](#joining-paths)
-			- [with cwd()](#with-cwd)
-		- [Parsing paths](#parsing-paths)
-	- [`fs` module](#fs-module)
-		- [Comparing the `fs` module APIs](#comparing-the-fs-module-apis)
-			- [Blocking Way: Synchronous API](#blocking-way-synchronous-api)
-			- [Promise API](#promise-api)
-		- [Reading files](#reading-files)
-		- [Writing files](#writing-files)
-		- [File metadata](#file-metadata)
-	- [Working with directories](#working-with-directories)
-		- [create,remove,rename dir](#createremoverename-dir)
-		- [read dir content: `readdir`](#read-dir-content-readdir)
-		- [Copying files with `fs.copyFile` and `fs.cp()`](#copying-files-with-fscopyfile-and-fscp)
-			- [`fs.copyFile()`](#fscopyfile)
-			- [🔥 `fs.cp()`](#-fscp)
-				- [Copy the entire directory, including subdirectories](#copy-the-entire-directory-including-subdirectories)
+  - [Working Directory:`process.cwd()` vs `__dirname`](#working-directoryprocesscwd-vs-__dirname)
+  - [Path](#path)
+    - [Joining paths](#joining-paths)
+      - [with cwd()](#with-cwd)
+    - [Parsing paths](#parsing-paths)
+  - [`fs` module](#fs-module)
+    - [Comparing the `fs` module APIs](#comparing-the-fs-module-apis)
+      - [Blocking Way: Synchronous API](#blocking-way-synchronous-api)
+      - [Promise API](#promise-api)
+    - [Reading files](#reading-files)
+    - [Writing files](#writing-files)
+    - [File metadata](#file-metadata)
+  - [Working with directories](#working-with-directories)
+    - [⭐ Getting Files in a Directory (without Sub-Directories): `readdir`, `readdirSync`](#-getting-files-in-a-directory-without-sub-directories-readdir-readdirsync)
+    - [⭐ Getting Files in a Directory (with Sub-Directories): `readdir`, `readdirSync`](#-getting-files-in-a-directory-with-sub-directories-readdir-readdirsync)
+    - [check if a directory/file exists](#check-if-a-directoryfile-exists)
+    - [⭐ `fs.lstat()` to check if a path is a file or directory](#-fslstat-to-check-if-a-path-is-a-file-or-directory)
+    - [Copying files with `fs.copyFile` and `fs.cp()`](#copying-files-with-fscopyfile-and-fscp)
+      - [`fs.copyFile()`](#fscopyfile)
+      - [🔥🔥 `fs.cp()`](#-fscp)
+        - [Copy the entire directory, including subdirectories](#copy-the-entire-directory-including-subdirectories)
+    - [create,remove,rename dir](#createremoverename-dir)
 
 Node.js has a module called `PATH` to interact with file and directory paths. Node.js has a module called `FS` to interact with file and directory systems i.e., create, modify and delete while listing files.
 
@@ -258,60 +261,175 @@ Stats {
 
 ## Working with directories
 
-### create,remove,rename dir
+### ⭐ Getting Files in a Directory (without Sub-Directories): `readdir`, `readdirSync`
 
-```typescript
-// example 1: create a directory
-await fsPromises.mkdir('sampleDir');
 
-// example 2: create multiple nested directories
-await fsPromises.mkdir('nested1/nested2/nested3', { recursive: true });
+```text
+root/
+├── deep-learning
+│   ├── 01-deep-learning.md
+│   ├── 02-deep-learning.md
+│   └── 03-deep-learning.md
+├── machine-learning
+│   ├── 01-machine-learning.md
+│   ├── 02-machine-learning.md
+│   └── 03-machine-learning.md
+├── random-1.md
+├── random-2.md
 
-// example 3: rename a directory
-await fsPromises.rename('sampleDir', 'sampleDirRenamed');
-
-// example 4: remove a directory
-await fsPromises.rmdir('sampleDirRenamed');
-
-// example 5: remove a directory tree
-await fsPromises.rm('nested1', { recursive: true });
-
-// example 6: remove a directory tree, ignore errors if it doesn't exist
-await fsPromises.rm('nested1', { recursive: true, force: true });
 ```
 
-Examples 2, 5, and 6 demonstrate the `recursive` option, which is especially helpful if you don’t know if a path will exist before creating or deleting it.
-
-### read dir content: `readdir`
-
-There are two options to read the contents of a directory. By default, the readdir function returns a list of the names of all the files and folders directly below the requested directory.
+The `readdir` function returns a list of the names of all the files and folders directly below the requested directory.
 
 ```typescript
+// import path
+import path from 'path';
+// Synchronous  version
+import fs from 'fs';
 const dirPath = path.join(process.cwd(), 'root');
+const files = fs.readdirSync(dirPath);
+console.log(files);
+
+// Asynchronous version
+import fs from 'fs/promises';
 async function readFile() {
- const files = await fs.readdir(dirPath);
- console.log(files);
+	const files = await fs.readdir(dirPath);
+	console.log(files);
 }
-// [ 'a', 'file.x' ]```
 ```
 
-Example 2: get files and directories as 'Dirent' directory entry objects
+Output:
+
+```bash
+[ 'deep-learning', 'machine-learning', 'random-1.md', 'random-2.md' ]
+```
+
+Get only files with full path
 
 ```typescript
- const dirents: Dirent[] = await fs.readdir(path.join(process.cwd(), 'root'), {
-  withFileTypes: true
- });
- console.log(dirents);
- dirents.forEach((entry) => {
-  if (entry.isFile()) {
-   console.log(`file name: ${entry.name}`);
-  } else if (entry.isDirectory()) {
-   console.log(`directory name: ${entry.name}`);
-  } else if (entry.isSymbolicLink()) {
-   console.log(`symbolic link name: ${entry.name}`);
-  }
- });
+const getOnlyFileList = (dirName: string) => {
+	let files: string[] = [];
+	const items = fs.readdirSync(dirName, { withFileTypes: true });
+
+	for (const item of items) {
+		// {withFileTypes: true} is required to access the isFile(),isDirectory method
+		if (!item.isDirectory()) {
+			const fullPath = join(dirName, item.name);
+			files.push(fullPath);
+		}
+	}
+
+	return files;
+};
+const only_files = getOnlyFileList(dirPath);
+console.log(only_files);
 ```
+
+Output:
+
+```bash
+[
+  '~\\exercise\\TS-JS\\TS\\04file-processing\\root\\random-1.md',
+  '~\\exercise\\TS-JS\\TS\\04file-processing\\root\\random-2.md'
+]
+```
+
+### ⭐ Getting Files in a Directory (with Sub-Directories): `readdir`, `readdirSync`
+
+
+```typescript
+const getAllFileList = (dirName: string) => {
+	let files: string[] = [];
+	const items = fs.readdirSync(dirName, { withFileTypes: true });
+
+	for (const item of items) {
+		const fullPath = join(dirName, item.name);
+		if (item.isDirectory()) {
+			files.push(fullPath); //(optional) push also the directory name to the array
+			// recursive call
+			const oldFiles = [...files];
+			const subFiles = getAllFileList(fullPath);
+			files = oldFiles.concat(subFiles);
+			// files = [...files, ...subFiles];
+		} else {
+			files.push(fullPath);
+		}
+	}
+
+	return files;
+};
+
+const allFiles = getAllFileList(dirPath);
+```
+
+```bash
+[
+  '~\\root\\deep-learning',
+  '~\\root\\deep-learning\\01-deep-learning.md',
+  '~\\root\\deep-learning\\02-deep-learning.md',
+  '~\\root\\deep-learning\\03-deep-learning.md',
+  '~\\root\\machine-learning',
+  '~\\root\\machine-learning\\01-machine-learning.md',
+  '~\\root\\machine-learning\\02-machine-learning.md',
+  '~\\root\\machine-learning\\03-machine-learning.md',
+  '~\\root\\random-1.md',
+  '~\\root\\random-2.md'
+]
+
+```
+
+### check if a directory/file exists
+
+```typescript
+import fs from 'fs/promises';
+import path from 'path';
+
+if (fs.existsSync(path.join(process.cwd(), 'root'))) {
+ console.log('Content exists.');
+} else {
+ console.log('Content does not exist.');
+}
+```
+
+### ⭐ `fs.lstat()` to check if a path is a file or directory
+
+```typescript
+const allFiles = getAllFileList(dirPath);
+function isDir(path: string) {
+	try {
+		var stat = fs.lstatSync(path);
+		return stat.isDirectory();
+		/*
+		Objects returned from `fs.stat()` and `fs.lstat()` are of this type.
+		stats.isFile()
+		stats.isDirectory()
+		stats.isBlockDevice()
+		stats.isCharacterDevice()
+		stats.isSymbolicLink() // (only valid with fs.lstat())
+		stats.isFIFO()
+		stats.isSocket()
+
+		*/
+	} catch (e) {
+		// lstatSync throws an error if path doesn't exist
+		return false;
+	}
+}
+const getSeries: string[] = [];
+allFiles.forEach((file) => {
+	if (isDir(file)) {
+		getSeries.push(file);
+	}
+});
+console.log(getSeries);
+```
+
+Output:
+
+```bash
+[ '~\\root\\deep-learning', '~\\root\\machine-learning' ]
+```
+
 
 ### Copying files with `fs.copyFile` and `fs.cp()`
 
@@ -330,7 +448,7 @@ await fsPromises.copyFile('source.txt', 'dest.txt', fs.constants.COPYFILE_EXCL);
 
 Example 1 will overwrite dest.txt if it exists already. In example 2, we pass in the COPYFILE_EXCL flag to override the default behavior and fail if dest.txt exists already.
 
-#### 🔥 `fs.cp()`
+#### 🔥🔥 `fs.cp()`
 
 Starting with version 16.7.0, nodejs has a new `fs.cp()` method that **copies the entire directory structure from src to dest asynchronously, including subdirectories and files.**
 
@@ -361,3 +479,27 @@ As we can see, this method works much better than the previous one:
 
 1. there is no more need to make sure that the dest directory must exist, if the dest directory does not exist, it will be created automatically (no matter how many levels of directories).
 2. you can copy the entire folder, including the subdirectories, without having to do it recursively and separately
+
+### create,remove,rename dir
+
+```typescript
+// example 1: create a directory
+await fsPromises.mkdir('sampleDir');
+
+// example 2: create multiple nested directories
+await fsPromises.mkdir('nested1/nested2/nested3', { recursive: true });
+
+// example 3: rename a directory
+await fsPromises.rename('sampleDir', 'sampleDirRenamed');
+
+// example 4: remove a directory
+await fsPromises.rmdir('sampleDirRenamed');
+
+// example 5: remove a directory tree
+await fsPromises.rm('nested1', { recursive: true });
+
+// example 6: remove a directory tree, ignore errors if it doesn't exist
+await fsPromises.rm('nested1', { recursive: true, force: true });
+```
+
+Examples 2, 5, and 6 demonstrate the `recursive` option, which is especially helpful if you don’t know if a path will exist before creating or deleting it.
