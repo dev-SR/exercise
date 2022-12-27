@@ -14,10 +14,12 @@
       - [check if an item is a subset of another list](#check-if-an-item-is-a-subset-of-another-list)
     - [🔥🔥List of Dictionaries🔥🔥](#list-of-dictionaries)
       - [find the index of a value in a list of dictionaries](#find-the-index-of-a-value-in-a-list-of-dictionaries)
+      - [Delete/Filter from list fo dictionaries](#deletefilter-from-list-fo-dictionaries)
       - [Search in list of dictionaries](#search-in-list-of-dictionaries)
         - [Check if element/dictionary already exists within list of dictionaries?](#check-if-elementdictionary-already-exists-within-list-of-dictionaries)
       - [add key for each dictionary in a list of dictionaries](#add-key-for-each-dictionary-in-a-list-of-dictionaries)
       - [Unique dictionaries in a list of dictionaries](#unique-dictionaries-in-a-list-of-dictionaries)
+
 
 ```python
 """
@@ -420,6 +422,62 @@ for i, d in enumerate(L):
 ```
 
     1
+
+
+#### Delete/Filter from list fo dictionaries
+
+
+```python
+data = [{'id': 1, 'name': 'paul'},
+ {'id': 2, 'name': 'john'}]
+data
+```
+
+
+
+
+    [{'id': 1, 'name': 'paul'}, {'id': 2, 'name': 'john'}]
+
+
+
+
+```python
+[{**row} for row in data if row['id'] != 1 ]
+```
+
+
+
+
+    [{'id': 2, 'name': 'john'}]
+
+
+
+
+```python
+[{**row} for row in data if row['name']!='john']
+```
+
+
+
+
+    [{'id': 1, 'name': 'paul'}]
+
+
+
+
+```python
+for idx in range(len(data)):
+    if data[idx].get('id') == 2:
+        del data[idx]
+        break
+data
+```
+
+
+
+
+    [{'id': 1, 'name': 'paul'}]
+
 
 
 #### Search in list of dictionaries
