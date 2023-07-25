@@ -176,24 +176,24 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 
 #### `left` alignment
 
-<img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100">
+<img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100"/>
 
 This is the code you need to align images to the left:
 
 ```
-<img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100">
+<img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100"/>
 ```
 
 ---
 
 #### `right` alignment
 
-<img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100">
+<img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100"/>
 
 This is the code you need to align images to the right:
 
 ```
-<img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100">
+<img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100"/>
 ```
 
 ---
@@ -201,12 +201,12 @@ This is the code you need to align images to the right:
 #### `center` alignment example
 
 <p align="center">
-  <img width="460" height="300" src="http://www.fillmurray.com/460/300">
+  <img width="460" height="300" src="http://www.fillmurray.com/460/300"/>
 </p>
 
 ```
 <p align="center">
-  <img width="460" height="300" src="http://www.fillmurray.com/460/300">
+  <img width="460" height="300" src="http://www.fillmurray.com/460/300"/>
 </p>
 ```
 
@@ -451,7 +451,7 @@ git push --force
 ### error while pushing: RPC failed
 
 <div align="center">
-<img src="img/git-RPC.jpg" alt="git-RPC.jpg" width="800px">
+<img src="img/git-RPC.jpg" alt="git-RPC.jpg" width="800px"/>
 </div>
 
 - Change network
@@ -493,7 +493,7 @@ for(int $INDEX$ = 0; $INDEX$ < $LIMIT$; $INDEX$++) {
 - [https://www.jetbrains.com/help/idea/using-live-templates.html#live_templates_configure](https://www.jetbrains.com/help/idea/using-live-templates.html#live_templates_configure)
 
 <div align="center">
-<img src="img/sn.gif" alt="sn.gif" width="700px">
+<img src="img/sn.gif" alt="sn.gif" width="700px"/>
 </div>
 
 ### VSCode Snippets
@@ -517,7 +517,7 @@ for(int $INDEX$ = 0; $INDEX$ < $LIMIT$; $INDEX$++) {
   "prefix": "!m-img",
   "body": [
    "<div align=\"center\">",
-   "<img src=\"img/${1:file_name}\" alt=\"${1:alt_text}\" width=\"${2:width}00px\">",
+   "<img src=\"img/${1:file_name}\" alt=\"${1:alt_text}\" width=\"${2:width}00px\"/>",
    "</div>"
   ],
   "description": "markdown_image"
