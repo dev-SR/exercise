@@ -357,9 +357,11 @@ Absolutely, I'd be happy to provide you with some common Git branching commands.
 
 3. **Create and Switch to a New Branch:**
    - `git checkout -b <new-branch-name>`: Creates and switches to a new branch in one command.
+   - Alias: `git ckb <new-branch-name>`
 
 4. **List Branches:**
    - `git branch`: Lists all the branches in the repository. The current branch is indicated with an asterisk (*).
+   - Alias: `git b`
 
 5. **Rename a Branch:**
    - `git branch -m <new-branch-name>`: Renames the current branch to the specified new name.
@@ -368,10 +370,13 @@ Absolutely, I'd be happy to provide you with some common Git branching commands.
 6. **Delete a Branch:**
    - `git branch -d <branch-name>`: Deletes a branch. The branch must be fully merged into the current branch.
    - `git branch -D <branch-name>`: Forces deletion of a branch, even if it's not fully merged.
+   - Alias: `git bd`
 
 7. **Merge Branches:**
    - `git checkout <target-branch>`: Switches to the branch you want to merge into.
+     - Alias: `git ck <target-branch>`
    - `git merge <source-branch>`: Merges the changes from the source branch into the target branch.
+     - Alias: `git m <source-branch>`
 
 8. **Rebase Branches:**
    - `git rebase <base-branch>`: Moves the commits from the current branch onto the tip of the base branch, effectively replaying your changes on top of it.
