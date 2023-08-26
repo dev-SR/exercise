@@ -23,7 +23,7 @@
     - [Git Alias 🚀🚀](#git-alias-)
     - [Commands for Github Repo](#commands-for-github-repo)
     - [Change the URI (URL) for a remote Git repository](#change-the-uri-url-for-a-remote-git-repository)
-    - [👉Git branching](#️git-branching)
+    - [👉Git branching](#git-branching)
     - [☁️🩹Merging Remote Changes](#️merging-remote-changes)
       - [With Clean Working Directory; no local changes](#with-clean-working-directory-no-local-changes)
         - [op1: `fetch+merge`](#op1-fetchmerge)
