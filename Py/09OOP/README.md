@@ -5,25 +5,19 @@
   - [Basics](#basics)
   - [Instance Attribute and Class Attributes](#instance-attribute-and-class-attributes)
       - [EX- 1](#ex--1)
-  - [Private members](#private-members)
-    - [Name Mangling to access private members](#name-mangling-to-access-private-members)
-  - [Getters and Setters](#getters-and-setters)
-    - [Using normal function](#using-normal-function)
-    - [Using `@property` decorators](#using-property-decorators)
-  - [Magic Methods](#magic-methods)
-    - [Comparing Objects](#comparing-objects)
+  - [Encapsulation : Private members](#encapsulation--private-members)
+    - [Getters and Setters](#getters-and-setters)
+      - [Using normal function](#using-normal-function)
+      - [Using `@property` decorators as 'getter'](#using-property-decorators-as-getter)
   - [Class method and Static method](#class-method-and-static-method)
-    - [Class Method](#class-method)
-      - [When do you use the class method?](#when-do-you-use-the-class-method)
-        - [🏭🏭 1. Factory methods](#-1-factory-methods)
-        - [2. Correct instance creation in inheritance](#2-correct-instance-creation-in-inheritance)
-    - [Static Method](#static-method)
-    - [@classmethod vs @staticmethod](#classmethod-vs-staticmethod)
+  - [Magic Methods](#magic-methods)
+    - [`__repr__`  vs `__str__`](#__repr__--vs-__str__)
+    - [`__hash__`](#__hash__)
+    - [Comparing Objects](#comparing-objects)
   - [Inheritance](#inheritance)
     - [Intro](#intro)
-    - [Method Overriding with super()](#method-overriding-with-super)
+    - [super()](#super)
     - [Multiple Inheritance](#multiple-inheritance)
-  - [Abstract Base Classes](#abstract-base-classes)
   - [Polymorphism](#polymorphism)
 
 
@@ -70,6 +64,9 @@ def __init__(self):
     ...
     ...
 ```
+
+The `__init__` method is a special method in Python classes that is *automatically called when an object is created from the class.* It is used to initialize the object's attributes and perform setup tasks
+
 
 **Defining the methods of a instance**
 
@@ -300,7 +297,10 @@ Human.population
 
 
 
-## Private members
+## Encapsulation : Private members
+
+Encapsulation is the process of bundling data and methods together within a class. It allows for data hiding and controlling access to the object's attributes using getter and setter methods.
+
 
 
 ```python
@@ -325,10 +325,10 @@ print(t.__private)  # AttributeError: 'Test' object has no attribute '__private'
 
     AttributeError                            Traceback (most recent call last)
 
-    Input In [50], in <cell line: 10>()
-          7 t = Test()
+    <ipython-input-1-747979b56390> in <module>
+          8
           9 print(t._not_so_private)  # 0
-    ---> 10 print(t.__private)
+    ---> 10 print(t.__private)  # AttributeError: 'Test' object has no attribute '__private'
 
 
     AttributeError: 'Test' object has no attribute '__private'
@@ -354,12 +354,14 @@ class FrqCounter():
 fcnt = FrqCounter()
 fcnt.add("python")
 fcnt.add("Python")
+print(fcnt)
 fcnt.add("C++")
 fcnt.d["python"] = 10 # but direct access should not be allowed
 print(fcnt)
 
 ```
 
+    FC ({'python': 2})
     FC ({'python': 10, 'c++': 1})
 
 
@@ -395,34 +397,14 @@ fcnt.add("C++")
 # print(fcnt.__d) # AttributeError: 'FrqCounter' object has no attribute '__d'
 ```
 
-### Name Mangling to access private members
-
-Python performs name mangling on private attributes. Every member with a double underscore will be changed to `object._class__variable`.
-
-
-```python
-print(fcnt._FrqCounter__d)
-```
-
-    {'python': 2, 'c++': 1}
-
-
-
-```python
- print(fcnt.__dict__)
-```
-
-    {'_FrqCounter__d': {'python': 2, 'c++': 1}}
-
-
-## Getters and Setters
+### Getters and Setters
 
 Private variables in python are not actually hidden fields like in other object oriented languages. Getters and Setters in python are often used when:
 
 - We use getters & setters to add validation logic around getting and setting a value.
 - To avoid direct access of a class field i.e. private variables cannot be accessed directly or modified by external user.
 
-### Using normal function
+#### Using normal function
 
 
 ```python
@@ -454,7 +436,10 @@ print(t.get_private())
     21
 
 
-### Using `@property` decorators
+#### Using `@property` decorators as 'getter'
+
+
+The `@property` decorator in Python is used to define a method as a `"getter"` for a class attribute. It allows you to access the method like an attribute rather than calling it as a method. The main purpose of the @property decorator is to provide a controlled way to access and compute values for an object's attributes.
 
 
 
@@ -468,7 +453,7 @@ class Test:
 		return "Jhon"
 
 t = Test()
-print(t.read_only)
+print(t.read_only) # Jhon
 t.read_only  = "Sara" # AttributeError: can't set attribute
 ```
 
@@ -480,10 +465,10 @@ t.read_only  = "Sara" # AttributeError: can't set attribute
 
     AttributeError                            Traceback (most recent call last)
 
-    Input In [53], in <cell line: 11>()
+    <ipython-input-4-461a102b3cac> in <module>
           9 t = Test()
          10 print(t.read_only)
-    ---> 11 t.read_only  = "Sara"
+    ---> 11 t.read_only  = "Sara" # AttributeError: can't set attribute
 
 
     AttributeError: can't set attribute
@@ -522,96 +507,244 @@ print(i.name)
     Tablet
 
 
+## Class method and Static method
+
+
+
+`@classmethod` and `@staticmethod` are both used to define methods that are associated with a class rather than an instance of the class. However, they serve different purposes:
+
+1. **@classmethod**:
+   - It takes the class (`cls`) as its first argument, allowing you to access and modify class-level attributes and methods.
+   - Typically used for factory methods or methods that create instances of the class.
+   - Can be overridden by subclasses.
+
+2. **@staticmethod**:
+   - It does not take the class or instance as its first argument. It behaves like a regular function defined within a class.
+   - Often used for utility functions related to the class, which do not depend on class-specific attributes or methods.
+   - Cannot be overridden by subclasses.
+
+Here are examples to illustrate the difference:
+
+**@classmethod Example (Factory Method):**
+
+
+```python
+class Rectangle:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    @classmethod
+    def create_square(cls, side_length):
+        return cls(side_length, side_length)
+
+square = Rectangle.create_square(5)
+print(square.width, square.height)  # Output: 5 5
+```
+
+
+
+In this example, `create_square` is a class method used as a factory to create square instances of the `Rectangle` class. It takes the class (`cls`) as its first argument and returns an instance of the class.
+
+**@staticmethod Example (Utility Function):**
+
+
+
+
+
+```python
+class MathUtils:
+    @staticmethod
+    def add(x, y):
+        return x + y
+
+result = MathUtils.add(3, 4)
+print(result)  # Output: 7
+```
+
+In this example, `add` is a static method within the `MathUtils` class. It does not depend on class-specific attributes or methods and can be called directly on the class without creating an instance.
+
+To summarize, `@classmethod` is typically used for methods that operate on the class itself or create instances of the class, while `@staticmethod` is used for utility functions that are related to the class but do not depend on its state.
+
+
+| `@classmethod`                                                                    | `@staticmethod`                                                               |
+| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| It can access **class attributes**, but not the **instance attributes**.          | It cannot access either **class attributes** or **instance attributes**.      |
+| It can be called using the `ClassName.MethodName()` or object.MethodName()        | It can be called using the `ClassName.MethodName()` or `object.MethodName().` |
+| It can be used to **declare a factory method that returns objects of the class**. | It cannot return an object of the class.                                      |
+
+
 ## Magic Methods
 
 
 - they are called automatically when some particular event occur
-
 - e.g. `__repr__` , `__init__`,, `__str__`
 
+### `__repr__`  vs `__str__`
+
 
 ```python
-# before overriding __repr__ magic function
-print(h1)
-print(Human.database)
-print(Human.database[0])
-print(Human.database[1].name)
+import datetime
+
+# Create a datetime object representing the current date and time
+today = datetime.datetime.now()
+today
+
 ```
 
-    <__main__.Human object at 0x0000020FF9D60790>
-    [<__main__.Human object at 0x0000020FF9D60790>, <__main__.Human object at 0x0000020FF9D60430>]
-    <__main__.Human object at 0x0000020FF9D60790>
-    Jhon
+
+
+
+    datetime.datetime(2023, 9, 12, 15, 4, 14, 905963)
+
 
 
 
 ```python
-class Human():
+# Similarly
+print(repr(today))
+```
 
-    # class variable
-    database = []
-    population = 0
-    id_seq = 0
+    datetime.datetime(2023, 9, 12, 15, 4, 14, 905963)
 
-    # constructor
-    def __init__(self,name,age,is_alive = True):
-        # instance variables
+
+but 👉
+
+
+```python
+print(today)
+```
+
+    2023-09-12 15:04:14.905963
+
+
+In this example, `today` is a datetime object representing the current date and time. When we evaluate it in the `REPL`, the `.__repr__()` method is called, providing a detailed and unambiguous representation. When we use the `print()` function, the `.__str__()` method is called, presenting a more user-friendly and human-readable representation.
+
+
+Often, the official string representation is a valid Python expression that you can use to create a new object with the same value. You can confirm this with the datetime.datetime object by copying the official string representation and assigning it to a new name. You can also attempt to use the informal string representation, but this won’t work:
+
+
+```python
+new_date = datetime.datetime(2023, 9, 12, 15, 4, 14, 905963)
+new_date == today
+```
+
+
+
+
+    True
+
+
+
+
+```python
+new_date = 2023-02-18 18:40:02.160890
+```
+
+
+      File "<ipython-input-13-82edebb4853b>", line 1
+        new_date = 2023-02-18 18:40:02.160890
+                         ^
+    SyntaxError: leading zeros in decimal integer literals are not permitted; use an 0o prefix for octal integers
+
+
+
+The output you got from `.__repr__()` when you evaluated today in the REPL created a new object equal to the original one.
+
+However, the string representation from `.__str__()`, which you got when you used `print()`, isn’t a valid Python expression, so it raises a SyntaxError.
+
+In short:
+
+- `.__repr__()` provides the official string representation of an object, aimed at the **programmer**.
+- `.__str__()` provides the informal string representation of an object, aimed at the **user**.
+
+
+```python
+class Person:
+    def __init__(self, name, age):
         self.name = name
         self.age = age
-        self.is_alive = is_alive
-        #
-        self.id = Human.id_seq
-        Human.id_seq += 1
-        Human.population += 1
-        Human.database.append(self)
 
-    # instance methods
-    def intro(self):
-        print("Hi, My name is",self.name,"My age is",self.age)
-
-    def die(self):
-        if self.is_alive:
-            print(self.name, "is dying")
-            self.is_alive = False
-            Human.population -= 1
-        else:
-            print("{} is already dead".format(self.name))
-
-    # __repr__ is a special method used to represent a class’s objects as a string
-    def __repr__(self):
-        return "%s(%r)" % (self.__class__, self.__dict__)
-    # The __str__ method in Python represents the class objects as a string. The __str__ method is
-    # called when the following functions are invoked on the object and return a string: print(), str()
     def __str__(self):
-        return f"Human [{self.id}, {self.name}, {self.age}, {self.is_alive}]"
-    #  `__repr__` vs `__str__`: __repr__ is for developers, __str__ is for customers.
-    # If we have not defined the __str__, then it will call the __repr__ method.
+        return f"{self.name} ({self.age} years old)"
+
+person = Person("Alice", 30)
+print(str(person))  # Output: Alice (30 years old)
+
 ```
+
+    Alice (30 years old)
+
 
 
 ```python
-# after overriding __repr__ magic function
-h1 = Human("soikat",22)
-h2 = Human("Jhon",69)
-# __repr__
-print(Human.database)
-print()
-# __str__
-print(h1)
-print(str(h1))
-print(Human.database[0])
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
+    def __repr__(self):
+        return f"Point({self.x}, {self.y})"
 
-print("other magic methods: \n"+str(dir(Human)))
+point = Point(3, 4)
+print(repr(point))  # Output: Point(3, 4)
+
 ```
 
-    [<class '__main__.Human'>({'name': 'soikat', 'age': 22, 'is_alive': True, 'id': 0}), <class '__main__.Human'>({'name': 'Jhon', 'age': 69, 'is_alive': True, 'id': 1})]
+    Point(3, 4)
 
-    Human [0, soikat, 22, True]
-    Human [0, soikat, 22, True]
-    Human [0, soikat, 22, True]
-    other magic methods:
-    ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'database', 'die', 'id_seq', 'intro', 'population']
+
+### `__hash__`
+
+
+```python
+class Node:
+    def __init__(self, name):
+        self.name = name
+
+    def __hash__(self):
+        return hash(self.name)
+
+    def __repr__(self):
+        return f"Node({self.name})"
+
+class Graph:
+    def __init__(self):
+        self.adjacency_list = {}
+
+    def add_node(self, node):
+        self.adjacency_list[node] = []
+
+    def add_edge(self, node1, node2):
+        self.adjacency_list[node1].append(node2)
+        self.adjacency_list[node2].append(node1)
+
+    def __repr__(self):
+        return f"Graph({self.adjacency_list})"
+
+# Create nodes
+node_A = Node("A")
+node_B = Node("B")
+node_C = Node("C")
+
+# Create a graph and add nodes
+graph = Graph()
+graph.add_node(node_A)
+graph.add_node(node_B)
+graph.add_node(node_C)
+
+# Add edges
+graph.add_edge(node_A, node_B)
+graph.add_edge(node_B, node_C)
+
+# Display node and graph representations
+print(node_A)    # Output: Node(A)
+print(graph)      # Output: Graph({Node(A): [Node(B)], Node(B): [Node(A), Node(C)], Node(C): [Node(B)]})
+
+```
+
+    Node(A)
+    Graph({Node(A): [Node(B)], Node(B): [Node(A), Node(C)], Node(C): [Node(B)]})
 
 
 ### Comparing Objects
@@ -652,362 +785,103 @@ print(p1+p2)
     Point(2 , 4)
 
 
-## Class method and Static method
-
-
-
-### Class Method
-
-Class methods are methods that are called on the class itself, not on a specific object instance. Therefore, it belongs to a class level, and all class instances share a class method.
-
-- **A class method is bound to the class and not the object of the class**. It can access only class variables.
-- It can modify the class state by changing the value of a class variable that would apply across all the class objects.
-
-The difference between a static method and a class method is:
-
-- Static method knows nothing about the class and just deals with the parameters
-- Class method works with the class since its parameter is always the class itself.
-
-The class method can be called both by the class and its object.
-
-
-
-
-```python
-class C(object):
-    @classmethod
-    def fun(cls,args):
-    #    ....
-
-
-# fun: function that needs to be converted into a class method
-# returns: a class method for function.
-
-```
-
-#### When do you use the class method?
-
-##### 🏭🏭 1. Factory methods
-
-Helper methods for initialization of objects from different data sources.
-
-
-```python
-import csv
-
-class Item:
-	pay_rate = 0.8
-	all = []
-
-	def __init__(self,name,price,quantity=0):
-		# Run validation on the arguments
-		assert price > 0, f"Price {price} must be greater than 0"
-		assert quantity >= 0, f"Quantity {quantity} must be greater than or equal to 0"
-
-		self.name = name
-		self.price = price
-		self.quantity = quantity
-
-		Item.all.append(self)
-
-	@classmethod
-	def instantiate_from_csv(cls):
-		with open("items.csv") as f:
-			reader = csv.DictReader(f)
-			items = list(reader)
-			# print(items)
-			for item in items:
-				# Item(item["name"], float(item["price"]), int(item["quantity"]))
-				# or
-				cls(item["name"], float(item["price"]), int(item["quantity"]))
-
-
-	def __repr__(self):
-		return f"Item({self.name},{self.price},{self.quantity})"
-
-# item1  = Item("Phone",10,1)
-# item2  = Item("Laptop",20,2)
-# item3 = Item("Mouse",20,2)
-# item4 = Item("Keyboard",20,2)
-
-Item.instantiate_from_csv()
-print(Item.all)
-```
-
-    [Item(Phone,100.0,1), Item(Laptop,1000.0,3), Item(Cable,10.0,5), Item(Mouse,50.0,5), Item(Keyboard,75.0,5)]
-
-
-##### 2. Correct instance creation in inheritance
-
-Whenever you derive a class from implementing a factory method as a class method, it ensures correct instance creation of the derived class.
-
-You can create a static method for the above example but the object it creates, will always be hard coded as Base class.
-
-But, when you use a class method, it creates the correct instance of the derived class.
-
-
-```python
-from datetime import date
-
-# random Person
-class Person:
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
-
-    @staticmethod
-    def fromFathersAge(name, fatherAge, fatherPersonAgeDiff):
-        return Person(name, date.today().year - fatherAge + fatherPersonAgeDiff)
-
-    @classmethod
-    def fromBirthYear(cls, name, birthYear):
-        return cls(name, date.today().year - birthYear)
-
-    def display(self):
-        print(self.name + "'s age is: " + str(self.age))
-
-# Inheritance
-class Man(Person):
-    sex = 'Male'
-
-
-man = Man.fromBirthYear('John', 1985) # using classmethod
-print(isinstance(man, Man))
-
-man1 = Man.fromFathersAge('John', 1965, 20) # using staticmethod
-print(isinstance(man1, Man))
-
-```
-
-    True
-    False
-
-
-Here, using a `static` method to create a class instance wants us to hardcode the instance type during creation.
-
-This clearly causes a problem when inheriting `Person` to `Man`.
-
-`fromFathersAge` method **doesn't return** a `Man` object but its base class `Person`'s object.
-
-This violates the OOP paradigm. Using a class method as `fromBirthYear` can ensure the OOP-ness of the code since it takes the first parameter as the class itself and calls its factory method.
-
-### Static Method
-
-
-
-A static method does not receive an implicit first argument (`self`).
-
-Syntax:
-
-```python
-class C(object):
-    @staticmethod
-    def fun(arg1, arg2, ...):
-        ...
-returns: a static method for function fun.
-```
-
-- A static method is also a method that is bound to the class and not the object of the class.
-- A static method can’t access or modify the class state.
-- It is present in a class because it makes sense for the method to be present in class.
-
-
-```python
-class Student():
-	def __init__(self,name,age):
-		self.name = name
-		self.age = age
-
-	def __str__(self):
-		return f"Student [{self.name}, {self.age}]"
-
-	@staticmethod
-	def welcomeToSchool(): # self is not required
-		print("Welcome to School!!")
-
-	@staticmethod
-	def isTeen(self,age): # explicitly mentioning self
-		return age>=13 and age<=19
-
-s1 = Student("soikat",22)
-s1.welcomeToSchool()
-
-```
-
-    Welcome to School!!
-
-
-
-```python
-Student.welcomeToSchool()
-```
-
-    Welcome to School!!
-
-
-
-```python
-Student.isTeen(s1,22)
-```
-
-
-
-
-    False
-
-
-
-### @classmethod vs @staticmethod
-
-
-
-| `@classmethod`                                                                    | `@staticmethod`                                                               |
-| --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| It can access **class attributes**, but not the **instance attributes**.          | It cannot access either **class attributes** or **instance attributes**.      |
-| It can be called using the `ClassName.MethodName()` or object.MethodName()        | It can be called using the `ClassName.MethodName()` or `object.MethodName().` |
-| It can be used to **declare a factory method that returns objects of the class**. | It cannot return an object of the class.                                      |
-
-
 ## Inheritance
 
 
 ### Intro
 
--  a process where one class acquire all the methods and properties of another class
+Inheritance in Python allows you to create a new class (called a subclass or derived class) that inherits attributes and methods from an existing class (called a superclass or base class). This enables you to create new classes that reuse and extend the behavior of existing classes. Here's a concise overview of inheritance in Python:
 
-**Parent Class** is the class being inherited, also called base class.
-**Child Class** is the class that inherits another class, also called derived class.
+
+- **Superclass**: The existing class that you want to inherit from.
+- **Subclass**: The new class that you are creating, which inherits from the superclass.
 
 Syntax :
 
+```python
+class Superclass:
+    # Superclass attributes and methods
+
+class Subclass(Superclass):
+    # Subclass attributes and methods
+```
+
+Key Concepts:
+
+- **Inheritance**: Inheritance establishes an "is-a" relationship between the superclass and subclass. The subclass is a specialized version of the superclass.
+
+- **Accessing Superclass Members**: The subclass can access attributes and methods of the superclass using the `super()` function.
 
 
 ```python
-# class ChildClassName(ParentClassName):
-```
+class Animal:
+    def __init__(self, name):
+        self.name = name
 
+    def speak(self):
+        pass
 
-```python
-# Child class
-class Hitman(Human):
-    # re-initialize constructor
-    def __init__(self,name,age):
-        super().__init__(name,age)
-        # additional hitman properties
-        self.kills  = 0
-        self.kills_list = []
+class Dog(Animal):
+    def speak(self):
+        return f"{self.name} says Woof!"
 
-    def kill(self,person):
-        """
-        `person` will be an object of Human
-        """
-        if person.is_alive:
-            print("{} is killing {}".format(self.name,person.name))
-            person.die()
-            self.kills+=1
-            self.kills_list.append(person)
-        else:
-            print("{} is already dead.".format(person.name))
+class Cat(Animal):
+    def speak(self):
+        return f"{self.name} says Meow!"
 
-    # function overriding - Achieving Polymorphism:
-    def intro(self):
-        print("Hi, my nam is {}, I've killed {} people".format(self.name,self.kills))
+# Create instances of subclasses
+dog = Dog("Buddy")
+cat = Cat("Whiskers")
+
+# Call methods of the subclasses
+print(dog.speak())  # Output: Buddy says Woof!
+print(cat.speak())  # Output: Whiskers says Meow!
 
 ```
 
-
-```python
-h3 =  Human("Bob",10)
-print(Human.population)
-print(Human.database)
-```
-
-    3
-    [[0, soikat, 22, True], [1, Jhon, 69, True], [2, Bob, 10, True]]
+    Buddy says Woof!
+    Whiskers says Meow!
 
 
+### super()
 
-```python
-bond = Hitman("James",40)
-print(bond)
-print(Human.population)
-print(Human.database)
-```
+In Python, the `super()` function is used to access and call **methods or attributes** from a parent (or superclass) class within a subclass. **It allows you to extend or override the behavior of the parent class's methods while still using them in the subclass**. Here's a concise example:
 
-    [3, James, 40, True]
-    4
-    [[0, soikat, 22, True], [1, Jhon, 69, True], [2, Bob, 10, True], [3, James, 40, True]]
 
 
 
 ```python
-print(Human.population)
-print(Human.database)
-bond.kill(h3)
-print(bond.kills)
-print(bond.kills_list)
+class Parent:
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        return f"{self.name} says something"
+
+class Child(Parent):
+    def __init__(self, name, toy):
+        super().__init__(name)  # Call the parent class's constructor
+        self.toy = toy
+
+    def speak(self):
+        parent_speech = super().speak()  # Call the parent class's method
+        return f"{self.name} says something and plays with {self.toy}"
+
+# Create instances
+parent = Parent("Alice")
+child = Child("Bob", "blocks")
+
+# Access parent class's method from the child
+parent_message = parent.speak()
+child_message = child.speak()
+
+print(parent_message)  # Output: Alice says something
+print(child_message)   # Output: Bob says something and plays with blocks
+
 ```
 
-    4
-    [[0, soikat, 22, True], [1, Jhon, 69, True], [2, Bob, 10, True], [3, James, 40, True]]
-    James is killing Bob
-    Bob is dying
-    1
-    [[2, Bob, 10, False]]
-
-
-
-```python
-bond.kill(h3)
-```
-
-    Bob is already dead.
-
-
-
-```python
-# Polymorphism
-h2.intro()
-bond.intro()
-```
-
-    Hi, My name is Jhon My age is 69
-    Hi, my nam is James, I've killed 1 people
-
-
-### Method Overriding with super()
-
-The `super()` builtin returns a proxy object (temporary object of the superclass) that allows us to access methods of the base class.
-
-In Python, `super()` has two major use cases:
-
-- Allows us to avoid using the base class name explicitly
-- Working with Multiple Inheritance
-
-
-```python
-class Person:
-	def __init__(self,name,age):
-		self.name = name
-		self.age = age
-
-	def intro(self):
-		print(f"Hi, my name is {self.name} and I am {self.age} years old")
-
-
-class Student(Person):
-	def __init__(self,name,age,cgpa):
-		super().__init__(name,age)
-		self.cgpa = cgpa
-
-	def result(self):
-		print(f"Hi, my name is {self.name} and I am {self.age} years old and my cgpa is {self.cgpa}")
-
-s = Student("soikat",22,4.0)
-s.result()
-```
-
-    Hi, my name is soikat and I am 22 years old and my cgpa is 4.0
+    Alice says something
+    Bob says something and plays with blocks
 
 
 ### Multiple Inheritance
@@ -1045,153 +919,6 @@ m.greet()
     Person greeting...
 
 
-## Abstract Base Classes
-
-
-
-> lets build a class:
-
-
-```python
-class InvalidOperationError(Exception):
-    pass
-
-class Stream:
-    def __init__(self):
-        self.opened = False
-
-    def open(self):
-        if self.opened:
-            raise InvalidOperationError("Stream is Already opened")
-        self.opened = True
-
-    def close(self):
-        if self.opened:
-            raise InvalidOperationError("Stream is Already opened")
-        self.opened = True
-
-class FileStream(Stream):
-    def read(self):
-        print("Reading data from a file")
-
-
-class NetworkStream(Stream):
-    def read(self):
-        print("Reading data from a network")
-
-```
-
-**Whats wrong with below code:::**
-
-
-```python
-stream = Stream()
-print(stream.opened)
-stream.open()
-print(stream.opened)
-```
-
-We should not allow `Stream()` class to be instantiated as above beacuse `Stream()` is abstruct idea... we don't know what type of stream we are talking about?? is it  `FileStream` or `NetworkStream`
-
-
-```python
-from abc import ABC,abstractmethod
-```
-
-
-```python
-
-class InvalidOperationError(Exception):
-    pass
-
-class Stream(ABC):
-    def __init__(self):
-        self.opened = False
-
-    def open(self):
-        if self.opened:
-            raise InvalidOperationError("Stream is Already opened")
-        self.opened = True
-
-    def close(self):
-        if self.opened:
-            raise InvalidOperationError("Stream is Already opened")
-        self.opened = True
-
-    @abstractmethod
-    def read(self):
-        pass
-
-class FileStream(Stream):
-    def read(self):
-        print("Reading data from a file")
-
-
-class NetworkStream(Stream):
-    def read(self):
-        print("Reading data from a network")
-
-```
-
-> abstruct class can't be instantiated
-
-
-```python
-stream = Stream()
-stream.open()
-```
-
-
-    ---------------------------------------------------------------------------
-
-    TypeError                                 Traceback (most recent call last)
-
-    <ipython-input-24-1456ce223969> in <module>
-    ----> 1 stream = Stream()
-          2 stream.open()
-
-
-    TypeError: Can't instantiate abstract class Stream with abstract methods read
-
-
-> Also we now  must implement `read()` method
-
-
-```python
-class MemoryStream(Stream):
-    pass
-
-mem = MemoryStream()
-```
-
-
-    ---------------------------------------------------------------------------
-
-    TypeError                                 Traceback (most recent call last)
-
-    <ipython-input-25-e4845ed35a73> in <module>
-          2     pass
-          3
-    ----> 4 mem = MemoryStream()
-
-
-    TypeError: Can't instantiate abstract class MemoryStream with abstract methods read
-
-
-
-```python
-class MemoryStream(Stream):
-    def read():
-        print("Memory Stream")
-
-mem = MemoryStream()
-mem.open()
-print(mem.opened)
-```
-
-    True
-
-
 ## Polymorphism
 
 - One function Name can have different functionality.
@@ -1200,36 +927,30 @@ print(mem.opened)
 
 
 ```python
-from abc import ABC,abstractmethod
-
-class UIControl(ABC):
-    @abstractmethod
-    def draw(self):
+class Animal:
+    def speak(self):
         pass
 
-class TextBox(UIControl):
-    def draw(self):
-        print("TextBox...")
+class Dog(Animal):
+    def speak(self):
+        return "Woof!"
 
-class DropDownList(UIControl):
-    def draw(self):
-        print("DropDownList....")
+class Cat(Animal):
+    def speak(self):
+        return "Meow!"
 
+# Polymorphic behavior
+def animal_sound(animal):
+    return animal.speak()
 
-def draw(controls):
-    for c in controls:
-        c.draw()
+dog = Dog()
+cat = Cat()
+
+print(animal_sound(dog))  # Output: "Woof!"
+print(animal_sound(cat))  # Output: "Meow!"
+
 ```
 
-
-```python
-
-ddl = DropDownList()
-txtbx = TextBox()
-
-draw([ddl,txtbx])
-```
-
-    DropDownList....
-    TextBox...
+    Woof!
+    Meow!
 
