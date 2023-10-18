@@ -610,6 +610,13 @@ Keymap:
 imap jj <Esc>
 ```
 
+### Colab
+
+```
+:imap jj <Esc>
+```
+
+
 ## Unicodes
 
 #### LINKS
