@@ -106,32 +106,34 @@ You can easily define your own snippets without any extension. To create or edit
 
 [Oh My Posh](https://github.com/jandedobbeleer/oh-my-posh)
 
-PowerShell Installation:
+1. Winget Installation:
 
 ```bash
-Install-Module oh-my-posh -Scope CurrentUser
+winget install JanDeDobbeleer.OhMyPosh -s winget
 ```
 
-To see, List all available themes, run:
+2. configure your shell to use Oh My Posh:
 
+- (Optional) make sure to create the profile first:
 ```bash
-Get-PoshThemes
+New-Item -Path $PROFILE -Type File -Force
 ```
+`C:\Users\u\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1` file will be created:
 
-Open PowerShell profile in Notepad with the following command:
+
+- Open PowerShell profile in Notepad with the following command:
 
 ```bash
 notepad $PROFILE
 ```
 
-`C:\Users\u\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1` file will open:
-
-To set the theme, add the following line to the file:
+Then add the following line:
 
 ```bash
-Set-PoshPrompt -Theme emodipt
-# Set-PoshPrompt -Theme <theme_name>
+oh-my-posh init pwsh --config 'them_json_path' | Invoke-Expression
 ```
+ex: `them_json_path`:  `C:/Users/x/pure.omp.json`
+
 
 ##### Install auto-suggestions
 
