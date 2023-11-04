@@ -155,11 +155,7 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 Complete PowerShell profile:
 
 ```bash
-# Install-Module oh-my-posh -Scope CurrentUser
-Import-Module oh-my-posh
-# Get-PoshThemes
-Set-PoshPrompt -Theme emodipt
-# Install-Module PSReadLine -Force
+oh-my-posh init pwsh --config 'C:/Users/x/pure.omp.json' | Invoke-Expression
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -PredictionViewStyle ListView
 ```
