@@ -157,7 +157,7 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 Complete PowerShell profile:
 
 ```bash
-oh-my-posh init pwsh --config 'C:/Users/x/pure.omp.json' | Invoke-Expression
+oh-my-posh init pwsh --config 'C:/Users/x/star.omp.json' | Invoke-Expression
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -PredictionViewStyle ListView
 ```
