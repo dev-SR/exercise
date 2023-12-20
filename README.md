@@ -8,16 +8,11 @@
       - [For Windows Terminal](#for-windows-terminal)
         - [Install auto-suggestions](#install-auto-suggestions)
   - [Markdown Guide](#markdown-guide)
-    - [Cheatsheets](#cheatsheets)
     - [Aligning images](#aligning-images)
-      - [`left` alignment](#left-alignment)
-      - [`right` alignment](#right-alignment)
-      - [`center` alignment example](#center-alignment-example)
     - [Mathematical Formula in markdown](#mathematical-formula-in-markdown)
       - [Writing inline expressions with `$`:](#writing-inline-expressions-with-)
       - [Writing expressions as blocks - with `$$` | `'''math`:](#writing-expressions-as-blocks---with---math)
   - [GIT and GITHUB 🚀🚀](#git-and-github-)
-    - [Gist](#gist)
     - [Clear Git Cache](#clear-git-cache)
       - [Clear Entire Git Cache](#clear-entire-git-cache)
     - [Git Alias 🚀🚀](#git-alias-)
@@ -38,10 +33,10 @@
     - [error while pushing: RPC failed](#error-while-pushing-rpc-failed)
   - [Creating Snippets 🚀🚀](#creating-snippets-)
     - [Live Templates in JetBrains IDE's](#live-templates-in-jetbrains-ides)
-    - [VSCode Snippets](#vscode-snippets)
   - [Vim](#vim)
     - [Linux(ubuntu)](#linuxubuntu)
     - [Intellij](#intellij)
+    - [Commands](#commands)
   - [Unicodes](#unicodes)
       - [LINKS](#links)
       - [Examples](#examples)
@@ -164,54 +159,13 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 
 ## Markdown Guide
 
-
-<div id="cheatsheet"/>
-
-### Cheatsheets
-
-> [Cheatsheet-1](https://www.markdownguide.org/basic-syntax/)
-
-> [Cheatsheet-1](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet)
-
 ### Aligning images
 
-#### `left` alignment
-
-<img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100"/>
-
-This is the code you need to align images to the left:
-
-```
-<img align="left" width="100" height="100" src="http://www.fillmurray.com/100/100"/>
-```
-
----
-
-#### `right` alignment
-
-<img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100"/>
-
-This is the code you need to align images to the right:
-
-```
-<img align="right" width="100" height="100" src="http://www.fillmurray.com/100/100"/>
-```
-
----
-
-#### `center` alignment example
-
+```html
 <p align="center">
-  <img width="460" height="300" src="http://www.fillmurray.com/460/300"/>
-</p>
-
-```
-<p align="center">
-  <img width="460" height="300" src="http://www.fillmurray.com/460/300"/>
+<img src="img/file_name" alt="file_name" width="width00px"/>
 </p>
 ```
-
-<div id="math"/>
 
 ### Mathematical Formula in markdown
 
@@ -235,21 +189,7 @@ $$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \
 
 $$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)$$
 
-Alternatively, you can use the `'''math` code block syntax to display a math expression as a block. With this syntax, you don't need to use $$ delimiters.
-
-```bash
-```math\sqrt{3}```
-```
-
-```math
-\sqrt{3}
-```
-
 ## GIT and GITHUB 🚀🚀
-
-### Gist
-
-[Gist](https://gist.github.com/dev-SR)
 
 ### Clear Git Cache
 
@@ -544,37 +484,6 @@ for(int $INDEX$ = 0; $INDEX$ < $LIMIT$; $INDEX$++) {
 <img src="img/sn.gif" alt="sn.gif" width="700px"/>
 </div>
 
-### VSCode Snippets
-
-```json
-{
- // Place your snippets for markdown here. Each snippet is defined under a snippet name and has a prefix, body and
- // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
- // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the
- // same ids are connected.
- // Example:
- // "Print to console": {
- //  "prefix": "log",
- //  "body": [
- //   "console.log('$1');",
- //   "$2"
- //  ],
- //  "description": "Log output to console"
- // }
- "markdown_image": {
-  "prefix": "!m-img",
-  "body": [
-   "<div align=\"center\">",
-   "<img src=\"img/${1:file_name}\" alt=\"${1:alt_text}\" width=\"${2:width}00px\"/>",
-   "</div>"
-  ],
-  "description": "markdown_image"
- }
-}
-```
-
-- [snippet-generator](https://snippet-generator.app/?description=&tabtrigger=&snippet=+&mode=vscode)
-
 ## Vim
 
 ### Linux(ubuntu)
@@ -609,6 +518,76 @@ Keymap:
 ```bash
 imap jj <Esc>
 ```
+
+### Commands
+
+**Moving Around:**
+
+- Move By Char
+  - `h` - move left one character
+  - `j` - move down one line
+  - `k` - move up one line
+  - `l` - move right one character
+- Move by Word
+  - `w` - move forward one word
+  - `b` - move backward one word
+- Line
+  - `0` - move to the beginning of the line
+  - `Ctrl+6` - move to the first non-blank character of the line
+  - `Ctrl+4` - move to the end of the line
+  - `G` - move to the last line of the file
+  - `gg` - move to the first line of the file
+- Page Jump
+  - `Ctrl+d` - **half page down**
+  - `Ctrl+u` - **half page up**
+  - `Ctrl+f` - **page down**
+  - `Ctrl+b` - **page up**
+  - `H` - move to the **top of the visible screen**
+  - `M` - move to the **middle of the visible screen**
+  - `L` - move to the **bottom of the visible screen**
+- Match Moving
+  - `%` - **move to matching parenthesis, bracket, or brace**
+
+**Editing Text:**
+
+- Insert Mode
+  - `i` - insert text before the cursor
+  - `a` - append text after the cursor
+  - `o` - open a new line below the current line
+  - `O` - open a new line above the current line
+- Delete
+  - `x` - delete the character under the cursor
+- - `d` - delete the selected text
+  - `dw` - delete the current word
+  - `dd` - delete the current line
+  - `D` - delete from the cursor to the end of the line
+- Copy & Paste
+  - `y` - yank (copy) the selected text
+  - `yw` - yank (copy) the current word
+  - `yy` - yank (copy) the current line
+  - `p` - paste the yanked text after the cursor
+  - `P` - paste the yanked text before the cursor
+- Undo & Redo
+  - `u` - undo the last change
+  - `Ctrl+r` - redo the last undone change
+
+**Searching and Replacing:**
+
+- `/pattern` - search for the specified pattern
+- `n` - find the next occurrence of the pattern
+- `N` - find the previous occurrence of the pattern
+- `:s/old/new/g` - replace all occurrences of "old" with "new" on the current line
+- `:%s/old/new/g` - replace all occurrences of "old" with "new" in the entire file
+
+**Additional Useful Commands:**
+
+- `>` - **indent the selected lines**
+- `<` - **unindent the selected lines**
+- `%` - jump to the matching parenthesis, bracket, or brace
+- `zz` - center the current line on the screen
+
+
+
 
 ## Unicodes
 
