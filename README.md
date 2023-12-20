@@ -38,7 +38,7 @@
       - [Linux(ubuntu)](#linuxubuntu)
       - [Intellij](#intellij)
       - [Colab](#colab)
-    - [Commands](#commands)
+    - [🔥Vim Commands](#vim-commands)
   - [Unicode](#unicode)
     - [LINKS](#links)
     - [Examples](#examples)
@@ -527,7 +527,7 @@ imap jj <Esc>
 :imap jj <Esc>
 ```
 
-### Commands
+### 🔥Vim Commands
 
 **Moving Around:**
 
@@ -568,33 +568,77 @@ imap jj <Esc>
 - - `d` - delete the selected text
   - `dw` - delete the current word
   - `dd` - delete the current line
-  - `D` - delete from the cursor to the end of the line
+  - `D` - **delete from the cursor to the end of the line**
+
 - Copy & Paste
   - `y` - yank (copy) the selected text
   - `yw` - yank (copy) the current word
   - `yy` - yank (copy) the current line
   - `p` - paste the yanked text after the cursor
   - `P` - paste the yanked text before the cursor
+
 - Undo & Redo
   - `u` - undo the last change
   - `Ctrl+r` - redo the last undone change
 
 **Searching and Replacing:**
 
-- `/pattern` - search for the specified pattern
-- `n` - find the next occurrence of the pattern
-- `N` - find the previous occurrence of the pattern
-- `:s/old/new/g` - replace all occurrences of "old" with "new" on the current line
-- `:%s/old/new/g` - replace all occurrences of "old" with "new" in the entire file
+- `/pattern` - **search for the specified pattern**
+- `n` - **find the next occurrence of the pattern**
+- `N` - **find the previous occurrence of the pattern**
+- `:s/old/new/g` - **replace all occurrences of "old" with "new" on the current line**
+- `:%s/old/new/g` - **replace all occurrences of "old" with "new" in the entire file**
+- `:1,10s/old/new/g` - **replace all occurrences of "old" with "new" between lines 1 and 10**
 
 **Additional Useful Commands:**
 
 - `>` - **indent the selected lines**
 - `<` - **unindent the selected lines**
-- `zz` - center the current line on the screen
+- `zz` - **center the current line on the screen**
+- `.` - **repeat the last command**
+- `3.` - **repeat the last command 3 times**
+
+**Using Marks for Navigation:**
+
+- `ma` - **set a mark at the current position**
+- ``a` - **jump back to mark "a"**
+- `'a` - **jump back to mark "a" in the same line**
 
 **Here are some examples of combining Vim commands for advanced operations:**
 
+- Combining Movement and Editing:
+  - `d2w` - delete the next two words
+  - `di(` - **delete the text inside (parentheses)**
+  - `ci(` - **delete the text inside (parentheses) and enter insert mode**
+  - `yi(` -**yank the text inside (parentheses)**
+
+- Using Visual Mode for Complex Edits.
+  - `viw`- select the inner word
+  - `vap`- select the paragraph
+  - `ggVG` - select the entire file
+  - For Code block like this:
+
+    ```bash
+    if (true){
+      line1
+      line2
+      line3
+      line4
+    }
+    ```
+
+    - `V6jd` -**visually select the next 6 lines and delete them**
+    - `f{V%d` - **find first `{` on the current line, visually select to the matching `}`, and delete the contents**
+    - `vi{d` - **visually select the contents inside `{}`, and delete them**
+    - `va{d` - **visually select the contents inside `{}` along with the braces, and delete them**
+    - `va{Vd` - **visually select the contents inside `{}` along with the braces and the line, and delete them**
+
+**Using Macros for Automation:**
+
+- `qa` - start recording a macro in register "a"
+- `<actions to record>`
+- `q` - stop recording the macro
+- `@a` - replay macro "a"
 
 
 ## Unicode
