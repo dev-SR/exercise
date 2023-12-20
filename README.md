@@ -34,12 +34,14 @@
   - [Creating Snippets 🚀🚀](#creating-snippets-)
     - [Live Templates in JetBrains IDE's](#live-templates-in-jetbrains-ides)
   - [Vim](#vim)
-    - [Linux(ubuntu)](#linuxubuntu)
-    - [Intellij](#intellij)
+    - [Setup and Configure](#setup-and-configure)
+      - [Linux(ubuntu)](#linuxubuntu)
+      - [Intellij](#intellij)
+      - [Colab](#colab)
     - [Commands](#commands)
-  - [Unicodes](#unicodes)
-      - [LINKS](#links)
-      - [Examples](#examples)
+  - [Unicode](#unicode)
+    - [LINKS](#links)
+    - [Examples](#examples)
 
 ## Vs Code Setting
 
@@ -101,32 +103,36 @@ You can easily define your own snippets without any extension. To create or edit
 
 [Oh My Posh](https://github.com/jandedobbeleer/oh-my-posh)
 
-PowerShell Installation:
+1. Winget Installation:
 
 ```bash
-Install-Module oh-my-posh -Scope CurrentUser
+winget install JanDeDobbeleer.OhMyPosh -s winget
 ```
 
-To see, List all available themes, run:
+2. configure your shell to use Oh My Posh:
+
+- (Optional) make sure to create the profile first:
+```bash
+New-Item -Path $PROFILE -Type File -Force
+```
+`C:\Users\u\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1` file will be created:
+
+
+- Open PowerShell profile in Notepad with the following command:
 
 ```bash
-Get-PoshThemes
+notepad $profile
+#or
+code $profile
 ```
 
-Open PowerShell profile in Notepad with the following command:
+Then add the following line:
 
 ```bash
-notepad $PROFILE
+oh-my-posh init pwsh --config 'them_json_path' | Invoke-Expression
 ```
+ex: `them_json_path`:  `C:/Users/x/pure.omp.json`
 
-`C:\Users\u\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1` file will open:
-
-To set the theme, add the following line to the file:
-
-```bash
-Set-PoshPrompt -Theme emodipt
-# Set-PoshPrompt -Theme <theme_name>
-```
 
 ##### Install auto-suggestions
 
@@ -148,11 +154,7 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 Complete PowerShell profile:
 
 ```bash
-# Install-Module oh-my-posh -Scope CurrentUser
-Import-Module oh-my-posh
-# Get-PoshThemes
-Set-PoshPrompt -Theme emodipt
-# Install-Module PSReadLine -Force
+oh-my-posh init pwsh --config 'C:/Users/x/star.omp.json' | Invoke-Expression
 Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -PredictionViewStyle ListView
 ```
@@ -486,14 +488,14 @@ for(int $INDEX$ = 0; $INDEX$ < $LIMIT$; $INDEX$++) {
 
 ## Vim
 
-### Linux(ubuntu)
+### Setup and Configure
+
+#### Linux(ubuntu)
 
 Install Vim (Enhanced version of vi which is preinstalled)
 
 ```bash
-
 sudo apt install vim
-
 ```
 
 Configure .vimrc
@@ -505,18 +507,24 @@ ls -a | grep .vim
 vim .vimrc
 ```
 
-```vim
+```bash
 inoremap jj <Esc>
 syntax on
 set number
 ```
 
-### Intellij
+#### Intellij
 
 Keymap:
 
 ```bash
 imap jj <Esc>
+```
+
+#### Colab
+
+```bash
+:imap jj <Esc>
 ```
 
 ### Commands
@@ -583,21 +591,21 @@ imap jj <Esc>
 
 - `>` - **indent the selected lines**
 - `<` - **unindent the selected lines**
-- `%` - jump to the matching parenthesis, bracket, or brace
 - `zz` - center the current line on the screen
 
+**Here are some examples of combining Vim commands for advanced operations:**
 
 
 
-## Unicodes
+## Unicode
 
-#### LINKS
+### LINKS
 
 [Arrows](https://unicode-table.com/en/sets/arrow-symbols/)
 
 [Box Drawing](https://unicode-table.com/en/blocks/box-drawing/)
 
-#### Examples
+### Examples
 
 ```
     /**
