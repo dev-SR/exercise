@@ -589,6 +589,10 @@ imap jj <Esc>
 - `:s/old/new/g` - **replace all occurrences of "old" with "new" on the current line**
 - `:%s/old/new/g` - **replace all occurrences of "old" with "new" in the entire file**
 - `:1,10s/old/new/g` - **replace all occurrences of "old" with "new" between lines 1 and 10**
+- Replace visually selected text
+  1. select the text in visual mode
+  2. yank the text with `y`
+  3. `:%s/<C-r>0/new_text`
 
 **Additional Useful Commands:**
 
