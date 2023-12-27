@@ -592,9 +592,7 @@ imap jj <Esc>
 - Replace visually selected text
   1. select the text in visual mode
   2. yank the text with `y`
-  3. `:%s/<C-r>0/new_text`
-     
-`0` is the yank register.
+  3. `:%s/<C-r>0/new_text` (`0` is the yank register)
 
 
 **Additional Useful Commands:**
