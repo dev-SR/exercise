@@ -159,6 +159,8 @@ Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -PredictionViewStyle ListView
 ```
 
+> Get Powershell Commad History: `(Get-PSReadlineOption).HistorySavePath`
+
 ## Markdown Guide
 
 ### Aligning images
