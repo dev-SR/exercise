@@ -1,0 +1,16 @@
+{
+	"name": "TS",
+	"version": "1.0.0",
+	"description": "",
+	"scripts": {
+		"start": "tsx --no-warnings --watch main.ts"
+	},
+	"keywords": [],
+	"author": "Soikat Rahman",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/fs-extra": "^11.0.4",
+		"@types/node": "^20.10.6",
+		"tsx": "^4.7.0"
+	}
+}

@@ -1,11 +1,11 @@
 # File Processing
 
 - [File Processing](#file-processing)
-  - [Working Directory:`process.cwd()` vs `__dirname`](#working-directoryprocesscwd-vs-__dirname)
   - [Path](#path)
     - [Joining paths](#joining-paths)
       - [with cwd()](#with-cwd)
     - [Parsing paths](#parsing-paths)
+  - [Working Directory:`process.cwd()` vs `__dirname`](#working-directoryprocesscwd-vs-__dirname)
   - [`fs` module](#fs-module)
     - [Comparing the `fs` module APIs](#comparing-the-fs-module-apis)
       - [Blocking Way: Synchronous API](#blocking-way-synchronous-api)
@@ -20,47 +20,14 @@
     - [⭐ `fs.lstat()` to check if a path is a file or directory](#-fslstat-to-check-if-a-path-is-a-file-or-directory)
     - [Copying files with `fs.copyFile` and `fs.cp()`](#copying-files-with-fscopyfile-and-fscp)
       - [`fs.copyFile()`](#fscopyfile)
-      - [🔥🔥 `fs.cp()`](#-fscp)
+      - [🔥 `fs.cp()`](#-fscp)
+      - [🔥 Coping full directory with ignore list with 'fs-extra'](#-coping-full-directory-with-ignore-list-with-fs-extra)
         - [Copy the entire directory, including subdirectories](#copy-the-entire-directory-including-subdirectories)
     - [create,remove,rename dir](#createremoverename-dir)
 
 Node.js has a module called `PATH` to interact with file and directory paths. Node.js has a module called `FS` to interact with file and directory systems i.e., create, modify and delete while listing files.
 
 - [https://blog.logrocket.com/file-processing-node-js-comprehensive-guide/](https://blog.logrocket.com/file-processing-node-js-comprehensive-guide/)
-
-## Working Directory:`process.cwd()` vs `__dirname`
-
-- `process.cwd()` returns the value of directory where we run the node process, whereas
-- `__dirname` returns the value of directory where the current running file resides.
-
-```bash
-Project
-├── main.js
-└──lib
-   └── script.js
-```
-
-`main.js`:
-
-```typescript
-console.log(process.cwd())
-// C:\Project
-console.log(__dirname)
-// C:\Project
-console.log(__dirname === process.cwd())
-// true
-```
-
-`script.js`:
-
-```typescript
-console.log(process.cwd())
-// C:\Project
-console.log(__dirname)
-// C:\Project\lib
-console.log(__dirname === process.cwd())
-// false
-```
 
 ## Path
 
@@ -125,6 +92,53 @@ we have single functions as well to get the file name, extension, and directory 
 console.log(path.basename(pathName)); // test.txt
 console.log(path.dirname(pathName)); // /path/to
 console.log(path.extname(pathName)); // .txt
+```
+
+
+## Working Directory:`process.cwd()` vs `__dirname`
+
+- `process.cwd()` - from where we run the node process by `node main.js`
+- `__dirname` - where the source file is located
+
+```bash?
+Project
+└──lib
+|   └── script.js
+├── main.js
+
+```
+
+`script.ts`:
+
+```typescript
+export const run1 = () => console.log(__dirname, process.cwd(), __dirname === process.cwd());
+```
+
+`main.ts`:
+
+```typescript
+import { run1 } from '@/script';
+export const run2 = () => console.log(__dirname, process.cwd(), __dirname === process.cwd());
+
+run1();
+run2();
+```
+
+Output:
+
+```bash
+~/Project/lib ~/Project false
+~/Project ~/Project true
+```
+
+Similarly, `__filename` is the full path of the current file. `__filename` is the same as `__dirname` + `path.basename(__filename)`.
+
+
+If you have enabled ES modules in Node.js (via `"type": "module"` in `package.json`) or using ES modules through a module bundler like Webpack, you’ll no longer have access to `__dirname` variables. In that case, to get the current file path:
+
+```typescript
+import path from 'path';
+const __dirname = path.resolve();
 ```
 
 ## `fs` module
@@ -293,8 +307,8 @@ console.log(files);
 // Asynchronous version
 import fs from 'fs/promises';
 async function readFile() {
-	const files = await fs.readdir(dirPath);
-	console.log(files);
+ const files = await fs.readdir(dirPath);
+ console.log(files);
 }
 ```
 
@@ -308,18 +322,18 @@ Get only files with full path
 
 ```typescript
 const getOnlyFileList = (dirName: string) => {
-	let files: string[] = [];
-	const items = fs.readdirSync(dirName, { withFileTypes: true });
+ let files: string[] = [];
+ const items = fs.readdirSync(dirName, { withFileTypes: true });
 
-	for (const item of items) {
-		// {withFileTypes: true} is required to access the isFile(),isDirectory method
-		if (!item.isDirectory()) {
-			const fullPath = join(dirName, item.name);
-			files.push(fullPath);
-		}
-	}
+ for (const item of items) {
+  // {withFileTypes: true} is required to access the isFile(),isDirectory method
+  if (!item.isDirectory()) {
+   const fullPath = join(dirName, item.name);
+   files.push(fullPath);
+  }
+ }
 
-	return files;
+ return files;
 };
 const only_files = getOnlyFileList(dirPath);
 console.log(only_files);
@@ -339,24 +353,24 @@ Output:
 
 ```typescript
 const getAllFileList = (dirName: string) => {
-	let files: string[] = [];
-	const items = fs.readdirSync(dirName, { withFileTypes: true });
+ let files: string[] = [];
+ const items = fs.readdirSync(dirName, { withFileTypes: true });
 
-	for (const item of items) {
-		const fullPath = join(dirName, item.name);
-		if (item.isDirectory()) {
-			files.push(fullPath); //(optional) push also the directory name to the array
-			// recursive call
-			const oldFiles = [...files];
-			const subFiles = getAllFileList(fullPath);
-			files = oldFiles.concat(subFiles);
-			// files = [...files, ...subFiles];
-		} else {
-			files.push(fullPath);
-		}
-	}
+ for (const item of items) {
+  const fullPath = join(dirName, item.name);
+  if (item.isDirectory()) {
+   files.push(fullPath); //(optional) push also the directory name to the array
+   // recursive call
+   const oldFiles = [...files];
+   const subFiles = getAllFileList(fullPath);
+   files = oldFiles.concat(subFiles);
+   // files = [...files, ...subFiles];
+  } else {
+   files.push(fullPath);
+  }
+ }
 
-	return files;
+ return files;
 };
 
 const allFiles = getAllFileList(dirPath);
@@ -396,30 +410,30 @@ if (fs.existsSync(path.join(process.cwd(), 'root'))) {
 ```typescript
 const allFiles = getAllFileList(dirPath);
 function isDir(path: string) {
-	try {
-		var stat = fs.lstatSync(path);
-		return stat.isDirectory();
-		/*
-		Objects returned from `fs.stat()` and `fs.lstat()` are of this type.
-		stats.isFile()
-		stats.isDirectory()
-		stats.isBlockDevice()
-		stats.isCharacterDevice()
-		stats.isSymbolicLink() // (only valid with fs.lstat())
-		stats.isFIFO()
-		stats.isSocket()
+ try {
+  var stat = fs.lstatSync(path);
+  return stat.isDirectory();
+  /*
+  Objects returned from `fs.stat()` and `fs.lstat()` are of this type.
+  stats.isFile()
+  stats.isDirectory()
+  stats.isBlockDevice()
+  stats.isCharacterDevice()
+  stats.isSymbolicLink() // (only valid with fs.lstat())
+  stats.isFIFO()
+  stats.isSocket()
 
-		*/
-	} catch (e) {
-		// lstatSync throws an error if path doesn't exist
-		return false;
-	}
+  */
+ } catch (e) {
+  // lstatSync throws an error if path doesn't exist
+  return false;
+ }
 }
 const getSeries: string[] = [];
 allFiles.forEach((file) => {
-	if (isDir(file)) {
-		getSeries.push(file);
-	}
+ if (isDir(file)) {
+  getSeries.push(file);
+ }
 });
 console.log(getSeries);
 ```
@@ -448,7 +462,7 @@ await fsPromises.copyFile('source.txt', 'dest.txt', fs.constants.COPYFILE_EXCL);
 
 Example 1 will overwrite dest.txt if it exists already. In example 2, we pass in the COPYFILE_EXCL flag to override the default behavior and fail if dest.txt exists already.
 
-#### 🔥🔥 `fs.cp()`
+#### 🔥 `fs.cp()`
 
 Starting with version 16.7.0, nodejs has a new `fs.cp()` method that **copies the entire directory structure from src to dest asynchronously, including subdirectories and files.**
 
@@ -457,12 +471,45 @@ This method can copy both a particular file and a directory. The `recursive` pro
 To copy files:
 
 ```typescript
-fs.cp('./a.txt', './aa/b.txt', (err) => {
+fs.cp(sourcePath, destinationPath, { recursive: true }, (err) => {
   if (err) {
     console.error(err);
   }
 });
+
+fs.cpSync(sourcePath, destinationPath, {
+  recursive: true,
+  filter: (src, dest) => {
+    return !src.includes('node_modules');
+  }
+});
 ```
+
+#### 🔥 Coping full directory with ignore list with 'fs-extra'
+
+```typescript
+import path from 'path';
+import fs from 'fs-extra';
+
+export const copy_dir = (sourceDir: string, destinationDir: string, ignoreList: string[] = []) => {
+ fs.copySync(sourceDir, destinationDir, {
+  overwrite: true,
+  filter: (src, dest) => {
+   // Get the relative path of the file/directory
+   const relativePath = path.relative(sourceDir, src);
+   // Check if the relative path matches any pattern in the ignore list
+   return !ignoreList.some((pattern) => relativePath.startsWith(pattern));
+  }
+ });
+};
+
+const sourceDir = path.join(__dirname, 'old');
+const destinationDir = path.join(__dirname, 'new');
+const ignoreList = ['node_modules','.git','.next'];
+
+copy_dir(sourceDir, destinationDir, ignoreList);
+```
+
 
 ##### Copy the entire directory, including subdirectories
 

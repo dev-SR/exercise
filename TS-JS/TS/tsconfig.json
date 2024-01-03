@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"module": "NodeNext",
+		"target": "ES2020",
+		"allowSyntheticDefaultImports": true,
+		"lib": ["esnext", "dom"],
+		"baseUrl": "./",
+		"paths": {
+			"@/*": ["./*"]
+		}
+	},
+	"exclude": ["node_modules", "dist"]
+}
