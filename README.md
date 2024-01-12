@@ -195,53 +195,6 @@ $$\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \
 
 ## GIT and GITHUB 🚀🚀
 
-### Clear Git Cache
-
-[Ref](https://devconnected.com/how-to-clear-git-cache/)
-
-When working with Git, you may want to add some new lines to your gitignore
-files.
-
-However, when listing the files to be committed in your staging area, you
-realize that some of the ignored files are still showing up.
-
-In this case, you may need to clear your Git cache.
-
-**The easiest way to clear your Git cache is to use the “git rm” command with
-the `–cached` option.**
-
-```properties
- git rm --cached filename
-```
-
-> **Note** o not forget the `--cached` option or your file will be deleted from
-> the filesystem.
-
-#### Clear Entire Git Cache
-
-In some cases, you may want to clear the cache of your entire Git staging area.
-
-This is particularly useful when you added multiple files that you want now to
-be ignored via your `.gitignore` file.
-
-**To clear your entire Git cache, use the `"git rm"` command with the `"-r"`
-option for recursive.**
-
-1. apply below cmd to un-stage all files:
-
-```properties
- git rm -r --cached .
-```
-
-2. add intended file to `.gitignore`
-3. then, get all files back simply by :
-
-```properties
- git add .
-```
-
-<div id="alias"/>
-
 ### Git Alias 🚀🚀
 
 [gist](https://gist.github.com/dev-SR/bf82b701864366b77b3320b543fbef75)
@@ -301,11 +254,11 @@ Absolutely, I'd be happy to provide you with some common Git branching commands.
 
 3. **Create and Switch to a New Branch:**
    - `git checkout -b <new-branch-name>`: Creates and switches to a new branch in one command.
-   - Alias: `git ckb <new-branch-name>`
+   - Alias: **`git ckb <new-branch-name>`**
 
 4. **List Branches:**
    - `git branch`: Lists all the branches in the repository. The current branch is indicated with an asterisk (*).
-   - Alias: `git b`
+   - Alias: **`git b`**
 
 5. **Rename a Branch:**
    - `git branch -m <new-branch-name>`: Renames the current branch to the specified new name.
@@ -314,13 +267,13 @@ Absolutely, I'd be happy to provide you with some common Git branching commands.
 6. **Delete a Branch:**
    - `git branch -d <branch-name>`: Deletes a branch. The branch must be fully merged into the current branch.
    - `git branch -D <branch-name>`: Forces deletion of a branch, even if it's not fully merged.
-   - Alias: `git bd`
+   - Alias: **`git bd`**
 
 7. **Merge Branches:**
    - `git checkout <target-branch>`: Switches to the branch you want to merge into.
-     - Alias: `git ck <target-branch>`
+     - Alias: **`git ck <target-branch>`**
    - `git merge <source-branch>`: Merges the changes from the source branch into the target branch.
-     - Alias: `git m <source-branch>`
+     - Alias: **`git m <source-branch>`**
 
 8. **Rebase Branches:**
    - `git rebase <base-branch>`: Moves the commits from the current branch onto the tip of the base branch, effectively replaying your changes on top of it.
@@ -335,6 +288,41 @@ Absolutely, I'd be happy to provide you with some common Git branching commands.
 Remember to always commit your changes before performing any branch operations, as Git doesn't allow you to switch branches with uncommitted changes in most cases. It's also a good practice to frequently pull the latest changes from the remote repository to ensure your branches are up to date.
 
 Please exercise caution when using these commands, especially when force-deleting branches or performing rebases, as they can rewrite commit history and cause data loss if not used correctly.
+
+### Creating a pull request
+
+1. **Fork the Repository:**
+   - Fork the repository to your GitHub account.
+
+2. **Clone the Repository:**
+   - Clone the forked repository to your local machine using `git clone`.
+
+3. **Create a Branch:**
+   - Create a new branch for your changes using `git checkout -b branch-name`.
+
+4. **Make Changes:**
+   - Make the necessary changes to the codebase.
+
+5. **Commit Changes:**
+   - Commit your changes using `git commit -m "Descriptive message"`.
+
+6. **Push Changes:**
+   - Push your branch to your GitHub repository with `git push origin branch-name`.
+
+7. **Create Pull Request:**
+   - Go to the original repository on GitHub.
+   - Click on "New Pull Request".
+   - Select your branch and the branch you want to merge into.
+
+8. **Provide Details:**
+   - Write a concise title and description for your pull request.
+
+9. **Submit Pull Request:**
+   - Submit your pull request.
+
+10. **Review and Merge:**
+   - Await feedback and address any comments.
+   - Once approved, the maintainers will merge your changes into the main branch.
 
 ### ☁️🩹Merging Remote Changes
 
@@ -439,6 +427,52 @@ Remote repo has changes that we do not have locally.
 ```bash
 git push --force
 ```
+### Clear Git Cache
+
+[Ref](https://devconnected.com/how-to-clear-git-cache/)
+
+When working with Git, you may want to add some new lines to your gitignore
+files.
+
+However, when listing the files to be committed in your staging area, you
+realize that some of the ignored files are still showing up.
+
+In this case, you may need to clear your Git cache.
+
+**The easiest way to clear your Git cache is to use the “git rm” command with
+the `–cached` option.**
+
+```properties
+ git rm --cached filename
+```
+
+> **Note** o not forget the `--cached` option or your file will be deleted from
+> the filesystem.
+
+#### Clear Entire Git Cache
+
+In some cases, you may want to clear the cache of your entire Git staging area.
+
+This is particularly useful when you added multiple files that you want now to
+be ignored via your `.gitignore` file.
+
+**To clear your entire Git cache, use the `"git rm"` command with the `"-r"`
+option for recursive.**
+
+1. apply below cmd to un-stage all files:
+
+```properties
+ git rm -r --cached .
+```
+
+2. add intended file to `.gitignore`
+3. then, get all files back simply by :
+
+```properties
+ git add .
+```
+
+<div id="alias"/>
 
 ### error while pushing: RPC failed
 
