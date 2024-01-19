@@ -159,7 +159,7 @@ Set-PSReadLineOption -PredictionSource History
 Set-PSReadLineOption -PredictionViewStyle ListView
 ```
 
-> Get Powershell Commad History: `(Get-PSReadlineOption).HistorySavePath`
+> Edit Powershell Commad History: `code (Get-PSReadlineOption).HistorySavePath`
 
 ## Markdown Guide
 
