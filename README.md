@@ -160,6 +160,22 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 ```
 
 > Edit Powershell Commad History: `code (Get-PSReadlineOption).HistorySavePath`
+> Clearing duplicate histories:
+
+```py
+# remove_duplicates_commad_history.py
+input_path = r'C:\Users\x\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt'
+output_path = input_path
+
+with open(input_path, 'r') as file:
+    lines = file.readlines()
+
+unique_lines = list(set(lines))
+
+with open(output_path, 'w') as file:
+    file.writelines(unique_lines)
+
+```
 
 ## Markdown Guide
 
