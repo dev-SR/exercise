@@ -649,7 +649,7 @@ imap jj <Esc>
 
 **Additional Useful Commands:**
 
-- `>` - **indent the selected lines**
+- `>` - **indent the selected lines** , (`>>/Shift..` in vs-code )
 - `<` - **unindent the selected lines**
 - `zz` - **center the current line on the screen**
 - `.` - **repeat the last command**
