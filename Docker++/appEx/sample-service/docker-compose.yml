@@ -1,0 +1,24 @@
+version: '3'
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    develop:
+      watch:
+        - action: sync
+          path: ./src
+          target: /sample-service/src
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    ports:
+      - '3000:3000'
+
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    ports:
+      - '3001:3001'
