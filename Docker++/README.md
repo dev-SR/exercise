@@ -1,0 +1,256 @@
+# Docker
+
+- [Docker](#docker)
+  - [Introduction](#introduction)
+  - [Building basic docker image](#building-basic-docker-image)
+    - [2 - Building Docker images for development and production](#2---building-docker-images-for-development-and-production)
+
+## Introduction
+
+Developing, testing, and deploying applications consistently across various environments can be complex and error-prone due to differences in software versions, dependencies, and configurations. Docker addresses this by providing containerization, which packages an application and its dependencies into a single, portable container that runs reliably on any environment that supports Docker, ensuring consistency and efficiency throughout the development lifecycle.
+
+In short, Docker is a tool for creating and running applications in isolated environments called containers. Key ideas include:
+
+1. **Images**: A Docker image is a template with instructions to create a container. It can be used to create multiple containers.
+2. **Containers**: A Docker container is an instance of an image, packaging an application and its dependencies, running in isolated environments.
+
+
+<p align="center">
+<img src="img/doc1.jpg" alt="doc1.jpg" width="500px"/>
+</p>
+
+This containers then can be run consistently on any system, ensuring that the application works the same way regardless of the environment.
+
+<p align="center">
+<img src="img/doc2.jpg" alt="doc2.jpg" width="500px"/>
+</p>
+
+There can be multiple containers in a microservice structure that work together to form a complete application, with each container handling a specific service or function independently.
+
+<p align="center">
+<img src="img/doc3.jpg" alt="doc3.jpg" width="500px"/>
+</p>
+
+## Building basic docker image
+
+Let's start with basic sample-service express project with following project setup:
+
+```bash
+sample-service
+├── Dockerfile
+├── .dockerignore
+├── package.json
+└── src
+    └── index.js
+```
+
+`index.js`
+
+```javascript
+import express from 'express';
+
+const app = express();
+const port = 3000;
+
+app.get('', async (req, res) => {
+	res.json({ message: 'Hello World!' });
+});
+
+app.listen(port, () => {
+	console.log(`Service running at http://localhost:${port}`);
+});
+
+```
+
+`package.json`
+
+```json
+{
+  "name": "sample-service",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}
+```
+
+- **Dockerfile**: This file contains instructions to build a Docker image. It specifies the base image - node.js to run the application, commands to copies the project files to the image, installs dependencies, and starts the application.
+
+`Dockerfile`
+
+```bash
+# Use an official Node runtime as a parent image
+FROM node:alpine
+
+# Set the working directory `in the container` to /sample-service
+WORKDIR /sample-service
+
+# COPY <source> <destination> or
+# COPY <all> <the> <things> <last-arg-is-destination>/:
+# Copy files from your project folder to the working directory in the container, WORKDIR
+COPY package.json pnpm-lock.yaml ./
+# Here './' is the relative path to the working directory in the container
+
+# Install any needed packages
+RUN npm install -g pnpm && pnpm install
+# Copy the current directory contents into the container at /sample-service
+COPY . .
+# We copied the package.jsons file first separately to take advantage of Docker’s caching mechanism.
+
+# Defining Entrypoints
+# Run the command to start the application
+CMD ["node", "./src/index.js"]
+```
+
+Here, we are using the official Node.js image as the base image, setting the working directory to `/sample-service`, copying the project files to the image, installing dependencies, and starting the application.
+
+Also note that instead of copying all the files and dirs form the project folder with `COPY . .` command, we copied `package.json` and `pnpm-lock.yaml` first to take advantage of Docker’s caching mechanism. This way, if the `package.json` file hasn’t changed, Docker will use the cached image layer for this step, saving time during the build process.
+
+- `.dockerignore` file: This file specifies files and directories that should be ignored when building the Docker image.
+
+`.dockerignore`
+
+```bash
+node_modules
+```
+
+
+Building the Docker image:
+
+```bash
+# Syntax: docker build -t <image-name:version-tag> <path-to-dockerfile>
+docker build -t sample-service .
+```
+
+Running the Docker image:
+
+```bash
+# Syntax: docker run -p <host-port>:<container-port> <image-name>
+docker run -p 3000:3000 sample-service
+```
+
+Now, you can access the application at `http://localhost:3000` in your browser.
+
+
+
+
+Stopping the Docker container:
+
+```bash
+# List all running containers
+docker ps
+# Stop the container
+docker stop <container-id>
+```
+
+Also to list and delete docker images:
+
+```bash
+# List all Docker images
+docker images
+# Delete a Docker image
+docker rmi <image-id>
+```
+
+### 2 - Building Docker images for development and production
+
+```bash
+sample-service
+├── Dockerfile.prod
+├── Dockerfile.dev
+├── .dockerignore
+├── package.json
+└── src
+    └── index.js
+```
+
+`index.js`
+
+```javascript
+import express from 'express';
+
+const app = express();
+const port = process.env.PORT || 3000;
+const environment = process.env.NODE_ENV || 'development';
+
+app.get('', async (req, res) => {
+	res.json({ message: 'Hello World!' });
+});
+
+app.listen(port, () => {
+	console.log(`Service running at http://localhost:${port} in ${environment} mode.`);
+});
+```
+
+`package.json`
+
+```json
+{
+  "name": "sample-service",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon ./src/index.js",
+    "docker-build:dev": "docker build -t sample-service:dev -f Dockerfile.dev .",
+    "docker-run:dev": "docker run -p 3000:3000 --name sample-service-dev sample-service:dev",
+    "start": "node src/index.js",
+    "docker-build": "docker build -t sample-service:0.0.1 -f Dockerfile.prod .",
+    "docker-run": "docker run -p 3001:3001 --name sample-service-prod sample-service:0.0.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}
+```
+
+`Dockerfile.dev`
+
+```bash
+FROM node:22.3.0-alpine
+ENV NODE_ENV=development
+ENV PORT=3000
+WORKDIR /sample-service
+COPY package.json pnpm-lock.yaml ./
+RUN npm install -g pnpm && pnpm install
+COPY . .
+CMD ["pnpm", "dev"]
+```
+
+`Dockerfile.prod`
+
+```bash
+FROM node:22.3.0-alpine
+ENV NODE_ENV=production
+ENV PORT=3001
+WORKDIR /sample-service
+COPY package.json pnpm-lock.yaml ./
+RUN npm install -g pnpm && pnpm install --prod
+COPY . .
+CMD ["pnpm", "start"]
+```
+
+<p align="center">
+<img src="img/docfiles.jpg" alt="docfiles.jpg" width="600px"/>
+</p>
+

@@ -1,0 +1,8 @@
+FROM node:22.3.0-alpine
+ENV NODE_ENV=development
+ENV PORT=3000
+WORKDIR /sample-service
+COPY package.json pnpm-lock.yaml ./
+RUN npm install -g pnpm && pnpm install
+COPY . .
+CMD ["pnpm", "dev"]

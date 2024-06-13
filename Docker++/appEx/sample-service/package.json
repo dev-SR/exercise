@@ -1,0 +1,24 @@
+{
+  "name": "sample-service",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "nodemon ./src/index.js",
+    "docker-build:dev": "docker build -t sample-service:dev -f Dockerfile.dev .",
+    "docker-run:dev": "docker run -p 3000:3000 --name sample-service-dev sample-service:dev",
+    "start": "node src/index.js",
+    "docker-build": "docker build -t sample-service:0.0.1 -f Dockerfile.prod .",
+    "docker-run": "docker run -p 3001:3001 --name sample-service-prod sample-service:0.0.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}

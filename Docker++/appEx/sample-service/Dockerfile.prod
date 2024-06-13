@@ -1,0 +1,22 @@
+# Use an official Node runtime as a parent image
+FROM node:22.3.0-alpine
+ENV NODE_ENV=production
+ENV PORT=3001
+# Set the working directory `in the container` to /sample-service
+WORKDIR /sample-service
+
+# COPY <source> <destination> or
+# COPY <all> <the> <things> <last-arg-is-destination>/:
+# Copy files from your project folder to the working directory in the container, WORKDIR
+COPY package.json pnpm-lock.yaml ./
+# Here './' is the relative path to the working directory in the container
+
+# Install any needed packages
+RUN npm install -g pnpm && pnpm install --prod
+# Copy the current directory contents into the container at /sample-service
+COPY . .
+# We copied the package.jsons file first separately to take advantage of Docker’s caching mechanism.
+
+# Defining Entrypoints
+# Run the command to start the application
+CMD ["pnpm", "start"]
