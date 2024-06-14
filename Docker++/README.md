@@ -7,6 +7,8 @@
   - [Volumes in Docker](#volumes-in-docker)
   - [Docker Compose - Multi-container applications](#docker-compose---multi-container-applications)
     - [Example express.js development and production setup](#example-expressjs-development-and-production-setup)
+    - [Ex - Docker Compose for Elasticsearch and Kibana](#ex---docker-compose-for-elasticsearch-and-kibana)
+    - [ex 2](#ex-2)
 
 ## Introduction
 
@@ -361,3 +363,105 @@ To build and run the service in production mode:
 ```bash
 docker-compose up --build prod
 ```
+
+### Ex - Docker Compose for Elasticsearch and Kibana
+
+Below is a simple example of a Docker Compose file for Elasticsearch and Kibana. You can create or copy this file using a text editor.
+
+```yml
+services:
+  elasticsearch:
+    image: elasticsearch:7.17.22
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+    networks:
+      - my-network
+
+  kibana:
+    image: kibana:7.17.22
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
+```
+
+Start Elasticsearch and Kibana by running the following command:
+
+```bash
+docker-compose up -d
+```
+
+This command starts the containers in the background. Elasticsearch can be accessed at `http://localhost:9200`, while Kibana is accessible at `http://localhost:5601`.
+
+To stop the containers, you can use the following command in the same directory:
+
+```bash
+docker-compose stop
+```
+
+To remove the containers, you can use the following command:
+
+```bash
+docker-compose down
+```
+
+
+### ex 2
+
+```yml
+services:
+  db:
+    image: postgres:16.3-alpine3.20
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DATABASE: ${POSTGRES_DB}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - 'pgdata:/persisted_data/pgdata'
+    networks:
+      myapp_net:
+
+volumes:
+  pgdata:
+
+networks:
+  myapp_net:
+```
+
+`.env`
+
+```bash
+PORT=9000
+# Postgres
+POSTGRES_DB=DB
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USER=myuser
+POSTGRES_PASSWORD=mypass
+DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
+```
+
+`docker exec -it postgres_db psql -U myuser`
+
+- `\l` - list databases
+- `\c <db> <user>` - connect to database
+- `\dt` - list tables
+- `\q` - quit
+
+
