@@ -597,6 +597,7 @@ imap jj <Esc>
   - `Ctrl+4` - move to the end of the line
   - `G` - move to the last line of the file
   - `gg` - move to the first line of the file
+  - `:n` - Go to the line number 
 - Page Jump
   - `Ctrl+d` - **half page down**
   - `Ctrl+u` - **half page up**
