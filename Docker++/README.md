@@ -429,7 +429,7 @@ services:
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DATABASE: ${POSTGRES_DB}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
@@ -447,13 +447,12 @@ networks:
 `.env`
 
 ```bash
-PORT=9000
 # Postgres
-POSTGRES_DB=DB
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
 POSTGRES_USER=myuser
 POSTGRES_PASSWORD=mypass
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=test_db
 DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}?schema=public
 ```
 
