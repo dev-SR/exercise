@@ -598,7 +598,7 @@ imap jj <Esc>
   - `G` - move to the last line of the file
   - `gg` - move to the first line of the file
   - `:n` - Go to the line number 
-- Page Jump
+- **Page Jump**
   - `Ctrl+d` - **half page down**
   - `Ctrl+u` - **half page up**
   - `Ctrl+f` - **page down**
@@ -606,7 +606,7 @@ imap jj <Esc>
   - `H` - move to the **top of the visible screen**
   - `M` - move to the **middle of the visible screen**
   - `L` - move to the **bottom of the visible screen**
-- Match Moving
+- **Match Moving**
   - `%` - **move to matching parenthesis, bracket, or brace**
 
 **Editing Text:**
@@ -647,15 +647,6 @@ imap jj <Esc>
   2. yank the text with `y`
   3. `:%s/<C-r>0/new_text` (`0` is the yank register)
 
-
-**Additional Useful Commands:**
-
-- `>` - **indent the selected lines** , (`>>/Shift..` in vs-code )
-- `<` - **unindent the selected lines**
-- `zz` - **center the current line on the screen**
-- `.` - **repeat the last command**
-- `3.` - **repeat the last command 3 times**
-
 **Using Marks for Navigation:**
 
 - `ma` - **set a mark at the current position**
@@ -691,13 +682,21 @@ imap jj <Esc>
     - `va{d` - **visually select the contents inside `{}` along with the braces, and delete them**
     - `va{Vd` - **visually select the contents inside `{}` along with the braces and the line, and delete them**
 
+
+**Additional Useful Commands:**
+
+- `>` - **indent the selected lines** , (`>>/Shift..` in vs-code )
+- `<` - **unindent the selected lines**
+- `zz` - **center the current line on the screen**
+- `.` - **repeat the last command**
+- `3.` - **repeat the last command 3 times**
+
 **Using Macros for Automation:**
 
 - `qa` - start recording a macro in register "a"
 - `<actions to record>`
 - `q` - stop recording the macro
 - `@a` - replay macro "a"
-
 
 ## Unicode
 
