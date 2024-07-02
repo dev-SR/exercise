@@ -657,8 +657,8 @@ imap jj <Esc>
 
 - Combining Movement and Editing:
   - `d2w` - delete the next two words
-  - `di(` - **delete the text inside (parentheses)**
-  - `ci(` - **delete the text inside (parentheses) and enter insert mode**
+  - `ci( | di(` - **delete the text inside parentheses - (inside)**
+  - **`dit | cit`** - **delete the text between matching html/xml tags - <tag>inside</tag>** 
   - `yi(` -**yank the text inside (parentheses)**
 
 - Using Visual Mode for Complex Edits.
