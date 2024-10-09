@@ -1,14 +1,14 @@
 # Python
 
 - [Python](#python)
-	- [Install both Anaconda & Python | Windows](#install-both-anaconda--python--windows)
-		- [Install Python 🐍](#install-python-)
-		- [Install Anaconda Distribution](#install-anaconda-distribution)
-		- [🤔 How to Access Anaconda & Python from cmd?](#-how-to-access-anaconda--python-from-cmd)
+	- [Install Anaconda Distribution](#install-anaconda-distribution)
+		- [Add conda path to vscode](#add-conda-path-to-vscode)
+		- [🤔 How to Access Anaconda \& Python from cmd?](#-how-to-access-anaconda--python-from-cmd)
 			- [Accessing `Anaconda` from `VsCode`](#accessing-anaconda-from-vscode)
-			- [Accessing `Anaconda` from `cmd`](#accessing-anaconda-from-cmd)
+		- [Accessing `Anaconda` from `cmd`](#accessing-anaconda-from-cmd)
 			- [Accessing `Python` from `cmd`](#accessing-python-from-cmd)
 		- [📥 Install packages differently](#-install-packages-differently)
+	- [Install Python (optional along with anaconda)](#install-python-optional-along-with-anaconda)
 	- [`pipenv` vs `virtualenv` vs `conda` environment](#pipenv-vs-virtualenv-vs-conda-environment)
 		- [Virtualenv](#virtualenv)
 			- [with vscode](#with-vscode)
@@ -22,27 +22,33 @@
 	- [Using Pip to install packages to Anaconda Environment](#using-pip-to-install-packages-to-anaconda-environment)
 	- [Convert `ipynb` files into html, markdown, pdf and other format files](#convert-ipynb-files-into-html-markdown-pdf-and-other-format-files)
 
-## Install both Anaconda & Python | Windows
-
-### Install Python 🐍
-
-- Make sure that you have checked out `ADD Python to PATH`.
-
-<div align="center" ><img src="../img/py_1.jpg" alt="py 1" width="700px" ></div>
-
-- Click on `Customize installation` and make few clicks on Next till you've got this page.
-
-<div align="center" ><img src="../img/py_2.jpg" alt="py 1" width="700px" ></div>
-
-- Choose a custom location other than the default. In this case I've choose `D:\Python310`.
-
-### Install Anaconda Distribution
+## Install Anaconda Distribution
 
 - Make sure you have checked out `Add Anaconda3 to my PATH environment variable`. This provides the flexibility to access the distribution of anaconda python anywhere from the PC.
 
 <div align="center" ><img src="../img/py_3.jpg" alt="py 3" width="700px" ></div>
 
 - Once installed, do a quick run of Anaconda Navigator and ensure it's running fine.
+
+### Add conda path to vscode
+
+Get anaconda installation:
+
+```bash
+conda info
+```
+
+Get path of `"base environment"` i.e. `base environment:C:\\Users\\x\\anaconda3`
+
+Add path of `following:
+
+```json
+{
+	"python.condaPath": "<base environment path>\\Scripts\\conda.exe",
+	"python.pythonPath": "<base environment path>\\python.exe",
+	"python.defaultInterpreterPath": "<base environment path>\\python.exe",
+}
+```
 
 ### 🤔 How to Access Anaconda & Python from cmd?
 
@@ -52,7 +58,7 @@
 
 <div align="center" ><img src="../img/py_4.jpg" alt="py 1" width="700px" ></div>
 
-#### Accessing `Anaconda` from `cmd`
+### Accessing `Anaconda` from `cmd`
 
 - Open command prompt and use the following command to activate conda base environment.
 
@@ -74,6 +80,7 @@ conda activate base
 
 - Just type `python` or `py` to open the python interpreter.
 
+
 ### 📥 Install packages differently
 
 With both the distributions installed, you have control on installing packages separately for each distribution.
@@ -89,6 +96,21 @@ conda install <packageName>
 ```python
 pip install <packageName>
 ```
+
+
+## Install Python (optional along with anaconda)
+
+- Make sure that you have checked out `ADD Python to PATH`.
+
+<div align="center" ><img src="../img/py_1.jpg" alt="py 1" width="700px" ></div>
+
+- Click on `Customize installation` and make few clicks on Next till you've got this page.
+
+<div align="center" ><img src="../img/py_2.jpg" alt="py 1" width="700px" ></div>
+
+- Choose a custom location other than the default. In this case I've choose `D:\Python310`.
+
+
 
 ## `pipenv` vs `virtualenv` vs `conda` environment
 
