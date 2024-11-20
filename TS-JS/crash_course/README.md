@@ -51,6 +51,21 @@
       - [Rest with Objects For Destructuring](#rest-with-objects-for-destructuring)
       - [Spread with Arrays Cloning](#spread-with-arrays-cloning)
       - [Spread with Objects Cloning/Property Updating](#spread-with-objects-cloningproperty-updating)
+  - [OOP](#oop)
+    - [Composition Over Inheritance](#composition-over-inheritance)
+    - [Composition Over Inheritance in TypeScript](#composition-over-inheritance-in-typescript)
+    - [Advanced OOP Patterns in JavaScript](#advanced-oop-patterns-in-javascript)
+      - [Factory Pattern](#factory-pattern)
+      - [Singleton Pattern](#singleton-pattern)
+      - [Observer Pattern](#observer-pattern)
+  - [JS Concepts](#js-concepts)
+    - [Lexical Environment](#lexical-environment)
+    - [Global Scope](#global-scope)
+    - [Local Scope](#local-scope)
+    - [Block Scope\*](#block-scope)
+    - [Let vs  Const vs Var](#let-vs--const-vs-var)
+    - [Hoisting](#hoisting)
+    - [Closures](#closures)
 
 ## Logics
 
@@ -836,3 +851,476 @@ const prodConfig = { ...baseConfig, mode: 'production' };
 
 console.log(prodConfig); // { mode: 'production', debug: true }
 ```
+
+
+
+
+
+## OOP
+
+Key Concepts of OOP in TypeScript
+- **Class**: A blueprint for creating objects.
+- **Constructor**: Initializes object properties.
+- **Properties** and Methods: Define object data and behaviors.
+- **Inheritance**: Extend functionality from another class.
+- **Access** Modifiers: Control access to class members (public, private, protected).
+- **Encapsulation**: Protects data by making properties private and exposing them through methods.
+- **Polymorphism**: Polymorphism lets different classes respond to the same function or method call. JavaScript achieves polymorphism via method overriding. Modeling a **User** and extending it to a specialized **Admin** user.
+
+```typescript
+// Base Class: User
+class User {
+  // Properties with access modifiers
+  protected username: string; // Accessible in derived classes
+  private password: string; // Only accessible within this class
+
+  // Constructor
+  constructor(username: string, password: string) {
+    this.username = username;
+    this.password = password;
+  }
+
+  // Public Method: Accessible everywhere
+  public login(inputPassword: string): boolean {
+    return this.password === inputPassword;
+  }
+
+  // Getter for username
+  public getUsername(): string {
+    return this.username;
+  }
+}
+
+// Derived Class: Admin (inherits from User)
+class Admin extends User {
+  private adminLevel: number;
+
+  constructor(username: string, password: string, adminLevel: number) {
+    super(username, password); // Call the constructor of the base class
+    this.adminLevel = adminLevel;
+  }
+
+  // Additional method for admin privileges
+  public getAdminLevel(): number {
+    return this.adminLevel;
+  }
+
+  // Override: Adding extra behavior
+  public getUsername(): string {
+    return `Admin: ${super.getUsername()}`;
+  }
+}
+
+// Example Usage
+const user = new User("JohnDoe", "1234");
+console.log(user.login("1234")); // true
+console.log(user.getUsername()); // JohnDoe
+
+const admin = new Admin("AdminJane", "adminPass", 1);
+console.log(admin.login("adminPass")); // true
+console.log(admin.getAdminLevel()); // 1
+console.log(admin.getUsername()); // Admin: AdminJane
+```
+ **Key Features Highlighted in the Example**
+1. **Inheritance**: `Admin` extends `User` and uses `super` to call the parent class constructor or methods.  
+2. **Encapsulation**: `password` is private, accessible only within the `User` class.  
+3. **Polymorphism**: `getUsername()` is overridden in the `Admin` class.  
+4. **Access Modifiers**: 
+   - `private`: Restricted to the defining class (`password`).  
+   - `protected`: Accessible in subclasses (`username`).  
+   - `public`: Accessible everywhere (`login`, `getUsername`).
+
+This approach ensures scalability, modularity, and secure object design in TypeScript.
+
+### Composition Over Inheritance
+
+Composition is a design principle where objects are constructed using smaller, reusable components rather than relying on a strict inheritance hierarchy. This leads to more flexible, decoupled, and maintainable code.
+
+In contrast to inheritance (which imposes a "is-a" relationship), composition uses a "has-a" relationship. For example, instead of an `Admin` being a specialized type of User, the `Admin` can have user-like behavior through composition.
+
+
+### Composition Over Inheritance in TypeScript  
+
+Composition is a design principle where objects are constructed using smaller, reusable components rather than relying on a strict inheritance hierarchy. This leads to more flexible, decoupled, and maintainable code.  
+
+In contrast to inheritance (which imposes a "is-a" relationship), **composition uses a "has-a" relationship. For example**, instead of an `Admin` *being* a specialized type of `User`, the `Admin` can *have* user-like behavior through composition.
+
+
+
+Detailed Example:  A `User` object with basic authentication functionality, and an `Admin` object with additional roles, constructed via composition.
+
+Step 1: Define Reusable Behaviors as Separate Classes  
+```typescript
+// Authentication Behavior
+class Auth {
+  private username: string;
+  private password: string;
+
+  constructor(username: string, password: string) {
+    this.username = username;
+    this.password = password;
+  }
+
+  public login(inputPassword: string): boolean {
+    return this.password === inputPassword;
+  }
+
+  public getUsername(): string {
+    return this.username;
+  }
+}
+
+// Role Management Behavior
+class Roles {
+  private roles: string[];
+
+  constructor(roles: string[]) {
+    this.roles = roles;
+  }
+
+  public addRole(role: string): void {
+    this.roles.push(role);
+  }
+
+  public getRoles(): string[] {
+    return this.roles;
+  }
+}
+```
+
+Step 2: Compose the `User` and `Admin` Classes  
+
+```typescript
+// User Class
+class User {
+  private auth: Auth;
+
+  constructor(username: string, password: string) {
+    this.auth = new Auth(username, password); // Composing Auth functionality
+  }
+
+  public login(password: string): boolean {
+    return this.auth.login(password);
+  }
+
+  public getUsername(): string {
+    return this.auth.getUsername();
+  }
+}
+
+// Admin Class
+class Admin {
+  private auth: Auth;
+  private roles: Roles;
+
+  constructor(username: string, password: string, roles: string[]) {
+    this.auth = new Auth(username, password); // Composing Auth functionality
+    this.roles = new Roles(roles); // Composing Roles functionality
+  }
+
+  public login(password: string): boolean {
+    return this.auth.login(password);
+  }
+
+  public getUsername(): string {
+    return this.auth.getUsername();
+  }
+
+  public getRoles(): string[] {
+    return this.roles.getRoles();
+  }
+
+  public addRole(role: string): void {
+    this.roles.addRole(role);
+  }
+}
+```
+
+ Step 3: Example Usage  
+ 
+```typescript
+// Create a basic user
+const user = new User("JohnDoe", "password123");
+console.log(user.login("password123")); // true
+console.log(user.getUsername()); // JohnDoe
+
+// Create an admin with roles
+const admin = new Admin("AdminJane", "adminPass", ["Editor"]);
+console.log(admin.login("adminPass")); // true
+console.log(admin.getUsername()); // AdminJane
+console.log(admin.getRoles()); // ["Editor"]
+// Add a new role to the admin
+admin.addRole("Manager");
+console.log(admin.getRoles()); // ["Editor", "Manager"]
+```
+
+ **Advantages of Composition Over Inheritance**
+1. **Reusability**: Individual behaviors (`Auth`, `Roles`) can be reused in other contexts without tying them to specific classes.  
+2. **Flexibility**: You can mix and match behaviors to create objects tailored to your needs.  
+3. **Decoupling**: Changes in one behavior class (`Auth`) won't directly affect others.  
+4. **Avoids the Inheritance Hierarchy Trap**: No deeply nested inheritance tree, which can make code rigid and harder to maintain.
+
+### Advanced OOP Patterns in JavaScript  
+
+Here are concise examples of advanced OOP patterns in JavaScript with explanations:  
+
+#### Factory Pattern
+
+A factory creates objects without exposing the instantiation logic to the client.  
+
+**Example**:  
+```javascript
+class Car {
+  constructor(model, price) {
+    this.model = model;
+    this.price = price;
+  }
+}
+
+class CarFactory {
+  createCar(model, price) {
+    return new Car(model, price);
+  }
+}
+
+// Usage
+const factory = new CarFactory();
+const tesla = factory.createCar("Tesla Model S", 80000);
+console.log(tesla); // Car { model: 'Tesla Model S', price: 80000 }
+```
+
+####  Singleton Pattern
+
+Ensures a class has only one instance, and provides a global point of access to it.  
+
+**Example**:  
+```javascript
+class Singleton {
+  constructor() {
+    if (Singleton.instance) return Singleton.instance;
+    Singleton.instance = this;
+  }
+}
+
+// Usage
+const instance1 = new Singleton();
+const instance2 = new Singleton();
+console.log(instance1 === instance2); // true
+```
+
+#### Observer Pattern
+
+ Defines a subscription mechanism to notify multiple observers about changes in a subject.  
+
+**Example**:  
+```javascript
+class Subject {
+  constructor() {
+    this.observers = [];
+  }
+
+  subscribe(observer) {
+    this.observers.push(observer);
+  }
+
+  unsubscribe(observer) {
+    this.observers = this.observers.filter((obs) => obs !== observer);
+  }
+
+  notify(data) {
+    this.observers.forEach((observer) => observer.update(data));
+  }
+}
+
+class Observer {
+  constructor(name) {
+    this.name = name;
+  }
+
+  update(data) {
+    console.log(`${this.name} received data: ${data}`);
+  }
+}
+
+// Usage
+const subject = new Subject();
+const observer1 = new Observer("Observer 1");
+const observer2 = new Observer("Observer 2");
+
+subject.subscribe(observer1);
+subject.subscribe(observer2);
+
+subject.notify("Hello Observers!"); 
+// Observer 1 received data: Hello Observers!
+// Observer 2 received data: Hello Observers!
+```
+
+
+## JS Concepts
+
+### Lexical Environment
+
+A mechanism where variables and functions are resolved based on their location in the code during definition, not runtime.
+
+```typescript
+function outer() {
+  let outerVar = "Outer";
+
+  function inner() {
+    console.log(outerVar); // Accesses `outerVar` from outer function's scope
+  }
+
+  inner(); // Prints "Outer"
+}
+outer();
+```
+
+---
+
+### Global Scope
+
+Variables declared outside any function or block are in the global scope and accessible everywhere.
+
+```typescript
+let globalVar = "Accessible Globally";
+
+function accessGlobal() {
+  console.log(globalVar); // Accessible here
+}
+accessGlobal();
+console.log(globalVar); // Accessible here too
+```
+
+### Local Scope
+
+Variables declared within a function or block are only accessible within that scope.
+
+```typescript
+function localScopeDemo() {
+  let localVar = "Local";
+  console.log(localVar); // Accessible here
+}
+console.log(localVar); // Error: `localVar` is not defined
+localScopeDemo();
+```
+
+### Block Scope*
+
+Variables declared with `let` or `const` inside a block `{}` are not accessible outside.
+
+```typescript
+{
+  let blockScoped = "Block Scoped";
+  console.log(blockScoped); // Accessible
+}
+console.log(blockScoped); // Error: Not accessible outside block
+```
+
+### Let vs  Const vs Var
+
+- `var`: Function-scoped. Can be redeclared and updated. Hoisted but undefined before initialization.  
+- `let`: Block-scoped. Cannot be redeclared in the same scope. Hoisted but not initialized.  
+- `const`: Block-scoped. Must be initialized at declaration. Cannot be reassigned.  
+
+**Example**:
+```typescript
+function scopeDemo() {
+  if (true) {
+    var x = 10; //  Accessible outside this block but Function-scoped
+    let y = 20; // Block-scoped, inaccessible outside
+    const z = 30; // Block-scoped and constant
+  }
+  console.log(x); // 10
+  console.log(y); // Error: 'y' is not defined
+  console.log(z); // Error: 'z' is not defined
+}
+scopeDemo();
+```
+
+
+### Hoisting
+
+Variable and function declarations are moved to the top of their scope during compilation. Variables declared with `let`/`const` are hoisted but not initialized.
+
+```typescript
+console.log(hoistedVar); // undefined
+var hoistedVar = "I am hoisted";
+
+console.log(notHoistedLet); // Error: Cannot access before initialization
+let notHoistedLet = "I am not hoisted";
+```
+
+### Closures
+
+Functions that remember the scope in which they were created, even after that scope has ended.
+
+```typescript
+function counter() {
+  let count = 0;
+  return function () {
+    count++;
+    return count;
+  };
+}
+
+const increment = counter();
+console.log(increment()); // 1
+console.log(increment()); // 2
+```
+
+---
+
+Would you like me to continue with the remaining concepts in the same detailed style?
+
+1.  Bind 5:11
+2.  Passed By Value 5:30
+3.  Passed By Reference 5:36
+4.  Object Literal 5:46
+5.  Object Constructor 5:52
+6.  Property 5:56
+7.  Prototype Chain 6:00
+8.  Inheritance 6:11
+9.  OOP 6:19
+10. Classes 6:22
+11. Constructor 6:25
+12. Get/Set 6:34
+13. Instance Method 6:39
+14. Static Method 6:42
+15. Array 6:46
+16. Set 6:53
+17. Map 6:56
+18. Garbage Collection 7:05
+19. Weak & Weakest 7:16
+20. Event Loop 7:26
+21. Sync 7:32
+22. Async 7:36
+23. Single Threaded 7:49
+24. SetTimeOut 7:56
+25. CallBack 8:04
+26. CallBack Hell 8:12
+27. Promise 8:18
+28. Resolve 8:24
+29. Reject 8:30
+30. Then/Catch 8:33
+31. Async 8:40
+32. Await 8:46
+33. Try/Catch 8:51
+34. ES Modules 9:00
+35. Default Import/Export 9:07
+36. Named Import/Export 9:19
+
+37. DOM 9:45
+38. Document 9:52
+39. QuerySelector 10:00
+40. CSS Selector 10:04
+41. Element 10:10
+42. QuerySelectorAll 10:16
+43. Event 10:25
+44. Imperative 10:34
+45. Declarative 10:42
+46. Components 10:48
+47. Data Binding 10:58
+48. Module Bundling 11:05
+49. Network Waterfall 11:19
+50. Dynamic Imports 11:28
+51.  ESLint07 12:01
