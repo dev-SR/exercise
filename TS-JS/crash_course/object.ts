@@ -56,3 +56,38 @@ let minibus = vehicles.minibus
 // Object Property
 // In ES6 we can easily assign properties to objects.You can take advantage of the shorthand notation if the variable name is the same as the object key.
 
+const {unicorn = "🦆",eagle = "🦅",chicken = "🐔"} = {unicorn: "🦄"}
+
+console.log(unicorn)// 🦄
+console.log(chicken)// 🐔
+
+
+let data = {
+    id: 23,
+    location: "Madagascar",
+    birds: {
+        swan: "🦢",
+        cockerel: "🐓",
+        turkey: "🦃",
+        flamingo: "🦩",
+        parrot: "🦜"
+    },
+    mammals: {
+        skunk: "🦨",
+        raccoon: "🦝",
+        kangaroo: "🦘",
+        badger: "🦡",
+        llama: "🦙"
+    }
+}
+
+function whereis({location,mammals: {raccoon: image}}) {
+    return `${image} is located at ${location}`
+}
+
+function whichGroup({birds: {swan: bird},mammals: {badger: mammal}}) {
+    return `${bird} is a bird and ${mammal} is a mamal`
+}
+
+console.log(whereis(data))//🦝 is located at Madagascar
+console.log(whichGroup(data))//🦢 is a bird and 🦡 is a mamal

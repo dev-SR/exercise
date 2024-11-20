@@ -1,6 +1,8 @@
 # Javascript/TypeScript
 
 - [Javascript/TypeScript](#javascripttypescript)
+  - [Logics](#logics)
+    - [Convert any type of value to boolean](#convert-any-type-of-value-to-boolean)
   - [Function](#function)
     - [Function Declaration](#function-declaration)
     - [Function Parameters](#function-parameters)
@@ -35,8 +37,43 @@
         - [`map()`](#map)
         - [`reduce()`](#reduce)
       - [Extraction \& SubSetting with `slice` and `splice`](#extraction--subsetting-with-slice-and-splice)
+      - [Sorting](#sorting)
+      - [Utils](#utils)
+        - [Remove Duplicates array values](#remove-duplicates-array-values)
+        - [Last elements of an array](#last-elements-of-an-array)
     - [Array and Object Destructuring](#array-and-object-destructuring)
-    - [Rest / Spread for Objects](#rest--spread-for-objects)
+      - [Array Destructuring](#array-destructuring)
+      - [Object Destructuring](#object-destructuring)
+        - [Basic Object Destructuring](#basic-object-destructuring)
+        - [Advance Unpacking](#advance-unpacking)
+    - [Rest vs Spread Operator](#rest-vs-spread-operator)
+      - [Rest with Arrays For destructuring](#rest-with-arrays-for-destructuring)
+      - [Rest with Objects For Destructuring](#rest-with-objects-for-destructuring)
+      - [Spread with Arrays Cloning](#spread-with-arrays-cloning)
+      - [Spread with Objects Cloning/Property Updating](#spread-with-objects-cloningproperty-updating)
+
+## Logics
+
+### Convert any type of value to boolean
+
+In JavaScript, there are two types of boolean values true and false. You can use the Boolean() function to find out if a variable is true or not.
+
+
+```typescript
+let num1;
+console.log(!!num1); // false
+
+const num2 = 10;
+console.log(!!num2); // true
+
+const n1 = 'Tim';
+console.log(!!n1); // true
+
+const n2 = '';
+console.log(!!n2); // false
+```
+
+
 
 ## Function
 
@@ -184,11 +221,14 @@ minibus:🚐
 ```typescript
 const animals = ['🐑','🐈','🐄','🐪','🐅'];
 const genArray1 = new Array(5).fill(0); // [0, 0, 0, 0, 0]
+const genArray1 = Array(5).fill(0); // [0, 0, 0, 0, 0]
 const genArray2 = [...Array(5).keys()]; // [0, 1, 2, 3, 4]
 const genArray3 = Array.from({length: 5},(_,i) => i); //[0,1,2,3,4]
 const genArray4 = Array.from({length: 5},(_,i) => i + 1); //[1,2,3,4,5]
-```
 
+const matrix = Array(5).fill(0).map(() => Array(5).fill(0));//[ [ 0, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ]
+
+```
 
 #### Array iteration
 
@@ -482,6 +522,19 @@ Array.prototype.reduce = function(reducer, initialValue) {
 Applications of reduce?
 
 ```typescript
+const array  = [5,4,7,8,9,2]; 
+
+// Sum in array javascript
+array.reduce((a,b) => a+b);// 35
+
+// MAX in array javascript
+array.reduce((a,b) => a>b?a:b);//9
+
+// MIN in array javascript
+array.reduce((a,b) => a<b?a:b);//2
+```
+
+```typescript
 let data = [
     {id: 1,emoji: '🐔',name: 'Chicken',number: 5},
     {id: 2,emoji: '🦇',name: 'Bat',number: 6},
@@ -539,8 +592,6 @@ console.log(myArray.slice(5))       // [ 6, 7 ]
 console.log(myArray.slice(-1))      // [ 7 ]
 console.log(myArray)                // [ 1, 2, 3, 4, 5, 6, 7 ]
 
-
-
 const secondArray = [10, 20, 30, 40, 50]
 
 console.log(secondArray.splice(0, 1))   // [ 10 ] : deletes 1 element starting at index 0
@@ -552,33 +603,236 @@ console.log(secondArray.splice(2, 0, 60, 70)) // [] : deletes 0 elements startin
 console.log(secondArray)                // [60, 70]
 ```
 
+#### Sorting 
+
+```typescript
+const stringArr = ["Joe", "Kapil", "Steve", "Musk"]
+stringArr.sort();// ["Joe", "Kapil", "Musk", "Steve"]
+stringArr.reverse();// ["Steve", "Musk", "Kapil", "Joe"]
+
+//### Sort Number Array in javascript
+const array  = [40, 100, 1, 5, 25, 10];
+array.sort((a,b) => a-b);// [1, 5, 10, 25, 40, 100]
+array.sort((a,b) => b-a); // [100, 40, 25, 10, 5, 1]
+```
+
+#### Utils
+
+##### Remove Duplicates array values
+
+```typescript
+const array  = [5,4,7,8,9,2,7,5];
+array.filter((item,idx,arr) => arr.indexOf(item) === idx);
+// or
+const nonUnique = [...new Set(array)];
+// Output: [5, 4, 7, 8, 9, 2]
+```
+
+##### Last elements of an array
+
+```typescript
+const elements = [5,6,7,8,9,10];
+const last = elements.slice(-1);//10
+
+const secondLast = elements.slice(-2);// 9,10
+```
+
+
 
 ### Array and Object Destructuring
 
-### Rest / Spread for Objects
-This feature builds off of updates from ES6 so we can use rest/spread syntax for objects. The spread operator enables us to create a clone of an Object so we can modify the original more easily. This feature should not be used at the end, or it will result in an error. Take a look at the code below to see how it works.
+
+#### Array Destructuring
+
+Destructuring is a clean and simple way of assigning the values of an array to separate variables. 
 
 ```typescript
-let myObj = {
-  a:1,
-  b:3,
-  c:5,
-  d:8,
+const animals = ['🐑', '🐈', '🐄', '🐪', '🐖'];
+
+// ❌Usually, to access an item in an array, you would have to access the items via their indexes as shown below.
+const sheep = animals[0]
+const cat = animals[1]
+// ✅ With destructuring, there is no need to use indexes or loops.
+const [sheep, cat, cow, camel, pig] = animals;
+console.log(sheep)// 🐑
+console.log(cat)// 🐈
+console.log(cow)// 🐄
+console.log(camel)// 🐪
+console.log(pig)// 🐖
+```
+
+In the same way, you can assign **default values** to the variables.Thus, if you have more variables than there are in the array, your variables will still have values defined.
+
+```typescript
+const fruits = ['🍇','🍎'];
+const [
+   grapes = 'A lot of Grapes',
+   apple = 'Red Apple',
+   peach = '🍑',
+   mango = '🥭'
+] = fruits;
+
+console.log(grapes) // 🍇
+console.log(mango) // 🥭
+```
+
+Variable Swap:
+
+```typescript
+let owl = '🦢';
+let swan = '🦉';
+
+[owl, swan] = [swan, owl]
+
+console.log(owl)// 🦉
+console.log(swan)// 🦢
+```
+
+#### Object Destructuring
+
+##### Basic Object Destructuring
+
+```typescript
+const vehicles = {
+  car: "🚗",
+  taxi: "🚕",
+  bus: "🚌",
+  minibus: "🚐"
+};
+
+const { car, taxi, bus, minibus } = vehicles
+
+console.log(car)// 🚗
+console.log(taxi)// 🚕
+```
+
+
+##### Advance Unpacking
+
+**Default values** can be assigned to the variable in a destructuring assignment if the unpacked value from the object is undefined.
+
+```typescript
+const {unicorn = "🦆",eagle = "🦅",chicken = "🐔"} = {unicorn: "🦄"}
+
+console.log(unicorn)// 🦄
+console.log(chicken)// 🐔
+```
+
+Likewise, a **property unpacked from an object can be assigned to a variable with a different name**.
+
+```typescript
+const balls = {fball: "⚽️", bball: "🏀", sball: "🥎", vball: "🏐"}
+const {fball: football, bball: basketball, sball: softball, vball: volleyball} = balls
+
+console.log(football)// ⚽️
+console.log(basketball)// 🏀
+console.log(softball)// 🥎
+console.log(volleyball)// 🏐
+```
+
+Similarly, we can unpack fields from objects passed as a function parameter
+
+```typescript
+const animals = {
+  id: 23,
+  location: "Madagascar",
+  birds: {
+    swan: "🦢",
+    cockerel: "🐓",
+    turkey: "🦃",
+    flamingo: "🦩",
+    parrot: "🦜"
+  },
+  mammals: {
+    skunk: "🦨",
+    raccoon: "🦝",
+    kangaroo: "🦘",
+    badger: "🦡",
+    llama: "🦙"
+  }
 }
 
-// we use the rest operator to grab everything else left in the object.
-let { a, b, ...z } = myObj;
-console.log(a);     // 1
-console.log(b);     // 3
-console.log(z);     // {c: 5, d: 8}
+function whereis({location, mammals: {raccoon: image}}){
+  return `${image} is located at ${location}`
+}
 
-// using the spread syntax we cloned our Object
-let clone = { ...myObj };
-console.log(clone);
-// {a: 1, b: 3, c: 5, d: 8}
-myObj.e = 15;
-console.log(clone)
-// {a: 1, b: 3, c: 5, d: 8}
-console.log(myObj)
-// {a: 1, b: 3, c: 5, d: 8, e: 15}
-``
+function whichGroup({birds: {swan: bird}, mammals: {badger: mammal}}){
+  return `${bird} is a bird and ${mammal} is a mamal`
+}
+
+console.log(whereis(data))//🦝 is located at Madagascar
+console.log(whichGroup(data))//🦢 is a bird and 🦡 is a mamal
+```
+
+### Rest vs Spread Operator
+
+In JavaScript, the rest and spread operators are both denoted by the same three dots (`...`) syntax, but they are used in different contexts and have different effects.
+
+| **Feature** | **Spread**                      | **Rest**                     |
+| ----------- | ------------------------------- | ---------------------------- |
+| **Purpose** | Expands elements/properties     | Collects elements/properties |
+| **Usage**   | Copies or merges arrays/objects | Destructure arrays/objects   |
+| **Context** | Array literals, object literals | Destructuring assignment     |
+
+
+The main difference between two is -
+
+- The **rest** operator is used to fill a JavaScript array with the remaining data from a user.
+  - Destructuring and catching indefinite number of arguments
+- The JavaScript **spread** operator allows an array or an object to be spread or flattened into its elements.
+  - For creating shallow copies
+  - For merging
+
+In common terms We can say -
+
+- Rest we use for **pack** elements.
+- Spread we use for **unpack** elements.
+
+
+#### Rest with Arrays For destructuring 
+```typescript
+const [first, ...rest] = ['🍇', '🍎', '🍌'];
+console.log(rest); // ['🍎', '🍌']
+
+function fruits() {
+  return ["🍐", "🥭", "🍑", "🍒"]
+}
+// skipping 🥭 and 🍑
+let [pear,...rest] = fruits()
+console.log(pear) //🍐
+console.log(rest) //[ "🥭" , "🍑", "🍒" ]
+```
+
+The rest operator is used in a function's parameter list to represent an indefinite number of arguments passed to the function. It allows you to pass a variable number of arguments to a function and handle them as an array inside the function. Here's an example:
+
+
+```typescript
+function sum(...numbers:number[]) {
+  return numbers.reduce((total, num) => total + num, 0);
+}
+
+console.log(sum(1, 2, 3)); // output: 6
+```
+
+#### Rest with Objects For Destructuring 
+```typescript
+const { debug, ...otherConfig } = { mode: 'development', debug: true, test: true };
+console.log(otherConfig); // { mode: 'development', test: true }
+```
+
+
+#### Spread with Arrays Cloning
+```typescript
+const fruits = ['🍇', '🍎'];
+const moreFruits = [...fruits, '🍌', '🍒'];
+console.log(moreFruits); // ['🍇', '🍎', '🍌', '🍒']
+```
+
+#### Spread with Objects Cloning/Property Updating
+
+```typescript
+const baseConfig = { mode: 'development', debug: true };
+const prodConfig = { ...baseConfig, mode: 'production' };
+
+console.log(prodConfig); // { mode: 'production', debug: true }
+```

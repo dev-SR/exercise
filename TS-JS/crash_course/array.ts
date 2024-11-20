@@ -113,3 +113,13 @@ console.log(res);
 
 
 // Extraction & Subsetting
+function fruits() {
+    return ["🍐","🥭","🍑","🍒"]
+}
+// skipping 🥭 and 🍑
+let [pear,...rest] = fruits()
+
+console.log(pear,rest)
+
+const matrix = Array(3).fill(0).map(() => Array(3).fill(0));
+console.log(matrix);
