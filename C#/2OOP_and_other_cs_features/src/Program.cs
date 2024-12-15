@@ -1,6 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using src.Inheritance.ex;
 using src.oop_basic.ex;
+using src.Reflection.ex;
 
 
 // Person person = new Person("Jhon",25);
@@ -22,27 +23,19 @@ using src.oop_basic.ex;
 // person.MutableName = "muting...";
 // Console.WriteLine(person.MutableName);//muting...
 
-internal class Program
-{
-    private static void Main(string[] args)
-    {
-        Car sedan = new() { DoorCount = 4 };
-        Car coupe = new() { DoorCount = 2 };
-        Truck pickupTruck = new() { DoorCount = 2 };
-        Bike bike = new();
+// Car sedan = new() { DoorCount = 4 };
+// Car coupe = new() { DoorCount = 2 };
+// Truck pickupTruck = new() { DoorCount = 2 };
+// Bike bike = new();
 
-        sedan.OpenDoors();//src.Inheritance.ex.Car opening 4 doors
-        coupe.OpenDoors();//src.Inheritance.ex.Car opening 2 doors
-        pickupTruck.OpenDoors();//src.Inheritance.ex.Truck opening 2 doors
-        bike.OpenDoors();//src.Inheritance.ex.Bike opening 0 doors
+// sedan.OpenDoors();//src.Inheritance.ex.Car opening 4 doors
+// coupe.OpenDoors();//src.Inheritance.ex.Car opening 2 doors
+// pickupTruck.OpenDoors();//src.Inheritance.ex.Truck opening 2 doors
+// bike.OpenDoors();//src.Inheritance.ex.Bike opening 0 doors
 
-        // polymorph
-        Vehicle car = new Car();
-        Vehicle Bike = new Bike();
-        Vehicle plane = new Plane();
+// // polymorph
+// Vehicle car = new Car();
+// Vehicle Bike = new Bike();
+// Vehicle plane = new Plane();
 
-        Person person = new("Jhon", 20);
-    }
-}
-
-public record Person(string Name, int Age);
+ReflectionDemo.example();

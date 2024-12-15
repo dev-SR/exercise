@@ -14,6 +14,15 @@
       - [Legacy Way](#legacy-way)
       - [Modern Syntax](#modern-syntax)
     - [Equality of Classes](#equality-of-classes)
+  - [Overview of Types](#overview-of-types)
+    - [Value Types](#value-types)
+    - [Reference Types](#reference-types)
+    - [Stack vs. Heap](#stack-vs-heap)
+      - [Value Types:](#value-types-1)
+      - [Reference Types:](#reference-types-1)
+    - [Null and Nullability](#null-and-nullability)
+      - [Nullable value types:](#nullable-value-types)
+    - [Modern Nullability](#modern-nullability)
   - [Inheritance](#inheritance)
     - [How to Do It](#how-to-do-it)
       - [Why to Do It](#why-to-do-it)
@@ -31,7 +40,7 @@
     - [Use Cases](#use-cases)
   - [Structs and Records](#structs-and-records)
     - [Structs](#structs)
-      - [Value Types](#value-types)
+      - [Value Types](#value-types-2)
       - [Syntax](#syntax)
       - [Equality](#equality)
       - [Mutability](#mutability)
@@ -46,25 +55,16 @@
   - [Extension Methods in C#](#extension-methods-in-c)
     - [Extension Methods](#extension-methods)
     - [Nuanced example](#nuanced-example)
+  - [Reflection in C#](#reflection-in-c)
   - [Generics](#generics)
     - [Very Basics of Generic Types](#very-basics-of-generic-types)
     - [Creating Generic Classes](#creating-generic-classes)
     - [Demonstrating Using Generically-Typed Methods](#demonstrating-using-generically-typed-methods)
-    - [Demonstrating Type Constraints](#demonstrating-type-constraints)
     - [Multiple Type Generics](#multiple-type-generics)
+    - [Demonstrating Type Constraints](#demonstrating-type-constraints)
     - [Demonstrating the Repo Patterns with Generics](#demonstrating-the-repo-patterns-with-generics)
-  - [Overview of Types](#overview-of-types)
-    - [Value Types](#value-types-1)
-    - [Reference Types](#reference-types)
-    - [Stack vs. Heap](#stack-vs-heap)
-      - [Value Types:](#value-types-2)
-      - [Reference Types:](#reference-types-1)
-    - [Null and Nullability](#null-and-nullability)
-      - [Nullable value types:](#nullable-value-types)
-      - [Word to the Wise: `NullReferenceException`](#word-to-the-wise-nullreferenceexception)
-    - [Modern Nullability](#modern-nullability)
-    - [Boxing and Unboxing](#boxing-and-unboxing)
-      - [Example:](#example-1)
+
+
 
 ## Classes Overview
 
@@ -369,6 +369,116 @@ public class Person : IEquatable<Person>
     }
 }
 ```
+
+
+## Overview of Types
+
+This section explores the differences between reference types and value types in programming, including practical examples using method calls.
+
+### Value Types
+Value types store the actual data. When you pass a value type to a method, the method receives a copy of the data.
+
+```csharp
+class Person
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+}
+
+void ChangeAge(int age)//pass by value
+{
+    age = 10;
+}
+
+Person person = new Person { Name = "Old Name", Age = 20 };
+ChangeAge(person.Age);
+// person.Age is still 20
+```
+
+### Reference Types
+Reference types store references to the actual data in memory. When you pass a reference type to a method, the method receives a reference to the same object.
+
+```csharp
+class Person
+{
+    public string Name { get; set; }
+}
+
+void ChangeName(Person person)//pass by reference
+{
+    person.Name = "New Name";
+}
+
+Person person = new Person { Name = "Old Name" };
+ChangeName(person);
+// person.Name is now "New Name"
+```
+
+Special note: Strings are a special type of reference type in C# that are treated a bit more like value types when passed to methods in that their value is copied.
+
+### Stack vs. Heap
+You don't need to know the difference between the stack and heap deeply for this course, but you should be aware that value types are stored on the stack and reference types are stored on the heap. What are the most important implications of this?
+
+#### Value Types:
+- Stored on the stack.  
+- Faster access - direct memory allocation.  
+- Automatic memory management - collected by the runtime when out of scope.  
+
+#### Reference Types:
+- Stored on the heap.  
+- Slower access - indirect memory allocation. Reference-typed variables, technically speaking, are pointers to the object's location in memory.  
+- Cleaned up via garbage collection, which is managed by the .NET runtime. Not automatically removed from memory when out of scope.  
+
+### Null and Nullability
+Represents the absence of a value. Commonly used in reference types.
+
+```csharp
+string str = null; // Valid for reference types
+int number = null; // This will cause a compilation error - value types cannot be null
+```
+
+#### Nullable value types:
+Allows value types to be assigned null. Add a `?` to the type to make it nullable!
+
+```csharp
+string str = null; // Valid for reference types
+int? nullableInt = null; // Valid for nullable value types
+```
+
+Word to the Wise: `NullReferenceException`
+
+This is perhaps the most common exception in C#. It's thrown when you try to access a member of a null object.
+
+```csharp
+Person person = null;
+Console.WriteLine(person.Name); // NullReferenceException
+```
+
+_"Object reference not set to an instance of an object."_ These are famous (and famously frustrating) words in C#.
+
+> Most important thing to remember: **Check for null before accessing members of a reference type!**
+
+### Modern Nullability
+Modern .NET versions have added explicit nullability for reference types to the language. This feature helps you to be more explicit about what is nullable and what isn't.
+
+```csharp
+public class Address
+{
+    public string Street { get; set; }
+    public string City { get; set; }
+    public string State { get; set; }
+    public string ZipCode { get; set; }
+}
+
+public class Person
+{
+    public string Name { get; set; }        // Non-nullable reference type
+    public string? MiddleName { get; set; } // Nullable reference type
+    public Address? Address { get; set; }   // Nullable reference type
+}
+```
+
+🌶️🌶️🌶️ C# devs tend to not fully embrace the benefits of nullable reference types. In brownfield (e.g., existing) projects, it's almost impossible to reverse-add nullability in a meaningful way. In greenfield (e.g., new) projects, I'd recommend turning on nullability + treating warnings as errors - this gives you the strictest null handling rules and will result in fewer bugs.
 
 
 ## Inheritance
@@ -1054,7 +1164,6 @@ public static class StringExtensions
 }
 ```
 
-
 ### Nuanced example
 
 Oftentimes, you will define interfaces in such a way that you want to narrowly define what the interface is, but still have convenient methods for developers to use. Those convenient methods are best added via extension methods.
@@ -1107,6 +1216,104 @@ public static class LoggerExtensions
 
 
 This keeps your API surface area small for the ILogger interface, while adding convenient methods for developers to use. Convenience makes developers happy!
+
+## Reflection in C#
+
+Reflection is a feature in C# that allows you to inspect, analyze, and manipulate the metadata of types, objects, and assemblies at runtime. It enables a program to dynamically access the structure of classes, methods, properties, fields, and more, without having prior knowledge at compile-time.
+
+Libraries like **Entity Framework** and **Dapper** use reflection to map database columns to class properties and vice versa. Libraries like xUnit, NUnit, or MSTest use reflection to find test methods and execute them dynamically.
+
+```csharp
+using System.Reflection;
+
+namespace src.Reflection.ex;
+
+public class Product
+{
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public double Price { get; set; }
+
+    public string GetProductDetails()
+    {
+        return $"{Name}: {Price:C}";
+    }
+}
+
+public class ReflectionDemo
+{
+    public static void example()
+    {
+        // Create an instance of Product
+        var product = new Product
+        {
+            Id = Guid.NewGuid(),
+            Name = "Laptop",
+            Price = 1200.50
+        };
+
+        // Get the Type of the object
+        Type type = product.GetType();
+        Console.WriteLine($"Type: {type.Name}\n");
+
+        // Get all properties of the Product class
+        Console.WriteLine("Properties:");
+        foreach (var property in type.GetProperties())
+        {
+            Console.WriteLine($"- {property.Name} ({property.PropertyType.Name})");
+        }
+
+        // Get and display the value of a specific property
+        var nameProperty = type.GetProperty("Name");
+        if (nameProperty != null)
+        {
+            var nameValue = nameProperty.GetValue(product);
+            Console.WriteLine($"\nValue of 'Name': {nameValue}");
+        }
+
+        // Get all methods of the Product class
+        Console.WriteLine("\nMethods:");
+        foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Instance))
+        {
+            Console.WriteLine($"- {method.Name}");
+        }
+
+        // Invoke a specific method
+        var getDetailsMethod = type.GetMethod("GetProductDetails");
+        if (getDetailsMethod != null)
+        {
+            var details = getDetailsMethod.Invoke(product, null);
+            Console.WriteLine($"\nInvoked 'GetProductDetails': {details}");
+        }
+    }
+}
+```
+
+```
+Type: Product
+
+Properties:
+- Id (Guid)
+- Name (String)
+- Price (Double)
+
+Value of 'Name': Laptop
+
+Methods:
+- get_Id
+- set_Id
+- get_Name
+- set_Name
+- get_Price
+- set_Price
+- GetProductDetails
+- GetType
+- ToString
+- Equals
+- GetHashCode
+
+Invoked 'GetProductDetails': Laptop: $1,200.50
+```
 
 ## Generics
 
@@ -1175,37 +1382,7 @@ public class Utilities
 ```
 
 
-In this example, GetDefaultValue is a method that returns the default value for the specified type T.
-
-### Demonstrating Type Constraints
-
-```csharp
-public class DataManager<T> where T : class, IDisposable
-{
-    public void Manage(T item)
-    {
-        // Logic for managing disposable objects
-    }
-}
-```
-
-In this example, the `where T : class` constraint specifies that `T` must be a reference type AND must implement `IDisposable`. Constraining the type is extremely useful as it allows you to define how an interface is used. It also means that you can use members specific to that type or interface:
-
-
-```csharp
-public interface ITrackedEntity
-{
-    Guid Id { get; set; }
-}
-
-public class DataManager<T> where T : class, ITrackedEntity
-{
-    public void Manage(T item)
-    {
-        Console.WriteLine($"Managing entity with ID: {item.Id}");
-    }
-}
-```
+In this example, `GetDefaultValue` is a method that returns the default value for the specified type T.
 
 
 ### Multiple Type Generics
@@ -1228,6 +1405,114 @@ public class KeyValuePairs
 
 One of the most common uses of multiple generic types is with collections like `Dictionary<TKey, TValue>`. In this example, `Dictionary<int, string>` holds key-value pairs, where the key is an int and the value is a string.
 
+
+### Demonstrating Type Constraints
+
+If we want to **restrict a generic class to accept only the particular type of placeholder**, then we need to use **Constraints**. *Using Constraints, we can specify what type of placeholder the generic class can accept, and the compiler will throw a compile-time error*. If we try to instantiate a generic class with the placeholder type, that is not allowed by a constraint.
+
+
+In c#, constraints are specified by using the `where` keyword. The following table lists a different type of constraints available in c#.
+
+- **`where T : struct`**:  The type argument must be a value type.
+- **`where T : unmanaged`** :The type argument must not be a reference type.
+- **`where T : class`** :The type argument must be a reference type.
+- **`where T : new()`** :The type argument must have a public parameterless constructor.
+- **`where T : <base class name>`** : The type argument must be or derive from the specified base class.
+- **`where T : <interface name>`** : The type argument must be or implement the specified interface.
+- **`where T : U`** : The type argument supplied for `T` must be or derive from the argument supplied for `U`.
+  
+  
+1. **Constraint by Value Type**
+Use the `struct` keyword to restrict the generic type to value types. Nullable value types are not allowed.
+
+```csharp
+class ConstrainByValueType<T> where T : struct { }
+
+var obj = new ConstrainByValueType<int>(); // Valid
+// var obj = new ConstrainByValueType<MyClass>(); // Invalid The type 'MyClass' must be a non-nullable value type in order to use it as parameter 'T' in the generic type or method 'ConstrainByValueType<T>'
+```
+
+2. **Constraint by Reference Type**
+Use the `class` keyword to restrict the generic type to reference types.
+
+```csharp
+class ConstrainByReferenceType<T> where T : class { }
+
+var obj = new ConstrainByReferenceType<MyClass>(); // Valid
+// var obj = new ConstrainByReferenceType<int>(); // Invalid
+```
+
+3. **Interface Type Constraint**
+Constrain the generic type to an interface, allowing only classes that implement that interface.
+
+```csharp
+interface IMammal { }
+class Lion : IMammal { }
+
+class ConstrainByInterface<T> where T : IMammal { }
+
+var obj = new ConstrainByInterface<Lion>(); // Valid
+// var obj = new ConstrainByInterface<int>(); // Invalid
+```
+
+4. **Constraint by Specific Class**
+Restrict the generic type to a specific class or its derived classes.
+
+```csharp
+class Lion { }
+class CuteLion : Lion { }
+class Cat{}
+
+class ConstrainByClass<T> where T : Lion { }
+
+var obj = new ConstrainByClass<CuteLion>(); // Valid
+// var obj = new ConstrainByClass<Cat>(); // Invalid
+```
+
+5. **Constraint by Parameterless Constructor**
+Ensure the generic type has a public parameterless constructor using `new()`.
+
+```csharp
+class ConstrainByCtor<T> where T : new() { }
+class Example {
+    public Example() { }
+}
+
+var obj = new ConstrainByCtor<Example>(); // Valid
+// var obj = new ConstrainByCtor<string>(); // Invalid
+```
+
+6. **Constraint by Enum**
+Starting with C# 7.3, you can constrain a generic type to enums using `System.Enum`.
+
+```csharp
+class ConstrainByEnum<T> where T : System.Enum {
+    public void PrintValues() {
+        foreach (var value in Enum.GetValues(typeof(T)))
+            Console.WriteLine(value);
+    }
+}
+enum Rainbow { Red, Orange, Yellow, Green }
+var obj = new ConstrainByEnum<Rainbow>();
+obj.PrintValues();
+```
+
+7. **Combining Constraints**
+You can apply multiple constraints simultaneously.
+
+```csharp
+interface IMammal { }
+class RainbowLion : IMammal {
+    public RainbowLion() { }
+}
+
+class ConstrainByCombination<T> where T : class, IMammal{ }
+
+var obj = new ConstrainByCombination<RainbowLion>(); // Valid
+```
+
+In this example, the `where T : class` constraint specifies that `T` must be **a reference type** AND **must implement `IMammal`**. Constraining the type is extremely useful as it allows you to define how an interface is used. It also means that you can use members specific to that type or interface:
+
 ### Demonstrating the Repo Patterns with Generics
 While I don't love talking about "software patterns", there are a few common and important ones. We'll explore this one, the Repository pattern, in more detail in the next course on APIs.
 
@@ -1246,17 +1531,20 @@ public interface IRepository<T> where T : class
 
 public class Repository<T> : IRepository<T> where T : class
 {
-    private readonly List<T> _entities = new List<T>();
+    private readonly List<T> _entities = new();
 
     public IEnumerable<T> GetAll()
     {
         return _entities;
     }
 
-    public T GetById(int id)
+     public T? GetById(Guid id)
     {
-        // Simulate fetching entity by ID
-        return _entities[id];
+        if (typeof(T).GetProperty("Id")?.GetValue(null) is Guid)
+        {
+            return _entities.FirstOrDefault(e => (Guid)typeof(T).GetProperty("Id")!.GetValue(e)! == id);
+        }
+        throw new InvalidOperationException("The entity does not have an Id property.");
     }
 
     public void Add(T entity)
@@ -1266,9 +1554,13 @@ public class Repository<T> : IRepository<T> where T : class
 
     public void Update(T entity)
     {
-        // Logic for updating entity
+        var existing = GetById((Guid)typeof(T).GetProperty("Id")!.GetValue(entity)!);
+        if (existing != null)
+        {
+            Delete(existing);
+            Add(entity);
+        }
     }
-
     public void Delete(T entity)
     {
         _entities.Remove(entity);
@@ -1284,129 +1576,4 @@ productRepository.Add(new Product { Id = Guid.NewGuid(), Name = "Product A" });
 
 
 In this example, `Repository<T>` is a generic class that implements the `IRepository<T> `interface. This allows for the reuse of the repository logic across different types of entities, such as Customer, Product, etc.
-
-## Overview of Types
-
-This section explores the differences between reference types and value types in programming, including practical examples using method calls.
-
-### Value Types
-Value types store the actual data. When you pass a value type to a method, the method receives a copy of the data.
-
-```csharp
-class Person
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
-}
-
-void ChangeAge(int age)//pass by value
-{
-    age = 10;
-}
-
-Person person = new Person { Name = "Old Name", Age = 20 };
-ChangeAge(person.Age);
-// person.Age is still 20
-```
-
-### Reference Types
-Reference types store references to the actual data in memory. When you pass a reference type to a method, the method receives a reference to the same object.
-
-```csharp
-class Person
-{
-    public string Name { get; set; }
-}
-
-void ChangeName(Person person)//pass by reference
-{
-    person.Name = "New Name";
-}
-
-Person person = new Person { Name = "Old Name" };
-ChangeName(person);
-// person.Name is now "New Name"
-```
-
-Special note: Strings are a special type of reference type in C# that are treated a bit more like value types when passed to methods in that their value is copied.
-
-### Stack vs. Heap
-You don't need to know the difference between the stack and heap deeply for this course, but you should be aware that value types are stored on the stack and reference types are stored on the heap. What are the most important implications of this?
-
-#### Value Types:
-- Stored on the stack.  
-- Faster access - direct memory allocation.  
-- Automatic memory management - collected by the runtime when out of scope.  
-
-#### Reference Types:
-- Stored on the heap.  
-- Slower access - indirect memory allocation. Reference-typed variables, technically speaking, are pointers to the object's location in memory.  
-- Cleaned up via garbage collection, which is managed by the .NET runtime. Not automatically removed from memory when out of scope.  
-
-### Null and Nullability
-Represents the absence of a value. Commonly used in reference types.
-
-```csharp
-string str = null; // Valid for reference types
-int number = null; // This will cause a compilation error - value types cannot be null
-```
-
-#### Nullable value types:
-Allows value types to be assigned null. Add a `?` to the type to make it nullable!
-
-```csharp
-string str = null; // Valid for reference types
-int? nullableInt = null; // Valid for nullable value types
-```
-
-#### Word to the Wise: `NullReferenceException`
-This is perhaps the most common exception in C#. It's thrown when you try to access a member of a null object.
-
-```csharp
-Person person = null;
-Console.WriteLine(person.Name); // NullReferenceException
-```
-
-_"Object reference not set to an instance of an object."_ These are famous (and famously frustrating) words in C#.
-
-> Most important thing to remember: **Check for null before accessing members of a reference type!**
-
-### Modern Nullability
-Modern .NET versions have added explicit nullability for reference types to the language. This feature helps you to be more explicit about what is nullable and what isn't.
-
-```csharp
-public class Address
-{
-    public string Street { get; set; }
-    public string City { get; set; }
-    public string State { get; set; }
-    public string ZipCode { get; set; }
-}
-
-public class Person
-{
-    public string Name { get; set; }        // Non-nullable reference type
-    public string? MiddleName { get; set; } // Nullable reference type
-    public Address? Address { get; set; }   // Nullable reference type
-}
-```
-
-🌶️🌶️🌶️ C# devs tend to not fully embrace the benefits of nullable reference types. In brownfield (e.g., existing) projects, it's almost impossible to reverse-add nullability in a meaningful way. In greenfield (e.g., new) projects, I'd recommend turning on nullability + treating warnings as errors - this gives you the strictest null handling rules and will result in fewer bugs.
-
-### Boxing and Unboxing
-This section covers boxing and unboxing in programming, explaining how value types are converted to reference types and vice versa.
-
-- **Boxing** is the process of converting a value type to a reference type.  
-- **Unboxing** is the process of converting a reference type back to a value type.  
-
-#### Example:
-```csharp
-int number = 42;
-object boxed = number; // Boxing
-
-object boxed = 42;
-int number = (int)boxed; // Unboxing
-```
-
-Boxing and unboxing can impact performance due to the additional overhead of creating objects on the heap. It's important to understand the implication of this, but I wouldn't bother getting too hung up on it either as, in practice, it usually doesn't matter that much.
 
