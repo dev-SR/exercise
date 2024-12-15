@@ -10,8 +10,19 @@
     - [Callbacks](#callbacks)
     - [delegates](#delegates)
   - [Collections Overview](#collections-overview)
-    - [List](#list)
-    - [Common Methods for List](#common-methods-for-list)
+    - [**List**](#list)
+      - [Common Methods for List](#common-methods-for-list)
+    - [`IEnumerable<T>` as Our First Generic Collection Type](#ienumerablet-as-our-first-generic-collection-type)
+      - [Lazy evaluation](#lazy-evaluation)
+    - [**Dictionary\<TKey, TValue\>**](#dictionarytkey-tvalue)
+      - [Setting Values](#setting-values)
+      - [Getting Values](#getting-values)
+      - [Useful Methods](#useful-methods)
+    - [**HashSet**](#hashset)
+    - [**ImmutableArray**](#immutablearray)
+    - [**Queue and Stack**](#queue-and-stack)
+      - [**Queue**](#queue)
+      - [**Stack**](#stack)
 
 
 ## Lambda Expressions, Func<..., T>, Action, and Action<...>
@@ -198,8 +209,16 @@ class Program
 
 ## Collections Overview
 
+- **`ImmutableArray<T>`:** Use when you need a collection that won’t change. Great for immutable objects.  
+- **`List<T>`:** Use when you need a resizable collection that allows fast access by index.  
+- **`Dictionary<TKey, TValue>`:** Use when you need to map keys to values and need fast lookups.  
+- **`HashSet<T>`:** Use when you need a collection of unique values with fast lookups.  
+- **`Queue<T>`:** Use when you need a first-in, first-out (**FIFO**) collection.  
+- **`Stack<T>`:** Use when you need a last-in, first-out (**LIFO**) collection.  
 
-### List<T>  
+🌶️ **Top Picks:** **`ImmutableArray<T>`**, **`Dictionary<TKey, TValue>`**, and **`List<T>`** for their versatility and performance.
+
+### **List<T>**  
 
 The `List<T>` is a generic collection in .NET that addresses many of the limitations of arrays. It is flexible, resizable, and provides various methods for adding, removing, and modifying elements.  
 
@@ -214,9 +233,8 @@ You can even declare it with collection initializer syntax in newer versions of 
 List<int> numbers = [1, 2, 3, 4, 5];
 ```
 
----
 
-### Common Methods for List<T>
+#### Common Methods for List<T>
 
 - `Add / AddRange` 
 - **Add:** Adds a single element to the list.  
@@ -280,3 +298,219 @@ foreach (var number in numbers)
     Console.WriteLine(number);
 }
 ```
+
+### `IEnumerable<T>` as Our First Generic Collection Type
+
+It provides a way to iterate over a collection of items of type `T`. All interfaces and classes that are generic collections implement `IEnumerable<T>`.
+
+You will almost never implement `IEnumerable<T>` directly, but it's important to understand that all generic collections implement it and the implications of its existence. More on this later!
+
+Example: Basic Use of `IEnumerable<T>`
+
+```csharp
+IEnumerable<int> numbers = new List<int> { 1, 2, 3, 4, 5 };
+
+foreach (var number in numbers)
+{
+    Console.WriteLine(number);
+}
+```
+
+Why Use IEnumerable<T>
+- **Abstraction & Flexibility**: It abstracts the underlying collection type, allowing you to switch between different implementations (e.g., List<T> to HashSet<T>) without changing the consuming code.
+- **Performance**: Lazy Deferred execution helps handle large datasets efficiently by processing items as needed, rather than all at once.
+
+#### Lazy evaluation
+
+Not just `IEnumerable<T>` makes it more versatile and reusable, for example, you can pass arrays (`int[]`), `HashSet<int>`, or any other collection that supports enumeration and integrates seamlessly with LINQ, allowing further query chaining, But also importantly **allow Lazy deferred execution**, improving performance.
+
+**Lazy evaluation** is an important concept in .NET collections, especially when working with `IEnumerable<T>`. It means that for certain types of operations, values or sequences of values are not generated or fetched until they are actually needed, which can significantly improve performance and reduce memory usage, especially when working with large data sets or expensive computations.
+
+
+```csharp
+public IEnumerable<int> GetNumbers()
+{
+    yield return 1;
+    yield return 2;
+}
+```
+
+the `yield` keyword is used to return an element one at a time from a method. It is commonly used in `LINQ` queries to return a sequence of elements.
+
+```csharp
+public class Demo
+{
+    public static void M()
+    {
+        List<int> numbers = new List<int> { 1, 2, 3, 4, 5, 6, 8, 10 };
+        var evenNumbers = GetEvenNumbers(numbers).Take(3);//LINQ integration
+
+        foreach (var number in evenNumbers)
+        {
+            Console.WriteLine(number);
+        }
+
+        evenNumbers = GetEvenNumbersList(numbers).Take(3);//
+
+        foreach (var number in evenNumbers)
+        {
+            Console.WriteLine(number);
+        }
+    }
+    static IEnumerable<int> GetEvenNumbers(IEnumerable<int> numbers)
+    {
+        foreach (var number in numbers)
+        {
+            if (number % 2 == 0)
+                yield return number; // Deferred execution
+        }
+    }
+
+
+    // vs List implementation | watchout the differences
+    static List<int> GetEvenNumbersList(IEnumerable<int> numbers)
+    {
+        List<int> _result = new();
+        foreach (var number in numbers)
+        {
+            if (number % 2 == 0)
+            {
+                _result.Add(number);
+            }
+        }
+        return _result;
+    }
+}
+```
+
+### **Dictionary<TKey, TValue>**
+
+A `Dictionary<TKey, TValue>` is a collection that maps **keys** to **values**, where both keys and values have specific types. It uses a **hash code** internally for fast lookups.
+
+#### Setting Values
+```csharp
+Dictionary<string, int> dictionary = new Dictionary<string, int>();
+
+// Set the values
+dictionary["one"] = 1;
+dictionary[2] = "two"; // This doesn't compile because the key must be a string!
+```
+
+#### Getting Values
+
+```csharp
+Dictionary<string, int> dictionary = new Dictionary<string, int>();
+
+// Set the values
+dictionary["one"] = 1;
+dictionary["two"] = 2;
+
+// Get the values
+int thisValue = dictionary["one"];
+int thatValue = dictionary["two"];
+
+// Will throw KeyNotFoundException if the key doesn't exist
+int doesNotExistValue = dictionary["three"];
+```
+
+#### Useful Methods
+1. **`Add`**  
+   Adds a key-value pair to the dictionary.  
+   ```csharp
+   dictionary.Add("three", 3); // Throws an exception if the key already exists
+   ```
+
+2. **`Remove`**  
+   Removes a key-value pair from the dictionary.  
+   ```csharp
+   dictionary.Remove("one");
+   ```
+
+3. **`ContainsKey`**  
+   Checks if the dictionary contains a key.  
+   ```csharp
+   bool exists = dictionary.ContainsKey("two");
+   ```
+
+4. **`ContainsValue`**  
+   Checks if the dictionary contains a value.  
+   ```csharp
+   bool hasValue = dictionary.ContainsValue(3);
+   ```
+
+5. **`TryGetValue`**  
+   Tries to get the value for a key without throwing an exception.  
+   ```csharp
+   if (dictionary.TryGetValue("three", out int value)) 
+   {
+       Console.WriteLine(value);
+   }
+   ```
+
+6. **`Clear`**  
+   Removes all key-value pairs from the dictionary.  
+   ```csharp
+   dictionary.Clear();
+   ```
+
+7. **`Count`**  
+   Gets the number of key-value pairs in the dictionary.  
+   ```csharp
+   int count = dictionary.Count;
+   ```
+
+8. **`Keys` and `Values`**  
+   Retrieves all keys or all values as collections.  
+   ```csharp
+   IEnumerable<string> keys = dictionary.Keys;
+   IEnumerable<int> values = dictionary.Values;
+   ```
+
+---
+
+### **HashSet<T>**
+A `HashSet<T>` is a collection that stores a **set of unique values**. It also uses a hash code for fast lookups.
+
+```csharp
+HashSet<int> hashSet = new HashSet<int>();
+hashSet.Add(1);
+hashSet.Add(2);
+hashSet.Add(2); // This will not be added because it is a duplicate
+```
+
+### **ImmutableArray<T>**
+An `ImmutableArray<T>` stores a fixed-size array of values that cannot be changed after creation.
+
+```csharp
+ImmutableArray<int> immutableArray = ImmutableArray.Create(1, 2, 3, 4, 5);
+
+// Adding to the array returns a new ImmutableArray<T> with the added value
+ImmutableArray<int> newImmutableArray = immutableArray.Add(6);
+```
+
+### **Queue<T> and Stack<T>**
+
+#### **Queue<T>**  
+A first-in, first-out (**FIFO**) collection.  
+```csharp
+Queue<int> queue = new Queue<int>();
+queue.Enqueue(1);
+queue.Enqueue(2);
+queue.Enqueue(3);
+
+int first = queue.Dequeue(); // 1
+int second = queue.Dequeue(); // 2
+```
+
+#### **Stack<T>**  
+A last-in, first-out (**LIFO**) collection.  
+```csharp
+Stack<int> stack = new Stack<int>();
+stack.Push(1);
+stack.Push(2);
+stack.Push(3);
+
+int top = stack.Pop(); // 3
+int second = stack.Pop(); // 2
+```
+
