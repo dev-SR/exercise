@@ -130,6 +130,8 @@ dotnet new console -n MyConsoleApp -o src
 To add the console project to the solution, run:  
 ```bash
 dotnet sln MySolution.sln add src/MyConsoleApp.csproj
+# or just:
+dotnet sln MySolution.sln add src/
 ```
 
 After running the above commands, your directory structure will look like this:  
