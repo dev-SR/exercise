@@ -3,11 +3,7 @@
 - [Misc topics in C#](#misc-topics-in-c)
   - [Working with JSON](#working-with-json)
     - [Newtonsoft.Json](#newtonsoftjson)
-      - [Overview](#overview)
-      - [Key Features](#key-features)
     - [System.Text.Json](#systemtextjson)
-      - [Overview](#overview-1)
-      - [Key Features](#key-features-1)
     - [Comparing Newtonsoft.Json and System.Text.Json](#comparing-newtonsoftjson-and-systemtextjson)
       - [JsonConvert vs. JsonSerializer](#jsonconvert-vs-jsonserializer)
       - [Weirdness with JSON Converters](#weirdness-with-json-converters)
@@ -23,13 +19,10 @@ There are two common libraries for working with JSON in .NET:
 
 ### Newtonsoft.Json
 
-#### Overview
-
 - **Older but Very Common**: Newtonsoft.Json, also known as Json.NET, is a popular and widely used library for handling JSON in .NET applications.
 - **Relaxed and Forgiving**: Known for its ability to handle various JSON formats and scenarios, including some that might be less strictly defined (like JSON with comments).
 
-#### Key Features
-
+Key Features:
 - **JsonConvert**: A class that provides static methods for converting JSON to and from .NET objects.
 
 Example usage:
@@ -50,11 +43,9 @@ var johnReborn = JsonConvert.DeserializeObject<Employee>(json);
 
 ### System.Text.Json
 
-#### Overview
-
 - **Emphasizes Speed, Accuracy, Exactness, Security**: System.Text.Json is a newer library introduced in .NET Core 3.0. It focuses on performance improvements, accuracy, and security.
 
-#### Key Features
+Key Features:
 
 - **JsonSerializer**: A class that provides methods for serializing and deserializing JSON data.
 
