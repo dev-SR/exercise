@@ -545,7 +545,6 @@ In C#, the base keyword is used in the context of inheritance to refer to the ba
 1. Calling Base Class Constructor
 2. Accessing Base Class Members
 
-
 ```csharp
 using System;
 
