@@ -23,22 +23,23 @@
     - [Null and Nullability](#null-and-nullability)
       - [Nullable value types:](#nullable-value-types)
     - [Modern Nullability](#modern-nullability)
-  - [Inheritance](#inheritance)
+  - [**Inheritance**](#inheritance)
     - [How to Do It](#how-to-do-it)
       - [Why to Do It](#why-to-do-it)
+    - [`Base` Keyword in C# Inheritance](#base-keyword-in-c-inheritance)
     - [Sealed vs. Virtual](#sealed-vs-virtual)
       - [**Sealed**](#sealed)
       - [**Virtual**](#virtual)
-  - [Abstract Classes](#abstract-classes)
+  - [**Abstract** Classes](#abstract-classes)
     - [U-Turn Back to Access Modifiers](#u-turn-back-to-access-modifiers)
     - [DRY vs. MOIST](#dry-vs-moist)
-  - [Interfaces in C#](#interfaces-in-c)
+  - [**Interfaces** in C#](#interfaces-in-c)
     - [Inheritance is Great (kind of), But Why Use Interfaces?](#inheritance-is-great-kind-of-but-why-use-interfaces)
     - [Why Are Interfaces Important?](#why-are-interfaces-important)
     - [Declaring an Interface](#declaring-an-interface)
     - [Advanced Stuff](#advanced-stuff)
     - [Use Cases](#use-cases)
-  - [Structs and Records](#structs-and-records)
+  - [**Structs and Records**](#structs-and-records)
     - [Structs](#structs)
       - [Value Types](#value-types-2)
       - [Syntax](#syntax)
@@ -52,11 +53,11 @@
       - [Problem with Inheritance](#problem-with-inheritance)
       - [Using Composition](#using-composition)
     - [How Composition Solves Problems](#how-composition-solves-problems)
-  - [Extension Methods in C#](#extension-methods-in-c)
+  - [**Extension Methods** in C#](#extension-methods-in-c)
     - [Extension Methods](#extension-methods)
     - [Nuanced example](#nuanced-example)
-  - [Reflection in C#](#reflection-in-c)
-  - [Generics](#generics)
+  - [**Reflection** in C#](#reflection-in-c)
+  - [**Generics**](#generics)
     - [Very Basics of Generic Types](#very-basics-of-generic-types)
     - [Creating Generic Classes](#creating-generic-classes)
     - [Demonstrating Using Generically-Typed Methods](#demonstrating-using-generically-typed-methods)
@@ -481,7 +482,7 @@ public class Person
 🌶️🌶️🌶️ C# devs tend to not fully embrace the benefits of nullable reference types. In brownfield (e.g., existing) projects, it's almost impossible to reverse-add nullability in a meaningful way. In greenfield (e.g., new) projects, I'd recommend turning on nullability + treating warnings as errors - this gives you the strictest null handling rules and will result in fewer bugs.
 
 
-## Inheritance
+## **Inheritance**
 
 Inheritance is core to understanding object hierarchy.
 
@@ -536,7 +537,60 @@ Vehicle plane = new Plane();
 - **Organizing Code**: Structures code hierarchically, improving readability and maintainability.  
 - **Polymorphism**: Enables treating derived classes as instances of the base class, allowing flexible designs.  
 
----
+
+### `Base` Keyword in C# Inheritance
+
+In C#, the base keyword is used in the context of inheritance to refer to the base class (or parent class) of the current class. It serves two primary purposes:
+
+1. Calling Base Class Constructor
+2. Accessing Base Class Members
+
+
+```csharp
+using System;
+
+class BaseClass
+{
+    public BaseClass(string message)
+    {
+        Console.WriteLine("Base Constructor: " + message);
+    }
+
+    public virtual void Display()
+    {
+        Console.WriteLine("Base Class Display");
+    }
+}
+
+class DerivedClass : BaseClass
+{
+    public DerivedClass(string message) : base(message) // Calling the base class constructor
+    {
+        Console.WriteLine("Derived Constructor: " + message);
+    }
+
+    public override void Display()
+    {
+        base.Display(); // Calling the base class method
+        Console.WriteLine("Derived Class Display");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        DerivedClass obj = new DerivedClass("Hello");
+        obj.Display();
+    }
+}
+/* OUTPUT:
+Base Constructor: Hello
+Derived Constructor: Hello
+Base Class Display
+Derived Class Display
+*/
+```
 
 ### Sealed vs. Virtual
 
@@ -587,7 +641,7 @@ public class DerivedEmployee : BaseEmployee
 
 ---
 
-## Abstract Classes
+## **Abstract** Classes
 
 **Abstract classes** serve as a base class for other classes. They:
 - May contain abstract methods that derived classes **must implement**.  
@@ -716,7 +770,7 @@ Spencer's rule of thumb:
 - Total elimination of duplication? **Not worth it.**
 
 
-## Interfaces in C#
+## **Interfaces** in C#
 
 Interfaces allow us to define a contract for a class to implement. Think of it like a lightweight abstract class.
 
@@ -843,7 +897,7 @@ Interfaces are often used to avoid deep inheritance hierarchies. Instead of exte
 That doesn't mean that you should declare one class that implements 10 interfaces. I like code to be broken up as necessary, and often will have a single-use interface for a single class.
 
 
-## Structs and Records
+## **Structs and Records**
 
 Structs and records are types in C# that provide different ways of modeling data. **Structs are value types, while records are reference types** with built-in structural equality. Understanding their use cases can help in choosing the right type for a given scenario.
 
@@ -1121,7 +1175,7 @@ While inheritance is useful in some cases, composition provides:
 Always prefer composition over inheritance unless the relationship is strictly "is-a."
 
 
-## Extension Methods in C#
+## **Extension Methods** in C#
 
 **"Adding behaviors to non-modifiable classes since 2007"**
 
@@ -1217,7 +1271,7 @@ public static class LoggerExtensions
 
 This keeps your API surface area small for the ILogger interface, while adding convenient methods for developers to use. Convenience makes developers happy!
 
-## Reflection in C#
+## **Reflection** in C#
 
 Reflection is a feature in C# that allows you to inspect, analyze, and manipulate the metadata of types, objects, and assemblies at runtime. It enables a program to dynamically access the structure of classes, methods, properties, fields, and more, without having prior knowledge at compile-time.
 
@@ -1315,7 +1369,7 @@ Methods:
 Invoked 'GetProductDetails': Laptop: $1,200.50
 ```
 
-## Generics
+## **Generics**
 
 Generics were introduced in .NET 3.5 and C# 2 (e.g. a Long Time Ago). They are a powerful feature that allows you to define classes, methods, and interfaces with a placeholder for the data type.
 
