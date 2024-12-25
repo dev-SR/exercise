@@ -23,6 +23,7 @@
     - [Null and Nullability](#null-and-nullability)
       - [Nullable value types:](#nullable-value-types)
     - [Modern Nullability](#modern-nullability)
+    - [Null-Forgiving (`!`) abd Null-Coalescing (`??`) Operator](#null-forgiving--abd-null-coalescing--operator)
   - [**Inheritance**](#inheritance)
     - [How to Do It](#how-to-do-it)
       - [Why to Do It](#why-to-do-it)
@@ -480,6 +481,76 @@ public class Person
 ```
 
 🌶️🌶️🌶️ C# devs tend to not fully embrace the benefits of nullable reference types. In brownfield (e.g., existing) projects, it's almost impossible to reverse-add nullability in a meaningful way. In greenfield (e.g., new) projects, I'd recommend turning on nullability + treating warnings as errors - this gives you the strictest null handling rules and will result in fewer bugs.
+
+### Null-Forgiving (`!`) abd Null-Coalescing (`??`) Operator
+
+The null-forgiving operator is used to suppress the compiler's nullability warning when you are certain that a variable is not null, even though the compiler cannot guarantee it.
+
+```csharp
+string? nullableString = GetNullableString();
+string nonNullableString = nullableString!; // Suppresses the warning
+```
+
+The null-coalescing operator is used to provide a default value when a nullable type is null.
+
+```csharp
+string? nullableString = GetNullableString();
+string nonNullableString = nullableString ?? "Default Value"; // Uses "Default Value" if nullableString is null
+```
+
+Example usage:
+
+```csharp
+public static string? GetNullableString()
+{
+    // This method may return null
+    return null;
+}
+public static void Main()
+{
+    string? nullableString = GetNullableString();
+
+    //! Using null-forgiving operator
+    string nonNullableString1 = nullableString!;//adding `!` tells the compiler to be null-forgiving, although the value might still be null (in this case, `nullableString` is null)
+
+    //! Using null-coalescing operator
+    string nonNullableString2 = nullableString ?? "Default Value"; //since `nullableString` is null, the default value - "Default Value" is used
+
+    Console.WriteLine(nonNullableString1);//null
+    Console.WriteLine(nonNullableString2);//Default Value
+}
+```
+
+In Entity Framework Core, the null-forgiving operator (`!`) can be used in entity model relations to suppress nullability warnings when you are certain that a navigation property will not be null, even though the compiler cannot guarantee it. This is particularly useful when dealing with required relationships.
+
+Consider the following example where we have two entities: Each `Book` must have an `Author`.
+
+```csharp
+
+public class Book
+{
+    public required int BookId { get; set; }
+    public required string Title { get; set; }
+    public required int AuthorId { get; set; }
+    public virtual Author Author { get; set; } = null!; // Null-forgiving operator
+}
+```
+                  
+You can configure the relationship in the `DbContext` class:
+
+```csharp
+public class ApplicationDbContext : DbContext{
+    protected override void OnModelCreating(ModelBuilder modelBuilder){
+        modelBuilder.Entity<Book>()
+            .HasOne(b => b.Author)
+            .WithMany(a => a.Books)
+            .HasForeignKey(b => b.AuthorId)
+            .IsRequired();
+    }
+}
+```
+
+- The `AuthorId` foreign key is required, ensuring that each `Book` must have an associated `Author`.
 
 
 ## **Inheritance**
