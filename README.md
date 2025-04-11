@@ -593,8 +593,8 @@ imap jj <Esc>
   - `b` - move backward one word
 - Line
   - `0` - move to the beginning of the line
-  - `Ctrl+6` - move to the first non-blank character of the line
-  - `Ctrl+4` - move to the end of the line
+  - `Shift+6` - move to the first non-blank character of the line
+  - `Shift+4` - move to the end of the line
   - `G` - move to the last line of the file
   - `gg` - move to the first line of the file
   - `:n` - Go to the line number 
