@@ -660,6 +660,9 @@ imap jj <Esc>
   - `ci( | di(` - **delete the text inside parentheses - (inside)**
   - **`dit | cit`** - **delete the text between matching html/xml tags - <tag>inside</tag>** 
   - `yi(` -**yank the text inside (parentheses)**
+  - `ct(` – change up to the first `"` (deletes `OldFun` from `OldFun("x")`)
+
+
 
 - Using Visual Mode for Complex Edits.
   - `viw`- select the inner word
