@@ -50,8 +50,10 @@
 **For Editor:** _`FiraCode-Regular.ttf`_ and _`FiraCode-Bold.ttf`_ from:
 [tonsky/FiraCode](https://github.com/tonsky/FiraCode)
 
-**For Terminal:** _`FiraMono NF`_ from
+**For Terminal:** _`FiraMono Nerd Font`_ from
 [Nerd Font](https://www.nerdfonts.com/font-downloads)
+
+![image](https://github.com/user-attachments/assets/1c963880-59e3-4e7d-a2aa-d50683d9469d)
 
 ### snippets
 
