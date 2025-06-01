@@ -51,7 +51,7 @@
 [tonsky/FiraCode](https://github.com/tonsky/FiraCode)
 
 **For Terminal:** _`FiraMono NF`_ from
-[Nerd Font](https://github.com/tonsky/FiraCode)
+[Nerd Font](https://www.nerdfonts.com/font-downloads)
 
 ### snippets
 
