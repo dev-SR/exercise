@@ -180,6 +180,9 @@ with open(output_path, 'w') as file:
     file.writelines(unique_lines)
 
 ```
+### Others Extensions:
+
+- [Terminal-Icons](https://github.com/devblackops/Terminal-Icons)
 
 ## Markdown Guide
 
