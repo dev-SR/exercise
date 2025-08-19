@@ -111,6 +111,8 @@ You can easily define your own snippets without any extension. To create or edit
 winget install JanDeDobbeleer.OhMyPosh -s winget
 ```
 
+> issue: PowerShell blocks script execution: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser`
+
 2. configure your shell to use Oh My Posh:
 
 - (Optional) make sure to create the profile first:
