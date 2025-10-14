@@ -549,6 +549,68 @@ for(int $INDEX$ = 0; $INDEX$ < $LIMIT$; $INDEX$++) {
 
 ### Setup and Configure
 
+#### Vscode settting
+
+```json
+	//**VIM SETUP**
+	"vim.useCtrlKeys": true,
+	"vim.useSystemClipboard": true,
+	// Insert mode
+	"vim.insertModeKeyBindings": [
+		// In insert mode jj to escape
+		{
+			"before": [
+				"j",
+				"j"
+			],
+			"after": [
+				"<Esc>"
+			]
+		},
+		{
+			"before": [
+				"a",
+				"a"
+			],
+			"after": [
+				"<Esc>"
+			]
+		}
+	],
+	// Visual mode
+	"vim.visualModeKeyBindings": [
+		// In visual mode i goes to insert mode
+		// {
+		// 	"before": ["i"],
+		// 	"after": ["<Esc>", "i"]
+		// }
+		// // In visual mode i goes to insert mode
+		// {
+		// 	"before": ["a"],
+		// 	"after": ["<Esc>", "a"]
+		// }
+	],
+	// *** Escaping *** from vim for below commands
+	"vim.handleKeys": {
+		// Select all
+		"<C-a>": false,
+		// VS Code search in file
+		"<C-f>": true,
+		// VS Code new marker @ next occurence
+		"<C-d>": true,
+		// Copy
+		"<C-c>": false,
+		// Cut
+		"<C-x>": false,
+		// Paste
+		"<C-v>": false
+	},
+	"vim.sneak": true,
+	"vim.easymotion": true,
+	"vim.autoindent": false,
+
+```
+
 #### Linux(ubuntu)
 
 Install Vim (Enhanced version of vi which is preinstalled)
