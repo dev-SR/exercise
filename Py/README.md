@@ -44,9 +44,8 @@ Add path of `following:
 
 ```json
 {
-	"python.condaPath": "<base environment path>\\Scripts\\conda.exe",
-	"python.pythonPath": "<base environment path>\\python.exe",
-	"python.defaultInterpreterPath": "<base environment path>\\python.exe",
+	"python.condaPath": "C:\\Users\\xxxxx\\anaconda3\\Scripts\\conda.exe",
+	"python.defaultInterpreterPath": "C:\\xxxxx\\sharu\\anaconda3\\python.exe",
 }
 ```
 
