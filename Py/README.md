@@ -22,7 +22,59 @@
 	- [Using Pip to install packages to Anaconda Environment](#using-pip-to-install-packages-to-anaconda-environment)
 	- [Convert `ipynb` files into html, markdown, pdf and other format files](#convert-ipynb-files-into-html-markdown-pdf-and-other-format-files)
 
-## Install Anaconda Distribution
+
+## Set Anaconda’s Python to default Python in Ubuntu
+
+### 1. Initialize Conda for zsh
+
+Open your terminal and run:
+
+```bash
+conda init zsh
+```
+
+This modifies your `~/.zshrc` to include the necessary environment variables so that Conda and its Python are available. After running it, restart your terminal or run:
+
+```bash
+source ~/.zshrc
+```
+
+---
+
+### 2. Ensure Anaconda’s `bin` is in your PATH
+
+Check if the following line exists in `~/.zshrc` (added by `conda init`):
+
+```bash
+export PATH="$HOME/anaconda3/bin:$PATH"
+```
+
+or, for Miniconda:
+
+```bash
+export PATH="$HOME/miniconda3/bin:$PATH"
+```
+
+If not, add it manually, replacing the path with the location where Anaconda is installed.
+
+---
+
+### 3. Set Anaconda Python as default
+
+Once the path is correct, check the default Python:
+
+```bash
+which python
+python --version
+```
+
+It should point to something like:
+
+```
+/Users/yourusername/anaconda3/bin/python
+```
+
+## (Win)Install Anaconda Distribution
 
 - Make sure you have checked out `Add Anaconda3 to my PATH environment variable`. This provides the flexibility to access the distribution of anaconda python anywhere from the PC.
 
