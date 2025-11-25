@@ -1,14 +1,20 @@
 # Python
 
 - [Python](#python)
-	- [Install Anaconda Distribution](#install-anaconda-distribution)
-		- [Add conda path to vscode](#add-conda-path-to-vscode)
+	- [Anaconda Installation(Ubuntu)](#anaconda-installationubuntu)
+		- [**1. Download \& Install**](#1-download--install)
+	- [Set Anaconda’s Python to default Python in Ubuntu](#set-anacondas-python-to-default-python-in-ubuntu)
+		- [1. Initialize Conda for zsh](#1-initialize-conda-for-zsh)
+		- [2. Ensure Anaconda’s `bin` is in your PATH](#2-ensure-anacondas-bin-is-in-your-path)
+		- [3. Set Anaconda Python as default](#3-set-anaconda-python-as-default)
+	- [(Win)Install Anaconda Distribution](#wininstall-anaconda-distribution)
 		- [🤔 How to Access Anaconda \& Python from cmd?](#-how-to-access-anaconda--python-from-cmd)
 			- [Accessing `Anaconda` from `VsCode`](#accessing-anaconda-from-vscode)
 		- [Accessing `Anaconda` from `cmd`](#accessing-anaconda-from-cmd)
 			- [Accessing `Python` from `cmd`](#accessing-python-from-cmd)
 		- [📥 Install packages differently](#-install-packages-differently)
 	- [Install Python (optional along with anaconda)](#install-python-optional-along-with-anaconda)
+	- [Addin conda path to vscode](#addin-conda-path-to-vscode)
 	- [`pipenv` vs `virtualenv` vs `conda` environment](#pipenv-vs-virtualenv-vs-conda-environment)
 		- [Virtualenv](#virtualenv)
 			- [with vscode](#with-vscode)
@@ -21,6 +27,47 @@
 		- [Create Anaconda Environment](#create-anaconda-environment)
 	- [Using Pip to install packages to Anaconda Environment](#using-pip-to-install-packages-to-anaconda-environment)
 	- [Convert `ipynb` files into html, markdown, pdf and other format files](#convert-ipynb-files-into-html-markdown-pdf-and-other-format-files)
+
+
+
+## Anaconda Installation(Ubuntu)
+
+### **1. Download & Install**
+
+```bash
+bash Anaconda3-latest-Linux-x86_64.sh
+```
+
+When asked **“initialize Anaconda?” → choose: `no`**
+(You will configure manually.)
+
+✅ **Disable auto-activation of base**
+
+```bash
+conda config --set auto_activate_base false
+```
+
+Confirm:
+
+```bash
+cat ~/.condarc
+```
+
+✅ **Ensure base does NOT activate on shell startup**
+
+Open:
+
+```bash
+nano ~/.zshrc
+```
+
+Make sure **this line is NOT present**:
+
+```
+conda activate base
+```
+
+Delete it if found.
 
 
 ## Set Anaconda’s Python to default Python in Ubuntu
@@ -82,24 +129,6 @@ It should point to something like:
 
 - Once installed, do a quick run of Anaconda Navigator and ensure it's running fine.
 
-### Add conda path to vscode
-
-Get anaconda installation:
-
-```bash
-conda info
-```
-
-Get path of `"base environment"` i.e. `base environment:C:\\Users\\x\\anaconda3`
-
-Add path of `following:
-
-```json
-{
-	"python.condaPath": "C:\\Users\\xxxxx\\anaconda3\\Scripts\\conda.exe",
-	"python.defaultInterpreterPath": "C:\\Users\\xxxxx\\anaconda3\\python.exe",
-}
-```
 
 ### 🤔 How to Access Anaconda & Python from cmd?
 
@@ -161,7 +190,28 @@ pip install <packageName>
 
 - Choose a custom location other than the default. In this case I've choose `D:\Python310`.
 
+## Addin conda path to vscode
 
+Get anaconda installation:
+
+```bash
+conda info
+```
+
+Get path of `"base environment"` i.e. `base environment:C:\\Users\\x\\anaconda3`
+
+Add path of `following:
+
+```json
+{
+	"python.condaPath": "C:\\Users\\xxxxx\\anaconda3\\Scripts\\conda.exe",
+	"python.defaultInterpreterPath": "C:\\Users\\xxxxx\\anaconda3\\python.exe",
+	// Or in ubuntu:
+	"python.condaPath": "/home/xxxxx/anaconda3/bin/conda",
+	"python.defaultInterpreterPath": "/home/xxxxx/anaconda3/bin/python",
+}
+
+```
 
 ## `pipenv` vs `virtualenv` vs `conda` environment
 
@@ -346,3 +396,4 @@ jupyter nbconvert --to pdf test.ipynb
 [https://ipython.org/ipython-doc/3/notebook/nbconvert.html](https://ipython.org/ipython-doc/3/notebook/nbconvert.html)
 
 [https://www.programmersought.com/article/95748768264/](https://www.programmersought.com/article/95748768264/)
+
