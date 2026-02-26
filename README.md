@@ -1,7 +1,5 @@
 # Quick Navigation
 
-Test
-
 - [Quick Navigation](#quick-navigation)
   - [Vs Code Setting](#vs-code-setting)
     - [font](#font)
