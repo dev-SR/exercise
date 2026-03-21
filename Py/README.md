@@ -15,16 +15,14 @@
 		- [📥 Install packages differently](#-install-packages-differently)
 	- [Install Python (optional along with anaconda)](#install-python-optional-along-with-anaconda)
 	- [Addin conda path to vscode](#addin-conda-path-to-vscode)
-	- [`pipenv` vs `virtualenv` vs `conda` environment](#pipenv-vs-virtualenv-vs-conda-environment)
+	- [Python Package Management](#python-package-management)
 		- [Virtualenv](#virtualenv)
 			- [with vscode](#with-vscode)
 			- [using cmd](#using-cmd)
-		- [`pipenv` 🌟🌟🌟](#pipenv-)
-			- [Creating and Activating a virtualenv](#creating-and-activating-a-virtualenv)
-			- [Installing from a copied a `pipfile`](#installing-from-a-copied-a-pipfile)
 			- [UnInstalling packages](#uninstalling-packages)
 			- [Remove virtualenv](#remove-virtualenv)
 		- [Create Anaconda Environment](#create-anaconda-environment)
+	- [`uv` 🔥](#uv-)
 	- [Using Pip to install packages to Anaconda Environment](#using-pip-to-install-packages-to-anaconda-environment)
 	- [Convert `ipynb` files into html, markdown, pdf and other format files](#convert-ipynb-files-into-html-markdown-pdf-and-other-format-files)
 
@@ -121,6 +119,30 @@ It should point to something like:
 /Users/yourusername/anaconda3/bin/python
 ```
 
+Full script:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/sharukh/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/sharukh/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/sharukh/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/sharukh/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# conda python as default python
+export PATH="$HOME/anaconda3/bin:$PATH"
+# <<< conda initialize <<<
+```
+
+
 ## (Win)Install Anaconda Distribution
 
 - Make sure you have checked out `Add Anaconda3 to my PATH environment variable`. This provides the flexibility to access the distribution of anaconda python anywhere from the PC.
@@ -213,7 +235,7 @@ Add path of `following:
 
 ```
 
-## `pipenv` vs `virtualenv` vs `conda` environment
+## Python Package Management
 
 ### Virtualenv
 
@@ -264,39 +286,6 @@ env\Scripts\activate
 deactivate
 ```
 
-### `pipenv` 🌟🌟🌟
-
-Pipenv was created due to many shortcomings of virtualenv such as it not making a distinction if project dependency and the depending of the project dependency, not having mechanism to distinguish dev and production needs etc.
-
-To install pipenv, you need to install pip first. Then do
-
-```bash
-pip install pipenv
-```
-
-#### Creating and Activating a virtualenv
-
-```bash
-### ~Desktop/project_name
-pipenv install django
-# Successfully created virtual environment!
-# Virtualenv location: C:\Users\X\.virtualenvs\project_name-zqtDNc_4
-
-### Activate virtualenv
-pipenv shell
-```
-
-<div align="center" ><img src="../img/pipenv_v1.jpg" alt="py venv" width="700px"></div>
-
-#### Installing from a copied a `pipfile`
-
-```bash
-pipenv sync
-# or
-pipenv install
-```
-
-[https://stackoverflow.com/questions/52171593/how-to-install-dependencies-from-a-copied-pipfile-inside-a-virtual-environment](https://stackoverflow.com/questions/52171593/how-to-install-dependencies-from-a-copied-pipfile-inside-a-virtual-environment)
 
 #### UnInstalling packages
 
@@ -368,6 +357,85 @@ conda install --revision 1
 # The following packages will be REMOVED:
 # configparser-3.5.0-py37_0
 ```
+
+## `uv` 🔥
+
+1. Install `uv`:
+
+[https://docs.astral.sh/uv/getting-started/installation/](https://docs.astral.sh/uv/getting-started/installation/)
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+📦 Project Setup
+
+1. Initialize project
+
+```bash
+uv init
+```
+
+This creates:
+
+* `pyproject.toml`
+* `.venv/` (virtual environment when needed)
+
+---
+
+2. Install dependencies from requirements file
+
+```bash
+uv add -r requirements.txt
+```
+
+✔ Creates virtual environment
+✔ Installs dependencies
+✔ Adds them to `pyproject.toml`
+
+---
+
+➕ Install a new package:
+
+```bash
+uv add uvicorn
+```
+
+➖ Uninstall a package:
+
+```bash
+uv remove uvicorn
+```
+
+📤 If needed, update requirements:
+
+```bash
+uv pip freeze > requirements.txt
+```
+
+🔄 Sync Environment
+
+To make sure your environment matches `pyproject.toml` exactly:
+
+```bash
+uv sync
+```
+
+* Removes extra packages
+* Installs missing ones
+* Keeps everything reproducible
+
+
+▶️ Run the App (example)
+
+```bash
+uv run pytest
+uv run uvicorn app.main:app --reload
+```
+
+---
+
+
 
 ## Using Pip to install packages to Anaconda Environment
 

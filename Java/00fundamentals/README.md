@@ -268,18 +268,31 @@ System.out.println(Arrays.toString(arr));
 ### Taking Array Input
 
 ```java
-int[] arr = takeInput();
+import java.util.Scanner;
 
-public static int[] takeInput() {
-    System.out.print("Size? ");
-    int n = scn.nextInt();
+void main() {
+    Scanner sc = new Scanner(System.in);
 
+    System.out.println("Enter number of elements:");
+    int n = sc.nextInt();
+
+    int[] arr = readArray(sc, n);
+    printArray(arr);
+}
+
+int[] readArray(Scanner sc, int n) {
     int[] arr = new int[n];
     for (int i = 0; i < n; i++) {
-        System.out.print("Value at index " + i + "? ");
-        arr[i] = scn.nextInt();
+        arr[i] = sc.nextInt();
     }
     return arr;
 }
+
+void printArray(int[] arr) {
+    for (int j : arr) {
+        System.out.print(j + " ");
+    }
+}
+
 ```
 
